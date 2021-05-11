@@ -3,13 +3,16 @@
     "path": "~/Transpo Research/Travel network code/geolocate_address.R",
     "project_path": null,
     "type": "r_source",
-    "hash": "3037219588",
+    "hash": "0",
     "contents": "",
     "dirty": false,
     "created": 1620511615543.0,
     "source_on_save": false,
     "relative_order": 7,
-    "properties": {},
+    "properties": {
+        "cursorPosition": "13,21",
+        "scrollLine": "0"
+    },
     "folds": "",
     "lastKnownWriteTime": 1620508252,
     "encoding": "UTF-8",

@@ -1,0 +1,19 @@
+install.packages(proj4)
+
+library(rgdal)
+library(proj4)
+
+#' Function to write out a CSV of points 
+write_points_file <- function(points, file){
+  points %>%
+    st_transform(4326) %>%
+    mutate(
+      LATITUDE = st_coordinates(.)[,2],
+      LONGITUDE = st_coordinates(.)[,1]
+    ) %>%
+    st_set_geometry(NULL) %>%
+    write_csv(file)
+}
+
+library_points <- st_read("C:/Users/stuck/Documents/Transpo Research/Libraries/Library_Points.geojson")
+library_latlon <- library_points %>% write_points_file("points.csv")

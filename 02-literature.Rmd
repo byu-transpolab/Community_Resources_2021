@@ -64,6 +64,8 @@ Kalikow Maxwell, N. (2008). Libraries?-Yes. Journal of Access Services, 5(3), 39
 Macfarlane, G. S., Boyd, N., Taylor, J. E., & Watkins, K. (2020). Modeling the impacts of park access on health outcomes: A utility-based accessibility approach. Environment and Planning B: Urban Analytics and City Science, 239980832097402. https://doi.org/10.1177/2399808320974027
 
 Madzia, J., Ryan, P., Yolton, K., Percy, Z., Newman, N., LeMasters, G., & Brokamp, C. (2019). Residential Greenspace Association with Childhood Behavioral Outcomes. The Journal of Pediatrics, 207, 233–240. https://doi.org/10.1016/j.jpeds.2018.10.061
+otp_dl_demo(path_data)
+otp_dl_demo(path_data)
 
 Widener, M. J., Farber, S., Neutens, T., & Horner, M. (2015). Spatiotemporal accessibility to supermarkets using public transit: An interaction potential approach in Cincinnati, Ohio. Journal of Transport Geography, 42, 72–83. https://doi.org/10.1016/j.jtrangeo.2014.11.004
 

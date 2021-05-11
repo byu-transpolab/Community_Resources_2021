@@ -1,0 +1,3 @@
+library(sf)
+
+libraries <- read_sf("C:/Users/stuck/Documents/Transpo Research/Libraries/Library_Points.geojson")
