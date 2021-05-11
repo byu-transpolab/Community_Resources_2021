@@ -1,0 +1,20 @@
+# Methods
+
+We describe our methods in this chapter.
+
+Begin by collecting the block group data data and converting it to lat and lon
+```{r}
+
+#download data from the census website
+bgcentroid <- read.csv("C:/Users/stuck/Documents/Transpo Research/Grocery Stores/For GIS/Block Group Centroid.csv", stringsAsFactors=F)
+
+lat <- bgcentroid[["LATITUDE"]]
+lon <- bgcentroid[["LONGITUDE"]]
+
+```
+
+Then, we collect data for grocery stores and convert that data to lat and lon. This data comes from ArcGIS
+```{r}
+
+```
+

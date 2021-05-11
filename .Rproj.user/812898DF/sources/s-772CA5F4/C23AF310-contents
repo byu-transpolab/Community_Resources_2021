@@ -1,0 +1,29 @@
+install.packages(proj4)
+
+library(rgdal)
+library(proj4)
+
+#' Function to write out a CSV of points 
+write_points_file <- function(points, file){
+  points %>%
+    st_transform(4326) %>%
+    mutate(
+      LATITUDE = st_coordinates(.)[,2],
+      LONGITUDE = st_coordinates(.)[,1]
+    ) %>%
+    st_set_geometry(NULL) %>%
+    write_csv(file)
+}
+
+grocery_points <- st_read("C:/Users/stuck/Documents/Transpo Research/Grocery Stores/For GIS/Shapefile/Polygons 2/shapefile.shp")
+grocery_points %>% write_points_file("points.csv")
+
+#dsn <- system.file("C:/Users/stuck/Documents/Transpo Research/Grocery Stores/For GIS/Shapefile", package = "rgdal")[1]
+#d <- readOGR(dsn = "C:/Users/stuck/Documents/Transpo Research/Grocery Stores/For GIS/Shapefile/Points")
+
+#if (is.projected(d)) d <- spTransform(d, CRS("+proj=longlat +ellps=WGS84"))
+
+#for (i in 1:nrwo(d)) {
+#  print(bbox(d[i,]))
+#}
+

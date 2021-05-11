@@ -1,0 +1,5 @@
+
+bgcentroid <- read.csv("C:/Users/stuck/Documents/Transpo Research/Grocery Stores/For GIS/Block Group Centroid.csv", stringsAsFactors=F)
+
+lat <- bgcentroid[["LATITUDE"]]
+lon <- bgcentroid[["LONGITUDE"]]

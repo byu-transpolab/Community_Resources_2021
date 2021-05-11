@@ -1,0 +1,55 @@
+```{r setup, include=FALSE, cache = FALSE}
+knitr::opts_chunk$set(echo = TRUE, cache = TRUE)
+library(osmdata)
+library(tidyverse)
+library(sf)
+library(leaflet)
+library(tidycensus)
+library(qwraps2)
+library(knitrProgressBar)
+
+
+
+basetiles <- providers$CartoDB.Positron
+this_crs <- 2227 # EPSG:2227 - NAD83 / California zone 3 (ftUS)
+options(tigris_use_cache = TRUE)
+```
+
+bb <- getbb("Utah County, Utah", format_out = "polygon")
+supermarket_osm <- opq(bb) %>% #specify bounding query
+  add_osm_feature(key = "shop", value = "supermarket") %>% #specify which kinds of data we want
+  osmdata_sf() %>% # get a list of sf data frames for these tags
+  trim_osmdata(bb, exclude = TRUE)
+
+polygons <- supermarket_osm$osm_polygons %>% st_transform(this_crs)
+
+points_on_polygon <- supermarket_osm$osm_points %>%
+  st_transform(this_crs)
+  
+
+supermarket <- rbind(
+  #convert polygons to centroids
+  polygons %>% st_centroid() %>%
+    select(osm_id, name),
+  # get points
+  supermarket_osm$osm_points %>%
+    st_transform(this_crs) %>%
+    filter(!(osm_id %in%
+               points_on_polygon$osm_id)) %>%
+    select(osm_id, name = brand)
+)
+
+leaflet(supermarket %>% st_transform(4326)) %>%
+  addProviderTiles(basetiles) %>%
+  addCircleMarkers(color = "red")
+
+supermarket_buffer <- st_buffer(supermarket, dist = 805)
+
+sup_buff_int <- st_intersection(supermarket, supermarket_buffer)
+
+bb_buff <- st_bbox(sup_buff_int)
+
+leaflet(sup_buff_int) %>%
+  addProviderTiles(basetiles) %>%
+  addCircleMarkers(color = "red")
+

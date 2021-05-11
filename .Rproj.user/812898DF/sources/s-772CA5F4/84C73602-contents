@@ -1,0 +1,30 @@
+install.packages("opentripplanner") # Install Package
+install.packages("tmap")
+library(opentripplanner)            # Load Package
+library(tidyr)
+library(tmap)
+
+path_data <- file.path("C:/Users/stuck/Documents/Transpo Research", "OTP")
+dir.create(path_data)
+
+path_otp <- otp_dl_jar(path_data, cache = FALSE)
+
+otp_dl_demo(path_data)
+
+log1 <- otp_build_graph(otp = path_otp, dir =  path_data)
+
+log2 <- otp_setup(otp = path_otp, dir = path_data)
+
+otpcon <- otp_connect()
+
+lsoa <- sf::st_read("https://github.com/ropensci/opentripplanner/releases/download/0.1/centroids.gpkg",
+                    stringsAsFactors = FALSE)
+head(lsoa)
+
+toPlace <- c(-1.159494, 50.732529)
+
+routes <- otp_plan(otpcon = otpcon,
+                   fromPlace = lsoa, 
+                   toPlace = toPlace)
+tmap_mode("view")
+qtm(routes)
