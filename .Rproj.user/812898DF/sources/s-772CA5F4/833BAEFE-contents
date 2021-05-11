@@ -1,6 +1,19 @@
 # Methods
 
 We describe our methods in this chapter.
+install all necessary libraries
+```{r}
+library(opentripplanner)            # Load Package
+library(tidyr)
+library(tmap)
+library(RcppSimdJson)
+library(tidyverse)
+library(tigris)
+library(sf)
+library(leaflet)
+library(here)
+```
+
 
 Begin by collecting the block group data data and converting it to lat and lon
 ```{r}
@@ -16,5 +29,26 @@ lon <- bgcentroid[["LONGITUDE"]]
 Then, we collect data for grocery stores and convert that data to lat and lon. This data comes from ArcGIS
 ```{r}
 
+```
+
+We have a collection of park polygons, and in order to accurately measure the distance to the parks we need points along the border of the park.
+```{r}
+parks <- read_sf("C:/Users/stuck/Documents/Transpo Research/Parks/manual_edits_parks(final).geojson")
+
+
+#get park boundary polygon
+park_boundaries <- parks %>%
+  ungroup() %>%
+  select(id) %>%
+  st_simplify(dTolerance = 100, preserveTopology = TRUE) %>%
+  st_cast("MULTIPOLYGON") %>%
+  st_cast("POLYGON") %>%
+  st_cast("LINESTRING", group_or_split = TRUE)
+point_samples <- park_boundaries %>%
+  st_line_sample(density = 1/500)
+park_points <- st_sf(id = 
+                       park_boundaries$id, geometry = point_samples) %>%
+  st_as_sf() %>%
+  st_cast(to = "POINT")
 ```
 
