@@ -12,13 +12,16 @@ get_bglatlong <- function(){
 
 
 get_osmbpf <- function(){
-  download.file("https://byu.box.com/shared/static/nkf9nh63oqp501ech59urzzi738sio5l.zip", destfile = "/data")
+  download.file("https://byu.box.com/shared/static/nkf9nh63oqp501ech59urzzi738sio5l.zip")
 }
 
-get_parks <- function(file){
+get_parks <- function(){
   parks <- fromJSON(file = "https://byu.box.com/s/s4wqbp34lczsmpirrhtxhifpp10whr2o")
-  parks_df <- as.data.frame(parks)
-  park_boundaries <- parks %>%
+  parks
+}
+
+make_park_points <- function(park_polygons){
+  park_boundaries <- park_polygons %>%
     ungroup() %>%
     select(id) %>%
     st_simplify(dTolerance = 100, preserveTopology = TRUE) %>%
@@ -27,29 +30,30 @@ get_parks <- function(file){
     st_cast("LINESTRING", group_or_split = TRUE)
   point_samples <- park_boundaries %>%
     st_line_sample(density = 1/500)
-  park_points <- st_sf(id = 
-                         park_boundaries$id, geometry = point_samples) %>%
+  park_points <- st_sf(id = park_boundaries$id, geometry = point_samples) %>%
     st_as_sf() %>%
     st_cast(to = "POINT")
 
-  write_points_file <- function(points, file){
-    points %>%
+  park_points %>%
       st_transform(4326) %>%
       mutate(
         LATITUDE = st_coordinates(.)[,2],
         LONGITUDE = st_coordinates(.)[,1]
       ) %>%
-      st_set_geometry(NULL) %>%
-      write_csv(file)
-  }
-  park_latlon <- park_points %>% write_points_file("points.csv")
+      st_set_geometry(NULL) 
 }
 
 
 get_libraries <- function(){
   libraries <- fromJSON(file = "https://byu.box.com/s/sn5rc75whklvik6ub83zxgc1esztoc28")
-  libraries_latlon <- libraries %>% write_points_file("lib_points.csv")
-  libraries_latlon_col <- libraries_latlon[,c(31,32)]
+  libraries %>% 
+    st_transform(4326) %>%
+    mutate(
+      LATITUDE = st_coordinates(.)[,2],
+      LONGITUDE = st_coordinates(.)[,1]
+    ) %>%
+    st_set_geometry(NULL)
+  libraries[,c(31,32)]
    }
 }
 
