@@ -4,3 +4,6 @@
 .Ruserdata
 
 _targets/
+
+
+*.log
