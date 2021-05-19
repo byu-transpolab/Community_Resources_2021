@@ -24,7 +24,7 @@ list(
   tar_target(osmpbf, get_osmbpf("data/utah.osm.pbf"), format = "file")
   
   # parks
-  tar_target(park_polygons, get_parks()),
+  tar_target(park_polygons, get_parks("data/parks.geojson")),
   tar_target(park_points, make_park_points(park_polygons)),
   tar_target(park_times, calculate_times(park_points, bgcentroid)),
 

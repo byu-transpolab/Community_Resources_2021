@@ -23,9 +23,17 @@ get_osmbpf <- function(path){
   return(path) # to use file target, need to return path to data. 
 }
 
-get_parks <- function(){
-  parks <- fromJSON(file = "https://byu.box.com/s/s4wqbp34lczsmpirrhtxhifpp10whr2o")
-  parks
+
+#' Get parks polygons data
+#' 
+#' @param file A geojson file with parks data
+#' @return An sf object with parks as polygons with attributes
+#' 
+#' @details This dataset is small enough that we can just keep thd ata directly in git
+#' 
+get_parks <- function(file){
+  st_read(file)  %>%
+    st_transform(4326) # convert to lat/long
 }
 
 make_park_points <- function(park_polygons){
