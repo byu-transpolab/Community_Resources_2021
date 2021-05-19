@@ -21,7 +21,7 @@ list(
   tar_target(bgcentroid, get_bglatlong()),
   
   #OSM data for OTP
-  tar_target(osmpbf, get_osmbpf("data/utah.osm.pbf"), format = "file")
+  tar_target(osmpbf, get_osmbpf("data/utah.osm.pbf"), format = "file"),
   
   # parks
   tar_target(park_polygons, get_parks("data/parks.geojson")),
