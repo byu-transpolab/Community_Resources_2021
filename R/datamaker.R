@@ -1,6 +1,3 @@
-library(sf)
-library("rjson")
-
 #' Get block groups
 #' 
 #' @return spatial points sf object from Census Bureau population weighted centroids
@@ -10,9 +7,20 @@ get_bglatlong <- function(){
   st_as_sf(bgcentroid, coords = c("LONGITUDE", "LATITUDE"))
 }
 
-
-get_osmbpf <- function(){
-  download.file("https://byu.box.com/shared/static/nkf9nh63oqp501ech59urzzi738sio5l.zip")
+#' Get OSM PBF file for OpenTripPlanner
+#' 
+#' @param file to data file
+#' @return Stores and unzips a PBF file in the data folder
+#' 
+get_osmbpf <- function(path){
+  if(!file.exists(path)){
+    # originally from GEOFABRIK - may 1 2021
+    download.file("http://download.geofabrik.de/north-america/us/utah-210501.osm.pbf",
+                  destfile = path)
+  } else {
+    message(path, " already available")
+  }
+  return(path) # to use file target, need to return path to data. 
 }
 
 get_parks <- function(){
@@ -54,7 +62,6 @@ get_libraries <- function(){
     ) %>%
     st_set_geometry(NULL)
   libraries[,c(31,32)]
-   }
 }
 
 get_groceries <- function(){
