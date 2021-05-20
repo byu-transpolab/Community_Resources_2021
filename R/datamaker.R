@@ -86,7 +86,8 @@ make_park_points <- function(park_polygons, density){
 #' 
 get_libraries <- function(file, crs){
   st_read(file) %>%
-    st_transform(crs) 
+    st_transform(crs)  %>%
+    rename(id = ID)
 }
 
 #' Get Groceries Data
@@ -103,20 +104,26 @@ get_groceries <- function(file, crs){
 
 #' Function to get lat / long from sf data as matrix
 #' 
-#' @param sfc A simple features collection of points
+#' @param sfc A simple features collection
+#' @return A data frame with three columns, id, LATITUDE and LONGITUDE
+#' 
+#' @details If sfc is a polygon, will first calculate the centroid.
+#' 
 get_latlong <- function(sfc){
   
-  ll <- sfc %>%
+  sfc %>%
     st_centroid() %>% 
     st_transform(4326) %>%
     mutate(
       LATITUDE  = st_coordinates(.)[, 2],
       LONGITUDE = st_coordinates(.)[, 1],
-    ) 
-  
-  cbind(ll$LATITUDE)
+    ) %>%
+    select(id, LATITUDE, LONGITUDE)  %>%
+    st_set_geometry(NULL)
   
 }
+
+
 
 
 calculate_times <- function(landuse, bgcentroids){
