@@ -36,7 +36,7 @@ get_osmbpf <- function(path){
 #' @details This dataset is small enough that we can just keep thd ata directly in git
 #' 
 get_parks <- function(file, crs){
-  st_read(file)  %>%
+  st_read(file) %>%
     st_transform(crs) 
 }
 
