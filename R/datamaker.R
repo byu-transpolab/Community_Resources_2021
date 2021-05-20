@@ -27,52 +27,91 @@ get_osmbpf <- function(path){
 #' Get parks polygons data
 #' 
 #' @param file A geojson file with parks data
+#' @param crs Projected CRS to use for data; 
 #' @return An sf object with parks as polygons with attributes
 #' 
 #' @details This dataset is small enough that we can just keep thd ata directly in git
 #' 
-get_parks <- function(file){
+get_parks <- function(file, crs){
   st_read(file)  %>%
-    st_transform(4326) # convert to lat/long
+    st_transform(crs) 
 }
 
-make_park_points <- function(park_polygons){
-  park_boundaries <- park_polygons %>%
-    ungroup() %>%
-    select(id) %>%
-    st_simplify(dTolerance = 100, preserveTopology = TRUE) %>%
-    st_cast("MULTIPOLYGON") %>%
-    st_cast("POLYGON") %>%
-    st_cast("LINESTRING", group_or_split = TRUE)
+#' Get points along park polygons
+#' 
+#' @param park_polygons An sf data frame with polygons
+#' @param density Rate at which to sample points along the boundary.  density
+#'   should be in units of the  projection.
+#'   
+#' @return A sf dataframe with points along the boundary
+#' 
+#' @details The parks are big enough we want to get distances to each point along
+#' the boundary, rather than just a centroid.
+make_park_points <- function(park_polygons, density){
+  
+  # turn polygon boundaries into linestrings
+  suppressWarnings(
+    park_boundaries <- park_polygons %>%
+      ungroup() %>%
+      select(id) %>%
+      # simplify boundaries
+      st_simplify(dTolerance = 100, preserveTopology = TRUE) %>%
+      st_cast("MULTIPOLYGON") %>% 
+      st_cast("POLYGON") %>% 
+      st_cast("LINESTRING", group_or_split = TRUE)
+  )
+  
+  # sample points along lines
   point_samples <- park_boundaries %>%
     st_line_sample(density = 1/500)
-  park_points <- st_sf(id = park_boundaries$id, geometry = point_samples) %>%
-    st_as_sf() %>%
-    st_cast(to = "POINT")
-
-  park_points %>%
-      st_transform(4326) %>%
-      mutate(
-        LATITUDE = st_coordinates(.)[,2],
-        LONGITUDE = st_coordinates(.)[,1]
-      ) %>%
-      st_set_geometry(NULL) 
+  
+  # make a dataset of points
+  suppressWarnings(
+    park_points <- st_sf(id = park_boundaries$id, geometry = point_samples) %>%
+      st_as_sf() %>%
+      st_cast(to = "POINT")
+  )
+  
+  park_points
 }
 
+#' Get Libraries Data
+#' 
+#' @param file Path to libraries geojson file
+#' @param crs Projected CRS to use for data; 
+#' @return sf data frame with 
+#' 
+get_libraries <- function(file, crs){
+  st_read(file) %>%
+    st_transform(crs) 
+}
 
-get_libraries <- function(){
-  libraries <- fromJSON(file = "https://byu.box.com/s/sn5rc75whklvik6ub83zxgc1esztoc28")
-  libraries %>% 
+#' Get Groceries Data
+#' 
+#' @param file Path to libraries geojson file
+#' @param crs Projected CRS to use for data; 
+#' @return sf data frame with groceries data
+#' 
+get_groceries <- function(file, crs){
+  
+  
+  
+}
+
+#' Function to get lat / long from sf data as matrix
+#' 
+#' @param sfc A simple features collection of points
+get_latlong <- function(sfc){
+  
+  ll <- sfc %>%
+    st_centroid() %>% 
     st_transform(4326) %>%
     mutate(
-      LATITUDE = st_coordinates(.)[,2],
-      LONGITUDE = st_coordinates(.)[,1]
-    ) %>%
-    st_set_geometry(NULL)
-  libraries[,c(31,32)]
-}
-
-get_groceries <- function(){
+      LATITUDE  = st_coordinates(.)[, 2],
+      LONGITUDE = st_coordinates(.)[, 1],
+    ) 
+  
+  cbind(ll$LATITUDE)
   
 }
 
