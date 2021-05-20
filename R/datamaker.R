@@ -127,6 +127,9 @@ get_latlong <- function(sfc){
 #' Calculate multimodal travel times between bgcentroids and destinations
 #' 
 #' @param landuse Destination features
+#' @param bgcentroid Population-weighted blockgroup centroid
+#' @param osmpbf path to OSM pbf file
+#' 
 calculate_times <- function(landuse, bgcentroid, osmpbf){
   
   
@@ -145,6 +148,7 @@ calculate_times <- function(landuse, bgcentroid, osmpbf){
   otpcon <- otp_connect()
   
   
+  #here's where your OTP stuff goes. Might want to make sure the data is there in another function
   
   # Get distance between each ll and each bg
   routes <- otp_plan(otpcon = otpcon,
@@ -155,9 +159,12 @@ calculate_times <- function(landuse, bgcentroid, osmpbf){
                      mode = c("WALK"),
                      get_geometry = FALSE)
   routes <- routes[,c("fromPlace","toPlace","duration")]
+  
   # Use the tidyr package to go from long to wide format
   routes_matrix <- tidyr::pivot_wider(routes, 
                                       names_from = "toPlace", 
                                       values_from = "duration")
-  #here's where your OTP stuff goes. Might want to make sure the data is there in another function
+  
+  # is this what you should return?
+  routes_matrix
 }
