@@ -124,30 +124,29 @@ get_latlong <- function(sfc){
 }
 
 
-
-
-calculate_times <- function(landuse, bgcentroids){
+#' Calculate multimodal travel times between bgcentroids and destinations
+#' 
+#' @param landuse Destination features
+calculate_times <- function(landuse, bgcentroid, osmpbf){
   
+  
+  # get lat / long for the landuse
+  ll <- get_latlong(landuse)
+  bg <- get_latlong(bgcentroid)
+  
+  
+  # set up OTP routing engine
   path_data <- file.path("C:/Users/Public", "OTP")
   dir.create(path_data)
-  
   path_otp <- otp_dl_jar(path_data, cache = FALSE)
-  
   otp_dl_demo(path_data)
-  
   log1 <- otp_build_graph(otp = path_otp, dir =  path_data)
-  
   log2 <- otp_setup(otp = path_otp, dir = path_data)
-  
   otpcon <- otp_connect()
   
-  amenities <- sf::st_read(landuse)
-  bgpoints <- sf::st_read(bgcentroids)
-  head(amenities)
   
-  toPlace   = amenities[rep(seq(1, 10), times = nrow(amenities)),]
-  fromPlace = amenities[rep(seq(1, 10), each  = nrow(amenities)),]
   
+  # Get distance between each ll and each bg
   routes <- otp_plan(otpcon = otpcon,
                      fromPlace = fromPlace,
                      toPlace = toPlace,
