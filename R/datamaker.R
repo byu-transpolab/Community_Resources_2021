@@ -3,8 +3,11 @@
 #' @return spatial points sf object from Census Bureau population weighted centroids
 get_bglatlong <- function(){
   bgcentroid <- read_csv("https://www2.census.gov/geo/docs/reference/cenpop2010/blkgrp/CenPop2010_Mean_BG49.txt")
+    
   
-  st_as_sf(bgcentroid, coords = c("LONGITUDE", "LATITUDE"))
+  st_as_sf(bgcentroid, coords = c("LONGITUDE", "LATITUDE"), crs = 4326) %>%
+    mutate(id = str_c(STATEFP, COUNTYFP, TRACTCE, BLKGRPCE)) %>%
+    select(id, POPULATION)
 }
 
 #' Get OSM PBF file for OpenTripPlanner
