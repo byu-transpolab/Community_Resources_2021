@@ -38,6 +38,7 @@ get_osmbpf <- function(path){
 get_parks <- function(file, crs){
   st_read(file) %>%
     st_transform(crs) 
+  parks
 }
 
 #' Get points along park polygons
@@ -50,7 +51,7 @@ get_parks <- function(file, crs){
 #' 
 #' @details The parks are big enough we want to get distances to each point along
 #' the boundary, rather than just a centroid.
-make_park_points <- function(park_polygons, density){
+make_park_points <- function(park_polygons, density, crs){
   
   # turn polygon boundaries into linestrings
   suppressWarnings(
@@ -75,7 +76,7 @@ make_park_points <- function(park_polygons, density){
       st_cast(to = "POINT")
   )
   
-  park_points
+  park_points 
 }
 
 #' Get Libraries Data
@@ -86,8 +87,8 @@ make_park_points <- function(park_polygons, density){
 #' 
 get_libraries <- function(file, crs){
   st_read(file) %>%
-    st_transform(crs)  %>%
-    rename(id = ID)
+    st_transform(crs)
+  libraries
 }
 
 #' Get Groceries Data
@@ -121,6 +122,8 @@ get_latlong <- function(sfc){
     select(id, LATITUDE, LONGITUDE)  %>%
     st_set_geometry(NULL)
   
+  latlong
+  
 }
 
 
@@ -139,10 +142,9 @@ calculate_times <- function(landuse, bgcentroid, osmpbf){
   
   
   # set up OTP routing engine
-  path_data <- file.path("C:/Users/Public", "OTP")
+  path_data <- file.path("C:/Users/stuck/Documents/Transpo Research/Community_Resources/data", "OTP")
   dir.create(path_data)
   path_otp <- otp_dl_jar(path_data, cache = FALSE)
-  otp_dl_demo(path_data)
   log1 <- otp_build_graph(otp = path_otp, dir =  path_data)
   log2 <- otp_setup(otp = path_otp, dir = path_data)
   otpcon <- otp_connect()
@@ -157,8 +159,8 @@ calculate_times <- function(landuse, bgcentroid, osmpbf){
   routes <- otp_plan(otpcon = otpcon,
                      fromPlace = fromPlace,
                      toPlace = toPlace,
-                     fromID = fromPlace$geo_code,
-                     toID = toPlace$geo_code,
+                     fromID = as.character(fromPlace$id),
+                     toID = as.character(toPlace$id),
                      mode = c("WALK"),
                      get_geometry = FALSE)
   routes <- routes[,c("fromPlace","toPlace","duration")]

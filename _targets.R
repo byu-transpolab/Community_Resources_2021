@@ -14,7 +14,7 @@ source("R/datamaker.R")
 # Set target-specific options such as packages.
 tar_option_set(packages = c("tidyverse", "sf","opentripplanner"))
 
-this_crs <- 3560 # http://epsg.io/3560-1746 Utah North usft
+this_crs <- 4326 # http://epsg.io/3560-1746 Utah North usft
 
 # End this file with a list of target objects.
 list(
@@ -26,7 +26,7 @@ list(
   
   # parks
   tar_target(park_polygons, get_parks("data/parks.geojson", this_crs)),
-  tar_target(park_points, make_park_points(park_polygons, 1/500)),
+  tar_target(park_points, make_park_points(park_polygons, 1/500, this_crs)),
   tar_target(park_times, calculate_times(park_points, bgcentroid, osmpbf)),
   
   # grocery stores
