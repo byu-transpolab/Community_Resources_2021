@@ -149,6 +149,9 @@ calculate_times <- function(landuse, bgcentroid, osmpbf){
   
   
   #here's where your OTP stuff goes. Might want to make sure the data is there in another function
+  fromPlace = bg[rep(seq(1, 10), each  = nrow(bg)),]
+  toPlace   = ll[rep(seq(1, 10), times = nrow(ll)),]
+  
   
   # Get distance between each ll and each bg
   routes <- otp_plan(otpcon = otpcon,
