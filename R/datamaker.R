@@ -10,6 +10,23 @@ get_bglatlong <- function(){
     select(id, POPULATION)
 }
 
+#' Get GTFS File for OpenTripPlanner
+#' 
+#' @param file to data file
+#' @return Stores a GTFS file in the appropriate location
+#' 
+get_gtfs <- function(path){
+  if(!file.exists(path)){
+    # originally from UTA: June 4 2021
+    download.file("https://gtfsfeed.rideuta.com/gtfs.zip",
+                  destfile = path)
+  } else {
+    message(path, " already available")
+  }
+  return(path) # to use file target, need to return path to data. 
+}
+
+
 #' Get OSM PBF file for OpenTripPlanner
 #' 
 #' @param file to data file
@@ -17,12 +34,12 @@ get_bglatlong <- function(){
 #' 
 get_osmbpf <- function(path){
   if(!file.exists(path)){
-    # originally from GEOFABRIK - may 1 2021
-    download.file("http://download.geofabrik.de/north-america/us/utah-210501.osm.pbf",
-                  destfile = path)
+    stop(path, " not available")
   } else {
     message(path, " already available")
   }
+  
+  
   return(path) # to use file target, need to return path to data. 
 }
 
@@ -38,7 +55,6 @@ get_osmbpf <- function(path){
 get_parks <- function(file, crs){
   st_read(file) %>%
     st_transform(crs) 
-  parks
 }
 
 #' Get points along park polygons
@@ -88,7 +104,6 @@ make_park_points <- function(park_polygons, density, crs){
 get_libraries <- function(file, crs){
   st_read(file) %>%
     st_transform(crs)
-  libraries
 }
 
 #' Get Groceries Data
@@ -121,8 +136,6 @@ get_latlong <- function(sfc){
     ) %>%
     select(id, LATITUDE, LONGITUDE)  %>%
     st_set_geometry(NULL)
-  
-  latlong
   
 }
 
