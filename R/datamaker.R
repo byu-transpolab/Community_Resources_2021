@@ -7,6 +7,7 @@ get_bglatlong <- function(){
   
   st_as_sf(bgcentroid, coords = c("LONGITUDE", "LATITUDE"), crs = 4326) %>%
     mutate(id = str_c(STATEFP, COUNTYFP, TRACTCE, BLKGRPCE)) %>%
+    filter(COUNTYFP == "049") %>%
     select(id, POPULATION)
 }
 
