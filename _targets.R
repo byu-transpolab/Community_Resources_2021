@@ -16,7 +16,7 @@ tar_option_set(packages = c("tidyverse", "sf","opentripplanner"))
 
 this_crs <- 3560 # http://epsg.io/3560-1746 Utah North usft
 
-otp_path <- "otp/graphs/utco/"
+otp_path <- "otp/graphs/default/"
 
 # End this file with a list of target objects.
 list(

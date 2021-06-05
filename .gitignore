@@ -5,6 +5,6 @@
 
 _targets/
 
-data/utah.osm.pbf
+otp/graphs/default/Graph.obj
 
 *.log
