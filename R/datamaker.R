@@ -136,13 +136,10 @@ get_latlong <- function(sfc){
       LATITUDE  = st_coordinates(.)[, 2],
       LONGITUDE = st_coordinates(.)[, 1],
     ) %>%
-    select(id, LONGITUDE, LATITUDE)   %>%
+    transmute(id = as.character(id), LONGITUDE, LATITUDE)   %>%
     st_set_geometry(NULL)
   
-  m <- as.matrix(tib[, -1])
-  rownames(m) <- tib$id
-  
-  m
+  tib
 }
 
 make_graph <- function(graph_dir){
@@ -170,26 +167,37 @@ calculate_times <- function(landuse, bgcentroid, graph){
   
   
   # get lat / long for the landuse and the centroids
-  ll <- get_latlong(landuse)[1:3, ]
-  bg <- get_latlong(bgcentroid)[1:3, ]
+  ll <- get_latlong(landuse)
+  bg <- get_latlong(bgcentroid)
+  
+  # make a complete table with combination of to and froms
+  expanded <- expand_grid(fromid = ll$id, toid = bg$id) %>%
+    left_join(ll %>% rename(fromid = id, fromlng = LONGITUDE, fromlat = LATITUDE), 
+              by = c("fromid")) %>%
+    left_join(bg %>% rename(toid = id, tolng = LONGITUDE, tolat = LATITUDE), 
+              by = c("toid"))
   
   # Get distance between each ll and each bg
-  routes <- otp_plan(otpcon = otpcon,
-                     fromPlace = ll,
-                     toPlace = bg,
-                     fromID = rownames(ll),
-                     toID = rownames(bg),
-                     mode = c("WALK", "TRANSIT", "CAR"),
-                     get_geometry = FALSE)
+  routes <- lapply(c("CAR", "WALK"), function(mode){
+    
+    message("Getting paths for ", mode)
+    tryCatch({
+      otp_plan(
+        otpcon = otpcon,
+        fromPlace = cbind(expanded[["fromlng"]], expanded[["fromlat"]]),
+        toPlace = cbind(expanded[["tolng"]], expanded[["tolat"]]),
+        fromID = expanded[["fromid"]],
+        toID = expanded[["toid"]],
+        mode = mode,
+        get_geometry = FALSE)
+    }, error = function(e){}
+    )
+  })  %>% bind_rows()
   
+  times <- routes %>%
+    select(fromPlace, toPlace, mode, distance, leg_startTime, leg_endTime) %>%
+    as_tibble() %>%
+    mutate(duration = leg_endTime - leg_startTime)
   
-  routes <- routes[,c("fromPlace","toPlace","duration")]
-  
-  # Use the tidyr package to go from long to wide format
-  routes_matrix <- tidyr::pivot_wider(routes, 
-                                      names_from = "toPlace", 
-                                      values_from = "duration")
-  
-  # is this what you should return?
-  routes_matrix
+  times
 }
