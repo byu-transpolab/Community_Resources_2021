@@ -104,7 +104,8 @@ make_park_points <- function(park_polygons, density, crs){
 #' 
 get_libraries <- function(file, crs){
   st_read(file) %>%
-    st_transform(crs)
+    st_transform(crs) %>%
+    rename(id = ID)
 }
 
 #' Get Groceries Data
