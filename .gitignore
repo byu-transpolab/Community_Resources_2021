@@ -5,6 +5,13 @@
 
 _targets/
 
+lucene/
 otp/graphs/default/Graph.obj
 
 *.log
+
+
+# needed to get correct version of java running on multiple-java machines
+# see https://gregmacfarlane.github.io/post/2021-06-04-java/
+.Renviron
+.java-version

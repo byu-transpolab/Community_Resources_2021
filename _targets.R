@@ -28,6 +28,7 @@ list(
   # us to bring it into the targets stream
   tar_target(osmpbf, get_osmbpf(file.path(otp_path, "osm.pbf")), format = "file"),
   tar_target(gtfs,   get_gtfs(file.path(otp_path, "gtfs.zip")), format = "file"),
+  tar_target(graph,  make_graph(otp_path), format = "file"),
   
   # parks
   tar_target(park_polygons, get_parks("data/parks.geojson", this_crs)),
@@ -40,7 +41,7 @@ list(
   
   # libraries
   tar_target(libraries, get_libraries("data/libraries.geojson", this_crs)),
-  tar_target(library_times, calculate_times(libraries, bgcentroid))
+  tar_target(library_times, calculate_times(libraries, bgcentroid, graph))
   
   
   

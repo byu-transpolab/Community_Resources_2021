@@ -129,17 +129,29 @@ get_groceries <- function(file, crs){
 #' 
 get_latlong <- function(sfc){
   
-  sfc %>%
+  tib <- sfc %>%
     st_centroid() %>% 
     st_transform(4326) %>%
     mutate(
       LATITUDE  = st_coordinates(.)[, 2],
       LONGITUDE = st_coordinates(.)[, 1],
     ) %>%
-    select(id, LATITUDE, LONGITUDE)  %>%
+    select(id, LONGITUDE, LATITUDE)   %>%
     st_set_geometry(NULL)
   
+  m <- as.matrix(tib[, -1])
+  rownames(m) <- tib$id
+  
+  m
 }
+
+make_graph <- function(graph_dir){
+  path_otp <- otp_dl_jar(cache = TRUE)
+  otp_build_graph(otp = path_otp, dir = "otp")
+  return(file.path(graph_dir, "Graph.obj"))
+}
+
+
 
 
 #' Calculate multimodal travel times between bgcentroids and destinations
@@ -148,36 +160,29 @@ get_latlong <- function(sfc){
 #' @param bgcentroid Population-weighted blockgroup centroid
 #' @param osmpbf path to OSM pbf file
 #' 
-calculate_times <- function(landuse, bgcentroid, osmpbf){
+calculate_times <- function(landuse, bgcentroid, graph){
   
-  
-  # get lat / long for the landuse
-  ll <- get_latlong(landuse)
-  bg <- get_latlong(bgcentroid)
-  
-  
-  # set up OTP routing engine
-  path_data <- file.path("C:/Users/stuck/Documents/Transpo Research/Community_Resources/data", "OTP")
-  dir.create(path_data)
-  path_otp <- otp_dl_jar(path_data, cache = FALSE)
-  log1 <- otp_build_graph(otp = path_otp, dir =  path_data)
-  log2 <- otp_setup(otp = path_otp, dir = path_data)
+  # start connection to OTP
+  path_otp <- otp_dl_jar(cache = TRUE)
+  log2 <- otp_setup(otp = path_otp, dir = "otp")
   otpcon <- otp_connect()
+  on.exit(otp_stop(warn = FALSE))
   
   
-  #here's where your OTP stuff goes. Might want to make sure the data is there in another function
-  fromPlace = bg[rep(seq(1, 10), each  = nrow(bg)),]
-  toPlace   = ll[rep(seq(1, 10), times = nrow(ll)),]
-  
+  # get lat / long for the landuse and the centroids
+  ll <- get_latlong(landuse)[1:3, ]
+  bg <- get_latlong(bgcentroid)[1:3, ]
   
   # Get distance between each ll and each bg
   routes <- otp_plan(otpcon = otpcon,
-                     fromPlace = fromPlace,
-                     toPlace = toPlace,
-                     fromID = as.character(fromPlace$id),
-                     toID = as.character(toPlace$id),
-                     mode = c("WALK"),
+                     fromPlace = ll,
+                     toPlace = bg,
+                     fromID = rownames(ll),
+                     toID = rownames(bg),
+                     mode = c("WALK", "TRANSIT", "CAR"),
                      get_geometry = FALSE)
+  
+  
   routes <- routes[,c("fromPlace","toPlace","duration")]
   
   # Use the tidyr package to go from long to wide format
