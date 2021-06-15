@@ -16,3 +16,7 @@ otp/graphs/default/Graph.obj
 # see https://gregmacfarlane.github.io/post/2021-06-04-java/
 .Renviron
 .java-version
+
+
+# a file for me to get the environment restarted
+R/restart.R
