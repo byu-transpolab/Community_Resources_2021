@@ -4,6 +4,7 @@
 .Ruserdata
 
 _targets/
+_bookdown_files/
 
 lucene/
 otp/graphs/default/Graph.obj
