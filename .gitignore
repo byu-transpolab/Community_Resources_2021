@@ -9,6 +9,8 @@ _bookdown_files/
 lucene/
 otp/graphs/default/Graph.obj
 
+data/streetlight_libraries.csv
+
 *.log
 
 
