@@ -33,19 +33,19 @@ list(
   # parks
   tar_target(park_polygons, get_parks("data/parks.geojson", this_crs)),
   tar_target(park_points, make_park_points(park_polygons, 1/500, this_crs)),
-  #tar_target(park_times, calculate_times(park_points, bgcentroid, osmpbf)),
+  tar_target(park_times, calculate_times(park_points, bgcentroid, graph)),
   
   # grocery stores
   #tar_target(groceries, get_groceries("data/groceries.geojson", this_crs)),
   #tar_target(grocery_times, calculate_times(groceries, bgcentroid)),
   
   # libraries
-  tar_target(libraries, get_libraries("data/libraries.geojson", this_crs)),
-  tar_target(library_times, calculate_times(libraries, bgcentroid, graph))
+  #tar_target(libraries, get_libraries("data/libraries.geojson", this_crs)),
+  #tar_target(library_times, calculate_times(libraries, bgcentroid, graph))
   
   
   
   # combination df
   #tar_target(all_data, make_all_data(park_times, library_times, grocery_times))
-  
+  tar_target(dummy,1+1)
 )
