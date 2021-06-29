@@ -49,10 +49,10 @@ list(
   
   
   # streetlight data
-  tar_target(sl_libraries_csv, get_sl_data("data/streetlight_libraries.csv", "libraries"),
-             format = "file"),
-  tar_target(sl_libraries, read_sl_data(sl_libraries_csv)),
-  tar_target(lee_plot, plot_streetlight(sl_libraries, "Brigham Young University - Harold B. Lee Library")),
+  #tar_target(sl_libraries_csv, get_sl_data("data/streetlight_libraries.csv", "libraries"),
+  #           format = "file"),
+  #tar_target(sl_libraries, read_sl_data(sl_libraries_csv)),
+  #tar_target(lee_plot, plot_streetlight(sl_libraries, "Brigham Young University - Harold B. Lee Library")),
   
   
   # combination df

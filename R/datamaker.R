@@ -193,14 +193,13 @@ calculate_times <- function(landuse, bgcentroid, graph){
     
     message("Getting paths for ", mode)
     tryCatch({
-      otp_plan(
+      otp_get_times(
         otpcon = otpcon,
         fromPlace = cbind(expanded[["fromlng"]], expanded[["fromlat"]]),
         toPlace = cbind(expanded[["tolng"]], expanded[["tolat"]]),
-        fromID = expanded[["fromid"]],
-        toID = expanded[["toid"]],
         mode = mode,
-        get_geometry = FALSE)
+        detail = TRUE,
+        includeLegs = TRUE)
     }, error = function(e){}
     )
   })  %>% bind_rows()
