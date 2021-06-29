@@ -10,9 +10,12 @@ library(targets)
 # This is where you write source(\"R/functions.R\")
 # if you keep your functions in external scripts.
 source("R/datamaker.R")
+source("R/streetlight_cleaner.r")
 
 # Set target-specific options such as packages.
-tar_option_set(packages = c("tidyverse", "sf","opentripplanner","rgeos"))
+#<<<<<<< HEAD
+tar_option_set(packages = c("tidyverse", "sf","opentripplanner", "rstudioapi"))
+#>>>>>>> 1296e78b53e52de6d0ff99d4b217f741bf2deb00
 
 this_crs <- 3560 # http://epsg.io/3560-1746 Utah North usft
 
@@ -42,8 +45,14 @@ list(
   
   # libraries
   tar_target(libraries, get_libraries("data/libraries.geojson", this_crs)),
-  tar_target(library_times, calculate_times(libraries, bgcentroid, graph))
+  tar_target(library_times, calculate_times(libraries, bgcentroid, graph)),
   
+  
+  # streetlight data
+  tar_target(sl_libraries_csv, get_sl_data("data/streetlight_libraries.csv", "libraries"),
+             format = "file"),
+  tar_target(sl_libraries, read_sl_data(sl_libraries_csv)),
+  tar_target(lee_plot, plot_streetlight(sl_libraries, "Brigham Young University - Harold B. Lee Library")),
   
   
   # combination df
