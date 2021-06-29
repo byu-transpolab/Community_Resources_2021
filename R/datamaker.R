@@ -115,9 +115,20 @@ get_libraries <- function(file, crs){
 #' @return sf data frame with groceries data
 #' 
 get_groceries <- function(file, crs){
+  st_read(file) %>%
+    st_transform(crs)
+}
+
+make_groceries_points <- function(grocery_polygons){
+  grocery_points <- gCentroid(polygons, byid = TRUE)
   
+  suppressWarnings(
+    grocery_points <- st_sf(id = grocery_polygons$id, geometry = grocery_points) %>%
+      st_as_sf() %>%
+      st_cast(to = "POINT")
+  )
   
-  
+  grocery_points
 }
 
 #' Function to get lat / long from sf data as matrix

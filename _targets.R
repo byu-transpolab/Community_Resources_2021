@@ -12,7 +12,7 @@ library(targets)
 source("R/datamaker.R")
 
 # Set target-specific options such as packages.
-tar_option_set(packages = c("tidyverse", "sf","opentripplanner"))
+tar_option_set(packages = c("tidyverse", "sf","opentripplanner","rgeos"))
 
 this_crs <- 3560 # http://epsg.io/3560-1746 Utah North usft
 
@@ -31,17 +31,18 @@ list(
   tar_target(graph,  make_graph(otp_path), format = "file"),
   
   # parks
-  tar_target(park_polygons, get_parks("data/parks.geojson", this_crs)),
-  tar_target(park_points, make_park_points(park_polygons, 1/500, this_crs)),
-  tar_target(park_times, calculate_times(park_points, bgcentroid, graph)),
+  #tar_target(park_polygons, get_parks("data/parks.geojson", this_crs)),
+  #tar_target(park_points, make_park_points(park_polygons, 1/500, this_crs)),
+  #tar_target(park_times, calculate_times(park_points, bgcentroid, graph)),
   
-  # grocery stores
+  #grocery stores
   #tar_target(groceries, get_groceries("data/groceries.geojson", this_crs)),
+  #tar_target(grocery_points, make_groceries_points(groceries)),
   #tar_target(grocery_times, calculate_times(groceries, bgcentroid)),
   
   # libraries
-  #tar_target(libraries, get_libraries("data/libraries.geojson", this_crs)),
-  #tar_target(library_times, calculate_times(libraries, bgcentroid, graph))
+  tar_target(libraries, get_libraries("data/libraries.geojson", this_crs)),
+  tar_target(library_times, calculate_times(libraries, bgcentroid, graph))
   
   
   
