@@ -182,41 +182,42 @@ calculate_times <- function(landuse, bgcentroid, graph){
   bg <- get_latlong(bgcentroid)
   
   # make a complete table with combination of to and froms
-  expanded <- expand_grid(fromid = ll$id, toid = bg$id) %>%
-    left_join(ll %>% rename(fromid = id, fromlng = LONGITUDE, fromlat = LATITUDE), 
-              by = c("fromid")) %>%
-    left_join(bg %>% rename(toid = id, tolng = LONGITUDE, tolat = LATITUDE), 
-              by = c("toid"))
+  #expanded <- expand_grid(fromid = ll$id, toid = bg$id) %>%
+    #left_join(ll %>% rename(fromid = id, fromlng = LONGITUDE, fromlat = LATITUDE), 
+    #          by = c("fromid")) %>%
+    #left_join(bg %>% rename(toid = id, tolng = LONGITUDE, tolat = LATITUDE), 
+    #          by = c("toid"))
   
   # Get distance between each ll and each bg
-  routes <- lapply(c("CAR", "WALK","TRANSIT"), function(mode){
-    total <- nrow(tib)
-    totalbg <- nrow(big)
-    routes <- data.frame("a", "b", "c", "d", "e", "f", "g", "h")
-    names(routes) <- c("FromPlace", "ToPlace", "status", "duration", "walktime", "transitTime", "waitingtime", "transfers")
+  routes <- lapply(c("TRANSIT"), function(mode){
+    total <- nrow(ll)
+    totalbg <- nrow(bg)
+    times <- data.frame("a", "b", "c", "d", "e", "f", "g", "h")
+    names(times) <- c("FromPlace", "ToPlace", "status", "duration", "walktime", "transitTime", "waitingtime", "transfers")
     k<- 1
     
     for (i in 1:total) {
       for (j in 1:totalbg) {
-        response <- otp_get_times(otpcon, fromPlace = c(tib[i,]$LATITUDE, tib[i, ]$LONGITUDE), toPlace = c(big[j,]$LATITUDE, big[j,]$LONGITUDE), mode = mode, detail = TRUE)
+        response <- otp_get_times(otpcon, fromPlace = c(ll[i,]$LATITUDE, ll[i, ]$LONGITUDE), toPlace = c(bg[j,]$LATITUDE, bg[j,]$LONGITUDE), mode = mode, detail = TRUE)
         # If response is OK update dataframe
         if (response$errorId == "OK") {
-          routes[k, "FromPlace"]<- tib[i,]$id
-          routes[k, "ToPlace"]<- big[j,]$id
-          routes[k, "status"]<- response$errorId
-          routes[k, "duration"]<- response$itineraries$duration
-          routes[k, "walktime"]<- response$itineraries$walkTime
-          routes[k, "transitTime"]<- response$itineraries$transitTime
-          routes[k, "waitingtime"]<- response$itineraries$waitingTime
-          routes[k, "transfers"]<- response$itineraries$transfers
+          times[k, "FromPlace"]<- ll[i,]$id
+          times[k, "ToPlace"]<- bg[j,]$id
+          times[k, "status"]<- response$errorId
+          times[k, "duration"]<- response$itineraries$duration
+          times[k, "walktime"]<- response$itineraries$walkTime
+          times[k, "transitTime"]<- response$itineraries$transitTime
+          times[k, "waitingtime"]<- response$itineraries$waitingTime
+          times[k, "transfers"]<- response$itineraries$transfers
           k<-k+1
         }else {
           # record error
-          routes[, "status"]<- response$errorId
+          times[, "status"]<- response$errorId
         }
       }
     }
-  }
+    times
+  })
 }
 
 
