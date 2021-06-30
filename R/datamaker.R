@@ -171,7 +171,7 @@ make_graph <- function(graph_dir){
 calculate_times <- function(landuse, bgcentroid, graph){
   
   # start connection to OTP
-  path_otp <- otp_dl_jar(cache = TRUE)
+  path_otp <- otp_dl_jar(file.path("OTP"),cache = TRUE)
   log2 <- otp_setup(otp = path_otp, dir = "otp")
   otpcon <- otp_connect()
   on.exit(otp_stop(warn = FALSE))
@@ -189,10 +189,10 @@ calculate_times <- function(landuse, bgcentroid, graph){
               by = c("toid"))
   
   # Get distance between each ll and each bg
-  routes <- lapply(c("CAR", "WALK"), function(mode){
+  routes <- lapply(c("CAR", "WALK","TRANSIT"), function(mode){
     
     message("Getting paths for ", mode)
-    tryCatch({
+    #tryCatch({
       otp_get_times(
         otpcon = otpcon,
         fromPlace = cbind(expanded[["fromlng"]], expanded[["fromlat"]]),
@@ -200,14 +200,15 @@ calculate_times <- function(landuse, bgcentroid, graph){
         mode = mode,
         detail = TRUE,
         includeLegs = TRUE)
-    }, error = function(e){}
-    )
+    #}, error = function(e){}
+    #)
   })  %>% bind_rows()
   
   times <- routes %>%
-    select(fromPlace, toPlace, mode, distance, leg_startTime, leg_endTime) %>%
-    as_tibble() %>%
-    mutate(duration = leg_endTime - leg_startTime)
+    select(errorId, duration, query) %>%
+    as_tibble()
   
   times
+  
+  routes
 }

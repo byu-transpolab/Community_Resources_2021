@@ -14,7 +14,7 @@ source("R/streetlight_cleaner.r")
 
 # Set target-specific options such as packages.
 #<<<<<<< HEAD
-tar_option_set(packages = c("tidyverse", "sf","opentripplanner", "rstudioapi"))
+tar_option_set(packages = c("tidyverse", "sf","opentripplanner", "rstudioapi","otpr"))
 #>>>>>>> 1296e78b53e52de6d0ff99d4b217f741bf2deb00
 
 this_crs <- 3560 # http://epsg.io/3560-1746 Utah North usft
