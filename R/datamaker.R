@@ -190,25 +190,35 @@ calculate_times <- function(landuse, bgcentroid, graph){
   
   # Get distance between each ll and each bg
   routes <- lapply(c("CAR", "WALK","TRANSIT"), function(mode){
+    total <- nrow(tib)
+    totalbg <- nrow(big)
+    routes <- data.frame("a", "b", "c", "d", "e", "f", "g", "h")
+    names(routes) <- c("FromPlace", "ToPlace", "status", "duration", "walktime", "transitTime", "waitingtime", "transfers")
+    k<- 1
     
-    message("Getting paths for ", mode)
-    #tryCatch({
-      otp_get_times(
-        otpcon = otpcon,
-        fromPlace = cbind(expanded[["fromlng"]], expanded[["fromlat"]]),
-        toPlace = cbind(expanded[["tolng"]], expanded[["tolat"]]),
-        mode = mode,
-        detail = TRUE,
-        includeLegs = TRUE)
-    #}, error = function(e){}
-    #)
-  })  %>% bind_rows()
-  
-  times <- routes %>%
-    select(errorId, duration, query) %>%
-    as_tibble()
-  
-  times
-  
-  routes
+    for (i in 1:total) {
+      for (j in 1:totalbg) {
+        response <- otp_get_times(otpcon, fromPlace = c(tib[i,]$LATITUDE, tib[i, ]$LONGITUDE), toPlace = c(big[j,]$LATITUDE, big[j,]$LONGITUDE), mode = mode, detail = TRUE)
+        # If response is OK update dataframe
+        if (response$errorId == "OK") {
+          routes[k, "FromPlace"]<- tib[i,]$id
+          routes[k, "ToPlace"]<- big[j,]$id
+          routes[k, "status"]<- response$errorId
+          routes[k, "duration"]<- response$itineraries$duration
+          routes[k, "walktime"]<- response$itineraries$walkTime
+          routes[k, "transitTime"]<- response$itineraries$transitTime
+          routes[k, "waitingtime"]<- response$itineraries$waitingTime
+          routes[k, "transfers"]<- response$itineraries$transfers
+          k<-k+1
+        }else {
+          # record error
+          routes[, "status"]<- response$errorId
+        }
+      }
+    }
+  }
 }
+
+
+  
+
