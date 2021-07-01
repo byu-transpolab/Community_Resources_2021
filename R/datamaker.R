@@ -90,7 +90,8 @@ make_park_points <- function(park_polygons, density, crs){
   suppressWarnings(
     park_points <- st_sf(id = park_boundaries$id, geometry = point_samples) %>%
       st_as_sf() %>%
-      st_cast(to = "POINT")
+      st_cast(to = "POINT")%>%
+      slice(20)
   )
   
   park_points 
@@ -116,20 +117,12 @@ get_libraries <- function(file, crs){
 #' 
 get_groceries <- function(file, crs){
   st_read(file) %>%
-    st_transform(crs)
+    st_transform(crs)%>%
+    rename(id = SITE_NAME)%>%
+    slice(20)
 }
 
-make_groceries_points <- function(grocery_polygons){
-  grocery_points <- gCentroid(polygons, byid = TRUE)
-  
-  suppressWarnings(
-    grocery_points <- st_sf(id = grocery_polygons$id, geometry = grocery_points) %>%
-      st_as_sf() %>%
-      st_cast(to = "POINT")
-  )
-  
-  grocery_points
-}
+
 
 #' Function to get lat / long from sf data as matrix
 #' 
