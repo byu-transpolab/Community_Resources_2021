@@ -182,6 +182,46 @@ calculate_times <- function(landuse, bgcentroid, graph){
     #          by = c("toid"))
   
   # Get distance between each ll and each bg
+  modes <- c("CAR")
+  total_lu <- nrow(ll)
+  total_bg <- nrow(b)
+  
+  origin <- lapply(1:total_lu, function(i){
+    ll_latlong <- c(ll[i,]$LATITUDE, ll[i, ]$LONGITUDE)
+  
+    
+    destinations <- lapply(1:total_bg, function(j){
+      bg_latlong <- c(bg[j,]$LATITUDE, bg[j, ]$LONGITUDE)
+      
+      
+      times <- lapply(modes, function(mode){
+        
+        otp_get_times(
+          otpcon, 
+          fromPlace = ll_latlong, toPlace = bg_latlong,
+          mode = mode, detail = TRUE
+        )
+      })
+      
+      names(times) <- modes
+      
+      
+      times %>% bind_rows(.id = "mode")
+      
+      
+    })
+    
+    names(destinations) <- bg$id
+    
+    destinations %>% bind_rows(.id = "destination")
+    
+    
+  })
+  
+  #names(origin) <- ll$id
+  
+  #origin %>% bind_rows(.id = "origin")
+  
   routes <- lapply(c("TRANSIT"), function(mode){
     total <- nrow(ll)
     totalbg <- nrow(bg)
@@ -209,7 +249,7 @@ calculate_times <- function(landuse, bgcentroid, graph){
         }
       }
     }
-    times
+    response
   })
 }
 
