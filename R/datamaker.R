@@ -91,7 +91,7 @@ make_park_points <- function(park_polygons, density, crs){
     park_points <- st_sf(id = park_boundaries$id, geometry = point_samples) %>%
       st_as_sf() %>%
       st_cast(to = "POINT")%>%
-      slice(20)
+      slice_head(n=2)
   )
   
   park_points 
@@ -182,9 +182,9 @@ calculate_times <- function(landuse, bgcentroid, graph){
     #          by = c("toid"))
   
   # Get distance between each ll and each bg
-  modes <- c("CAR")
+  modes <- c("CAR","BUS")
   total_lu <- nrow(ll)
-  total_bg <- nrow(b)
+  total_bg <- nrow(bg)
   
   origin <- lapply(1:total_lu, function(i){
     ll_latlong <- c(ll[i,]$LATITUDE, ll[i, ]$LONGITUDE)
@@ -206,7 +206,10 @@ calculate_times <- function(landuse, bgcentroid, graph){
       names(times) <- modes
       
       
-      times %>% bind_rows(.id = "mode")
+      times %>% bind_rows(.id = "mode")%>%
+        mutate(errorId = as.character(errorId))%>%
+        mutate(BuserrorId = as.character(times$BUS$errorId))%>%
+        mutate(CarerrorId = as.character(times$CAR$errorId))
       
       
     })
@@ -215,43 +218,53 @@ calculate_times <- function(landuse, bgcentroid, graph){
     
     destinations %>% bind_rows(.id = "destination")
     
-    
   })
+
+
   
-  #names(origin) <- ll$id
+  names(origin) <- ll$id
   
-  #origin %>% bind_rows(.id = "origin")
-  
-  routes <- lapply(c("TRANSIT"), function(mode){
-    total <- nrow(ll)
-    totalbg <- nrow(bg)
-    times <- data.frame("a", "b", "c", "d", "e", "f", "g", "h")
-    names(times) <- c("FromPlace", "ToPlace", "status", "duration", "walktime", "transitTime", "waitingtime", "transfers")
-    k<- 1
+  parktimes <- origin %>% bind_rows(.id = "origin") %>%
+    group_by(destination)%>%
+    arrange(.by_group = TRUE)
     
-    for (i in 1:total) {
-      for (j in 1:totalbg) {
-        response <- otp_get_times(otpcon, fromPlace = c(ll[i,]$LATITUDE, ll[i, ]$LONGITUDE), toPlace = c(bg[j,]$LATITUDE, bg[j,]$LONGITUDE), mode = mode, detail = TRUE)
-        # If response is OK update dataframe
-        if (response$errorId == "OK") {
-          times[k, "FromPlace"]<- ll[i,]$id
-          times[k, "ToPlace"]<- bg[j,]$id
-          times[k, "status"]<- response$errorId
-          times[k, "duration"]<- response$itineraries$duration
-          times[k, "walktime"]<- response$itineraries$walkTime
-          times[k, "transitTime"]<- response$itineraries$transitTime
-          times[k, "waitingtime"]<- response$itineraries$waitingTime
-          times[k, "transfers"]<- response$itineraries$transfers
-          k<-k+1
-        }else {
-          # record error
-          times[, "status"]<- response$errorId
-        }
-      }
-    }
-    response
-  })
+  parktimes <- slice_min(n = 2)
+  
+
+  
+  
 }
+  
+  #routes <- lapply(c("TRANSIT"), function(mode){
+    #total <- nrow(ll)
+    #totalbg <- nrow(bg)
+    #times <- data.frame("a", "b", "c", "d", "e", "f", "g", "h")
+    #names(times) <- c("FromPlace", "ToPlace", "status", "duration", "walktime", "transitTime", "waitingtime", "transfers")
+    #k<- 1
+    
+    #for (i in 1:total) {
+      #for (j in 1:totalbg) {
+        #response <- otp_get_times(otpcon, fromPlace = c(ll[i,]$LATITUDE, ll[i, ]$LONGITUDE), toPlace = c(bg[j,]$LATITUDE, bg[j,]$LONGITUDE), mode = "TRANSIT", detail = TRUE)
+        # If response is OK update dataframe
+        #if (response$errorId == "OK") {
+          #times[k, "FromPlace"]<- ll[i,]$id
+          #times[k, "ToPlace"]<- bg[j,]$id
+          #times[k, "status"]<- response$errorId
+          #times[k, "duration"]<- response$itineraries$duration
+          #times[k, "walktime"]<- response$itineraries$walkTime
+          #times[k, "transitTime"]<- response$itineraries$transitTime
+          #times[k, "waitingtime"]<- response$itineraries$waitingTime
+          #times[k, "transfers"]<- response$itineraries$transfers
+          #k<-k+1
+        #}else {
+          # record error
+          #times[, "status"]<- response$errorId
+        #}
+      #}
+    #}
+    #response
+  #})
+#}
 
 
   
