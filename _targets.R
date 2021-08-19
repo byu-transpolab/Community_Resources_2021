@@ -37,12 +37,12 @@ list(
   tar_target(park_times, calculate_times(park_points, bgcentroid, graph)),
   
   #grocery stores
-  #tar_target(groceries, get_groceries("data/groceries.geojson", this_crs)),
-  #tar_target(grocery_times, calculate_times(groceries, bgcentroid)),
+  tar_target(groceries, get_groceries("data/groceries.geojson", this_crs)),
+  tar_target(grocery_times, calculate_times(groceries, bgcentroid)),
   
   # libraries
-  #tar_target(libraries, get_libraries("data/libraries.geojson", this_crs)),
-  #tar_target(library_times, calculate_times(libraries, bgcentroid, graph)),
+  tar_target(libraries, get_libraries("data/libraries.geojson", this_crs)),
+  tar_target(library_times, calculate_times(libraries, bgcentroid, graph)),
   
   
   # streetlight data
