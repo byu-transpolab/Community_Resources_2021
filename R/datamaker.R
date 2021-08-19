@@ -196,23 +196,22 @@ calculate_times <- function(landuse, bgcentroid, graph){
       
       times <- lapply(modes, function(mode){
         
-        otp_get_times(
+        o <- otp_get_times(
           otpcon, 
           fromPlace = ll_latlong, toPlace = bg_latlong,
           mode = mode, detail = TRUE
         )
+        
+        o$errorId <- as.character(o$errorId)
+        
+        o
       })
       
       names(times) <- modes
       
-      
-      times %>% bind_rows(.id = "mode")%>%
-        mutate(errorId = as.character(errorId))%>%
-        mutate(BuserrorId = as.character(times$BUS$errorId))%>%
-        mutate(CarerrorId = as.character(times$CAR$errorId))
-      
-      
+      times %>% bind_rows(.id = "mode")
     })
+
     
     names(destinations) <- bg$id
     
@@ -224,14 +223,17 @@ calculate_times <- function(landuse, bgcentroid, graph){
   
   names(origin) <- ll$id
   
-  parktimes <- origin %>% bind_rows(.id = "origin") %>%
-    group_by(destination)%>%
-    arrange(.by_group = TRUE)
+ parktimes <- 
+    origin %>% 
+    bind_rows(.id = "origin") %>%
+    select(origin, destination, mode, itineraries) %>%
+    mutate(duration = itineraries$duration) %>%
+    select(origin, destination, mode, duration) %>%
+    group_by(origin, destination, mode)%>%
     
-  parktimes <- slice_min(n = 2)
-  
+    arrange(duration, .by_group = TRUE) %>%
+      slice(1)
 
-  
   
 }
   
@@ -267,5 +269,9 @@ calculate_times <- function(landuse, bgcentroid, graph){
 #}
 
 
+read_sl_data <- function(file){
+  read.csv(file)
   
+  libraries
+} 
 
