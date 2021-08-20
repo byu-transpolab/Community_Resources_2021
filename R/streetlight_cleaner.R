@@ -76,7 +76,8 @@ read_sl_data <- function(path){
       time = `Day Part`,
       volume = `Average Daily Zone Traffic (StL Volume)`,
       percent = `Percent by Home Location`,
-      flow = volume * percent
+      flow = volume * percent,
+      flow = ifelse(is.na(flow), 0, flow)
     )   %>%
     filter(!is.na(geoid))
 }
