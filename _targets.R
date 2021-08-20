@@ -13,7 +13,8 @@ source("R/datamaker.R")
 source("R/streetlight_cleaner.r")
 
 # Set target-specific options such as packages.
-tar_option_set(packages = c("tidyverse", "sf","opentripplanner", "rstudioapi","otpr"))
+tar_option_set(packages = c("tidyverse", "sf","opentripplanner", "rstudioapi",
+                            "otpr", "leaflet", "tidycensus"))
 
 this_crs <- 3560 # http://epsg.io/3560-1746 Utah North usft
 
@@ -23,6 +24,7 @@ otp_path <- "otp/graphs/default/"
 list(
   # block group centroids
   tar_target(bgcentroid, get_bglatlong()),
+  tar_target(acsdata, get_acsdata(state = "UT", county = "Utah")),
   
   # OTP Routing data ==========
   # OSM data for OTP is already constructed and committed. But this allows
