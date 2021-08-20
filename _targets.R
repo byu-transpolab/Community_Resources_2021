@@ -32,9 +32,9 @@ list(
   tar_target(graph,  make_graph(otp_path), format = "file"),
   
   # parks
-  #tar_target(park_polygons, get_parks("data/parks.geojson", this_crs)),
-  #tar_target(park_points, make_park_points(park_polygons, 1/500, this_crs)),
-  #tar_target(park_times, calculate_times(park_points, bgcentroid, graph)),
+  tar_target(park_polygons, get_parks("data/parks.geojson", this_crs)),
+  tar_target(park_points, make_park_points(park_polygons, 1/500, this_crs)),
+  tar_target(park_times, calculate_times(park_points, bgcentroid, graph)),
   
   #grocery stores
   tar_target(groceries, get_groceries("data/groceries.geojson", this_crs)),
@@ -52,16 +52,14 @@ list(
   tar_target(lee_plot, plot_streetlight(sl_libraries, "Brigham Young University - Harold B. Lee Library")),
   
   # streetlight data parks
-  #tar_target(sl_parks_csv, get_sl_data("data/streetlight_parks.csv"), "park_points"),
-  #            format = "file"),
-  #tar_target(sl_parks, read_sl_data(sl_parks_csv)),
-  #tar_target(park_plot, plot_streetlight(sl_parks, "park1"))
+  tar_target(sl_parks_csv, get_sl_data("data/streetlight_parks.csv", "parks"),
+             format = "file"),
+  tar_target(sl_parks, read_sl_data(sl_parks_csv)),
   
   #streetlight data groceries
-  #tar_target(sl_grocery_csv, get_sl_data("data/streetlight_grocery.csv"), "groceries"),
-  #            format = "file"),
-  #tar_target(sl_grocery, read_sl_data(sl_grocery_csv)),
-  #tar_target(grocery_plot, plot_streetlight(sl_grocery, "grocery1"))
+  tar_target(sl_grocery_csv, get_sl_data("data/streetlight_grocery.csv", "groceries"),
+             format = "file"),
+  tar_target(sl_grocery, read_sl_data(sl_grocery_csv)),
 
   
   # combination df
