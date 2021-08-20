@@ -12,11 +12,15 @@
 get_sl_data <- function(path, landuse){
   
   urls <- list(
-    "libraries" = "https://byu.box.com/s/1mia30bkv7cd9yg7c3m8ijz98ajnxwky"
+    "libraries" = "https://byu.box.com/s/1mia30bkv7cd9yg7c3m8ijz98ajnxwky",
+    "parks" = "",
+    "groceries" = "https://byu.box.com/s/25dmjoho7uje6dxl50sse6rclaaep42w"
   )
   
   files <- list(
-    "libraries" = "160756_Libraries_home_block_groups_all.csv"
+    "libraries" = "160756_Libraries_home_block_groups_all.csv",
+    "parks" = "",
+    "groceries" = "256055_Grocery_Stores_Utah_County_2019_home_block_groups_all.csv"
   )
   
   if(!file.exists(path)){
