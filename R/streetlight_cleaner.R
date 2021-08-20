@@ -13,13 +13,13 @@ get_sl_data <- function(path, landuse){
   
   urls <- list(
     "libraries" = "https://byu.box.com/s/1mia30bkv7cd9yg7c3m8ijz98ajnxwky",
-    "parks" = "",
+    "parks" = "https://byu.box.com/s/5etywvo9zxdkd2q04oq8r0fcevhm6x9s",
     "groceries" = "https://byu.box.com/s/25dmjoho7uje6dxl50sse6rclaaep42w"
   )
   
   files <- list(
     "libraries" = "160756_Libraries_home_block_groups_all.csv",
-    "parks" = "",
+    "parks" = "streetlight_parks.zip",
     "groceries" = "256055_Grocery_Stores_Utah_County_2019_home_block_groups_all.csv"
   )
   
@@ -36,6 +36,22 @@ get_sl_data <- function(path, landuse){
   }
   return(path) # to use file target, need to return path to data. 
   
+}
+
+
+#' Function to copy all the different parks file into one folder.
+#' 
+#' @details doesn't need to be a part of the targets path.
+copy_sl_files <- function(){
+  path <- "~/Box/Macfarlane/research/isolation_mentalhealth/UT Parks, Grocery, and Library Streetlight Data/Parks Data/Parks Data 2019/"
+  out_path <- "/Users/gregmacfarlane/Box/Macfarlane/research/isolation_mentalhealth/UT Parks, Grocery, and Library Streetlight Data/Parks Data/parks_home_location_2019"
+  
+  folders <- dir(path) 
+  lapply(folders, function(folder){
+    files <- dir(file.path(path, folder, "Home Work"), full.names = TRUE)
+    file <- files[grepl("home_block_groups", files)]
+    file.copy(file, out_path, overwrite = TRUE)
+  })
 }
 
 #' Read and clean up Streetlight data file

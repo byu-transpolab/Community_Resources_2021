@@ -52,12 +52,12 @@ list(
   tar_target(lee_plot, plot_streetlight(sl_libraries, "Brigham Young University - Harold B. Lee Library")),
   
   # streetlight data parks
-  tar_target(sl_parks_csv, get_sl_data("data/streetlight_parks.csv", "parks"),
+  tar_target(sl_parks_csv, get_sl_data("data/streetlight_parks.zip", "parks"),
              format = "file"),
   tar_target(sl_parks, read_sl_data(sl_parks_csv)),
   
   #streetlight data groceries
-  tar_target(sl_grocery_csv, get_sl_data("data/streetlight_grocery.csv", "groceries"),
+  tar_target(sl_grocery_csv, get_sl_data("data/streetlight_groceries.csv", "groceries"),
              format = "file"),
   tar_target(sl_grocery, read_sl_data(sl_grocery_csv)),
 

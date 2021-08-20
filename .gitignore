@@ -11,7 +11,7 @@ otp/graphs/default/Graph.obj
 
 data/streetlight_libraries.csv
 data/streetlight_groceries.csv
-data/streetlight_parks.csv
+data/streetlight_parks.zip
 
 
 *.log
