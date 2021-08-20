@@ -1,0 +1,362 @@
+\documentclass[3p, authoryear]{elsarticle} %review=doublespace preprint=single 5p=2 column
+%%% Begin My package additions %%%%%%%%%%%%%%%%%%%
+\usepackage[hyphens]{url}
+
+  \journal{NARSC 2021} % Sets Journal name
+
+
+\usepackage{lineno} % add
+\providecommand{\tightlist}{%
+  \setlength{\itemsep}{0pt}\setlength{\parskip}{0pt}}
+
+\usepackage{graphicx}
+\usepackage{booktabs} % book-quality tables
+%%%%%%%%%%%%%%%% end my additions to header
+
+\usepackage[T1]{fontenc}
+\usepackage{lmodern}
+\usepackage{amssymb,amsmath}
+\usepackage{ifxetex,ifluatex}
+\usepackage{fixltx2e} % provides \textsubscript
+% use upquote if available, for straight quotes in verbatim environments
+\IfFileExists{upquote.sty}{\usepackage{upquote}}{}
+\ifnum 0\ifxetex 1\fi\ifluatex 1\fi=0 % if pdftex
+  \usepackage[utf8]{inputenc}
+\else % if luatex or xelatex
+  \usepackage{fontspec}
+  \ifxetex
+    \usepackage{xltxtra,xunicode}
+  \fi
+  \defaultfontfeatures{Mapping=tex-text,Scale=MatchLowercase}
+  \newcommand{\euro}{€}
+\fi
+% use microtype if available
+\IfFileExists{microtype.sty}{\usepackage{microtype}}{}
+\usepackage{natbib}
+\bibliographystyle{apalike}
+\usepackage{longtable}
+\ifxetex
+  \usepackage[setpagesize=false, % page size defined by xetex
+              unicode=false, % unicode breaks when used with xetex
+              xetex]{hyperref}
+\else
+  \usepackage[unicode=true]{hyperref}
+\fi
+\hypersetup{breaklinks=true,
+            bookmarks=true,
+            pdfauthor={},
+            pdftitle={Utility-Based Accessibility to Community Resources: An Application of Location-Based Services Data},
+            colorlinks=false,
+            urlcolor=blue,
+            linkcolor=magenta,
+            pdfborder={0 0 0}}
+\urlstyle{same}  % don't use monospace font for urls
+
+\setcounter{secnumdepth}{5}
+% Pandoc toggle for numbering sections (defaults to be off)
+
+% Pandoc citation processing
+
+% Pandoc header
+\usepackage{booktabs}
+\usepackage{booktabs}
+\usepackage{longtable}
+\usepackage{array}
+\usepackage{multirow}
+\usepackage{wrapfig}
+\usepackage{float}
+\usepackage{colortbl}
+\usepackage{pdflscape}
+\usepackage{tabu}
+\usepackage{threeparttable}
+\usepackage{threeparttablex}
+\usepackage[normalem]{ulem}
+\usepackage{makecell}
+\usepackage{xcolor}
+
+
+
+\begin{document}
+\begin{frontmatter}
+
+  \title{Utility-Based Accessibility to Community Resources: An Application of Location-Based Services Data}
+    \author[BYU]{Gregory Macfarlane\corref{1}}
+   \ead{gregmacfarlane@byu.edu} 
+    \author[BYU]{Emma Stucki}
+   \ead{stuckiemma@gmail.com} 
+      \address[BYU]{Brigham Young University Civil and Construction Engineering Department, 430 Engineering Building, Provo, Utah 84602}
+    \address[Another University]{Some Other Place}
+      \cortext[1]{Corresponding Author}
+  
+  \begin{abstract}
+  Understanding who in a community has access to its resources -- parks, libraries, grocery stores, etc. -- has profound equity implications, but typical methods to understand access to these resources are limited. Travel time buffers require researchers to assert mode of access as well as an arbitrary distance threshold; further, these methods do not distinguish between destination quality attributes in an effective way. In this research, we present a methodology to develop utility-based accessibility measures for parks, libraries, and grocery stores in Utah County, Utah. The method relies on passive location-based services data to model destination choice to these community resources; the destination choice model utility functions in turn allow us to develop a picture of regional access that is sensitive to: the quality and size of the destination resource; continuous (non-binary) travel impedance by multiple modes; and the sociodemographic attributes of the traveler. We then use this measure to explore equity in access to the specified community resources across income level and minority status in Utah County.
+  \end{abstract}
+   \begin{keyword} Accessibility Passive Data Location Choice\end{keyword}
+ \end{frontmatter}
+
+\hypertarget{intro}{%
+\section{Introduction}\label{intro}}
+
+\hypertarget{lit-review}{%
+\section{Literature}\label{lit-review}}
+
+Research about accessibility in the recent years has placed a considerable focus
+on access to jobs and the corresponding negative impact that there is on a
+community when there is a lack of accessibility to quality jobs. A research
+study was done examining job accessibility of the poor in Los Angeles to
+determine whether it was a problem in accessibility that caused the employment
+distribution pattern that is present in the cities today. This research was done
+to address an issue that is caused by not having access to jobs, and they found
+similar results to much of the other research that has been done, in that there
+are jobs that are accessible in the poor city centers, but the number of jobs is
+declining. So although there is access, the lack of access is concerning when
+considering the impact it could have on communities that are already struggling
+(Hu, 2015). In a similar research study done in Australia that examined
+accessibility to jobs, they connected accessibility of jobs to sense of
+well-being and satisfaction with life. In this study they found that transport
+disadvantage is positively associated with social exclusion (where their
+definition of social exclusion means comparatively less access to employment,
+shops, and other entertainment) and social exclusion is strongly negatively
+associated with well-being, showing an overall conclusion that social exclusion
+contributes to poor well being and transport disadvantage contributes to social
+exclusion \citep{currie2010modeling}. Both of these research studies showed the
+effect of lack of access to jobs, but neither really discussed the effects of
+limited accessibility to other public resources such as parks and greenspace,
+grocery stores, and libraries.
+
+There is comparatively little research that has been done on the subject, but
+one article does specifically address nonwork accessibility and its impact on
+vulnerable social groups. \citet{grengs2015nonwork} found that when looking at
+accessibility among vulnerable social groups such as African Americans,
+Hispanics, low-income households, and households in poverty, there is a
+substantially larger share of households with extreme levels of low
+accessibility and so they share a remarkable disadvantage in accessibility to
+shopping and supermarkets. This research used a gravity model and included the
+impedance factor from traveling between origin and destination as well as the
+attractiveness factor based on the number of opportunities in the destination
+zone. The model of accessibility is relatively robust in including
+attractiveness and impedance for the different zones, however, the
+attractiveness part of the equation was entirely based upon the number of
+opportunities in the destination. Even this research lacks a study based upon
+what amenity is most attractive to people for a particular resource, and whether
+or not they have access to that amenity. For example, in a grocery store, is it
+more desirable to have more fresh produce or lower prices? Then using that
+information, does the person have access to the resources that they want? These
+variables help us identify the potential reach accessibility needs to have for a
+particular resource. In our study we will attempt to analyze different variables
+that could contribute to the attractiveness of a resource for parks and
+greenspace, grocery stores, and libraries.
+
+We have chosen to analyze these resources because of several reasons, including
+their popularity in the community, the availability of existing data to collect,
+and the negative or positive impacts having access to these resources has on
+physical and emotional well-being.
+
+One of the resources that we are analyzing is libraries. They are a space that
+allows people to gather to learn, escape pressures of life, connect with others,
+and socialize in a way that is different than any other community building. In
+addition, libraries are a community resource that are almost entirely supported
+by the local community. (Kalikow Maxwell, 2008) Libraries are indoor spaces that
+are free for public use, and available in most communities. In a major study of
+residential environments, libraries were found to be more popular than any other
+amenity except a food or drugstore. This was true for every demographic.
+However, despite its popularity and social benefit, libraries are still not very
+prevalent. According to the statistical abstract there are 39,400 pharmacies,
+67,000 supermarkets and only 16,192 public libraries in the U.S. For the third
+most desired community resource, the number of libraries is remarkably low, and
+thus it is essential to improve accessibility to this resource. Additionally,
+libraries provide a place to gather together and learn together with other
+members of the community. Many stories of the aftermath of the tragedy of 9/11
+tell how much of the community went to the library in search of information and
+community feeling and to gather together in their loss. Because libraries are a
+free resource, they are available to every demographic and something that is
+important to all \citep{barclay2017space}
+
+Parks fill a niche that is similar to libraries: just as libraries provide
+places for community gatherings and self-improvement, so do parks. Some of the
+reasons parks are essential are because of their benefit to mental health and
+physical health. Parks and other greenspace have been the subject of research
+when comparing access to parks and the influence on mental health. In a study
+done on young adults and teens and their access to green space, it was found
+that an increase in access to greenspace corresponded to a decrease in
+likelihood of anxiety, depression, or another mental health disorder. (Madzia et
+al., 2019) This research noted that some parks are more desirable than others
+because of their environment or community. People may not feel safe in a certain
+place and be less likely to frequent a park for that reason, and so may not
+receive the benefits of the park close by. Yet there also may be other reasons
+not to frequent a park, such as low upkeep, lack of shade, or lack of amenities
+and play equipment for children or adults. One aspect that we will be analyzing
+in this research is what qualities of parks are more desirable, such as more
+vegetation, or trails, or sports courts, or playgrounds. All of these factors
+contribute to what draws a person to a particular park and can help us identify
+how to improve parks that are existing and not used as much because of a
+previously unknown variable. In addition to improving mental health as was
+analyzed in this research, parks can also provide ways to exercise and become
+healthy. In a review done about the proximity and density of parks and physical
+activity in the United States it was found that several studies found a positive
+correlation between proximity to parks and physical activity, and in the studies
+that compared multiple measurements and used smaller buffer sizes there was a
+stronger correlation between parks and physical activity \citep{bancroft2015association}.
+Although this is somewhat inconclusive, it is a factor that could be a positive
+impact on health for those within access to parks.
+
+The community resource that has many proven studies that show a correlation
+between health and accessibility are grocery stores. Research that has been done
+on this subject has termed lack of accessibility to fresh produce in grocery
+stores as `food deserts'. These food deserts are often located in areas with a
+low-income demographic, or a high percentage of minority population. As a
+result, these groups have less access to healthy foods and are more likely to
+have negative health effects. In a study done comparing access to supermarkets
+and fruit and vegetable consumption, it was found that when only looking at
+distance to nearest grocery store there was not a significant correlation
+between shopping and fruit and vegetable consumption. However, this study also
+found that many people passed their nearest option to go to a different
+supermarket for their primary shopping, and those who shopped at less expensive
+grocery stores had a corresponding diet with fewer fruits and vegetables \citep{aggarwal2014access}.
+Therefore, in addition to access to healthy foods, it is
+also personal choice that perhaps causes those in lower economic classes to
+choose to forgo healthier options for cheaper options. These lower income
+demographics also frequently do not have easy access to locations that accept
+food stamps, or other places, such as food pantries, where they can get access
+to healthier food options at an affordable price for their income. In a study
+done on access to fresh produce in low-income neighborhoods in Los Angeles it
+was found that only 41\% of food pantry clients were within walking distance of
+stores with fresh produce, 83\% were within walking distance of stores with
+limited produce, and 13\% were not within walking distance of either store type.
+(Algert et al., 2006) Grocery store accessibility is important for other
+demographic groups as well for the same reasons, and despite the seemingly
+common presence of grocery stores throughout a city, we can see from this study
+there are still locations and people that experience a lack of accessibility.
+
+Because of the benefit of having these resources close, it is important to
+identify what exactly makes something accessible. There are many different ways
+of defining accessibility including isochrone, distance, community-based, and
+network based. The isochrone definition of accessibility is defined as being
+based on location, such as whether or not you are within a mile of a certain
+resource. Algert et al.~used this basis for their accessibility model when
+determining accessibility of low-income neighborhoods to healthy foods in Los
+Angeles. They used a network distance model, tracing roads a distance of 0.8 km.
+in every direction originating from each store location. (Algert et al., 2006)
+This idea of accessibility is limited because it fails to include different
+modes of travel or routes to go to the grocery store, such as on the way back
+from work. In addition, it also fails to include time accessibility as well as
+different variables such as familiarity, price comparison, or availability of
+food groups, that may encourage or dissuade a person from visiting a particular
+store.
+Another accessibility measure is the distance model, which determines
+accessibility by how close the nearest amenity is to a certain location. This
+definition of accessibility is slightly more variable than the isochrone method
+because it includes multiple stores in the method and includes stores that are
+perhaps a little further away but could be reached using different modes of
+transportation. But like the isochrone method, this does not use individual
+level measures such as activity patterns or personal preferences. This method
+was used in research done by Clifton to determine food availability for
+low-income families in Texas. This study was able to determine and use different
+mobility strategies, such as auto, rides, transit, walking, borrowing, taxis,
+etc. They also included an additional variable that questioned the distance to
+preferred supermarkets over distance to nearest supermarkets.(Clifton, 2004)
+This variable adds an individual level to the model in addition to the simple
+distance model. However, it still lacked the whole individual space time
+environment and included just a few distinct variables.
+
+The community-based model of accessibility is probably one of the most
+simplistic definitions of accessibility of these four. This model is primarily
+used to determine if a particular resource is located in a particular city or
+county. This model could be helpful for resources that are perhaps not quite as
+prevalent such as hospitals or libraries, or for relatively small cities.
+However, for resources that are more common like parks and grocery stores or for
+metropolitan areas this model is not able to accurately represent accessibility
+for specific resources. (I can't find an example, do you have one?)
+
+Access via network determines accessibility based on network availability rather
+than a set distance or time factor. Because of this it is a measure that can be
+very useful when looking at social exclusion within accessibility. This measure
+is also frequently more difficult to calculate because it is based off of
+individual characteristics and circumstance. In a study done analyzing the role
+of social capital influence variables on travel it was found that these
+variables distinctly affected the amount of time spent traveling as well as the
+travel mode of choice (Ciommo et al., 2014). This implies that these social
+capital variables in an individual network have a large effect on travel and
+accessibility and are an important factor to include.
+
+Despite the benefit and particular variables that these models of accessibility
+favor, none of them can easily address the quality or the attributes of the
+target resource. Additionally, people might not go to the nearest grocery store
+if there is a better one a bit further away, or if there is a transit route that
+makes accessing a different one easier. There are two accessibility measures
+that can include some of these qualities: time-space accessibility and
+utility-based accessibility.
+
+Time-space accessibility uses measures of time restriction as well as space
+restriction in the model to identify a potential interaction space for a person
+to access a resource. This type of model was used successfully in research done
+by Widener et al.~on the accessibility of grocery stores and supermarkets in
+Cinncinati, Ohio. They allowed for a 120 minute time budget, and for their space
+measures they used transit systems along the commute from work to home, or just
+directly from home, and every option that was available along that line within
+the time budget \citep{widener2015spatiotemporal}. In another study done in China,
+\citet{chen2021effects} used three different space-time accessibility measures to
+determine how
+these factors affected shopping activity frequency as well as travel distance.
+In the smallest space-time constraint it was found that service-rich areas had
+more shopping activities and trips but tended to have a smaller travel distance.
+In the medium and large space time constraints it was found that increase of
+neighborhood service opportunities did not significantly increase service
+related activities. This study found that unequal space-time
+measures are not significantly affected by an increase in density of resources
+unless the original space-time measure was small in a service rich area. Thus,
+it is important to note that accessibility is increased more by improving
+space-time measures, rather than by increasing density of resources. These
+measures should be included in data collection on measures of accessibility.
+
+Another measure of accessibility is utility-based accessibility which looks at
+the utility that a person derives from the location or service at the end of
+their trip. This model is described in research done by Dong et al.~to be
+composed of two things: systematic utility, which is observable attributes of
+the resource, and the disturbance, which is the unobservable part of the
+resource or the individual's opinion of the resource. Using these parameters a
+multinomial logit model is formed and the overall maximum utility is found to
+hypothesis the most likely option for each individual \citep{dong2006moving}. Using
+this model, the utility function derived can be used to identify an individual
+response after a certain change in choice attributes. This allows the model to
+be extremely variable in regard to specific utility measures, but, it is limited
+in its ability to compare to different utility functions and is frequently
+difficult to interpret \citep{handy1997measuring}
+
+The best way to accurately determine accessibility to resources is to determine
+which attributes are most attractive to the individual and determine the cost of
+traveling to obtain that attribute in a particular resource. This is obtained
+through the utility-based model, as described previously, but it is very
+difficult to collect the data required to estimate these models, especially for
+non-frequent purposes. However, the benefits of such an approach proved
+successful in research done in Alameda County, California \citep{macfarlane2020modeling}. We can rely on large-scale passive origin-destination data sets to
+estimate these models. We will also use previously collected attributes for each
+resource along with these large data sets to determine the most attractive
+features of each community resource. Using these measures and this model, we can
+determine the accessibility of resources to different block groups and
+demographic groups and use this information to identify potential solutions to
+improving accessibility to the most desirable resources.
+
+\hypertarget{methods}{%
+\section{Methods}\label{methods}}
+
+\hypertarget{applications}{%
+\section{Applications}\label{applications}}
+
+Some \emph{significant} applications are demonstrated in this chapter.
+
+\hypertarget{example-one}{%
+\subsection{Example one}\label{example-one}}
+
+\hypertarget{example-two}{%
+\subsection{Example two}\label{example-two}}
+
+\hypertarget{final-words}{%
+\section{Final Words}\label{final-words}}
+
+We have finished a nice book.
+
+\bibliography{book.bib}
+
+
+\end{document}
