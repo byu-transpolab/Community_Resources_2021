@@ -19,14 +19,14 @@ definition of social exclusion means comparatively less access to employment,
 shops, and other entertainment) and social exclusion is strongly negatively
 associated with well-being, showing an overall conclusion that social exclusion
 contributes to poor well being and transport disadvantage contributes to social
-exclusion (Currie & Delbosc, 2010). Both of these research studies showed the
+exclusion [@currie2010modeling]. Both of these research studies showed the
 effect of lack of access to jobs, but neither really discussed the effects of
 limited accessibility to other public resources such as parks and greenspace,
 grocery stores, and libraries.
 
 There is comparatively little research that has been done on the subject, but
 one article does specifically address nonwork accessibility and its impact on
-vulnerable social groups. (Grengs, 2015) Grengs found that when looking at
+vulnerable social groups. @grengs2015nonwork found that when looking at
 accessibility among vulnerable social groups such as African Americans,
 Hispanics, low-income households, and households in poverty, there is a
 substantially larger share of households with extreme levels of low
@@ -70,7 +70,7 @@ members of the community. Many stories of the aftermath of the tragedy of 9/11
 tell how much of the community went to the library in search of information and
 community feeling and to gather together in their loss. Because libraries are a
 free resource, they are available to every demographic and something that is
-important to all. (Barclay, 2017)
+important to all [@barclay2017space]
 
 Parks fill a niche that is similar to libraries: just as libraries provide
 places for community gatherings and self-improvement, so do parks. Some of the
@@ -96,7 +96,7 @@ healthy. In a review done about the proximity and density of parks and physical
 activity in the United States it was found that several studies found a positive
 correlation between proximity to parks and physical activity, and in the studies
 that compared  multiple measurements and used smaller buffer sizes there was a
-stronger correlation between parks and physical activity.(Bancroft et al., 2015)
+stronger correlation between parks and physical activity [@bancroft2015association].
 Although this is somewhat inconclusive, it is a factor that could be a positive
 impact on health for those within access to parks.
 
@@ -112,8 +112,8 @@ distance to nearest grocery store there was not a significant correlation
 between shopping and fruit and vegetable consumption. However, this study also
 found that many people passed their nearest option to go to a different
 supermarket for their primary shopping, and those who shopped at less expensive
-grocery stores had a corresponding diet with fewer fruits and vegetables.
-(Aggarwal et al., 2014) Therefore, in addition to access to healthy foods, it is
+grocery stores had a corresponding diet with fewer fruits and vegetables [@aggarwal2014access].
+ Therefore, in addition to access to healthy foods, it is
 also personal choice that perhaps causes those in lower economic classes to
 choose to forgo healthier options for cheaper options. These lower income
 demographics also frequently do not have easy access to locations that accept
@@ -194,14 +194,15 @@ by Widener et al. on the accessibility of grocery stores and supermarkets in
 Cinncinati, Ohio. They allowed for a 120 minute time budget, and for their space
 measures they used transit systems along the commute from work to home, or just
 directly from home, and every option that was available along that line within
-the time budget (Widener et al., 2015). In another study done in China, Chen and
-Yeh used three different space-time accessibility measures to determine how
+the time budget [@widener2015spatiotemporal]. In another study done in China,
+@chen2021effects used three different space-time accessibility measures to
+  determine how
 these factors affected shopping activity frequency as well as travel distance.
 In the smallest space-time constraint it was found that service-rich areas had
 more shopping activities and trips but tended to have a smaller travel distance.
 In the medium and large space time constraints it was found that increase of
 neighborhood service opportunities did not significantly increase service
-related activities (Chen & Yeh, 2021). This study found that unequal space-time
+related activities. This study found that unequal space-time
 measures are not significantly affected by an increase in density of resources
 unless the original space-time measure was small in a service rich area. Thus,
 it is important to note that accessibility is increased more by improving
@@ -215,12 +216,12 @@ composed of two things: systematic utility, which is observable attributes of
 the resource, and the disturbance, which is the unobservable part of the
 resource or the individual’s opinion of the resource. Using these parameters a
 multinomial logit model is formed and the overall maximum utility is found to
-hypothesis the most likely option for each individual (Dong et al., 2006). Using
+hypothesis the most likely option for each individual [@dong2006moving]. Using
 this model, the utility function derived can be used to identify an individual
 response after a certain change in choice attributes. This allows the model to
 be extremely variable in regard to specific utility measures, but, it is limited
 in its ability to compare to different utility functions and is frequently
-difficult to interpret (Handy & Niemeier, 1997).
+difficult to interpret [@handy1997measuring]
 
 The best way to accurately determine accessibility to resources is to determine
 which attributes are most attractive to the individual and determine the cost of
@@ -228,8 +229,7 @@ traveling to obtain that attribute in a particular resource. This is obtained
 through the utility-based model, as described previously, but it is very
 difficult to collect the data required to estimate these models, especially for
 non-frequent purposes. However, the benefits of such an approach proved
-successful in research done in Alameda County, California. (Macfarlane et al.,
-2020). We can rely on large-scale passive origin-destination data sets to
+successful in research done in Alameda County, California [@macfarlane2020modeling].  We can rely on large-scale passive origin-destination data sets to
 estimate these models. We will also use previously collected attributes for each
 resource along with these large data sets to determine the most attractive
 features of each community resource. Using these measures and this model, we can
@@ -244,39 +244,4 @@ improving accessibility to the most desirable resources.
 
 
 
-
-
-Citations
-Aggarwal, A., Cook, A. J., Jiao, J., Seguin, R. A., Moudon, A. V., Hurvitz, P. M., & Drewnowski, A. (2014). Access to Supermarkets and Fruit and Vegetable Consumption. American Journal of Public Health Aggarwal et Al. | Peer Reviewed | Research and Practice, 104(5), 917. https://doi.org/10.2105/AJPH.2013.301763
-
-Algert, S. J., Agrawal, A., & Lewis, D. S. (2006). Disparities in Access to Fresh Produce in Low-Income Neighborhoods in Los Angeles. American Journal of Preventive Medicine, 30(5), 365–370. https://doi.org/10.1016/j.amepre.2006.01.009
-
-Bancroft, C., Joshi, S., Rundle, A., Hutson, M., Chong, C., Weiss, C. C., Genkinger, J., Neckerman, K., & Lovasi, G. (2015). Association of proximity and density of parks and objectively measured physical activity in the United States: A systematic review. In Social Science and Medicine (Vol. 138, pp. 22–30). Elsevier Ltd. https://doi.org/10.1016/j.socscimed.2015.05.034
-
-Barclay, D. A. (2017). Space and the Social Worth of Public Libraries. Public Library Quarterly, 36(4), 267–273. https://doi.org/10.1080/01616846.2017.1327767
-
-Chen, Z., & Yeh, A. G. O. (2021). Effects of built environment on activity participation under different space-time constraints: A case study of Guangzhou, China. Travel Behaviour and Society, 22, 84–93. https://doi.org/10.1016/j.tbs.2020.08.007
-
-Ciommo, F. Di, Comendador, J., López-Lambas, E., Cherchi, E., & De Dios Ortúzar, J. (2014). Exploring the role of social capital influence variables on travel behaviour. https://doi.org/10.1016/j.tra.2014.08.018
-
-Clifton, K. J. (2004). Mobility Strategies and Food Shopping for Low-Income Families. Journal of Planning Education and Research, 23(4), 402–413. https://doi.org/10.1177/0739456X04264919
-
-Currie, G., & Delbosc, A. (2010). Modelling the social and psychological impacts of transport disadvantage. Transportation, 37(6), 953–966. https://doi.org/10.1007/s11116-010-9280-2
-
-Dong, X., Ben-Akiva, M. E., Bowman, J. L., & Walker, J. L. (2006). Moving from trip-based to activity-based measures of accessibility. Transportation Research Part A: Policy and Practice, 40(2), 163–180. https://doi.org/10.1016/j.tra.2005.05.002
-
-Grengs, J. (2015). Nonwork Accessibility as a Social Equity Indicator. International Journal of Sustainable Transportation, 9(1), 1–14. https://doi.org/10.1080/15568318.2012.719582
-
-Handy, S. L., & Niemeier, D. A. (1997). Measuring accessibility: an exploration of issues and alternatives. In Environment and Planning A (Vol. 29).
-Hu, L. (2015). Job Accessibility of the Poor in Los Angeles. Journal of the American Planning Association, 81(1), 30–45. https://doi.org/10.1080/01944363.2015.1042014
-
-Kalikow Maxwell, N. (2008). Libraries?-Yes. Journal of Access Services, 5(3), 391–396. https://doi.org/10.1080/15367960802170787
-
-Macfarlane, G. S., Boyd, N., Taylor, J. E., & Watkins, K. (2020). Modeling the impacts of park access on health outcomes: A utility-based accessibility approach. Environment and Planning B: Urban Analytics and City Science, 239980832097402. https://doi.org/10.1177/2399808320974027
-
-Madzia, J., Ryan, P., Yolton, K., Percy, Z., Newman, N., LeMasters, G., & Brokamp, C. (2019). Residential Greenspace Association with Childhood Behavioral Outcomes. The Journal of Pediatrics, 207, 233–240. https://doi.org/10.1016/j.jpeds.2018.10.061
-otp_dl_demo(path_data)
-otp_dl_demo(path_data)
-
-Widener, M. J., Farber, S., Neutens, T., & Horner, M. (2015). Spatiotemporal accessibility to supermarkets using public transit: An interaction potential approach in Cincinnati, Ohio. Journal of Transport Geography, 42, 72–83. https://doi.org/10.1016/j.jtrangeo.2014.11.004
 
