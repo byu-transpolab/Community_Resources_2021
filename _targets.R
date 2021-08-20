@@ -10,7 +10,9 @@ library(targets)
 # This is where you write source(\"R/functions.R\")
 # if you keep your functions in external scripts.
 source("R/datamaker.R")
-source("R/streetlight_cleaner.r")
+source("R/streetlight_cleaner.R")
+source("R/choice_modeling.R")
+
 
 # Set target-specific options such as packages.
 tar_option_set(packages = c("tidyverse", "sf","opentripplanner", "rstudioapi",
@@ -41,6 +43,7 @@ list(
   tar_target(sl_parks_csv, get_sl_data("data/streetlight_parks.zip", "parks"),
              format = "file"),
   tar_target(sl_parks, read_sl_data(sl_parks_csv)),
+  tar_target(parks_estdata, make_estdata(sl_parks, park_times, park_polygons, acsdata)),
   
   # Groceries =====================
   tar_target(groceries, get_groceries("data/groceries.geojson", this_crs)),
@@ -50,6 +53,7 @@ list(
              format = "file"),
   tar_target(sl_grocery, read_sl_data(sl_grocery_csv)),
   # choice data and models ---
+  tar_target(groceries_estdata, make_estdata(sl_grocery, grocery_times, groceries, acsdata)),
   
   
   
@@ -63,11 +67,8 @@ list(
   tar_target(sl_libraries, read_sl_data(sl_libraries_csv)),
   tar_target(lee_plot, plot_streetlight(sl_libraries, "Brigham Young University - Harold B. Lee Library")),
   # choice data and models ---
-  tar_target(library_choicedata, )
+  tar_target(libraries_estdata, make_estdata(sl_libraries, library_times, libraries, acsdata)),
   
   
-  
-  # combination df
-  #tar_target(all_data, make_all_data(park_times, library_times, grocery_times))
   tar_target(dummy,1+1)
 )
