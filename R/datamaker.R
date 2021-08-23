@@ -90,7 +90,8 @@ make_park_points <- function(park_polygons, density, crs){
   suppressWarnings(
     park_points <- st_sf(id = park_boundaries$id, geometry = point_samples) %>%
       st_as_sf() %>%
-      st_cast(to = "POINT")
+      st_cast(to = "POINT")%>%
+      slice_head(n=2)
   )
   
   park_points 
@@ -116,20 +117,12 @@ get_libraries <- function(file, crs){
 #' 
 get_groceries <- function(file, crs){
   st_read(file) %>%
-    st_transform(crs)
+    st_transform(crs)%>%
+    rename(id = SITE_NAME)%>%
+    slice(20)
 }
 
-make_groceries_points <- function(grocery_polygons){
-  grocery_points <- gCentroid(polygons, byid = TRUE)
-  
-  suppressWarnings(
-    grocery_points <- st_sf(id = grocery_polygons$id, geometry = grocery_points) %>%
-      st_as_sf() %>%
-      st_cast(to = "POINT")
-  )
-  
-  grocery_points
-}
+
 
 #' Function to get lat / long from sf data as matrix
 #' 
@@ -171,7 +164,7 @@ make_graph <- function(graph_dir){
 calculate_times <- function(landuse, bgcentroid, graph){
   
   # start connection to OTP
-  path_otp <- otp_dl_jar(cache = TRUE)
+  path_otp <- otp_dl_jar(file.path("OTP"),cache = TRUE)
   log2 <- otp_setup(otp = path_otp, dir = "otp")
   otpcon <- otp_connect()
   on.exit(otp_stop(warn = FALSE))
@@ -182,33 +175,155 @@ calculate_times <- function(landuse, bgcentroid, graph){
   bg <- get_latlong(bgcentroid)
   
   # make a complete table with combination of to and froms
-  expanded <- expand_grid(fromid = ll$id, toid = bg$id) %>%
-    left_join(ll %>% rename(fromid = id, fromlng = LONGITUDE, fromlat = LATITUDE), 
-              by = c("fromid")) %>%
-    left_join(bg %>% rename(toid = id, tolng = LONGITUDE, tolat = LATITUDE), 
-              by = c("toid"))
+  #expanded <- expand_grid(fromid = ll$id, toid = bg$id) %>%
+    #left_join(ll %>% rename(fromid = id, fromlng = LONGITUDE, fromlat = LATITUDE), 
+    #          by = c("fromid")) %>%
+    #left_join(bg %>% rename(toid = id, tolng = LONGITUDE, tolat = LATITUDE), 
+    #          by = c("toid"))
   
   # Get distance between each ll and each bg
-  routes <- lapply(c("CAR", "WALK"), function(mode){
+  modes <- c("CAR","BUS")
+  total_lu <- nrow(ll)
+  total_bg <- nrow(bg)
+  
+  origin <- lapply(1:total_lu, function(i){
+    ll_latlong <- c(ll[i,]$LATITUDE, ll[i, ]$LONGITUDE)
+  
     
-    message("Getting paths for ", mode)
-    tryCatch({
-      otp_plan(
-        otpcon = otpcon,
-        fromPlace = cbind(expanded[["fromlng"]], expanded[["fromlat"]]),
-        toPlace = cbind(expanded[["tolng"]], expanded[["tolat"]]),
-        fromID = expanded[["fromid"]],
-        toID = expanded[["toid"]],
-        mode = mode,
-        get_geometry = FALSE)
-    }, error = function(e){}
-    )
-  })  %>% bind_rows()
+    destinations <- lapply(1:total_bg, function(j){
+      bg_latlong <- c(bg[j,]$LATITUDE, bg[j, ]$LONGITUDE)
+      
+      
+      times <- lapply(modes, function(mode){
+        
+        o <- otp_get_times(
+          otpcon, 
+          fromPlace = ll_latlong, toPlace = bg_latlong,
+          mode = mode, detail = TRUE
+        )
+        
+        o$errorId <- as.character(o$errorId)
+        
+        o
+      })
+      
+      names(times) <- modes
+      
+      times %>% bind_rows(.id = "mode")
+    })
+
+    
+    names(destinations) <- bg$id
+    
+    destinations %>% bind_rows(.id = "destination")
+    
+  })
+
+
   
-  times <- routes %>%
-    select(fromPlace, toPlace, mode, distance, leg_startTime, leg_endTime) %>%
-    as_tibble() %>%
-    mutate(duration = leg_endTime - leg_startTime)
+  names(origin) <- ll$id
   
-  times
+ parktimes <- 
+    origin %>% 
+    bind_rows(.id = "origin") %>%
+    select(origin, destination, mode, itineraries) %>%
+    mutate(duration = itineraries$duration) %>%
+    select(origin, destination, mode, duration) %>%
+    group_by(origin, destination, mode)%>%
+    
+    arrange(duration, .by_group = TRUE) %>%
+      slice(1)
+
+  
+}
+  
+  #routes <- lapply(c("TRANSIT"), function(mode){
+    #total <- nrow(ll)
+    #totalbg <- nrow(bg)
+    #times <- data.frame("a", "b", "c", "d", "e", "f", "g", "h")
+    #names(times) <- c("FromPlace", "ToPlace", "status", "duration", "walktime", "transitTime", "waitingtime", "transfers")
+    #k<- 1
+    
+    #for (i in 1:total) {
+      #for (j in 1:totalbg) {
+        #response <- otp_get_times(otpcon, fromPlace = c(ll[i,]$LATITUDE, ll[i, ]$LONGITUDE), toPlace = c(bg[j,]$LATITUDE, bg[j,]$LONGITUDE), mode = "TRANSIT", detail = TRUE)
+        # If response is OK update dataframe
+        #if (response$errorId == "OK") {
+          #times[k, "FromPlace"]<- ll[i,]$id
+          #times[k, "ToPlace"]<- bg[j,]$id
+          #times[k, "status"]<- response$errorId
+          #times[k, "duration"]<- response$itineraries$duration
+          #times[k, "walktime"]<- response$itineraries$walkTime
+          #times[k, "transitTime"]<- response$itineraries$transitTime
+          #times[k, "waitingtime"]<- response$itineraries$waitingTime
+          #times[k, "transfers"]<- response$itineraries$transfers
+          #k<-k+1
+        #}else {
+          # record error
+          #times[, "status"]<- response$errorId
+        #}
+      #}
+    #}
+    #response
+  #})
+#}
+
+#' Get American Community Survey data for the study.
+#' 
+#' @param state Which state to pull for
+#' @param county Which county(ies) to pull
+#' 
+get_acsdata <- function(state = "UT", county = "Utah") {
+  variables <- c(
+    "population" = "B02001_001", # TOTAL: RACE
+    "housing_units" = "B25001_001", # HOUSING UNITS
+    "households" = "B19001_001", #HOUSEHOLD INCOME IN THE PAST 12 MONTHS (IN 2017 INFLATION-ADJUSTED DOLLARS)
+    # Hispanic or Latino Origin by Race
+    "white" = "B03002_003",
+    "black" = "B03002_004",
+    "asian" = "B03002_006",
+    "hispanic" = "B03002_012",
+    #MEDIAN HOUSEHOLD INCOME IN THE PAST 12 MONTHS (IN 2017 INFLATION-ADJUSTED DOLLARS)
+    "income" = "B19013_001",
+    # FAMILY TYPE BY PRESENCE AND AGE OF RELATED CHILDREN
+    "children_c06" = "B11004_004", # married under 6 only
+    "children_c6+" = "B11004_005", # married under 6 and older
+    "children_m06" = "B11004_011", # male under 6 only
+    "children_m6+" = "B11004_012", # male under 6 and older
+    "children_f06" = "B11004_017", # female under 6 only
+    "children_f6+" = "B11004_018", # female under 6 and older
+    #HOUSEHOLD INCOME IN THE PAST 12 MONTHS (IN 2017 INFLATION-ADJUSTED DOLLARS)
+    "inc_0010" = "B19001_002",  "inc_1015" = "B19001_003", "inc_1520" = "B19001_004",
+    "inc_2025" = "B19001_005", "inc_2530" = "B19001_006", "inc_3035" = "B19001_007",
+    "inc_125"  = "B19001_015", "inc_150"  = "B19001_016", "inc_200"  = "B19001_017"
+  )
+  
+  get_acs(geography = "block group", variables = variables,
+                 state = state, county = county, geometry = TRUE) %>%
+    select(-moe) %>%
+    spread(variable, estimate) %>%
+    # area is in m^2, change to km^2
+    mutate(area = as.numeric(st_area(geometry) * 1e-6)) %>%
+    transmute(
+      geoid = GEOID,
+      group = 1,
+      population, households, housing_units, 
+      density = households / area,
+      income,
+      # many of the variables come in raw counts, but we want to consider
+      # them as shares of a relevant denominator.
+      children = 100 * ( children_c06 + `children_c6+` + 
+                           children_m06 + `children_m6+` + 
+                           children_f06 + `children_f6+`) / households,
+      lowincome    = 100 * (inc_0010 + inc_1015 + inc_1520 + inc_2530 +
+                              inc_3035) / households,
+      highincome   = 100 * (inc_125 + inc_150 + inc_200) / households,
+      black        = 100 * black / population,
+      asian        = 100 * asian / population,
+      hispanic     = 100 * hispanic / population,
+      white        = 100 * white / population
+    ) %>%
+    filter(population > 0) %>%
+    st_set_geometry(NULL) %>%
+    as_tibble()
 }

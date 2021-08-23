@@ -1,116 +1,76 @@
 # Methods
 
-We describe our methods in this chapter.
-install all necessary libraries
-```{r}
-library(opentripplanner)            # Load Package
-library(tidyr)
-library(tmap)
-library(RcppSimdJson)
-library(tidyverse)
-library(tigris)
-library(sf)
-library(leaflet)
-library(here)
-library(rgdal)
-library(proj4)
+Utah County, Utah, is among the fastest-growing urbanized regions in the United
+States, with formerly agrarian areas and open rangeland being converted to
+predominately suburban built environments. 
+
+Table \@ref(tab:acstable) presents descriptive statistics of the block groups
+in Utah County obtained from the 2015-2019 American Community Survey (ACS) using
+the tidycensus package for R [@tidycensus].
+
+```{r acstable}
+tar_load(acsdata)
+
+acs_for_table <- acsdata %>% select(
+    "Density: Households per square kilometer" = density,
+    "Income: Median tract income" = income,
+    "Low Income: Share of households making less than $35k" = lowincome,
+    "High Income: Share of households making more than $125k" = highincome,
+    "Children: Share of households with children under 6" = children,
+    "Black: Share of population who is Black" = black,
+    "Asian: Share of population who is Asian" = asian,
+    "Hispanic: Share of population who is Hispanic*" = hispanic,
+    "White: Share of population who is White" = white)
+
+datasummary_skim(acs_for_table, title = "Block Group Summary Statistics",
+  histogram = !knitr::is_latex_output()) %>%
+  kableExtra::kable_styling(latex_options = c("scale_down")) %>%
+  kableExtra::column_spec(1, width = "4cm") %>%
+  kableExtra::footnote(symbol = "Hispanic indicates Hispanic individuals of all races; non-Hispanic individuals report a single race alone.") 
 ```
 
+```{r utco_map}
+tar_load(groceries)
+tar_load(park_polygons)
+tar_load(libraries)
 
-Begin by collecting the block group data data and converting it to lat and lon
-```{r}
+dj1 <- wesanderson::wes_palette("Darjeeling1")
 
-#download data from the census website
-bgcentroid <- read.csv("C:/Users/stuck/Documents/Transpo Research/Grocery Stores/For GIS/Block Group Centroid.csv", stringsAsFactors=F)
+mapdata <- bind_rows(
+  list("Groceries" = groceries,
+       "Parks" = park_polygons,
+       "Libraries" = libraries),
+  .id = "LandUse"
+)
 
-lat <- bgcentroid[["LATITUDE"]]
-lon <- bgcentroid[["LONGITUDE"]]
-
-```
-
-Then, we collect data for grocery stores and convert that data to lat and lon. This data comes from ArcGIS
-```{r}
-
-```
-
-We have a collection of park polygons, and in order to accurately measure the distance to the parks we need points along the border of the park.
-```{r}
-parks <- read_sf("C:/Users/stuck/Documents/Transpo Research/Parks/manual_edits_parks(final).geojson")
-
-
-#get park boundary polygon
-park_boundaries <- parks %>%
-  ungroup() %>%
-  select(id) %>%
-  st_simplify(dTolerance = 100, preserveTopology = TRUE) %>%
-  st_cast("MULTIPOLYGON") %>%
-  st_cast("POLYGON") %>%
-  st_cast("LINESTRING", group_or_split = TRUE)
-point_samples <- park_boundaries %>%
-  st_line_sample(density = 1/500)
-park_points <- st_sf(id = 
-                       park_boundaries$id, geometry = point_samples) %>%
-  st_as_sf() %>%
-  st_cast(to = "POINT")
-```
-We then need to covert these park point features into lat-lon coordinates
-
-```{r}
-
-```
-After we have all the different lat-lon coordinates we can use the open trip planner server to discover routes and travel times from one location to another. This code is currently a tutorial code with London locations and data. 
-
-```{r}
-path_data <- file.path("C:/Users/Public", "OTP")
-dir.create(path_data)
-
-path_otp <- otp_dl_jar(path_data, cache = FALSE)
-
-otp_dl_demo(path_data)
-
-log1 <- otp_build_graph(otp = path_otp, dir =  path_data)
-
-log2 <- otp_setup(otp = path_otp, dir = path_data)
-
-otpcon <- otp_connect(timezone = "Europe/London")
-
-lsoa <- sf::st_read("https://github.com/ropensci/opentripplanner/releases/download/0.1/centroids.gpkg",
-                    stringsAsFactors = FALSE)
-head(lsoa)
-
-toPlace   = lsoa[rep(seq(1, 10), times = nrow(lsoa)),]
-fromPlace = lsoa[rep(seq(1, 10), each  = nrow(lsoa)),]
-
-routes <- otp_plan(otpcon = otpcon,
-                   fromPlace = fromPlace,
-                   toPlace = toPlace,
-                   fromID = fromPlace$geo_code,
-                   toID = toPlace$geo_code,
-                   mode = c("WALK","BUS"),
-                   get_geometry = FALSE)
-routes <- routes[,c("fromPlace","toPlace","duration")]
-# Use the tidyr package to go from long to wide format
-routes_matrix <- tidyr::pivot_wider(routes, 
-                                    names_from = "toPlace", 
-                                    values_from = "duration")
-```
-
-We can also import the library shapefile. We will need to also convert these points to lat-lon as well at some point. That code is also included.
-
-```{r}
-library_points <- st_read("C:/Users/stuck/Documents/Transpo Research/Libraries/Library_Points.geojson")
-
-write_points_file <- function(points, file){
-  points %>%
-    st_transform(4326) %>%
-    mutate(
-      LATITUDE = st_coordinates(.)[,2],
-      LONGITUDE = st_coordinates(.)[,1]
-    ) %>%
-    st_set_geometry(NULL) %>%
-    write_csv(file)
+if(knitr::is_html_output()){
+  
+  polys <- mapdata %>% st_transform(4326) %>% filter(st_is(., "MULTIPOLYGON"))
+  polypal <- colorFactor("Dark2", domain = polys$LandUse)
+  pnts  <- mapdata %>% st_transform(4326) %>% filter(!st_is(., "MULTIPOLYGON"))
+  pntspal <- colorFactor("Dark2",domain = pnts$LandUse)
+                                                     
+  leaflet(polys) %>%
+    addProviderTiles(providers$Esri.WorldGrayCanvas) %>%
+    addPolygons(color = ~polypal(LandUse)) %>%
+    addCircles(data = pnts, color = ~pntspal(pnts$LandUse))
+  
+} else {
+  pbox <- st_bbox(mapdata %>% st_transform(4326))
+  map_back <- get_map(c(lon = mean(pbox[c(1, 3)]), lat = mean(pbox[c(2, 4)]) ),  
+                      zoom = 11, source = "google", maptype = "roadmap", color = "bw")
+  
+  ggmap(map_back, extent = "device") + 
+    coord_sf(crs = st_crs(3426),  expand = FALSE) + 
+    geom_sf(data = mapdata %>% st_transform(4326), 
+            aes(color = LandUse, fill = `Land Use`),
+            inherit.aes = FALSE,  lwd = 1) +
+    theme(axis.line = element_line(color = NA))  + 
+    xlab("") + ylab("") 
 }
 
-library_latlon <- library_points %>% write_points_file("points.csv")
 ```
 
+
+
+## Models
