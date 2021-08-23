@@ -159,7 +159,11 @@ make_graph <- function(graph_dir){
 #' 
 #' @param landuse Destination features
 #' @param bgcentroid Population-weighted blockgroup centroid
-#' @param osmpbf path to OSM pbf file
+#' @param graph path to OSM pbf file
+#' 
+#' @return A tibble with times between Block groups and resources by multiple modes
+#' 
+#' @details Parallelized, will use parallel::detectCores() - 1
 #' 
 calculate_times <- function(landuse, bgcentroid, graph){
   
@@ -174,101 +178,55 @@ calculate_times <- function(landuse, bgcentroid, graph){
   ll <- get_latlong(landuse)
   bg <- get_latlong(bgcentroid)
   
-  # make a complete table with combination of to and froms
-  #expanded <- expand_grid(fromid = ll$id, toid = bg$id) %>%
-    #left_join(ll %>% rename(fromid = id, fromlng = LONGITUDE, fromlat = LATITUDE), 
-    #          by = c("fromid")) %>%
-    #left_join(bg %>% rename(toid = id, tolng = LONGITUDE, tolat = LATITUDE), 
-    #          by = c("toid"))
-  
   # Get distance between each ll and each bg
   total_lu <- nrow(ll)
   total_bg <- nrow(bg)
   
   # loop through the land use points
-  origin <- mclapply(1:total_lu, function(i){
+  alltimes <- mclapply(1:total_lu, function(i){
     ll_latlong <- c(ll[i,]$LATITUDE, ll[i, ]$LONGITUDE)
-  
     
     # loop through the block groups
-    destinations <- lapply(1:total_bg, function(j){
+    lapply(1:total_bg, function(j){
       bg_latlong <- c(bg[j,]$LATITUDE, bg[j, ]$LONGITUDE)
-      modes <- c("CAR","BUS")
       
       # loop through the modes
-      times <- lapply(modes, function(mode){
-        
+      modes <- c("CAR","BUS")
+      lapply(modes, function(mode){
         o <- otp_get_times(
           otpcon, 
-          fromPlace = ll_latlong, toPlace = bg_latlong,
+          fromPlace = bg_latlong, toPlace = ll_latlong,
           mode = mode, detail = TRUE
         )
         
         o$errorId <- as.character(o$errorId)
         
         o
-      })
+      }) %>%
+        set_names(modes) %>%
+        bind_rows(.id = "mode")
       
-      names(times) <- modes
-      
-      times %>% bind_rows(.id = "mode")
-    })
-
+    }) %>%
+      set_names(bg$id) %>%
+      bind_rows(.id = "blockgroup")
     
-    names(destinations) <- bg$id
-    
-    destinations %>% bind_rows(.id = "destination")
-    
-  }, mc.cores = detectCores() - 1)
-
-
+  }, mc.cores = detectCores() - 1) %>%
+    set_names(ll$id) %>%
+    bind_rows(.id = "resource")
   
-  names(origin) <- ll$id
-  
- parktimes <- 
-    origin %>% 
+  # Do a little bit of cleanup
+  alltimes %>% 
     bind_rows(.id = "origin") %>%
-    select(origin, destination, mode, itineraries) %>%
+    select(blockgroup, resource, mode, itineraries) %>%
     mutate(duration = itineraries$duration) %>%
-    select(origin, destination, mode, duration) %>%
-    group_by(origin, destination, mode)%>%
-    
+    select(resource, blockgroup, mode, duration) %>%
+    group_by(resource, blockgroup, mode) %>%
     arrange(duration, .by_group = TRUE) %>%
-      slice(1)
-
+    slice(1)
   
 }
   
-  #routes <- lapply(c("TRANSIT"), function(mode){
-    #total <- nrow(ll)
-    #totalbg <- nrow(bg)
-    #times <- data.frame("a", "b", "c", "d", "e", "f", "g", "h")
-    #names(times) <- c("FromPlace", "ToPlace", "status", "duration", "walktime", "transitTime", "waitingtime", "transfers")
-    #k<- 1
-    
-    #for (i in 1:total) {
-      #for (j in 1:totalbg) {
-        #response <- otp_get_times(otpcon, fromPlace = c(ll[i,]$LATITUDE, ll[i, ]$LONGITUDE), toPlace = c(bg[j,]$LATITUDE, bg[j,]$LONGITUDE), mode = "TRANSIT", detail = TRUE)
-        # If response is OK update dataframe
-        #if (response$errorId == "OK") {
-          #times[k, "FromPlace"]<- ll[i,]$id
-          #times[k, "ToPlace"]<- bg[j,]$id
-          #times[k, "status"]<- response$errorId
-          #times[k, "duration"]<- response$itineraries$duration
-          #times[k, "walktime"]<- response$itineraries$walkTime
-          #times[k, "transitTime"]<- response$itineraries$transitTime
-          #times[k, "waitingtime"]<- response$itineraries$waitingTime
-          #times[k, "transfers"]<- response$itineraries$transfers
-          #k<-k+1
-        #}else {
-          # record error
-          #times[, "status"]<- response$errorId
-        #}
-      #}
-    #}
-    #response
-  #})
-#}
+
 
 #' Get American Community Survey data for the study.
 #' 
