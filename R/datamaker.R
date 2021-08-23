@@ -55,7 +55,8 @@ get_osmbpf <- function(path){
 #' 
 get_parks <- function(file, crs){
   st_read(file) %>%
-    st_transform(crs) 
+    st_transform(crs)  %>%
+    mutate(id = as.character(id))
 }
 
 #' Get points along park polygons
@@ -106,7 +107,8 @@ make_park_points <- function(park_polygons, density, crs){
 get_libraries <- function(file, crs){
   st_read(file) %>%
     st_transform(crs) %>%
-    rename(id = ID)
+    rename(id = ID) %>%
+    mutate(id = as.character(id))
 }
 
 #' Get Groceries Data
@@ -117,9 +119,9 @@ get_libraries <- function(file, crs){
 #' 
 get_groceries <- function(file, crs){
   st_read(file) %>%
-    st_transform(crs)%>%
-    rename(id = SITE_NAME)%>%
-    slice(20)
+    st_transform(crs) %>%
+    rename(id = SITE_NAME) %>%
+    mutate(id = as.character(id))
 }
 
 
