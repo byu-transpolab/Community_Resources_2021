@@ -182,18 +182,20 @@ calculate_times <- function(landuse, bgcentroid, graph){
     #          by = c("toid"))
   
   # Get distance between each ll and each bg
-  modes <- c("CAR","BUS")
   total_lu <- nrow(ll)
   total_bg <- nrow(bg)
   
-  origin <- lapply(1:total_lu, function(i){
+  # loop through the land use points
+  origin <- mclapply(1:total_lu, function(i){
     ll_latlong <- c(ll[i,]$LATITUDE, ll[i, ]$LONGITUDE)
   
     
+    # loop through the block groups
     destinations <- lapply(1:total_bg, function(j){
       bg_latlong <- c(bg[j,]$LATITUDE, bg[j, ]$LONGITUDE)
+      modes <- c("CAR","BUS")
       
-      
+      # loop through the modes
       times <- lapply(modes, function(mode){
         
         o <- otp_get_times(
@@ -217,7 +219,7 @@ calculate_times <- function(landuse, bgcentroid, graph){
     
     destinations %>% bind_rows(.id = "destination")
     
-  })
+  }, mc.cores = detectCores() - 1)
 
 
   

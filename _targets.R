@@ -16,7 +16,7 @@ source("R/choice_modeling.R")
 
 # Set target-specific options such as packages.
 tar_option_set(packages = c("tidyverse", "sf","opentripplanner", "rstudioapi",
-                            "otpr", "leaflet", "tidycensus"))
+                            "otpr", "leaflet", "tidycensus", "parallel"))
 
 this_crs <- 3560 # http://epsg.io/3560-1746 Utah North usft
 
