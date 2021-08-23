@@ -1,2 +1,76 @@
 # Methods
 
+Utah County, Utah, is among the fastest-growing urbanized regions in the United
+States, with formerly agrarian areas and open rangeland being converted to
+predominately suburban built environments. 
+
+Table \@ref(tab:acstable) presents descriptive statistics of the block groups
+in Utah County obtained from the 2015-2019 American Community Survey (ACS) using
+the tidycensus package for R [@tidycensus].
+
+```{r acstable}
+tar_load(acsdata)
+
+acs_for_table <- acsdata %>% select(
+    "Density: Households per square kilometer" = density,
+    "Income: Median tract income" = income,
+    "Low Income: Share of households making less than $35k" = lowincome,
+    "High Income: Share of households making more than $125k" = highincome,
+    "Children: Share of households with children under 6" = children,
+    "Black: Share of population who is Black" = black,
+    "Asian: Share of population who is Asian" = asian,
+    "Hispanic: Share of population who is Hispanic*" = hispanic,
+    "White: Share of population who is White" = white)
+
+datasummary_skim(acs_for_table, title = "Block Group Summary Statistics",
+  histogram = !knitr::is_latex_output()) %>%
+  kableExtra::kable_styling(latex_options = c("scale_down")) %>%
+  kableExtra::column_spec(1, width = "4cm") %>%
+  kableExtra::footnote(symbol = "Hispanic indicates Hispanic individuals of all races; non-Hispanic individuals report a single race alone.") 
+```
+
+```{r utco_map}
+tar_load(groceries)
+tar_load(park_polygons)
+tar_load(libraries)
+
+dj1 <- wesanderson::wes_palette("Darjeeling1")
+
+mapdata <- bind_rows(
+  list("Groceries" = groceries,
+       "Parks" = park_polygons,
+       "Libraries" = libraries),
+  .id = "LandUse"
+)
+
+if(knitr::is_html_output()){
+  
+  polys <- mapdata %>% st_transform(4326) %>% filter(st_is(., "MULTIPOLYGON"))
+  polypal <- colorFactor("Dark2", domain = polys$LandUse)
+  pnts  <- mapdata %>% st_transform(4326) %>% filter(!st_is(., "MULTIPOLYGON"))
+  pntspal <- colorFactor("Dark2",domain = pnts$LandUse)
+                                                     
+  leaflet(polys) %>%
+    addProviderTiles(providers$Esri.WorldGrayCanvas) %>%
+    addPolygons(color = ~polypal(LandUse)) %>%
+    addCircles(data = pnts, color = ~pntspal(pnts$LandUse))
+  
+} else {
+  pbox <- st_bbox(mapdata %>% st_transform(4326))
+  map_back <- get_map(c(lon = mean(pbox[c(1, 3)]), lat = mean(pbox[c(2, 4)]) ),  
+                      zoom = 11, source = "google", maptype = "roadmap", color = "bw")
+  
+  ggmap(map_back, extent = "device") + 
+    coord_sf(crs = st_crs(3426),  expand = FALSE) + 
+    geom_sf(data = mapdata %>% st_transform(4326), 
+            aes(color = LandUse, fill = `Land Use`),
+            inherit.aes = FALSE,  lwd = 1) +
+    theme(axis.line = element_line(color = NA))  + 
+    xlab("") + ylab("") 
+}
+
+```
+
+
+
+## Models
