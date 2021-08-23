@@ -1,2 +1,19 @@
 # Introduction {#intro}
 
+Communities provide important resources to their members, and spatial exclusion
+from these resources can negatively affect both subjective measures of well-being 
+[@currie2010modeling] and economic opportunity.
+
+But measuring good or poor access to these resources is an important 
+concern But access involves more than distance or travel impedance: it is a 
+function of the quality of the resource, and how many options are available.
+
+In this paper, we consider utility-based access to parks, grocery stores, and
+libraries in Utah County, Utah. The utility preferences are estimated on
+location-based services data obtained from a third-party commercial data
+aggregator. We then use the model estimates to construct a composite
+accessibility measure and compare the measure with neighborhood-level
+sociodemographic characteristics. 
+
+The paper begins with a discussion of previous attempts to evaluate 
+access to community resources. We then describe the methodology
