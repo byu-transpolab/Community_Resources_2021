@@ -111,17 +111,45 @@ get_libraries <- function(file, crs){
     mutate(id = as.character(id))
 }
 
-#' Get Groceries Data
+#' Get Groceries shape information
 #' 
-#' @param file Path to libraries geojson file
+#' @param file Path to groceries geojson file
+#' @param data Path to groceries survey data
 #' @param crs Projected CRS to use for data; 
 #' @return sf data frame with groceries data
 #' 
-get_groceries <- function(file, crs){
-  st_read(file) %>%
+get_groceries <- function(file, data, crs){
+  # read shape information
+  gj <- st_read(file) %>%
     st_transform(crs) %>%
-    rename(id = SITE_NAME) %>%
-    mutate(id = as.character(id))
+    transmute(id = str_c("UT-", SITE_NAME, sep = "")) 
+  
+  # read survey data 
+  gd <- read_spss("data/NEMS-S_UC2021_brief.sav") %>%
+    transmute(
+      id = STORE_ID,
+      type = as_factor(STORE_T, levels = "labels"),
+      type2 = STORE_T_3_TEXT,
+      pharmacy = STORE_T2_3Rx_2 == 1,
+      ethnic = STORE_T2_4ETH == 1,
+      merch = STORE_T2_6GEN == 1,
+      registers = REGISTERS,
+      selfchecko = SELFCHECKOUT,
+      total_registers = REGISTERS_TOT
+    )
+    
+  inner_join(gj, gd, by = "id")
+  
+}
+
+
+groceries_map <- function(groceries){
+  
+  pal <- colorFactor("Dark2", groceries$type)
+  
+  leaflet(groceries %>% st_centroid() %>% st_transform(4326)) %>%
+    addProviderTiles(providers$Esri.WorldGrayCanvas) %>%
+    addCircles(color = ~pal(type), radius = ~(total_registers* 10))
 }
 
 

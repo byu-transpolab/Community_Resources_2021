@@ -16,7 +16,7 @@ source("R/choice_modeling.R")
 
 # Set target-specific options such as packages.
 tar_option_set(packages = c("tidyverse", "sf","opentripplanner", "rstudioapi",
-                            "otpr", "leaflet", "tidycensus", "parallel"))
+                            "otpr", "leaflet", "tidycensus", "parallel", "haven"))
 
 this_crs <- 3560 # http://epsg.io/3560-1746 Utah North usft
 
@@ -46,8 +46,8 @@ list(
   tar_target(parks_estdata, make_estdata(sl_parks, park_times, park_polygons, acsdata)),
   
   # Groceries =====================
-  tar_target(groceries, get_groceries("data/groceries.geojson", this_crs)),
-  tar_target(grocery_times, calculate_times(groceries, bgcentroid)),
+  tar_target(groceries, get_groceries("data/groceries.geojson", "data/NEMS-S_UC2021_brief.sav", this_crs)),
+  tar_target(grocery_times, calculate_times(groceries, bgcentroid, graph)),
   # streetlight ----
   tar_target(sl_grocery_csv, get_sl_data("data/streetlight_groceries.csv", "groceries"),
              format = "file"),
