@@ -123,7 +123,8 @@ get_groceries <- function(file, data, crs){
   gj <- st_read(file) %>%
     st_transform(crs) %>%
     filter(st_is(., c("MULTIPOLYGON"))) %>%
-    transmute(id = str_c("UT-", SITE_NAME, sep = "")) 
+    transmute(id = str_c("UT-", SITE_NAME, sep = ""))  %>%
+    filter(!duplicated(id))
   
   # read survey data 
   gd <- read_spss("data/NEMS-S_UC2021_brief.sav") %>%
@@ -138,7 +139,7 @@ get_groceries <- function(file, data, crs){
       selfchecko = SELFCHECKOUT,
       total_registers = REGISTERS_TOT
     )
-    
+  
   inner_join(gj, gd, by = "id")
   
 }
