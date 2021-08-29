@@ -122,6 +122,7 @@ get_groceries <- function(file, data, crs){
   # read shape information
   gj <- st_read(file) %>%
     st_transform(crs) %>%
+    filter(st_is(., c("MULTIPOLYGON"))) %>%
     transmute(id = str_c("UT-", SITE_NAME, sep = "")) 
   
   # read survey data 
