@@ -58,6 +58,7 @@ list(
                                              n_obs = 10000, n_alts = 10)),
   tar_target(grocery_models, estimate_grocerymodels(groceries_estdata)),
   tar_target(grocery_mod_rds, write_rds(grocery_models, "data/grocery_models.rds"), format = "rds"),
+  tar_target(grocery_logsums, calculate_grocery_access(grocery_times, groceries, grocery_models)),
   
   
   

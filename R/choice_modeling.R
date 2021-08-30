@@ -88,3 +88,36 @@ estimate_grocerymodels <- function(groceries_estdata){
   models
 }
 
+
+
+calculate_grocery_access <- function(grocery_times, groceries, grocery_models) {
+  
+  coef <- grocery_models$Size$coefficients
+  
+  # construct prediction frame
+  grocery_times %>%
+    spread(mode, duration) %>%
+    filter(!is.na(CAR)) %>%
+    left_join(groceries %>% st_set_geometry(NULL), by = c("resource" = "id"))  %>%
+    
+    # calculate utilities
+    mutate(
+      other = ifelse(type == "Other (Write in a description)", TRUE, FALSE),
+      convenience = ifelse(type == "Convenience Store", TRUE, FALSE),
+      u = 
+        CAR * coef["CAR"] + 
+        convenience * coef["typeConvenience Store"] + 
+        other * coef["typeOther (Write in a description)"]  +
+        pharmacy * coef["pharmacyTRUE"] + 
+        ethnic * coef["ethnicTRUE"] + 
+        merch * coef["merchTRUE"] + 
+        registers * coef["registers"] + 
+        selfchecko * coef["selfchecko"] ,
+      eU = exp(u)
+    )  %>%
+    group_by(blockgroup) %>%
+    summarise(
+      logsum = log(sum(eU))
+    )
+  
+}
