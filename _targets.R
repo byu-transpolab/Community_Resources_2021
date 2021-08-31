@@ -37,19 +37,19 @@ list(
   #tar_target(park_times, calculate_times(park_points, bgcentroid, graph)),
   
   #grocery stores
-  #tar_target(groceries, get_groceries("data/groceries.geojson", this_crs)),
-  #tar_target(grocery_times, calculate_times(groceries, bgcentroid)),
+  tar_target(groceries, get_groceries("data/groceries.geojson", this_crs)),
+  tar_target(grocery_times, calculate_times(groceries, bgcentroid)),
   
   # libraries
-  tar_target(libraries, get_libraries("data/libraries.geojson", this_crs)),
-  tar_target(library_times, calculate_times(libraries, bgcentroid, graph)),
+  #tar_target(libraries, get_libraries("data/libraries.geojson", this_crs)),
+  #tar_target(library_times, calculate_times(libraries, bgcentroid, graph)),
   
   
   # streetlight data libraries
-  tar_target(sl_libraries_csv, get_sl_data("data/streetlight_libraries.csv", "libraries"),
-             format = "file"),
-  tar_target(sl_libraries, read_sl_data(sl_libraries_csv)),
-  tar_target(lee_plot, plot_streetlight(sl_libraries, "Brigham Young University - Harold B. Lee Library")),
+  #tar_target(sl_libraries_csv, get_sl_data("data/streetlight_libraries.csv", "libraries"),
+  #           format = "file"),
+  #tar_target(sl_libraries, read_sl_data(sl_libraries_csv)),
+  #tar_target(lee_plot, plot_streetlight(sl_libraries, "Brigham Young University - Harold B. Lee Library")),
   
   # streetlight data parks
   #tar_target(sl_parks_csv, get_sl_data("data/streetlight_parks.csv"), "park_points"),
@@ -63,6 +63,9 @@ list(
   #tar_target(sl_grocery, read_sl_data(sl_grocery_csv)),
   #tar_target(grocery_plot, plot_streetlight(sl_grocery, "grocery1"))
 
+  # attributes
+  #tar_target(park_attributes, get_park_attributes(park_polygons)),
+  
   
   # combination df
   #tar_target(all_data, make_all_data(park_times, library_times, grocery_times))

@@ -97,6 +97,13 @@ make_park_points <- function(park_polygons, density, crs){
   park_points 
 }
 
+get_park_attributes <- function(parks){
+  park_attributes <- parks%>%
+    select(id, playground)
+}
+
+
+
 #' Get Libraries Data
 #' 
 #' @param file Path to libraries geojson file
@@ -119,7 +126,7 @@ get_groceries <- function(file, crs){
   st_read(file) %>%
     st_transform(crs)%>%
     rename(id = SITE_NAME)%>%
-    slice(20)
+    slice_head(n=3)
 }
 
 
