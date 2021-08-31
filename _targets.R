@@ -10,10 +10,13 @@ library(targets)
 # This is where you write source(\"R/functions.R\")
 # if you keep your functions in external scripts.
 source("R/datamaker.R")
-source("R/streetlight_cleaner.r")
+source("R/streetlight_cleaner.R")
+source("R/choice_modeling.R")
+
 
 # Set target-specific options such as packages.
-tar_option_set(packages = c("tidyverse", "sf","opentripplanner", "rstudioapi","otpr"))
+tar_option_set(packages = c("tidyverse", "sf","opentripplanner", "rstudioapi",
+                            "otpr", "leaflet", "tidycensus"))
 
 this_crs <- 3560 # http://epsg.io/3560-1746 Utah North usft
 
@@ -23,51 +26,50 @@ otp_path <- "otp/graphs/default/"
 list(
   # block group centroids
   tar_target(bgcentroid, get_bglatlong()),
+  tar_target(acsdata, get_acsdata(state = "UT", county = "Utah")),
   
-  # OTP Routing data
+  # OTP Routing data ==========
   # OSM data for OTP is already constructed and committed. But this allows
   # us to bring it into the targets stream
   tar_target(osmpbf, get_osmbpf(file.path(otp_path, "osm.pbf")), format = "file"),
   tar_target(gtfs,   get_gtfs(file.path(otp_path, "gtfs.zip")), format = "file"),
   tar_target(graph,  make_graph(otp_path), format = "file"),
   
-  # parks
-  #tar_target(park_polygons, get_parks("data/parks.geojson", this_crs)),
-  #tar_target(park_points, make_park_points(park_polygons, 1/500, this_crs)),
-  #tar_target(park_times, calculate_times(park_points, bgcentroid, graph)),
+  # Parks ============
+  tar_target(park_polygons, get_parks("data/parks.geojson", this_crs)),
+  tar_target(park_points, make_park_points(park_polygons, 1/500, this_crs)),
+  tar_target(park_times, calculate_times(park_points, bgcentroid, graph)),
+  # streetlight ----
+  tar_target(sl_parks_csv, get_sl_data("data/streetlight_parks.zip", "parks"),
+             format = "file"),
+  tar_target(sl_parks, read_sl_data(sl_parks_csv)),
+  tar_target(parks_estdata, make_estdata(sl_parks, park_times, park_polygons, acsdata)),
   
-  #grocery stores
+
+  
+  # Groceries =====================
   tar_target(groceries, get_groceries("data/groceries.geojson", this_crs)),
   tar_target(grocery_times, calculate_times(groceries, bgcentroid)),
-  
-  # libraries
-  #tar_target(libraries, get_libraries("data/libraries.geojson", this_crs)),
-  #tar_target(library_times, calculate_times(libraries, bgcentroid, graph)),
-  
-  
-  # streetlight data libraries
-  #tar_target(sl_libraries_csv, get_sl_data("data/streetlight_libraries.csv", "libraries"),
-  #           format = "file"),
-  #tar_target(sl_libraries, read_sl_data(sl_libraries_csv)),
-  #tar_target(lee_plot, plot_streetlight(sl_libraries, "Brigham Young University - Harold B. Lee Library")),
-  
-  # streetlight data parks
-  #tar_target(sl_parks_csv, get_sl_data("data/streetlight_parks.csv"), "park_points"),
-  #            format = "file"),
-  #tar_target(sl_parks, read_sl_data(sl_parks_csv)),
-  #tar_target(park_plot, plot_streetlight(sl_parks, "park1"))
-  
-  #streetlight data groceries
-  #tar_target(sl_grocery_csv, get_sl_data("data/streetlight_grocery.csv"), "groceries"),
-  #            format = "file"),
-  #tar_target(sl_grocery, read_sl_data(sl_grocery_csv)),
-  #tar_target(grocery_plot, plot_streetlight(sl_grocery, "grocery1"))
-
-  # attributes
-  #tar_target(park_attributes, get_park_attributes(park_polygons)),
+  # streetlight ----
+  tar_target(sl_grocery_csv, get_sl_data("data/streetlight_groceries.csv", "groceries"),
+             format = "file"),
+  tar_target(sl_grocery, read_sl_data(sl_grocery_csv)),
+  # choice data and models ---
+  tar_target(groceries_estdata, make_estdata(sl_grocery, grocery_times, groceries, acsdata)),
   
   
-  # combination df
-  #tar_target(all_data, make_all_data(park_times, library_times, grocery_times))
+  
+  
+  # Libraries ======================
+  tar_target(libraries, get_libraries("data/libraries.geojson", this_crs)),
+  tar_target(library_times, calculate_times(libraries, bgcentroid, graph)),
+  # streetlight ----
+  tar_target(sl_libraries_csv, get_sl_data("data/streetlight_libraries.csv", "libraries"),
+             format = "file"),
+  tar_target(sl_libraries, read_sl_data(sl_libraries_csv)),
+  tar_target(lee_plot, plot_streetlight(sl_libraries, "Brigham Young University - Harold B. Lee Library")),
+  # choice data and models ---
+  tar_target(libraries_estdata, make_estdata(sl_libraries, library_times, libraries, acsdata)),
+  
   tar_target(dummy,1+1)
 )

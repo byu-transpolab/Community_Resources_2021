@@ -6,10 +6,15 @@
 _targets/
 _bookdown_files/
 
+Community_Resources.spl
+
 lucene/
 otp/graphs/default/Graph.obj
 
 data/streetlight_libraries.csv
+data/streetlight_groceries.csv
+data/streetlight_parks.zip
+
 
 *.log
 

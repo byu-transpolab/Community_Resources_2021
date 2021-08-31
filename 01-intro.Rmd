@@ -1,21 +1,19 @@
 # Introduction {#intro}
 
-You can label chapter and section titles using `{#label}` after them, e.g., we can reference Chapter \@ref(intro). If you do not manually label them, there will be automatic labels anyway, e.g., Chapter \@ref(methods).
+Communities provide important resources to their members, and spatial exclusion
+from these resources can negatively affect both subjective measures of well-being 
+[@currie2010modeling] and economic opportunity.
 
-Figures and tables with captions will be placed in `figure` and `table` environments, respectively.
+But measuring good or poor access to these resources is an important 
+concern But access involves more than distance or travel impedance: it is a 
+function of the quality of the resource, and how many options are available.
 
-```{r nice-fig, fig.cap='Here is a nice figure!', out.width='80%', fig.asp=.75, fig.align='center'}
-par(mar = c(4, 4, .1, .1))
-plot(pressure, type = 'b', pch = 19)
-```
+In this paper, we consider utility-based access to parks, grocery stores, and
+libraries in Utah County, Utah. The utility preferences are estimated on
+location-based services data obtained from a third-party commercial data
+aggregator. We then use the model estimates to construct a composite
+accessibility measure and compare the measure with neighborhood-level
+sociodemographic characteristics. 
 
-Reference a figure by its code chunk label with the `fig:` prefix, e.g., see Figure \@ref(fig:nice-fig). Similarly, you can reference tables generated from `knitr::kable()`, e.g., see Table \@ref(tab:nice-tab).
-
-```{r nice-tab, tidy=FALSE}
-knitr::kable(
-  head(iris, 20), caption = 'Here is a nice table!',
-  booktabs = TRUE
-)
-```
-
-You can write citations, too. For example, we are using the **bookdown** package [@R-bookdown] in this sample book, which was built on top of R Markdown and **knitr** [@xie2015].
+The paper begins with a discussion of previous attempts to evaluate 
+access to community resources. We then describe the methodology
