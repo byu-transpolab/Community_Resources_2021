@@ -55,7 +55,8 @@ get_osmbpf <- function(path){
 #' 
 get_parks <- function(file, crs){
   st_read(file) %>%
-    st_transform(crs) 
+    st_transform(crs)  %>%
+    mutate(id = as.character(id))
 }
 
 #' Get points along park polygons
@@ -106,20 +107,51 @@ make_park_points <- function(park_polygons, density, crs){
 get_libraries <- function(file, crs){
   st_read(file) %>%
     st_transform(crs) %>%
-    rename(id = ID)
+    rename(id = ID) %>%
+    mutate(id = as.character(id))
 }
 
-#' Get Groceries Data
+#' Get Groceries shape information
 #' 
-#' @param file Path to libraries geojson file
+#' @param file Path to groceries geojson file
+#' @param data Path to groceries survey data
 #' @param crs Projected CRS to use for data; 
 #' @return sf data frame with groceries data
 #' 
-get_groceries <- function(file, crs){
-  st_read(file) %>%
-    st_transform(crs)%>%
-    rename(id = SITE_NAME)%>%
-    slice(20)
+get_groceries <- function(file, data, crs){
+  # read shape information
+  gj <- st_read(file) %>%
+    st_transform(crs) %>%
+    filter(st_is(., c("MULTIPOLYGON"))) %>%
+    transmute(id = str_c("UT-", SITE_NAME, sep = ""))  %>%
+    filter(!duplicated(id))
+  
+  # read survey data 
+  gd <- read_spss("data/NEMS-S_UC2021_brief.sav") %>%
+    transmute(
+      id = STORE_ID,
+      type = as_factor(STORE_T, levels = "labels"),
+      type2 = STORE_T_3_TEXT,
+      pharmacy = STORE_T2_3Rx_2 == 1,
+      ethnic = STORE_T2_4ETH == 1,
+      merch = STORE_T2_6GEN == 1,
+      registers = REGISTERS,
+      selfchecko = SELFCHECKOUT,
+      total_registers = REGISTERS_TOT
+    )
+  
+  inner_join(gj, gd, by = "id")
+  
+}
+
+
+groceries_map <- function(groceries){
+  
+  pal <- colorFactor("Dark2", groceries$type)
+  
+  leaflet(groceries %>% st_centroid() %>% st_transform(4326)) %>%
+    addProviderTiles(providers$Esri.WorldGrayCanvas) %>%
+    addCircles(color = ~pal(type), radius = ~(total_registers* 10))
 }
 
 
@@ -159,7 +191,11 @@ make_graph <- function(graph_dir){
 #' 
 #' @param landuse Destination features
 #' @param bgcentroid Population-weighted blockgroup centroid
-#' @param osmpbf path to OSM pbf file
+#' @param graph path to OSM pbf file
+#' 
+#' @return A tibble with times between Block groups and resources by multiple modes
+#' 
+#' @details Parallelized, will use parallel::detectCores() - 1
 #' 
 calculate_times <- function(landuse, bgcentroid, graph){
   
@@ -174,99 +210,55 @@ calculate_times <- function(landuse, bgcentroid, graph){
   ll <- get_latlong(landuse)
   bg <- get_latlong(bgcentroid)
   
-  # make a complete table with combination of to and froms
-  #expanded <- expand_grid(fromid = ll$id, toid = bg$id) %>%
-    #left_join(ll %>% rename(fromid = id, fromlng = LONGITUDE, fromlat = LATITUDE), 
-    #          by = c("fromid")) %>%
-    #left_join(bg %>% rename(toid = id, tolng = LONGITUDE, tolat = LATITUDE), 
-    #          by = c("toid"))
-  
   # Get distance between each ll and each bg
-  modes <- c("CAR","BUS")
   total_lu <- nrow(ll)
   total_bg <- nrow(bg)
   
-  origin <- lapply(1:total_lu, function(i){
+  # loop through the land use points
+  alltimes <- mclapply(1:total_lu, function(i){
     ll_latlong <- c(ll[i,]$LATITUDE, ll[i, ]$LONGITUDE)
-  
     
-    destinations <- lapply(1:total_bg, function(j){
+    # loop through the block groups
+    lapply(1:total_bg, function(j){
       bg_latlong <- c(bg[j,]$LATITUDE, bg[j, ]$LONGITUDE)
       
-      
-      times <- lapply(modes, function(mode){
-        
+      # loop through the modes
+      modes <- c("CAR","BUS")
+      lapply(modes, function(mode){
         o <- otp_get_times(
           otpcon, 
-          fromPlace = ll_latlong, toPlace = bg_latlong,
+          fromPlace = bg_latlong, toPlace = ll_latlong,
           mode = mode, detail = TRUE
         )
         
         o$errorId <- as.character(o$errorId)
         
         o
-      })
+      }) %>%
+        set_names(modes) %>%
+        bind_rows(.id = "mode")
       
-      names(times) <- modes
-      
-      times %>% bind_rows(.id = "mode")
-    })
-
+    }) %>%
+      set_names(bg$id) %>%
+      bind_rows(.id = "blockgroup")
     
-    names(destinations) <- bg$id
-    
-    destinations %>% bind_rows(.id = "destination")
-    
-  })
-
-
+  }, mc.cores = detectCores() - 1) %>%
+    set_names(ll$id) %>%
+    bind_rows(.id = "resource")
   
-  names(origin) <- ll$id
-  
- parktimes <- 
-    origin %>% 
+  # Do a little bit of cleanup
+  alltimes %>% 
     bind_rows(.id = "origin") %>%
-    select(origin, destination, mode, itineraries) %>%
+    select(blockgroup, resource, mode, itineraries) %>%
     mutate(duration = itineraries$duration) %>%
-    select(origin, destination, mode, duration) %>%
-    group_by(origin, destination, mode)%>%
-    
+    select(resource, blockgroup, mode, duration) %>%
+    group_by(resource, blockgroup, mode) %>%
     arrange(duration, .by_group = TRUE) %>%
-      slice(1)
-
+    slice(1)
   
 }
   
-  #routes <- lapply(c("TRANSIT"), function(mode){
-    #total <- nrow(ll)
-    #totalbg <- nrow(bg)
-    #times <- data.frame("a", "b", "c", "d", "e", "f", "g", "h")
-    #names(times) <- c("FromPlace", "ToPlace", "status", "duration", "walktime", "transitTime", "waitingtime", "transfers")
-    #k<- 1
-    
-    #for (i in 1:total) {
-      #for (j in 1:totalbg) {
-        #response <- otp_get_times(otpcon, fromPlace = c(ll[i,]$LATITUDE, ll[i, ]$LONGITUDE), toPlace = c(bg[j,]$LATITUDE, bg[j,]$LONGITUDE), mode = "TRANSIT", detail = TRUE)
-        # If response is OK update dataframe
-        #if (response$errorId == "OK") {
-          #times[k, "FromPlace"]<- ll[i,]$id
-          #times[k, "ToPlace"]<- bg[j,]$id
-          #times[k, "status"]<- response$errorId
-          #times[k, "duration"]<- response$itineraries$duration
-          #times[k, "walktime"]<- response$itineraries$walkTime
-          #times[k, "transitTime"]<- response$itineraries$transitTime
-          #times[k, "waitingtime"]<- response$itineraries$waitingTime
-          #times[k, "transfers"]<- response$itineraries$transfers
-          #k<-k+1
-        #}else {
-          # record error
-          #times[, "status"]<- response$errorId
-        #}
-      #}
-    #}
-    #response
-  #})
-#}
+
 
 #' Get American Community Survey data for the study.
 #' 

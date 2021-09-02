@@ -1,0 +1,632 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta charset="utf-8" />
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+<meta name="generator" content="pandoc" />
+<meta name="viewport" content="width=device-width, initial-scale=1">
+
+
+<!--
+Font-awesome icons ie github or twitter
+-->
+<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.1/css/all.css" integrity="sha384-50oBUHEmvpQ+1lW4y57PTFmhCaXp0ML5d60M1M7uH2+nqUivzIebhndOJK28anvf" crossorigin="anonymous">
+<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.1/css/brands.css" integrity="sha384-n9+6/aSqa9lBidZMRCQHTHKJscPq6NW4pCQBiMmHdUCvPN8ZOg2zJJTkC7WIezWv" crossorigin="anonymous">
+
+<!--
+Google fonts api stuff
+-->
+
+
+
+<title>Measuring utility-based access to nutrition in Utah County, UT using passive mobile devices and NEMS-S data</title>
+
+<script src="food_insecurity_poster_files/header-attrs-2.8/header-attrs.js"></script>
+<script src="food_insecurity_poster_files/kePrint-0.0.1/kePrint.js"></script>
+<link href="food_insecurity_poster_files/lightable-0.0.1/lightable.css" rel="stylesheet" />
+
+
+
+
+<style>
+@page {
+size: 45in 38in;
+margin: 0;
+padding: 0;
+}
+body {
+margin: 0;
+font-size: 45px;
+width: 45in;
+height: 38in;
+padding: 0;
+text-align: justify;
+font-family: Palatino;
+}
+.poster_wrap {
+width: 45in;
+height: 38in;
+padding: 0cm;
+}
+.title_container {
+width: 45in;
+height: calc(38in * 0.15);
+overflow: hidden;
+background-color: #002E5D;
+border: 0 solid #FFFFFF;
+}
+.logo_left {
+float: left;
+width: 10%;
+height: 100%;
+background-color: #002E5D;
+display: flex;
+align-items: center;
+justify-content: center;
+}
+.logo_right {
+float: right;
+width: 10%;
+height: 100%;
+background-color: #002E5D;
+display: flex;
+align-items: center;
+justify-content: center;
+}
+.poster_title {
+text-align: center;
+position: relative;
+float: left;
+width: 80%;
+height: 100%;
+color: #FFFFFF;
+top: 50%;
+transform: translateY(-50%);
+-webkit-transform: translateY(-50%);
+}
+#title {
+font-family: Palatino;
+}
+/* unvisited link */
+a:link {
+color: #cc0000;
+}
+.mybreak {
+  break-before: column;
+}
+/* visited link */
+a:visited {
+color: #cc0000;
+}
+
+/* mouse over link */
+a:hover {
+color: #cc0000;
+}
+
+/* selected link */
+a:active {
+color: #cc0000;
+}
+.poster_body {
+-webkit-column-count: 3; /* Chrome, Safari, Opera */
+-moz-column-count: 3; /* Firefox */
+column-count: 3;
+-webkit-column-fill: auto;
+-moz-column-fill: auto;
+column-fill: auto;
+-webkit-column-rule-width: 1mm;
+-moz-column-rule-width: 1mm;
+column-rule-width: 1mm;
+-webkit-column-rule-style: dashed;
+-moz-column-rule-style: dashed;
+column-rule-style: dashed;
+-webkit-column-rule-color: #002E5D;
+-moz-column-rule-color: #002E5D;
+column-rule-color: #002E5D;
+column-gap: 1em;
+padding-left: 0.5em;
+padding-right: 0.5em;
+height: 100%;
+color: #000000
+background-color: #ffffff;
+}
+.poster_title h1 {
+font-size: 75pt;
+margin: 0;
+border: 0;
+font-weight: normal;
+}
+.poster_body_wrap{
+width: calc(45in + 0 + 0);
+height: calc(38in * 0.83);
+padding-top: calc(38in * 0.005);
+padding-bottom: calc(38in * 0.01);
+background-color: #ffffff;
+}
+.poster_title h3 {
+color: #FFFFFF;
+font-size: 50pt;
+margin: 0;
+border: 0;
+font-weight: normal;
+}
+.poster_title h3 > sup {
+  font-size: 35pt;
+  margin-left: 0.02em;
+}
+.poster_title h5 {
+color: #FFFFFF;
+font-size: 35pt;
+margin: 0;
+border: 0;
+font-weight: normal;
+}
+img {
+margin-top: 2cm;
+margin-bottom: 0;
+}
+.section {
+  padding: 0.2em;
+}
+.poster_body h1 {
+text-align: center;
+color: #FFFFFF;
+font-size: 65pt;
+border: 2mm solid #002E5D;
+background-color: #002E5D;
+border-radius: 4mm 0mm;
+margin-top: 2mm;
+margin-bottom: 2mm;
+font-weight: normal;
+}
+.poster_body h2 {
+color: #000000;
+font-size: 40pt;
+padding-left: 4mm;
+font-weight: normal;
+}
+.span {
+width: 200%;
+}
+/* center align leaflet map,
+from https://stackoverflow.com/questions/52112119/center-leaflet-in-a-rmarkdown-document */
+.html-widget {
+margin: auto;
+position: sticky;
+margin-top: 2cm;
+margin-bottom: 2cm;
+}
+.leaflet.html-widget.html-widget-static-bound.leaflet-container.leaflet-touch.leaflet-fade-anim.leaflet-grab.leaflet-touch-drag.leaflet-touch-zoom {
+position: sticky;
+width: 100%;
+}
+pre.sourceCode.r {
+background-color: #dddddd40;
+border-radius: 4mm;
+padding: 4mm;
+width: 75%;
+/* align-items: center; */
+margin: auto;
+padding-left: 2cm;
+}
+code.sourceCode.r{
+background-color: transparent;
+font-size: 20pt;
+border-radius: 2mm;
+}
+.caption {
+font-size: 25pt;
+}
+.table caption {
+font-size: 25pt;
+padding-bottom: 3mm;
+
+}
+code {
+font-size: 1em;
+font-family: monospace;
+background-color: #FFFFFF24;
+color: #002E5D;
+padding: 1.2mm;
+border-radius: 2mm;
+}
+.poster_title code {
+font-size: 1em;
+}
+table {
+font-size: 40px;
+margin: auto;
+border-top: 3px solid #666;
+border-bottom: 3px solid #666;
+}
+table thead th {
+border-bottom: 3px solid #ddd;
+}
+td {
+padding: 8px;
+}
+th {
+padding: 15px;
+}
+caption {
+margin-bottom: 10px;
+}
+.poster_body p {
+margin-right: 4mm;
+margin-left: 4mm;
+margin-top: 6mm;
+margin-bottom: 10mm;
+}
+.poster_body ol {
+margin-right: 4mm;
+margin-left: 4mm;
+}
+#ul {
+margin-right: 4mm;
+margin-left: 4mm;
+}
+.references p {
+font-size: 20pt;
+}
+.orcid img {
+  width: 1em;
+}
+</style>
+</head>
+<body>
+
+
+<div class="poster_wrap">
+<div class="title_container">
+<!-- Left Logo  -->
+<div class="logo_left">
+<img src= 'frame.png' style="width: 80%">
+</div>
+<!-- Poster Title -->
+<div class= "poster_title">
+<h1 id="title">Measuring utility-based access to nutrition in Utah County, UT using passive mobile devices and NEMS-S data</h1>
+<h3 id="author">Gregory Macfarlane<sup>1, <a class="orcid" href="https://orcid.org/0000-0003-3999-7584"><img src="https://raw.githubusercontent.com/brentthorne/posterdown/master/images/orcid.jpg"></a></sup>, Emma Stucki<sup>1</sup>, Alisha Redelfs<sup>2, <a class="orcid" href="https://orcid.org/0000-0002-3533-6044"><img src="https://raw.githubusercontent.com/brentthorne/posterdown/master/images/orcid.jpg"></a></sup>, Lori Spruance<sup>2, <a class="orcid" href="https://orcid.org/0000-0003-0254-483X"><img src="https://raw.githubusercontent.com/brentthorne/posterdown/master/images/orcid.jpg"></a></sup></h3><br>
+<h5 id="affiliation"><sup>1</sup> Department of Civil and Construction Engineering, Brigham Young University<br> <sup>2</sup> Department of Public Health, Brigham Young University</h5>
+</div>
+<!-- Right Logo  -->
+<div class="logo_right">
+<img src=byu_mono_white.png style="width: 80%">
+</div>
+</div>
+
+<div class='poster_body_wrap'>
+<div class='poster_body'>
+<!--  Original Abstract
+Equitable access to adequate nutrition is a critical concern in many
+communities. However, prevailing methods to measure access using distance
+thresholds are overly simplistic and lack behavioral support: people do not
+always patronize the nearest grocery store, if more affordable or preferable
+options exist. Simply considering the proportion of the population living within
+a given distance of any grocery store ignores these nuances and could lead to
+ineffective policy interventions. In this research, we present an initial
+attempt to estimate a grocery store destination choice model for residents in
+Utah County, Utah using passive mobile device location data paired with a
+recently collected NEMS-S data set representing the local food environment. The
+model estimates reveal tradeoffs between value, nutrition quality, and travel
+distance segmented by income level. Further, the models allow us to develop a
+nutrition accessibility picture of the county that is continuously defined and
+sensitive to nutrition qualityin a way that typical models using binary distance
+thresholds are not. For example,the proposed measure would allow policy makers
+to evaluate the case of a low-income neighborhood whose only accessible grocery
+store is a high-priced specialty store, or a neighborhood with multiple suitable
+stores just beyond a binary distance threshold. This understanding would in turn
+allow more targeted interventions, including grants for store siting or
+improvement or increasing transportation accessibility from underserved
+neighborhoods to existing stores. Further research is necessary to refine the
+model estimates and incorporate travel impedance by multiple transportation
+modes.-->
+<div id="introduction" class="section level1">
+<h1>Introduction</h1>
+<p>Equitable access to adequate nutrition is a critical concern in many
+communities. However, prevailing methods to measure access using distance
+thresholds are overly simplistic and lack behavioral support: people do not
+always patronize the nearest grocery store, if more affordable or preferable
+options exist. Simply considering the proportion of the population living within
+a given distance of any grocery store ignores these nuances and could lead to
+ineffective policy interventions.</p>
+<div id="objectives" class="section level2">
+<h2>Objectives</h2>
+<p>In this research, we present an initial attempt to estimate a grocery store
+destination choice model for residents in Utah County, Utah using passive mobile
+device location data paired with a recently collected NEMS-S data set
+representing the local food environment. This model allows us to infer the relative
+importance of</p>
+<ol style="list-style-type: decimal">
+<li>Travel distance from home neighborhood to grocery store</li>
+<li>Observed behavioral preference for store size and amenities</li>
+</ol>
+<p>We then use this model to evaluate access to grocery stores in Utah County.</p>
+</div>
+</div>
+<div id="methods" class="section level1">
+<h1>Methods</h1>
+<p>Utility-based access is based in destination choice theory. If a person living in
+block group <span class="math inline">\(i\)</span> is choosing to travel to a grocery store, the <em>utility</em> of a
+particular store <span class="math inline">\(j\)</span> is</p>
+<p><span class="math display">\[
+U_{ij} = \beta d_{ij} + \mathbf{\gamma} X_j
+\]</span></p>
+<p>Where <span class="math inline">\(d_{ij}\)</span> is the distance or travel cost between <span class="math inline">\(i\)</span> and <span class="math inline">\(j\)</span>, <span class="math inline">\(X_j\)</span> is a
+vector of attributes of the store (size, brand, etc.), and <span class="math inline">\(\beta, \gamma\)</span> are estimated
+coefficients. The total benefit (or access) to all options <span class="math inline">\(J\)</span> is the log-sum of
+the utility of everything in the choice set,</p>
+<p><span class="math display">\[
+\ln\sum_{j \in J} \exp(U_{ij})
+\]</span>
+We estimate the coefficients for this measure using three data sets:</p>
+<ol style="list-style-type: decimal">
+<li>A NEMS-S survey <span class="citation">(Glanz et al. 2007)</span> conducted on grocery stores in Utah
+County, Utah during Spring 2021 provides attributes of the stores including
+their size and amenities.</li>
+<li>Mobile device records obtained from StreetLight Data reveal the home block group of visitors to these
+grocery stores.</li>
+<li>Travel paths between block group centroids and grocery stores obtained from
+OpenStreetMap via <code>opentripplanner</code> <span class="citation">(Morgan et al. 2019)</span></li>
+</ol>
+<p>To construct the estimation data set, we sample from the mobile device data to
+obtain simulated observed “trips” to grocery stores. Alternative options
+are sampled randomly from the other stores — this results in unbiased but
+somewhat inefficient estimates. Models are estimated using the <code>mlogit</code> package
+for R <span class="citation">(Croissant 2020)</span>.</p>
+</div>
+<div id="results" class="section level1">
+<h1>Results</h1>
+<p>The estimated coefficients are intuitive and highly significant considering
+standard confidence intervals. People are less likely to go to stores that are
+further away by car, or to stores that are convenience stores or ethnic markets
+rather than traditional grocery stores. They are more likely to go to larger
+stores (as inferred from the number of cash registers), or stores that include
+other kinds of merchandise such as home goods or clothing, all else equal.</p>
+<table class="table" style="width: auto !important; margin-left: auto; margin-right: auto;">
+<caption>
+<span id="tab:model-tab">Table 1: </span>Store Choice Utility Coeffcients
+</caption>
+<thead>
+<tr>
+<th style="text-align:left;">
+</th>
+<th style="text-align:center;">
+Base
+</th>
+<th style="text-align:center;">
+Attributes
+</th>
+<th style="text-align:center;">
+Size
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left;">
+Drive time
+</td>
+<td style="text-align:center;">
+-0.206 (-73.226)
+</td>
+<td style="text-align:center;">
+-0.210 (-67.477)
+</td>
+<td style="text-align:center;">
+-0.217 (-65.236)
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Convenience Store
+</td>
+<td style="text-align:center;">
+-3.077 (-12.663)
+</td>
+<td style="text-align:center;">
+-2.285 (-9.167)
+</td>
+<td style="text-align:center;">
+-1.588 (-6.290)
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Other non-standard
+</td>
+<td style="text-align:center;">
+-2.684 (-17.033)
+</td>
+<td style="text-align:center;">
+-1.617 (-9.703)
+</td>
+<td style="text-align:center;">
+-1.052 (-6.215)
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Has pharmacy
+</td>
+<td style="text-align:center;">
+</td>
+<td style="text-align:center;">
+0.660 (13.741)
+</td>
+<td style="text-align:center;">
+0.286 (5.235)
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Ethnic market
+</td>
+<td style="text-align:center;">
+</td>
+<td style="text-align:center;">
+-1.704 (-13.312)
+</td>
+<td style="text-align:center;">
+-0.990 (-7.510)
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Has other merchandise
+</td>
+<td style="text-align:center;">
+</td>
+<td style="text-align:center;">
+1.670 (33.469)
+</td>
+<td style="text-align:center;">
+1.039 (17.092)
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Number of registers
+</td>
+<td style="text-align:center;">
+</td>
+<td style="text-align:center;">
+</td>
+<td style="text-align:center;">
+0.079 (28.279)
+</td>
+</tr>
+<tr>
+<td style="text-align:left;box-shadow: 0px 1px">
+Number of self-checkout
+</td>
+<td style="text-align:center;box-shadow: 0px 1px">
+</td>
+<td style="text-align:center;box-shadow: 0px 1px">
+</td>
+<td style="text-align:center;box-shadow: 0px 1px">
+0.022 (6.888)
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Num.Obs.
+</td>
+<td style="text-align:center;">
+5,848
+</td>
+<td style="text-align:center;">
+5,848
+</td>
+<td style="text-align:center;">
+5,848
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Log Likelihood
+</td>
+<td style="text-align:center;">
+-7,729.8
+</td>
+<td style="text-align:center;">
+-6,592.4
+</td>
+<td style="text-align:center;">
+-6,086.4
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+McFadden Rho-Sq
+</td>
+<td style="text-align:center;">
+0.449
+</td>
+<td style="text-align:center;">
+0.530
+</td>
+<td style="text-align:center;">
+0.566
+</td>
+</tr>
+</tbody>
+<tfoot>
+<tr>
+<td style="padding: 0; border:0;" colspan="100%">
+<sup></sup> t-statistics in parentheses.
+</td>
+</tr>
+</tfoot>
+</table>
+<p><br></p>
+<div class="figure" style="text-align: center"><span id="fig:logsums-map"></span>
+<img src="food_insecurity_poster_files/figure-html/logsums-map-1.png" alt="Access to grocery stores based on the 'Size' model." width="100%" />
+<p class="caption">
+Figure 1: Access to grocery stores based on the ‘Size’ model.
+</p>
+</div>
+<p>When the model coefficients are applied to all block groups in the region,
+the comparative nutrition accessibility picture becomes clear. Large retail
+areas show the highest comparative accessibility, while outlying regions
+show comparatively less.</p>
+<p><br></p>
+<div class="figure" style="text-align: center"><span id="fig:ls-plot"></span>
+<img src="food_insecurity_poster_files/figure-html/ls-plot-1.png" alt="Correlation of income and logsum-based access to grocery stores." width="100%" />
+<p class="caption">
+Figure 2: Correlation of income and logsum-based access to grocery stores.
+</p>
+</div>
+<p>There is not a clear relationship observable between utility-based access to
+grocery stores and traditional sociodemographic characteristics
+revealed by this model. But these preliminary results do not yet consider the
+improved mobility that high-income households have. Further research is required.</p>
+</div>
+<div id="next-steps" class="section level1">
+<h1>Next Steps</h1>
+<p>The driving time is the only current travel impedance term. This
+will be expanded to include other modes of travel, weighted by the mode
+availability of the agents.</p>
+<p>The NEMS-S contains considerably more attributes than those included in these
+preliminary results: produce price and variety, dairy offerings, etc. Investigating
+the effect of these variables on store choice is a major next step.</p>
+<p>Neighborhoods with different socioeconomic characteristics are likely to
+show different preferences in their grocery store choice; the model should be
+segmented to allow for flexibility and accuracy in these preferences.</p>
+</div>
+<div id="references" class="section level1 unnumbered">
+<h1>References</h1>
+<div id="refs" class="references csl-bib-body hanging-indent">
+<div id="ref-mlogit2020" class="csl-entry">
+Croissant, Yves. 2020. <span>“Estimation of Random Utility Models in <span>R</span>: The <span class="nocase">mlogit</span> Package.”</span> <em>Journal of Statistical Software</em> 95 (11): 1–41. <a href="https://doi.org/10.18637/jss.v095.i11">https://doi.org/10.18637/jss.v095.i11</a>.
+</div>
+<div id="ref-glanz2007nutrition" class="csl-entry">
+Glanz, Karen, James F Sallis, Brian E Saelens, and Lawrence D Frank. 2007. <span>“Nutrition Environment Measures Survey in Stores (NEMS-s): Development and Evaluation.”</span> <em>American Journal of Preventive Medicine</em> 32 (4): 282–89.
+</div>
+<div id="ref-opentripplanner" class="csl-entry">
+Morgan, Malcolm, Marcus Young, Robin Lovelace, and Layik Hama. 2019. <span>“OpenTripPlanner for r.”</span> <em>Journal of Open Source Software</em> 4 (44): 1926. <a href="https://doi.org/10.21105/joss.01926">https://doi.org/10.21105/joss.01926</a>.
+</div>
+</div>
+</div>
+</div>
+</div>
+
+</div>
+
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+(function () {
+var script = document.createElement("script");
+script.type = "text/javascript";
+var src = "true";
+if (src === "" || src === "true") src = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-MML-AM_CHTML";
+if (location.protocol !== "file:" && /^https?:/.test(src))
+src = src.replace(/^https?:/, '');
+script.src = src;
+document.getElementsByTagName("head")[0].appendChild(script);
+})();
+</script>
+
+
+</body>
+</html>
