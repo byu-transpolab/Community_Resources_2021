@@ -1,0 +1,247 @@
+---
+title: Measuring utility-based access to nutrition in Utah County, UT using passive mobile devices and NEMS-S data
+author:
+  - name: Gregory Macfarlane
+    affil: 1
+    twitter: greg_macfarlane
+    email: gregmacfarlane@byu.edu
+    orcid: 0000-0003-3999-7584
+    main: true
+  - name: Emma Stucki
+    affil: 1
+    twitter: 
+    email: gregmacfarlane@byu.edu
+  - name: Alisha Redelfs
+    affil: 2
+    orcid: 0000-0002-3533-6044
+    email: alisha_redelfs@byu.edu
+  - name: Lori Spruance
+    affil: 2
+    orcid: 0000-0003-0254-483X
+    email: lori.spruance@byu.edu
+affiliation:
+  - num: 1
+    address: Department of Civil and Construction Engineering, Brigham Young University
+  - num: 2
+    address: Department of Public Health, Brigham Young University
+column_numbers: 3
+logoright_name: byu_mono_white.png
+logoleft_name: frame.png
+output: 
+  posterdown::posterdown_html:
+    self_contained: false
+bibliography: [packages.bib, poster.bib]
+primary_colour: \#002E5D 
+secondary_colour: \#FFFFFF
+knit: pagedown::chrome_print
+---
+
+
+<!--  Original Abstract
+Equitable access to adequate nutrition is a critical concern in many
+communities. However, prevailing methods to measure access using distance
+thresholds are overly simplistic and lack behavioral support: people do not
+always patronize the nearest grocery store, if more affordable or preferable
+options exist. Simply considering the proportion of the population living within
+a given distance of any grocery store ignores these nuances and could lead to
+ineffective policy interventions. In this research, we present an initial
+attempt to estimate a grocery store destination choice model for residents in
+Utah County, Utah using passive mobile device location data paired with a
+recently collected NEMS-S data set representing the local food environment. The
+model estimates reveal tradeoffs between value, nutrition quality, and travel
+distance segmented by income level. Further, the models allow us to develop a
+nutrition accessibility picture of the county that is continuously defined and
+sensitive to nutrition qualityin a way that typical models using binary distance
+thresholds are not. For example,the proposed measure would allow policy makers
+to evaluate the case of a low-income neighborhood whose only accessible grocery
+store is a high-priced specialty store, or a neighborhood with multiple suitable
+stores just beyond a binary distance threshold. This understanding would in turn
+allow more targeted interventions, including grants for store siting or
+improvement or increasing transportation accessibility from underserved
+neighborhoods to existing stores. Further research is necessary to refine the
+model estimates and incorporate travel impedance by multiple transportation
+modes.-->
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(results = 'asis',
+                      echo = FALSE,
+                      warning = FALSE,
+                      tidy = FALSE,
+                      message = FALSE,
+                      fig.align = 'center',
+                      out.width = "100%")
+
+options(knitr.table.format = "html") 
+options(tigris_use_cache = TRUE)
+
+library(modelsummary)
+library(tidyverse)
+library(targets)
+library(here)
+library(tigris)
+library(ggspatial)
+
+knitr::write_bib(c('posterdown', 'rmarkdown','pagedown', "opentripplanner", "modelsummary", "mlogit"), 'packages.bib')
+```
+
+# Introduction
+
+Equitable access to adequate nutrition is a critical concern in many
+communities. However, prevailing methods to measure access using distance
+thresholds are overly simplistic and lack behavioral support: people do not
+always patronize the nearest grocery store, if more affordable or preferable
+options exist. Simply considering the proportion of the population living within
+a given distance of any grocery store ignores these nuances and could lead to
+ineffective policy interventions. 
+
+## Objectives
+
+In this research, we present an initial attempt to estimate a grocery store
+destination choice model for residents in Utah County, Utah using passive mobile
+device location data paired with a recently collected NEMS-S data set
+representing the local food environment. This model allows us to infer the relative
+importance of 
+
+1.  Travel distance from home neighborhood to grocery store
+2.  Observed behavioral preference for store size and amenities
+
+We then use this model to evaluate access to grocery stores in Utah County.
+
+# Methods
+
+Utility-based access is based in destination choice theory. If a person living in
+block group $i$ is choosing to travel to a grocery store, the *utility* of a 
+particular store $j$ is
+
+
+$$
+U_{ij} = \beta d_{ij} + \mathbf{\gamma} X_j
+$$
+
+Where $d_{ij}$ is the distance or travel cost between $i$ and $j$, $X_j$ is a
+vector of attributes of the store (size, brand, etc.), and $\beta, \gamma$ are estimated
+coefficients. The total benefit (or access) to all options $J$ is the log-sum of 
+the utility of everything in the choice set,
+
+$$
+\ln\sum_{j \in J} \exp(U_{ij})
+$$
+We estimate the coefficients for this measure using three data sets:
+
+  1. A NEMS-S survey [@glanz2007nutrition] conducted on grocery stores in Utah
+  County, Utah during Spring 2021 provides attributes of the stores including
+  their size and amenities.
+  1. Mobile device records obtained from StreetLight Data reveal the home block group of visitors to these
+  grocery stores.
+  1. Travel paths between block group centroids and grocery stores obtained from
+  OpenStreetMap via `opentripplanner` [@opentripplanner]
+  
+To construct the estimation data set, we sample from the mobile device data to
+obtain simulated observed "trips" to grocery stores. Alternative options
+are sampled randomly from the other stores --- this results in unbiased but
+somewhat inefficient estimates. Models are estimated using the `mlogit` package
+for R [@mlogit2020].
+
+# Results
+
+```{r models, include = FALSE}
+grocery_models <- read_rds(here("data/grocery_models.rds"))
+
+this_map = c(
+    "CAR" = "Drive time",
+    "typeConvenience Store" = "Convenience Store",
+    "typeOther (Write in a description)" = "Other non-standard",
+    "pharmacyTRUE" = "Has pharmacy",
+    "ethnicTRUE" = "Ethnic market",
+    "merchTRUE" = "Has other merchandise",
+    "registers" = "Number of registers",
+    "selfchecko" = "Number of self-checkout"
+  )
+f <- function(x) format(round(x, 1), big.mark=",")
+gm <-  list(
+  list("raw" = "nobs",  "clean" = "Num.Obs.", "fmt" = f),
+  list("raw" = "logLik","clean" = "Log Likelihood", "fmt" = f),
+  list("raw" = "rho20", "clean" = "McFadden Rho-Sq", "fmt" = 3)
+)
+modelsummary(grocery_models)
+```
+
+
+The estimated coefficients are intuitive and highly significant considering
+standard confidence intervals. People are less likely to go to stores that are
+further away by car, or to stores that are convenience stores or ethnic markets
+rather than traditional grocery stores. They are more likely to go to larger
+stores (as inferred from the number of cash registers), or stores that include
+other kinds of merchandise such as home goods or clothing, all else equal.
+
+```{r model-tab}
+modelsummary(
+  grocery_models,
+  coef_map = this_map, gof_map = gm,
+  estimate = "{estimate} ({statistic})", 
+  statistic = NULL,
+  title = "Store Choice Utility Coeffcients",
+  note = "t-statistics in parentheses."
+)
+```
+
+
+<br>
+
+
+```{r logsums-map, messages = FALSE, fig.cap="Access to grocery stores based on the 'Size' model."}
+grocery_logsums <- read_rds(here("data/grocery_logsums.rds"))
+acsdata <- read_rds(here("data/acsdata.rds"))
+
+bg <- block_groups("UT", "Utah", class = "sf") %>%
+  transmute(geoid = GEOID) %>%
+  left_join(grocery_logsums, by = c("geoid" = "blockgroup")) %>%
+  left_join(acsdata, by = "geoid") %>%
+  filter(!is.na(logsum))
+
+ggplot(bg, aes(fill = logsum)) + 
+  annotation_map_tile(type = "cartolight", zoom = 10) + 
+  geom_sf(lwd = 0, alpha = 0.6)  +
+  scale_fill_viridis_b("Logsum Accessibility")
+```
+
+
+When the model coefficients are applied to all block groups in the region, 
+the comparative nutrition accessibility picture becomes clear. Large retail
+areas show the highest comparative accessibility, while outlying regions 
+show comparatively less.
+
+<br>
+
+
+```{r ls-plot, fig.cap = "Correlation of income and logsum-based access to grocery stores."}
+ggplot(bg, aes(x = income, y = logsum, size = households / 1000, weight = households)) + 
+  geom_point( alpha = 0.5, show.legend = FALSE) + geom_smooth(show.legend = FALSE) +
+  xlab("Median block group household annual income") +
+  ylab("Logsum Accessibility") +
+  scale_size("Block Group Households (000)") + theme_bw()
+```
+
+
+There is not a clear relationship observable between utility-based access to
+grocery stores and traditional sociodemographic characteristics 
+revealed by this model. But these preliminary results do not yet consider the
+improved mobility that high-income households have. Further research is required.
+
+# Next Steps
+
+The driving time is the only current travel impedance term. This
+will be expanded to include other modes of travel, weighted by the mode
+availability of the agents.
+
+The NEMS-S contains considerably more attributes than those included in these
+preliminary results: produce price and variety, dairy offerings, etc. Investigating 
+the effect of these variables on store choice is a major next step.
+
+Neighborhoods with different socioeconomic characteristics are likely to 
+show different preferences in their grocery store choice; the model should be
+segmented to allow for flexibility and accuracy in these preferences.
+
+
+
+# References

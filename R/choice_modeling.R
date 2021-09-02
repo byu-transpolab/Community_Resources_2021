@@ -12,10 +12,6 @@
 make_estdata <- function(flows, times, ludata, acsdata, n_obs = 50, n_alts = 5,
                          day = "0: All Days (M-Su)", time = "All Day (12am-12am)") {
   
-  # id-name lookup
-  nameid <- ludata %>%
-    select(Name, id) %>% st_set_geometry(NULL) %>% as_tibble() %>%
-    mutate(id = as.character(id))
   
   # Get a list of chosen destinations  ----
   mydata <- flows %>%
@@ -23,16 +19,15 @@ make_estdata <- function(flows, times, ludata, acsdata, n_obs = 50, n_alts = 5,
     filter(time %in% time, day %in% day) %>%
     mutate(weight = flow / sum(flow)) %>%
     sample_n(n_obs, replace = TRUE, weight = weight) %>%
-    transmute(obs_id = as.character(row_number()), geoid, Name = dest,
+    transmute(obs_id = as.character(row_number()), geoid, dest = str_c("UT-", dest, sep = ""),
               validation = sample(c(TRUE,FALSE), n(), TRUE, prob = c(0.2, 0.8))) %>%
-    left_join(nameid, by = "Name") %>%
-    select(-Name) %>%
-    rename(alt_0 = id)
+    rename(alt_0 = dest) %>%
+    filter(alt_0 %in% ludata$id)
     
               
   
   # Get a list of non-chosen alternatives ---------
-  sampled_dests <- lapply(1:n_obs, function(i){
+  sampled_dests <- lapply(1:nrow(mydata), function(i){
     sample(ludata$id[which(mydata$obs_id[i] != ludata$id)], n_alts)
   }) %>%
     unlist() %>%
@@ -40,8 +35,7 @@ make_estdata <- function(flows, times, ludata, acsdata, n_obs = 50, n_alts = 5,
     as_tibble(.name_repair = ~ str_c("alt", 1:n_alts, sep = "_"))
 
   # Create dataset ----
-  attributes <- ludata %>% st_set_geometry(NULL) %>%
-    mutate(id = as.character(id))
+  attributes <- ludata %>% st_set_geometry(NULL)  %>% as_tibble()
   mytimes <- times %>%
     pivot_wider(names_from = mode, values_from = duration)
     
@@ -56,14 +50,74 @@ make_estdata <- function(flows, times, ludata, acsdata, n_obs = 50, n_alts = 5,
     left_join(attributes, by = c("dest" = "id")) %>%
   
     # append distances
-    left_join(mytimes, by = c("geoid" = "destination", "dest" = "origin")) %>%
-    
+    left_join(mytimes, by = c("geoid" = "blockgroup", "dest" = "resource")) %>%
     
     # append block group attributes
     left_join(acsdata, by = c("geoid")
               
     )
   
+  # TODO: fix CAR times 
+  # until then, we need to remove observations that have missing CAR times for their
+  # chosen alternative
+  nocar <- logitdata %>% filter(is.na(CAR)) %>% pull(obs_id)
   
+  
+  logitdata  %>% filter(!obs_id %in% nocar)
+}
+
+
+#' Estimate grocery store choice models
+#' 
+#' @param groceries_estdata
+#' 
+#' 
+estimate_grocerymodels <- function(groceries_estdata){
+  
+  
+  ld <- dfidx(groceries_estdata, idx = list("obs_id", "alt"), shape = "long",  
+        choice = "chosen", idnames = "id", drop.index = FALSE)
+  
+  models <- list(
+    "Base" = mlogit(chosen ~ CAR + type | -1 , data = ld),
+    "Attributes" = mlogit(chosen ~ CAR + type  + pharmacy + ethnic + merch | -1 , data = ld),
+    "Size" = mlogit(chosen ~ CAR + type  + pharmacy + ethnic + merch + registers + selfchecko| -1 , data = ld)
+  )
+  
+  
+  models
+}
+
+
+
+calculate_grocery_access <- function(grocery_times, groceries, grocery_models) {
+  
+  coef <- grocery_models$Size$coefficients
+  
+  # construct prediction frame
+  grocery_times %>%
+    spread(mode, duration) %>%
+    filter(!is.na(CAR)) %>%
+    left_join(groceries %>% st_set_geometry(NULL), by = c("resource" = "id"))  %>%
+    
+    # calculate utilities
+    mutate(
+      other = ifelse(type == "Other (Write in a description)", TRUE, FALSE),
+      convenience = ifelse(type == "Convenience Store", TRUE, FALSE),
+      u = 
+        CAR * coef["CAR"] + 
+        convenience * coef["typeConvenience Store"] + 
+        other * coef["typeOther (Write in a description)"]  +
+        pharmacy * coef["pharmacyTRUE"] + 
+        ethnic * coef["ethnicTRUE"] + 
+        merch * coef["merchTRUE"] + 
+        registers * coef["registers"] + 
+        selfchecko * coef["selfchecko"] ,
+      eU = exp(u)
+    )  %>%
+    group_by(blockgroup) %>%
+    summarise(
+      logsum = log(sum(eU))
+    )
   
 }

@@ -3,8 +3,11 @@
 .RData
 .Ruserdata
 
+
 _targets/
 _bookdown_files/
+rosm.cache/*
+*/rosm.cache/*
 
 Community_Resources.spl
 
