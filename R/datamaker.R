@@ -91,7 +91,9 @@ make_park_points <- function(park_polygons, density, crs){
     park_points <- st_sf(id = park_boundaries$id, geometry = point_samples) %>%
       st_as_sf() %>%
       st_cast(to = "POINT")%>%
-      slice_head(n=2)
+      group_by(id)%>%
+      slice_head(n=1)%>%
+      ungroup()
   )
   
   park_points 
@@ -206,7 +208,7 @@ calculate_times <- function(landuse, bgcentroid, graph){
         o <- otp_get_times(
           otpcon, 
           fromPlace = ll_latlong, toPlace = bg_latlong,
-          mode = mode, detail = TRUE
+          mode = mode, detail = TRUE, includeLegs = TRUE
         )
         
         o$errorId <- as.character(o$errorId)
@@ -234,14 +236,13 @@ calculate_times <- function(landuse, bgcentroid, graph){
     origin %>% 
     bind_rows(.id = "origin") %>%
     select(origin, destination, mode, itineraries) %>%
-    mutate(duration = itineraries$duration) %>%
-    select(origin, destination, mode, duration) %>%
+    mutate(duration = itineraries$duration, transit = itineraries$transitTime, wait = itineraries$waitingTime) %>%
+    select(origin, destination, mode, duration, transit, wait) %>%
     group_by(origin, destination, mode)%>%
     
-    arrange(duration, .by_group = TRUE) %>%
-      slice(1)
-
-  
+    arrange(duration, .by_group = TRUE)%>%
+      slice(n = 1)
+ 
 }
   
   #routes <- lapply(c("TRANSIT"), function(mode){

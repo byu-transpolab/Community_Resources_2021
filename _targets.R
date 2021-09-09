@@ -36,14 +36,14 @@ list(
   tar_target(graph,  make_graph(otp_path), format = "file"),
   
   # Parks ============
-  tar_target(park_polygons, get_parks("data/parks.geojson", this_crs)),
-  tar_target(park_points, make_park_points(park_polygons, 1/500, this_crs)),
-  tar_target(park_times, calculate_times(park_points, bgcentroid, graph)),
+  #tar_target(park_polygons, get_parks("data/parks.geojson", this_crs)),
+  #tar_target(park_points, make_park_points(park_polygons, 1/500, this_crs)),
+  #tar_target(park_times, calculate_times(park_points, bgcentroid, graph)),
   # streetlight ----
-  tar_target(sl_parks_csv, get_sl_data("data/streetlight_parks.zip", "parks"),
-             format = "file"),
-  tar_target(sl_parks, read_sl_data(sl_parks_csv)),
-  tar_target(parks_estdata, make_estdata(sl_parks, park_times, park_polygons, acsdata)),
+  #tar_target(sl_parks_csv, get_sl_data("data/streetlight_parks.zip", "parks"),
+  #           format = "file"),
+  #tar_target(sl_parks, read_sl_data(sl_parks_csv)),
+  #tar_target(parks_estdata, make_estdata(sl_parks, park_times, park_polygons, acsdata)),
   
 
   
@@ -51,25 +51,25 @@ list(
   tar_target(groceries, get_groceries("data/groceries.geojson", this_crs)),
   tar_target(grocery_times, calculate_times(groceries, bgcentroid)),
   # streetlight ----
-  tar_target(sl_grocery_csv, get_sl_data("data/streetlight_groceries.csv", "groceries"),
-             format = "file"),
-  tar_target(sl_grocery, read_sl_data(sl_grocery_csv)),
+  #tar_target(sl_grocery_csv, get_sl_data("data/streetlight_groceries.csv", "groceries"),
+  #           format = "file"),
+  #tar_target(sl_grocery, read_sl_data(sl_grocery_csv)),
   # choice data and models ---
-  tar_target(groceries_estdata, make_estdata(sl_grocery, grocery_times, groceries, acsdata)),
+  #tar_target(groceries_estdata, make_estdata(sl_grocery, grocery_times, groceries, acsdata)),
   
   
   
   
   # Libraries ======================
-  tar_target(libraries, get_libraries("data/libraries.geojson", this_crs)),
-  tar_target(library_times, calculate_times(libraries, bgcentroid, graph)),
+  #tar_target(libraries, get_libraries("data/libraries.geojson", this_crs)),
+  #tar_target(library_times, calculate_times(libraries, bgcentroid, graph)),
   # streetlight ----
-  tar_target(sl_libraries_csv, get_sl_data("data/streetlight_libraries.csv", "libraries"),
-             format = "file"),
-  tar_target(sl_libraries, read_sl_data(sl_libraries_csv)),
-  tar_target(lee_plot, plot_streetlight(sl_libraries, "Brigham Young University - Harold B. Lee Library")),
+  #tar_target(sl_libraries_csv, get_sl_data("data/streetlight_libraries.csv", "libraries"),
+  #           format = "file"),
+  #tar_target(sl_libraries, read_sl_data(sl_libraries_csv)),
+  #tar_target(lee_plot, plot_streetlight(sl_libraries, "Brigham Young University - Harold B. Lee Library")),
   # choice data and models ---
-  tar_target(libraries_estdata, make_estdata(sl_libraries, library_times, libraries, acsdata)),
+  #tar_target(libraries_estdata, make_estdata(sl_libraries, library_times, libraries, acsdata)),
   
   tar_target(dummy,1+1)
 )
