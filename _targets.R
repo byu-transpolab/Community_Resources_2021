@@ -48,8 +48,8 @@ list(
 
   
   # Groceries =====================
-  tar_target(groceries, get_groceries("data/groceries.geojson", this_crs)),
-  tar_target(grocery_times, calculate_times(groceries, bgcentroid)),
+  #tar_target(groceries, get_groceries("data/groceries.geojson", this_crs)),
+  #tar_target(grocery_times, calculate_times(groceries, bgcentroid)),
   # streetlight ----
   #tar_target(sl_grocery_csv, get_sl_data("data/streetlight_groceries.csv", "groceries"),
   #           format = "file"),
@@ -61,8 +61,8 @@ list(
   
   
   # Libraries ======================
-  #tar_target(libraries, get_libraries("data/libraries.geojson", this_crs)),
-  #tar_target(library_times, calculate_times(libraries, bgcentroid, graph)),
+  tar_target(libraries, get_libraries("data/libraries.geojson", this_crs)),
+  tar_target(library_times, calculate_times(libraries, bgcentroid, graph)),
   # streetlight ----
   #tar_target(sl_libraries_csv, get_sl_data("data/streetlight_libraries.csv", "libraries"),
   #           format = "file"),

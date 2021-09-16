@@ -128,7 +128,7 @@ get_groceries <- function(file, crs){
   st_read(file) %>%
     st_transform(crs)%>%
     rename(id = SITE_NAME)%>%
-    slice_head(n=3)
+    slice_head(n=1)
 }
 
 
@@ -236,13 +236,14 @@ calculate_times <- function(landuse, bgcentroid, graph){
     origin %>% 
     bind_rows(.id = "origin") %>%
     select(origin, destination, mode, itineraries) %>%
-    mutate(duration = itineraries$duration, transit = itineraries$transitTime, wait = itineraries$waitingTime) %>%
+    mutate(duration = itineraries$duration, transit = itineraries$transitTime, wait = itineraries$waitingTime, walk = itineraries$walkTime) %>%
     select(origin, destination, mode, duration, transit, wait) %>%
     group_by(origin, destination, mode)%>%
     
     arrange(duration, .by_group = TRUE)%>%
       slice(n = 1)
- 
+  origin
+  
 }
   
   #routes <- lapply(c("TRANSIT"), function(mode){
