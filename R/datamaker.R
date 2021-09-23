@@ -96,7 +96,8 @@ make_park_points <- function(park_polygons, density, crs){
       ungroup()
   )
   
-  park_points 
+  park_points %>%
+    slice_head(n = 3)
 }
 
 get_park_attributes <- function(parks){
@@ -115,7 +116,8 @@ get_park_attributes <- function(parks){
 get_libraries <- function(file, crs){
   st_read(file) %>%
     st_transform(crs) %>%
-    rename(id = ID)
+    rename(id = ID)%>%
+    slice_head(n = 2)
 }
 
 #' Get Groceries Data
@@ -208,7 +210,7 @@ calculate_times <- function(landuse, bgcentroid, graph){
         o <- otp_get_times(
           otpcon, 
           fromPlace = ll_latlong, toPlace = bg_latlong,
-          mode = mode, detail = TRUE, includeLegs = TRUE
+          mode = mode, date = "08-02-2021", time = "08:00:00", detail = TRUE, includeLegs = TRUE
         )
         
         o$errorId <- as.character(o$errorId)
@@ -237,12 +239,12 @@ calculate_times <- function(landuse, bgcentroid, graph){
     bind_rows(.id = "origin") %>%
     select(origin, destination, mode, itineraries) %>%
     mutate(duration = itineraries$duration, transit = itineraries$transitTime, wait = itineraries$waitingTime, walk = itineraries$walkTime) %>%
-    select(origin, destination, mode, duration, transit, wait) %>%
+    select(origin, destination, mode, duration, transit, wait, walk) %>%
     group_by(origin, destination, mode)%>%
     
     arrange(duration, .by_group = TRUE)%>%
       slice(n = 1)
-  origin
+  parktimes
   
 }
   

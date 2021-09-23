@@ -36,9 +36,9 @@ list(
   tar_target(graph,  make_graph(otp_path), format = "file"),
   
   # Parks ============
-  #tar_target(park_polygons, get_parks("data/parks.geojson", this_crs)),
-  #tar_target(park_points, make_park_points(park_polygons, 1/500, this_crs)),
-  #tar_target(park_times, calculate_times(park_points, bgcentroid, graph)),
+  tar_target(park_polygons, get_parks("data/parks.geojson", this_crs)),
+  tar_target(park_points, make_park_points(park_polygons, 1/500, this_crs)),
+  tar_target(park_times, calculate_times(park_points, bgcentroid, graph)),
   # streetlight ----
   #tar_target(sl_parks_csv, get_sl_data("data/streetlight_parks.zip", "parks"),
   #           format = "file"),
@@ -48,8 +48,8 @@ list(
 
   
   # Groceries =====================
-  #tar_target(groceries, get_groceries("data/groceries.geojson", this_crs)),
-  #tar_target(grocery_times, calculate_times(groceries, bgcentroid)),
+  tar_target(groceries, get_groceries("data/groceries.geojson", this_crs)),
+  tar_target(grocery_times, calculate_times(groceries, bgcentroid)),
   # streetlight ----
   #tar_target(sl_grocery_csv, get_sl_data("data/streetlight_groceries.csv", "groceries"),
   #           format = "file"),
