@@ -101,11 +101,6 @@ make_park_points <- function(park_polygons, density, crs){
     slice_head(n = 3)
 }
 
-get_park_attributes <- function(parks){
-  park_attributes <- parks%>%
-    select(id, playground)
-}
-
 
 
 #' Get Libraries Data
