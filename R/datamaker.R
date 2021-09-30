@@ -130,6 +130,9 @@ get_groceries <- function(file, crs){
   st_read(file) %>%
     st_transform(crs)%>%
     rename(id = SITE_NAME)%>%
+    mutate(
+      id = paste0("UT-", id)
+      )%>%
     slice_head(n=5)
 }
 
@@ -224,7 +227,6 @@ calculate_times <- function(landuse, bgcentroid, graph){
       times %>% bind_rows(.id = "mode")
     })
 
-    
     names(destinations) <- ll$id
     
     destinations %>% bind_rows(.id = "destination")
