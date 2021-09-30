@@ -92,11 +92,21 @@ make_park_points <- function(park_polygons, density, crs){
     park_points <- st_sf(id = park_boundaries$id, geometry = point_samples) %>%
       st_as_sf() %>%
       st_cast(to = "POINT")%>%
-      slice_head(n=2)
+      group_by(id)%>%
+      slice_head(n=1)%>%
+      ungroup()
   )
   
-  park_points 
+  park_points %>%
+    slice_head(n = 3)
 }
+
+get_park_attributes <- function(parks){
+  park_attributes <- parks%>%
+    select(id, playground)
+}
+
+
 
 #' Get Libraries Data
 #' 
@@ -108,7 +118,8 @@ get_libraries <- function(file, crs){
   st_read(file) %>%
     st_transform(crs) %>%
     rename(id = ID) %>%
-    mutate(id = as.character(id))
+    mutate(id = as.character(id))%>%
+    slice_head(n=2)
 }
 
 #' Get Groceries shape information
@@ -118,6 +129,7 @@ get_libraries <- function(file, crs){
 #' @param crs Projected CRS to use for data; 
 #' @return sf data frame with groceries data
 #' 
+
 get_groceries <- function(file, data, crs){
   # read shape information
   gj <- st_read(file) %>%
@@ -140,7 +152,8 @@ get_groceries <- function(file, data, crs){
       total_registers = REGISTERS_TOT
     )
   
-  inner_join(gj, gd, by = "id")
+  inner_join(gj, gd, by = "id")%>%
+    slice_head(n=5)
   
 }
 
@@ -152,6 +165,7 @@ groceries_map <- function(groceries){
   leaflet(groceries %>% st_centroid() %>% st_transform(4326)) %>%
     addProviderTiles(providers$Esri.WorldGrayCanvas) %>%
     addCircles(color = ~pal(type), radius = ~(total_registers* 10))
+
 }
 
 
@@ -214,6 +228,7 @@ calculate_times <- function(landuse, bgcentroid, graph){
   total_lu <- nrow(ll)
   total_bg <- nrow(bg)
   
+
   # loop through the land use points
   alltimes <- mclapply(1:total_lu, function(i){
     ll_latlong <- c(ll[i,]$LATITUDE, ll[i, ]$LONGITUDE)
@@ -228,7 +243,9 @@ calculate_times <- function(landuse, bgcentroid, graph){
         o <- otp_get_times(
           otpcon, 
           fromPlace = bg_latlong, toPlace = ll_latlong,
-          mode = mode, detail = TRUE
+
+          mode = mode, 
+          date = "08-02-2021", time = "08:00:00", detail = TRUE, includeLegs = TRUE
         )
         
         o$errorId <- as.character(o$errorId)
@@ -241,6 +258,7 @@ calculate_times <- function(landuse, bgcentroid, graph){
     }) %>%
       set_names(bg$id) %>%
       bind_rows(.id = "blockgroup")
+
     
   }, mc.cores = detectCores() - 1) %>%
     set_names(ll$id) %>%
