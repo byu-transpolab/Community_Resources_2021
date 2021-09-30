@@ -58,7 +58,7 @@ copy_sl_files <- function(){
 #' 
 #' @param path to a SL data file
 #' @return a tibble with cleaned and organized data
-read_sl_data <- function(path){
+read_sl_data <- function(path, edit_dest = NULL){
   read_csv(
     path, 
     col_types = list(
@@ -68,7 +68,8 @@ read_sl_data <- function(path){
     ))   %>%
     transmute(
       geoid = ifelse(`Block Group ID` == "N/A", NA, `Block Group ID`),
-      dest = `Zone Name`,
+      dest = ifelse(!is.null(edit_dest), str_c(edit_dest, `Zone Name`, sep = ""),
+                    `Zone Name`),
       dest_id = `Zone ID`,
       home_work = `Home and Work Filter`,
       intersection = `Intersection Type`,
