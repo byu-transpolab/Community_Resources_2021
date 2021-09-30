@@ -130,7 +130,7 @@ get_groceries <- function(file, crs){
   st_read(file) %>%
     st_transform(crs)%>%
     rename(id = SITE_NAME)%>%
-    slice_head(n=1)
+    slice_head(n=5)
 }
 
 
@@ -197,20 +197,21 @@ calculate_times <- function(landuse, bgcentroid, graph){
   total_lu <- nrow(ll)
   total_bg <- nrow(bg)
   
-  origin <- lapply(1:total_lu, function(i){
-    ll_latlong <- c(ll[i,]$LATITUDE, ll[i, ]$LONGITUDE)
+  origin <- lapply(1:total_bg, function(i){
+    bg_latlong <- c(bg[i,]$LATITUDE, bg[i, ]$LONGITUDE)
   
     
-    destinations <- lapply(1:total_bg, function(j){
-      bg_latlong <- c(bg[j,]$LATITUDE, bg[j, ]$LONGITUDE)
+    destinations <- lapply(1:total_lu, function(j){
+      ll_latlong <- c(ll[j,]$LATITUDE, ll[j, ]$LONGITUDE)
       
       
       times <- lapply(modes, function(mode){
         
         o <- otp_get_times(
           otpcon, 
-          fromPlace = ll_latlong, toPlace = bg_latlong,
-          mode = mode, date = "08-02-2021", time = "08:00:00", detail = TRUE, includeLegs = TRUE
+          fromPlace = bg_latlong, toPlace = ll_latlong,
+          mode = mode, 
+          date = "08-02-2021", time = "08:00:00", detail = TRUE, includeLegs = TRUE
         )
         
         o$errorId <- as.character(o$errorId)
@@ -224,7 +225,7 @@ calculate_times <- function(landuse, bgcentroid, graph){
     })
 
     
-    names(destinations) <- bg$id
+    names(destinations) <- ll$id
     
     destinations %>% bind_rows(.id = "destination")
     
@@ -232,7 +233,7 @@ calculate_times <- function(landuse, bgcentroid, graph){
 
 
   
-  names(origin) <- ll$id
+  names(origin) <- bg$id
   
  parktimes <- 
     origin %>% 
