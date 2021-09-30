@@ -16,7 +16,8 @@ source("R/choice_modeling.R")
 
 # Set target-specific options such as packages.
 tar_option_set(packages = c("tidyverse", "sf","opentripplanner", "rstudioapi",
-                            "otpr", "leaflet", "tidycensus"))
+                            "otpr", "leaflet", "tidycensus", "parallel", "haven", 
+                            "mlogit"))
 
 this_crs <- 3560 # http://epsg.io/3560-1746 Utah North usft
 
@@ -38,24 +39,28 @@ list(
   # Parks ============
   tar_target(park_polygons, get_parks("data/parks.geojson", this_crs)),
   tar_target(park_points, make_park_points(park_polygons, 1/500, this_crs)),
-  tar_target(park_times, calculate_times(park_points, bgcentroid, graph)),
-  # streetlight ----
-  #tar_target(sl_parks_csv, get_sl_data("data/streetlight_parks.zip", "parks"),
-  #           format = "file"),
-  #tar_target(sl_parks, read_sl_data(sl_parks_csv)),
-  #tar_target(parks_estdata, make_estdata(sl_parks, park_times, park_polygons, acsdata)),
-  
+  # tar_target(park_times, calculate_times(park_points, bgcentroid, graph)),
+  # # streetlight ----
+  # tar_target(sl_parks_csv, get_sl_data("data/streetlight_parks.zip", "parks"),
+  #            format = "file"),
+  # tar_target(sl_parks, read_sl_data(sl_parks_csv)),
+  # tar_target(parks_estdata, make_estdata(sl_parks, park_times, park_polygons, acsdata)),
 
   
   # Groceries =====================
-  tar_target(groceries, get_groceries("data/groceries.geojson", this_crs)),
-  tar_target(grocery_times, calculate_times(groceries, bgcentroid)),
+  tar_target(groceries, get_groceries("data/groceries.geojson", "data/NEMS-S_UC2021_brief.sav", this_crs)),
+  tar_target(grocery_times, calculate_times(groceries, bgcentroid, graph)),
   # streetlight ----
   #tar_target(sl_grocery_csv, get_sl_data("data/streetlight_groceries.csv", "groceries"),
   #           format = "file"),
   #tar_target(sl_grocery, read_sl_data(sl_grocery_csv)),
   # choice data and models ---
-  #tar_target(groceries_estdata, make_estdata(sl_grocery, grocery_times, groceries, acsdata)),
+  tar_target(groceries_estdata, make_estdata(sl_grocery, grocery_times, groceries, acsdata,
+                                             n_obs = 10000, n_alts = 10)),
+  tar_target(grocery_models, estimate_grocerymodels(groceries_estdata)),
+  tar_target(grocery_mod_rds, write_rds(grocery_models, "data/grocery_models.rds"), format = "rds"),
+  tar_target(grocery_logsums, calculate_grocery_access(grocery_times, groceries, grocery_models)),
+
   
   
   
