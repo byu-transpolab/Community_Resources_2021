@@ -117,9 +117,8 @@ get_park_attributes <- function(parks){
 get_libraries <- function(file, crs){
   st_read(file) %>%
     st_transform(crs) %>%
-    rename(id = ID) %>%
-    mutate(id = as.character(id))%>%
-    slice_head(n=2)
+    rename(id = ID, name = Name) %>%
+    mutate(id = as.character(id))
 }
 
 #' Get Groceries shape information
@@ -129,13 +128,12 @@ get_libraries <- function(file, crs){
 #' @param crs Projected CRS to use for data; 
 #' @return sf data frame with groceries data
 #' 
-
 get_groceries <- function(file, data, crs){
   # read shape information
   gj <- st_read(file) %>%
     st_transform(crs) %>%
     filter(st_is(., c("MULTIPOLYGON"))) %>%
-    transmute(id = str_c("UT-", SITE_NAME, sep = ""))  %>%
+    rename(id = SITE_NAME) %>%
     filter(!duplicated(id))
   
   # read survey data 
@@ -152,8 +150,7 @@ get_groceries <- function(file, data, crs){
       total_registers = REGISTERS_TOT
     )
   
-  inner_join(gj, gd, by = "id")%>%
-    slice_head(n=5)
+  inner_join(gj, gd, by = "id")
   
 }
 
