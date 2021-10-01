@@ -4,10 +4,15 @@
 get_bglatlong <- function(){
   bgcentroid <- read_csv("https://www2.census.gov/geo/docs/reference/cenpop2010/blkgrp/CenPop2010_Mean_BG49.txt")
     
-  
   st_as_sf(bgcentroid, coords = c("LONGITUDE", "LATITUDE"), crs = 4326) %>%
     mutate(id = str_c(STATEFP, COUNTYFP, TRACTCE, BLKGRPCE)) %>%
     filter(COUNTYFP == "049") %>%
+    # remove block groups in stupid places
+    filter(!id %in% c(
+      "490499801001", # Camp williams
+      "490490109002", # spanish fork peak
+      "490490109001", # provo canyon
+      ))
     select(id, POPULATION)
 }
 
