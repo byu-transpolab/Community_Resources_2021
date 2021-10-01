@@ -224,7 +224,7 @@ calculate_times <- function(landuse, bgcentroid, graph, landuselimit = NULL, bgl
   alltimes <- lapply(1:nrow(ll), function(i){
     ll_latlong <- c(ll[i,]$LATITUDE, ll[i, ]$LONGITUDE)
     
-    message("Getting travel times for land use id", ll[i, ]$id)
+    message("Getting travel times for land use ", ll[i, ]$id, ", ", i, " of ", nrow(ll))
     # loop through the block groups
     lapply(1:nrow(bg), function(j){
       bg_latlong <- c(bg[j,]$LATITUDE, bg[j, ]$LONGITUDE)
