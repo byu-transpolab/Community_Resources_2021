@@ -93,12 +93,9 @@ make_park_points <- function(park_polygons, density, crs){
       st_as_sf() %>%
       st_cast(to = "POINT")%>%
       group_by(id)%>%
-      slice_head(n=1)%>%
       ungroup()
   )
   
-  park_points %>%
-    slice_head(n = 3)
 }
 
 
@@ -202,7 +199,7 @@ make_graph <- function(graph_dir){
 #' 
 #' @details Parallelized, will use parallel::detectCores() - 1
 #' 
-calculate_times <- function(landuse, bgcentroid, graph){
+calculate_times <- function(landuse, bgcentroid, graph, landuselimit = NULL, bglimit = NULL){
   
   # start connection to OTP
   path_otp <- otp_dl_jar(file.path("OTP"),cache = TRUE)
@@ -215,9 +212,9 @@ calculate_times <- function(landuse, bgcentroid, graph){
   ll <- get_latlong(landuse)
   bg <- get_latlong(bgcentroid)
   
-  # Get distance between each ll and each bg
-  total_lu <- nrow(ll)
-  total_bg <- nrow(bg)
+  # limit the number of cells for the time calculations (for debugging)
+  if(!is.null(landuselimit)) ll <- ll %>% sample_n(landuselimit)
+  if(!is.null(bglimit)) bg <- bg %>% sample_n(bglimit)
   
 
   # loop through the land use points
