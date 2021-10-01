@@ -222,19 +222,20 @@ calculate_times <- function(landuse, bgcentroid, graph, landuselimit = NULL, bgl
   alltimes <- lapply(1:nrow(ll), function(i){
     ll_latlong <- c(ll[i,]$LATITUDE, ll[i, ]$LONGITUDE)
     
+    message("Getting travel times for land use id", ll[i, ]$id)
     # loop through the block groups
     lapply(1:nrow(bg), function(j){
       bg_latlong <- c(bg[j,]$LATITUDE, bg[j, ]$LONGITUDE)
       
       # loop through the modes
-      modes <- c("CAR","BUS")
+      modes <- c("CAR","TRANSIT", "WALK")
       lapply(modes, function(mode){
         o <- otp_get_times(
           otpcon, 
           fromPlace = bg_latlong, toPlace = ll_latlong,
 
           mode = mode, 
-          date = "08-02-2021", time = "08:00:00", detail = TRUE, includeLegs = TRUE
+          date = "10-05-2021", time = "08:00:00", detail = TRUE, includeLegs = TRUE
         )
         
         o$errorId <- as.character(o$errorId)
@@ -257,8 +258,13 @@ calculate_times <- function(landuse, bgcentroid, graph, landuselimit = NULL, bgl
   alltimes %>% 
     bind_rows(.id = "origin") %>%
     select(blockgroup, resource, mode, itineraries) %>%
-    mutate(duration = itineraries$duration) %>%
-    select(resource, blockgroup, mode, duration) %>%
+    transmute(resource, blockgroup, mode, 
+              duration = itineraries$duration, 
+              transfers = itineraries$transfers,
+              walktime = itineraries$walkTime,
+              waitingTime = itineraries$waitingTime, 
+              transitTime = itineraries$transitTime) %>%
+    # keep only the shortest itinerary by origin / destination / mode
     group_by(resource, blockgroup, mode) %>%
     arrange(duration, .by_group = TRUE) %>%
     slice(1)
