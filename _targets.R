@@ -17,7 +17,7 @@ source("R/choice_modeling.R")
 # Set target-specific options such as packages.
 tar_option_set(packages = c("tidyverse", "sf","opentripplanner", "rstudioapi",
                             "otpr", "leaflet", "tidycensus", "parallel", "haven", 
-                            "mlogit"))
+                            "mlogit", "jsonlite"))
 
 this_crs <- 3560 # http://epsg.io/3560-1746 Utah North usft
 
@@ -35,6 +35,8 @@ list(
   tar_target(osmpbf, get_osmbpf(file.path(otp_path, "osm.pbf")), format = "file"),
   tar_target(gtfs,   get_gtfs(file.path(otp_path, "gtfs.zip")), format = "file"),
   tar_target(graph,  make_graph(otp_path), format = "file"),
+  tar_target(util_file, "data/mode_utilities.json", format = "file"),
+  tar_target(utilities, read_utilities(util_file)),
   
   # Parks ============
   tar_target(park_polygons, get_parks("data/parks.geojson", this_crs)),
