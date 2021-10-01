@@ -167,8 +167,9 @@ groceries_map <- function(groceries){
 #' 
 get_latlong <- function(sfc){
   
+  
   tib <- sfc %>%
-    st_centroid() %>% 
+    suppressWarnings(st_centroid()) %>% # will always warn for constant geometry
     st_transform(4326) %>%
     mutate(
       LATITUDE  = st_coordinates(.)[, 2],
