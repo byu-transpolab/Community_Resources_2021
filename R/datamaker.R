@@ -264,15 +264,64 @@ calculate_times <- function(landuse, bgcentroid, graph, landuselimit = NULL, bgl
               duration = itineraries$duration, 
               transfers = itineraries$transfers,
               walktime = itineraries$walkTime,
-              waitingTime = itineraries$waitingTime, 
-              transitTime = itineraries$transitTime) %>%
+              waittime = itineraries$waitingTime, 
+              transittime = itineraries$transitTime) %>%
     # keep only the shortest itinerary by origin / destination / mode
     group_by(resource, blockgroup, mode) %>%
     arrange(duration, .by_group = TRUE) %>%
     slice(1)
   
 }
+
+
+#' Calculate mode choice logsums
+#' 
+#' @param times A tibble returned from calculate_times
+#' @param utilities A list of mode choice utilities
+#' @param walkspeed Assumed walking speed in miles per hour
+#' 
+#' @return A tibble with the mode choice logsum for each resource / blockgroup
+#'   pair
+calculate_logsums <- function(times, utilities, walkspeed = 2.8) {
   
+  times %>%
+    pivot_wider(id_cols = c("resource", "blockgroup"), names_from = mode,
+                values_from = c(duration, transfers, walktime, waittime, transittime)) %>%
+    mutate(
+      utility_CAR = as.numeric(
+        utilities$CAR$constant + duration_CAR * utilities$CAR$ivtt
+      ),
+      utility_TRANSIT = as.numeric(
+        utilities$TRANSIT$constant + 
+          transittime_TRANSIT * utilities$TRANSIT$ivtt + 
+          waittime_TRANSIT * utilities$TRANSIT$wait
+      ), 
+      utility_WALK = as.numeric(
+        utilities$WALK$constant + 
+          duration_WALK * utilities$WALK$ivtt + 
+          ifelse(walktime_WALK > utilities$WALK$distance_threshold,
+                 # minutes * hr / min * mi/hr *  util / mi
+                 walktime_WALK / 60 * walkspeed * utilities$WALK$long_distance,
+                 walktime_WALK / 60 * walkspeed * utilities$WALK$short_distance
+          )
+      ), 
+      
+    ) %>%
+    select(contains("utility")) %>%
+    pivot_longer(cols = contains("utility"), 
+                 names_to = "mode", names_prefix = "utility_", values_to = "utility") %>%
+    group_by(resource, blockgroup) %>%
+    summarise(mclogsum = logsum(utility))
+  
+}
+
+logsum <- function(utility){
+  log(sum(exp(utility), na.rm = TRUE))
+}
+
+prob_u <- function(utility){
+  exp(utility) / sum(exp(utility), na.rm = TRUE)
+}
 
 read_utilities <- function(file){
   
