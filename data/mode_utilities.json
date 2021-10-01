@@ -1,0 +1,18 @@
+{
+  "CAR":[{
+    "constant":0,
+    "ivtt":-0.02 
+  }],
+  "TRANSIT": [{
+    "constant":-2.0,
+    "ivtt":-0.02,
+    "wait":-0.05
+  }],
+  "WALK": [{
+    "constant":-2.5,
+    "ivtt":-0.02,
+    "short_distance":-20.0,
+    "long_distance": -50.0,
+    "distance_threshold": 1
+  }]
+}

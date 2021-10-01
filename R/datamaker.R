@@ -274,6 +274,13 @@ calculate_times <- function(landuse, bgcentroid, graph, landuselimit = NULL, bgl
 }
   
 
+read_utilities <- function(file){
+  
+  read_json(file, simplifyVector = TRUE)
+  
+}
+  
+
 
 #' Get American Community Survey data for the study.
 #' 
