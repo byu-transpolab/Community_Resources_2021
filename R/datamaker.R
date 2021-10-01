@@ -217,13 +217,13 @@ calculate_times <- function(landuse, bgcentroid, graph, landuselimit = NULL, bgl
   if(!is.null(landuselimit)) ll <- ll %>% sample_n(landuselimit)
   if(!is.null(bglimit)) bg <- bg %>% sample_n(bglimit)
   
-
+  # Get distance between each ll and each bg
   # loop through the land use points
-  alltimes <- mclapply(1:total_lu, function(i){
+  alltimes <- lapply(1:nrow(ll), function(i){
     ll_latlong <- c(ll[i,]$LATITUDE, ll[i, ]$LONGITUDE)
     
     # loop through the block groups
-    lapply(1:total_bg, function(j){
+    lapply(1:nrow(bg), function(j){
       bg_latlong <- c(bg[j,]$LATITUDE, bg[j, ]$LONGITUDE)
       
       # loop through the modes
@@ -249,7 +249,7 @@ calculate_times <- function(landuse, bgcentroid, graph, landuselimit = NULL, bgl
       bind_rows(.id = "blockgroup")
 
     
-  }, mc.cores = detectCores() - 1) %>%
+  }) %>%
     set_names(ll$id) %>%
     bind_rows(.id = "resource")
   
