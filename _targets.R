@@ -20,6 +20,7 @@ tar_option_set(packages = c("tidyverse", "sf","opentripplanner", "rstudioapi",
                             "mlogit", "jsonlite"))
 
 this_crs <- 3560 # http://epsg.io/3560-1746 Utah North usft
+bglimit <- 20 # This will limit the times calculation to this many random zones. Set to NULL for all
 
 otp_path <- "otp/graphs/default/"
 
@@ -41,17 +42,20 @@ list(
   # Parks ============
   tar_target(park_polygons, get_parks("data/parks.geojson", this_crs)),
   tar_target(park_points, make_park_points(park_polygons, 1/500, this_crs)),
-  tar_target(park_times, calculate_times(park_points, bgcentroid, graph)),
-  # # streetlight ----
+  tar_target(park_times, calculate_times(park_points, bgcentroid, graph, bglimit = bglimit)),
+  tar_target(park_lsums, calculate_lsums(library_times, utilities)),
+  # streetlight ----
   tar_target(sl_parks_csv, get_sl_data("data/streetlight_parks.zip", "parks"),
              format = "file"),
   tar_target(sl_parks, read_sl_data(sl_parks_csv)),
+  # choice data and models ---
   tar_target(parks_estdata, make_estdata(sl_parks, park_times, park_polygons, acsdata)),
 
   
   # Groceries =====================
   tar_target(groceries, get_groceries("data/groceries.geojson", "data/NEMS-S_UC2021_brief.sav", this_crs)),
-  tar_target(grocery_times, calculate_times(groceries, bgcentroid, graph)),
+  tar_target(grocery_times, calculate_times(groceries, bgcentroid, graph, bglimit = bglimit)),
+  tar_target(grocery_lsums, calculate_logsums(grocery_times, utilities)),
   # streetlight ----
   tar_target(sl_grocery_csv, get_sl_data("data/streetlight_groceries.csv", "groceries"),
              format = "file"),
@@ -61,7 +65,7 @@ list(
                                              n_obs = 10000, n_alts = 10)),
   tar_target(grocery_models, estimate_grocerymodels(groceries_estdata)),
   tar_target(grocery_mod_rds, write_rds(grocery_models, "data/grocery_models.rds"), format = "rds"),
-  tar_target(grocery_logsums, calculate_grocery_access(grocery_times, groceries, grocery_models)),
+  tar_target(grocery_access, calculate_grocery_access(grocery_times, groceries, grocery_models)),
 
   
   
@@ -69,7 +73,8 @@ list(
   
   # Libraries ======================
   tar_target(libraries, get_libraries("data/libraries.geojson", this_crs)),
-  tar_target(library_times, calculate_times(libraries, bgcentroid, graph)),
+  tar_target(library_times, calculate_times(libraries, bgcentroid, graph, bglimit = bglimit)),
+  tar_target(library_lsums, calculate_logsums(library_times, utilities)),
   # streetlight ----
   tar_target(sl_libraries_csv, get_sl_data("data/streetlight_libraries.csv", "libraries"),
              format = "file"),
@@ -77,6 +82,9 @@ list(
   tar_target(lee_plot, plot_streetlight(sl_libraries, "Brigham Young University - Harold B. Lee Library")),
   # choice data and models ---
   tar_target(libraries_estdata, make_estdata(sl_libraries, library_times, libraries, acsdata)),
+  tar_target(library_models, estimate_library_models(libraries_estdata)),
+  tar_target(library_mod_rds, write_rds(library_models, "data/library_models.rds"), format = "rds"),
+  tar_target(library_access, calculate_library_access(library_times, libraries, library_models)),
   
   tar_target(dummy,1+1)
 )
