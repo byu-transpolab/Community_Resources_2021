@@ -216,6 +216,7 @@ calculate_times <- function(landuse, bgcentroid, graph, landuselimit = NULL, bgl
   on.exit(otp_stop(warn = FALSE))
   
   
+  
   # get lat / long for the landuse and the centroids
   ll <- get_latlong(landuse)
   bg <- get_latlong(bgcentroid)
@@ -225,8 +226,13 @@ calculate_times <- function(landuse, bgcentroid, graph, landuselimit = NULL, bgl
   if(!is.null(bglimit)) bg <- bg %>% sample_n(bglimit)
   
   # Get distance between each ll and each bg
-  # loop through the land use points
-  alltimes <- lapply(1:nrow(ll), function(i){
+  # loop through the land use points in parallel; this will not work on 
+  # Window because I'm too lazy to find an alternative to the very easy 
+  # parallel::mclapply
+  cores <- if(Sys.info()['sysname'] == "Windows") 1 else parallel::detectCores() - 1
+  cores <- 1
+  
+  alltimes <- mclapply(1:nrow(ll), function(i){
     ll_latlong <- c(ll[i,]$LATITUDE, ll[i, ]$LONGITUDE)
     
     message("Getting travel times for land use ", ll[i, ]$id, ", ", i, " of ", nrow(ll))
@@ -257,7 +263,7 @@ calculate_times <- function(landuse, bgcentroid, graph, landuselimit = NULL, bgl
       bind_rows(.id = "blockgroup")
 
     
-  }) %>%
+  }, mc.cores = cores) %>%
     set_names(ll$id) %>%
     bind_rows(.id = "resource")
   
