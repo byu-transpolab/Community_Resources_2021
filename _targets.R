@@ -20,7 +20,7 @@ tar_option_set(packages = c("tidyverse", "sf","opentripplanner", "rstudioapi",
                             "mlogit", "jsonlite"))
 
 this_crs <- 3560 # http://epsg.io/3560-1746 Utah North usft
-bglimit <- 20 # This will limit the times calculation to this many random zones. Set to NULL for all
+bglimit <- NULL # This will limit the times calculation to this many random zones. Set to NULL for all
 
 otp_path <- "otp/graphs/default/"
 
@@ -43,7 +43,7 @@ list(
   tar_target(park_polygons, get_parks("data/parks.geojson", this_crs)),
   tar_target(park_points, make_park_points(park_polygons, 1/500, this_crs)),
   tar_target(park_times, calculate_times(park_points, bgcentroid, graph, bglimit = bglimit)),
-  tar_target(park_lsums, calculate_lsums(library_times, utilities)),
+  tar_target(park_lsums, calculate_logsums(library_times, utilities)),
   # streetlight ----
   tar_target(sl_parks_csv, get_sl_data("data/streetlight_parks.zip", "parks"),
              format = "file"),
