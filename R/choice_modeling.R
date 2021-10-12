@@ -1,7 +1,7 @@
 #' Construct an estimation dataset
 #' 
 #' @param flows tibble with flows from block groups to destination zones
-#' @param times  tibble with multimodal times between origins and destinations
+#' @param lsums tibble with multimodal times and logsums between origins and destinations. see calculate_logsums()
 #' @param ludata tibble with land use data
 #' @param n_obs Number of simulated agents
 #' @param n_alts Number of non-chosen alternatives
@@ -9,7 +9,7 @@
 #' @return A tibble with simulated choice makers and their chosen alternative
 #' 
 #' 
-make_estdata <- function(flows, times, ludata, acsdata, n_obs = 50, n_alts = 5,
+make_estdata <- function(flows, lsums, ludata, acsdata, n_obs = 50, n_alts = 5,
                          day = "0: All Days (M-Su)", time = "All Day (12am-12am)") {
   
   
@@ -36,8 +36,6 @@ make_estdata <- function(flows, times, ludata, acsdata, n_obs = 50, n_alts = 5,
 
   # Create dataset ----
   attributes <- ludata %>% st_set_geometry(NULL)  %>% as_tibble()
-  mytimes <- times %>%
-    pivot_wider(names_from = mode, values_from = duration)
     
   
   logitdata <- mydata %>%
@@ -50,20 +48,15 @@ make_estdata <- function(flows, times, ludata, acsdata, n_obs = 50, n_alts = 5,
     left_join(attributes, by = c("dest" = "id")) %>%
   
     # append distances
-    left_join(mytimes, by = c("geoid" = "blockgroup", "dest" = "resource")) %>%
+    left_join(lsums, by = c("geoid" = "blockgroup", "dest" = "resource")) %>%
     
     # append block group attributes
     left_join(acsdata, by = c("geoid")
               
     )
   
-  # TODO: fix CAR times 
-  # until then, we need to remove observations that have missing CAR times for their
-  # chosen alternative
-  nocar <- logitdata %>% filter(is.na(CAR)) %>% pull(obs_id)
   
-  
-  logitdata  %>% filter(!obs_id %in% nocar)
+  logitdata  
 }
 
 

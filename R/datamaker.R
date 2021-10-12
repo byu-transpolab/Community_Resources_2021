@@ -295,9 +295,11 @@ calculate_times <- function(landuse, bgcentroid, graph, landuselimit = NULL, bgl
 #'   pair
 calculate_logsums <- function(times, utilities, walkspeed = 2.8) {
   
-  times %>%
+  w_times <- times %>%
     pivot_wider(id_cols = c("resource", "blockgroup"), names_from = mode,
-                values_from = c(duration, transfers, walktime, waittime, transittime)) %>%
+                values_from = c(duration, transfers, walktime, waittime, transittime)) 
+  
+  lsum <- w_times %>%
     mutate(
       utility_CAR = as.numeric(
         utilities$CAR$constant + duration_CAR * utilities$CAR$ivtt
@@ -323,6 +325,8 @@ calculate_logsums <- function(times, utilities, walkspeed = 2.8) {
                  names_to = "mode", names_prefix = "utility_", values_to = "utility") %>%
     group_by(resource, blockgroup) %>%
     summarise(mclogsum = logsum(utility))
+  
+  left_join(w_times, lsum, by = c("resource", "blockgroup"))
   
 }
 
