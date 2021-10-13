@@ -91,4 +91,11 @@ ggmap_bbox <- function(map) {
     attr(map, "bb")$ur.lon <- bbox_3857["xmax"]
     map
 }
+
+f <- function(x) format(round(x, 1), big.mark=",")
+gm <-  list(
+  list("raw" = "nobs",  "clean" = "Num.Obs.", "fmt" = f),
+  list("raw" = "logLik","clean" = "Log Likelihood", "fmt" = f),
+  list("raw" = "rho20", "clean" = "McFadden Rho-Sq", "fmt" = 3)
+)
 ```
