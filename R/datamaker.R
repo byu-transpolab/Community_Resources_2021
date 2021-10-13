@@ -307,7 +307,8 @@ calculate_logsums <- function(times, utilities, walkspeed = 2.8) {
       utility_TRANSIT = as.numeric(
         utilities$TRANSIT$constant + 
           transittime_TRANSIT * utilities$TRANSIT$ivtt + 
-          waittime_TRANSIT * utilities$TRANSIT$wait
+          waittime_TRANSIT * utilities$TRANSIT$wait + 
+          walktime_TRANSIT * utilities$TRANSIT$access
       ), 
       utility_WALK = as.numeric(
         utilities$WALK$constant + 
