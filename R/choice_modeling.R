@@ -57,7 +57,13 @@ make_estdata <- function(flows, lsums, ludata, acsdata, n_obs = 50, n_alts = 5,
     )
   
   
-  logitdata  
+  # TODO: fix CAR times 
+  # until then, we need to remove observations that have missing CAR times for their
+  # chosen alternative
+  nocar <- logitdata %>% filter(is.na(duration_CAR)) %>% pull(obs_id)
+  
+  
+  logitdata  %>% filter(!obs_id %in% nocar)
 }
 
 

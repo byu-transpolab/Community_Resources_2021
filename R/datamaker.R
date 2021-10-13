@@ -297,7 +297,8 @@ calculate_logsums <- function(times, utilities, walkspeed = 2.8) {
   
   w_times <- times %>%
     pivot_wider(id_cols = c("resource", "blockgroup"), names_from = mode,
-                values_from = c(duration, transfers, walktime, waittime, transittime)) 
+                values_from = c(duration, transfers, walktime, waittime, transittime)) %>%
+    filter(!is.na(duration_CAR))
   
   lsum <- w_times %>%
     mutate(
