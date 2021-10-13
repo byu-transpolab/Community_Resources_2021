@@ -157,7 +157,7 @@ groceries_map <- function(groceries){
   
   leaflet(groceries %>% st_centroid() %>% st_transform(4326)) %>%
     addProviderTiles(providers$Esri.WorldGrayCanvas) %>%
-    addCircles(color = ~pal(type), radius = ~(total_registers* 10))
+    addCircles(color = ~pal(type), label = ~as.character(id), radius = ~(total_registers* 10))
 
 }
 

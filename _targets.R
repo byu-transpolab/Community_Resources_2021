@@ -43,13 +43,15 @@ list(
   tar_target(park_polygons, get_parks("data/parks.geojson", this_crs)),
   tar_target(park_points, make_park_points(park_polygons, 1/500, this_crs)),
   tar_target(park_times, calculate_times(park_points, bgcentroid, graph, bglimit = bglimit)),
-  tar_target(park_lsums, calculate_logsums(library_times, utilities)),
+  tar_target(park_lsums, calculate_logsums(park_times, utilities)),
   # streetlight ----
   tar_target(sl_parks_csv, get_sl_data("data/streetlight_parks.zip", "parks"),
              format = "file"),
   tar_target(sl_parks, read_sl_data(sl_parks_csv)),
   # choice data and models ---
-  tar_target(parks_estdata, make_estdata(sl_parks, park_lsums, park_polygons, acsdata)),
+  tar_target(parks_estdata, make_estdata(sl_parks, park_lsums, park_polygons, acsdata, 
+                                         n_obs = 10000, n_alts = 10)),
+  tar_target(park_models, estimate_parkmodels(parks_estdata)),
 
   
   # Groceries =====================
@@ -82,9 +84,7 @@ list(
   tar_target(lee_plot, plot_streetlight(sl_libraries, "Brigham Young University - Harold B. Lee Library")),
   # choice data and models ---
   tar_target(libraries_estdata, make_estdata(sl_libraries, library_lsums, libraries, acsdata)),
-  tar_target(library_models, estimate_library_models(libraries_estdata)),
-  tar_target(library_mod_rds, write_rds(library_models, "data/library_models.rds"), format = "rds"),
-  tar_target(library_access, calculate_library_access(library_times, libraries, library_models)),
+  tar_target(library_models, estimate_librarymodels(libraries_estdata)),
   
   tar_target(dummy,1+1)
 )
