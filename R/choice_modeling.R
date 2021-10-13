@@ -16,6 +16,7 @@ make_estdata <- function(flows, lsums, ludata, acsdata, n_obs = 50, n_alts = 5,
   # Get a list of chosen destinations  ----
   mydata <- flows %>%
     ungroup() %>%
+    filter(dest %in% lsums$resource, geoid %in% lsums$blockgroup) %>%
     filter(time %in% time, day %in% day) %>%
     mutate(weight = flow / sum(flow)) %>%
     sample_n(n_obs, replace = TRUE, weight = weight) %>%
@@ -64,6 +65,7 @@ make_estdata <- function(flows, lsums, ludata, acsdata, n_obs = 50, n_alts = 5,
 #' 
 #' @param groceries_estdata
 #' 
+#' mlogit()
 #' 
 estimate_grocerymodels <- function(groceries_estdata){
   
@@ -71,11 +73,14 @@ estimate_grocerymodels <- function(groceries_estdata){
   ld <- dfidx(groceries_estdata, idx = list("obs_id", "alt"), shape = "long",  
         choice = "chosen", idnames = "id", drop.index = FALSE)
   
+  
   models <- list(
-    "Car" = mlogit(chosen ~ duration_CAR  + type | -1, data = ld, estimate = FALSE),
+    "Car" = mlogit(chosen ~ duration_CAR | -1, data = ld),
     "MCLS" = mlogit(chosen ~ mclogsum | -1 , data = ld),
-    "Attributes" = mlogit(chosen ~ type  + pharmacy + ethnic + merch | -1 , data = ld),
-    "Size" = mlogit(chosen ~ type + pharmacy + ethnic + merch + registers + selfchecko| -1 , data = ld)
+    "Attributes" = mlogit(chosen ~ type + pharmacy + ethnic + merch | -1 , data = ld),
+    "Size" = mlogit(chosen ~ type + pharmacy + ethnic + merch + registers + selfchecko| -1 , data = ld),
+    "All - Car" = mlogit(chosen ~ duration_CAR  + type + pharmacy + ethnic + merch + registers + selfchecko | -1, data = ld),
+    "All - Logsum" = mlogit(chosen ~ mclogsum + type + pharmacy + ethnic + merch + registers + selfchecko | -1, data = ld)
   )
   
   
@@ -119,4 +124,25 @@ calculate_grocery_access <- function(grocery_times, groceries, grocery_models) {
       logsum = log(sum(eU))
     )
   
+}
+
+
+estimate_librarymodels <- function(libraries_estdata){
+  
+}
+
+estimate_parkmodels <- function(parks_estdata){
+  ld <- dfidx(parks_estdata, idx = list("obs_id", "alt"), shape = "long",  
+              choice = "chosen", idnames = "id", drop.index = FALSE)
+  
+  models <- list(
+    "Car" = mlogit(chosen ~ duration_CAR | -1, data = ld),
+    "MCLS" = mlogit(chosen ~ mclogsum | -1 , data = ld),
+    "Attributes" = mlogit(chosen ~  playground + volleyball + basketball + tennis | -1 , data = ld),
+    "All - Car" = mlogit(chosen ~  duration_CAR + playground + volleyball + basketball + tennis | -1 , data = ld),
+    "All - Logsum" = mlogit(chosen ~  mclogsum + playground + volleyball + basketball + tennis | -1 , data = ld)
+    
+  )
+  
+  models
 }
