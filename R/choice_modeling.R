@@ -72,15 +72,21 @@ estimate_grocerymodels <- function(groceries_estdata){
         choice = "chosen", idnames = "id", drop.index = FALSE)
   
   models <- list(
-    "Base" = mlogit(chosen ~ CAR + type | -1 , data = ld),
-    "Attributes" = mlogit(chosen ~ CAR + type  + pharmacy + ethnic + merch | -1 , data = ld),
-    "Size" = mlogit(chosen ~ CAR + type  + pharmacy + ethnic + merch + registers + selfchecko| -1 , data = ld)
+    "Car" = mlogit(chosen ~ duration_CAR  + type | -1, data = ld, estimate = FALSE),
+    "MCLS" = mlogit(chosen ~ mclogsum | -1 , data = ld),
+    "Attributes" = mlogit(chosen ~ type  + pharmacy + ethnic + merch | -1 , data = ld),
+    "Size" = mlogit(chosen ~ type + pharmacy + ethnic + merch + registers + selfchecko| -1 , data = ld)
   )
   
   
   models
 }
 
+
+modeltable <- function(models){
+  modelsummary(models, estimate = "{estimate}({statistic}){stars}", stars = c('*' = .05, '**' = .01),
+               statistic = NULL, note = "t-statistics in parentheses. * p < 0.5, ** < 0.1")
+}
 
 
 calculate_grocery_access <- function(grocery_times, groceries, grocery_models) {
