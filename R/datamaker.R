@@ -4,10 +4,15 @@
 get_bglatlong <- function(){
   bgcentroid <- read_csv("https://www2.census.gov/geo/docs/reference/cenpop2010/blkgrp/CenPop2010_Mean_BG49.txt")
     
-  
   st_as_sf(bgcentroid, coords = c("LONGITUDE", "LATITUDE"), crs = 4326) %>%
     mutate(id = str_c(STATEFP, COUNTYFP, TRACTCE, BLKGRPCE)) %>%
     filter(COUNTYFP == "049") %>%
+    # remove block groups in stupid places
+    filter(!id %in% c(
+      "490499801001", # Camp williams
+      "490490109002", # spanish fork peak
+      "490490109001" # provo canyon
+    )) %>%
     select(id, POPULATION)
 }
 
@@ -92,11 +97,13 @@ make_park_points <- function(park_polygons, density, crs){
     park_points <- st_sf(id = park_boundaries$id, geometry = point_samples) %>%
       st_as_sf() %>%
       st_cast(to = "POINT")%>%
-      slice_head(n=2)
+      group_by(id)%>%
+      ungroup()
   )
   
-  park_points 
 }
+
+
 
 #' Get Libraries Data
 #' 
@@ -107,8 +114,7 @@ make_park_points <- function(park_polygons, density, crs){
 get_libraries <- function(file, crs){
   st_read(file) %>%
     st_transform(crs) %>%
-    rename(id = ID) %>%
-    mutate(id = as.character(id))
+    transmute(id = Name) 
 }
 
 #' Get Groceries shape information
@@ -123,7 +129,7 @@ get_groceries <- function(file, data, crs){
   gj <- st_read(file) %>%
     st_transform(crs) %>%
     filter(st_is(., c("MULTIPOLYGON"))) %>%
-    transmute(id = str_c("UT-", SITE_NAME, sep = ""))  %>%
+    rename(id = SITE_NAME) %>%
     filter(!duplicated(id))
   
   # read survey data 
@@ -152,6 +158,7 @@ groceries_map <- function(groceries){
   leaflet(groceries %>% st_centroid() %>% st_transform(4326)) %>%
     addProviderTiles(providers$Esri.WorldGrayCanvas) %>%
     addCircles(color = ~pal(type), radius = ~(total_registers* 10))
+
 }
 
 
@@ -165,8 +172,10 @@ groceries_map <- function(groceries){
 #' 
 get_latlong <- function(sfc){
   
+  
+  suppressWarnings(
   tib <- sfc %>%
-    st_centroid() %>% 
+    st_centroid() %>% # will always warn for constant geometry
     st_transform(4326) %>%
     mutate(
       LATITUDE  = st_coordinates(.)[, 2],
@@ -174,6 +183,7 @@ get_latlong <- function(sfc){
     ) %>%
     transmute(id = as.character(id), LONGITUDE, LATITUDE)   %>%
     st_set_geometry(NULL)
+  )
   
   tib
 }
@@ -197,7 +207,7 @@ make_graph <- function(graph_dir){
 #' 
 #' @details Parallelized, will use parallel::detectCores() - 1
 #' 
-calculate_times <- function(landuse, bgcentroid, graph){
+calculate_times <- function(landuse, bgcentroid, graph, landuselimit = NULL, bglimit = NULL){
   
   # start connection to OTP
   path_otp <- otp_dl_jar(file.path("OTP"),cache = TRUE)
@@ -206,29 +216,39 @@ calculate_times <- function(landuse, bgcentroid, graph){
   on.exit(otp_stop(warn = FALSE))
   
   
+  
   # get lat / long for the landuse and the centroids
   ll <- get_latlong(landuse)
   bg <- get_latlong(bgcentroid)
   
-  # Get distance between each ll and each bg
-  total_lu <- nrow(ll)
-  total_bg <- nrow(bg)
+  # limit the number of cells for the time calculations (for debugging)
+  if(!is.null(landuselimit)) ll <- ll %>% sample_n(landuselimit)
+  if(!is.null(bglimit)) bg <- bg %>% sample_n(bglimit)
   
-  # loop through the land use points
-  alltimes <- mclapply(1:total_lu, function(i){
+  # Get distance between each ll and each bg
+  # loop through the land use points in parallel; this will not work on 
+  # Window because I'm too lazy to find an alternative to the very easy 
+  # parallel::mclapply
+  cores <- if(Sys.info()['sysname'] == "Windows") 1 else parallel::detectCores() - 1
+  cores <- 1
+  
+  alltimes <- mclapply(1:nrow(ll), function(i){
     ll_latlong <- c(ll[i,]$LATITUDE, ll[i, ]$LONGITUDE)
     
+    message("Getting travel times for land use ", ll[i, ]$id, ", ", i, " of ", nrow(ll))
     # loop through the block groups
-    lapply(1:total_bg, function(j){
+    lapply(1:nrow(bg), function(j){
       bg_latlong <- c(bg[j,]$LATITUDE, bg[j, ]$LONGITUDE)
       
       # loop through the modes
-      modes <- c("CAR","BUS")
+      modes <- c("CAR","TRANSIT", "WALK")
       lapply(modes, function(mode){
         o <- otp_get_times(
           otpcon, 
           fromPlace = bg_latlong, toPlace = ll_latlong,
-          mode = mode, detail = TRUE
+
+          mode = mode, 
+          date = "10-05-2021", time = "08:00:00", detail = TRUE, includeLegs = TRUE
         )
         
         o$errorId <- as.character(o$errorId)
@@ -241,8 +261,9 @@ calculate_times <- function(landuse, bgcentroid, graph){
     }) %>%
       set_names(bg$id) %>%
       bind_rows(.id = "blockgroup")
+
     
-  }, mc.cores = detectCores() - 1) %>%
+  }, mc.cores = cores) %>%
     set_names(ll$id) %>%
     bind_rows(.id = "resource")
   
@@ -250,11 +271,72 @@ calculate_times <- function(landuse, bgcentroid, graph){
   alltimes %>% 
     bind_rows(.id = "origin") %>%
     select(blockgroup, resource, mode, itineraries) %>%
-    mutate(duration = itineraries$duration) %>%
-    select(resource, blockgroup, mode, duration) %>%
+    transmute(resource, blockgroup, mode, 
+              duration = itineraries$duration, 
+              transfers = itineraries$transfers,
+              walktime = itineraries$walkTime,
+              waittime = itineraries$waitingTime, 
+              transittime = itineraries$transitTime) %>%
+    # keep only the shortest itinerary by origin / destination / mode
     group_by(resource, blockgroup, mode) %>%
     arrange(duration, .by_group = TRUE) %>%
     slice(1)
+  
+}
+
+
+#' Calculate mode choice logsums
+#' 
+#' @param times A tibble returned from calculate_times
+#' @param utilities A list of mode choice utilities
+#' @param walkspeed Assumed walking speed in miles per hour
+#' 
+#' @return A tibble with the mode choice logsum for each resource / blockgroup
+#'   pair
+calculate_logsums <- function(times, utilities, walkspeed = 2.8) {
+  
+  times %>%
+    pivot_wider(id_cols = c("resource", "blockgroup"), names_from = mode,
+                values_from = c(duration, transfers, walktime, waittime, transittime)) %>%
+    mutate(
+      utility_CAR = as.numeric(
+        utilities$CAR$constant + duration_CAR * utilities$CAR$ivtt
+      ),
+      utility_TRANSIT = as.numeric(
+        utilities$TRANSIT$constant + 
+          transittime_TRANSIT * utilities$TRANSIT$ivtt + 
+          waittime_TRANSIT * utilities$TRANSIT$wait
+      ), 
+      utility_WALK = as.numeric(
+        utilities$WALK$constant + 
+          duration_WALK * utilities$WALK$ivtt + 
+          ifelse(walktime_WALK > utilities$WALK$distance_threshold,
+                 # minutes * hr / min * mi/hr *  util / mi
+                 walktime_WALK / 60 * walkspeed * utilities$WALK$long_distance,
+                 walktime_WALK / 60 * walkspeed * utilities$WALK$short_distance
+          )
+      ), 
+      
+    ) %>%
+    select(contains("utility")) %>%
+    pivot_longer(cols = contains("utility"), 
+                 names_to = "mode", names_prefix = "utility_", values_to = "utility") %>%
+    group_by(resource, blockgroup) %>%
+    summarise(mclogsum = logsum(utility))
+  
+}
+
+logsum <- function(utility){
+  log(sum(exp(utility), na.rm = TRUE))
+}
+
+prob_u <- function(utility){
+  exp(utility) / sum(exp(utility), na.rm = TRUE)
+}
+
+read_utilities <- function(file){
+  
+  read_json(file, simplifyVector = TRUE)
   
 }
   
