@@ -1,7 +1,57 @@
-# Applications
+# Results
 
-Some _significant_ applications are demonstrated in this chapter.
 
-## Example one
+## Destination Choice Models
+
+```{r park-models}
+tar_load(park_models)
+park_map = c(
+    "duration_CAR" = "Drive time",
+    "mclogsum" = "Mode Choice Logsum",
+    "playgroundTRUE" = "Playground",
+    "volleyballTRUE" = "Volleyball",
+    "basketballTRUE" = "Basketball",
+    "tennisTRUE" = "Tennis"
+)
+
+modelsummary(park_models, estimate = "{estimate}({statistic}){stars}", stars = c('*' = .05, '**' = .01),
+             coef_map = park_map, gof_map = gm,
+             statistic = NULL, note = "t-statistics in parentheses. * p < 0.5, ** p < 0.1")
+
+```
+
+
+```{r grocery-models}
+tar_load(grocery_models)
+
+grocery_map = c(
+    "duration_CAR" = "Drive time",
+    "mclogsum" = "Mode Choice Logsum",
+    "typeConvenience Store" = "Convenience Store",
+    "typeOther (Write in a description)" = "Other non-standard",
+    "pharmacyTRUE" = "Has pharmacy",
+    "ethnicTRUE" = "Ethnic market",
+    "merchTRUE" = "Has other merchandise",
+    "registers" = "Number of registers",
+    "selfchecko" = "Number of self-checkout"
+  )
+
+modelsummary(grocery_models, estimate = "{estimate}({statistic}){stars}", stars = c('*' = .05, '**' = .01),
+             coef_map = grocery_map, gof_map = gm,
+             statistic = NULL, note = "t-statistics in parentheses. * p < 0.5, ** p < 0.1")
+```
+
+```{r library-models}
+tar_load(library_models)
+
+library_map <- c(
+    "duration_CAR" = "Drive time",
+    "mclogsum" = "Mode Choice Logsum",
+    
+)
+
+
+```
+
 
 ## Example two
