@@ -19,7 +19,7 @@ make_estdata <- function(flows, times, ludata, acsdata, n_obs = 50, n_alts = 5,
     filter(time %in% time, day %in% day) %>%
     mutate(weight = flow / sum(flow)) %>%
     sample_n(n_obs, replace = TRUE, weight = weight) %>%
-    transmute(obs_id = as.character(row_number()), geoid, dest = str_c("UT-", dest, sep = ""),
+    transmute(obs_id = as.character(row_number()), geoid, dest,
               validation = sample(c(TRUE,FALSE), n(), TRUE, prob = c(0.2, 0.8))) %>%
     rename(alt_0 = dest) %>%
     filter(alt_0 %in% ludata$id)
