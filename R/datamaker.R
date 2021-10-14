@@ -202,12 +202,22 @@ make_graph <- function(graph_dir){
 #' @param landuse Destination features
 #' @param bgcentroid Population-weighted blockgroup centroid
 #' @param graph path to OSM pbf file
+#' @param landuselimit The maximum number of resources to sample. Default NULL means all included
+#' @param bglimit The maximum number of block groups included in sample. deafult NULL means all included
+#' @param shortcircuit The path to a file that if given will skip the path calculations.
 #' 
 #' @return A tibble with times between Block groups and resources by multiple modes
 #' 
 #' @details Parallelized, will use parallel::detectCores() - 1
 #' 
-calculate_times <- function(landuse, bgcentroid, graph, landuselimit = NULL, bglimit = NULL){
+calculate_times <- function(landuse, bgcentroid, graph, landuselimit = NULL, bglimit = NULL,
+                            shortcircuit = NULL){
+  
+  # short-circuit times calculator if the paths are already computed.
+  if(!is.null(shortcircuit)){ 
+    warning("Using previously calculated times in ", shortcircuit)
+    return(read_rds(shortcircuit))
+  }
   
   # start connection to OTP
   path_otp <- otp_dl_jar(file.path("OTP"),cache = TRUE)

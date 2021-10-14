@@ -42,7 +42,8 @@ list(
   # Parks ============
   tar_target(park_polygons, get_parks("data/parks.geojson", this_crs)),
   tar_target(park_points, make_park_points(park_polygons, 1/500, this_crs)),
-  tar_target(park_times, calculate_times(park_points, bgcentroid, graph, bglimit = bglimit)),
+  tar_target(park_times, calculate_times(park_points, bgcentroid, graph, 
+                                         bglimit = bglimit, shortcircuit = "data/park_times.rds")),
   tar_target(park_lsums, calculate_logsums(park_times, utilities)),
   # streetlight ----
   tar_target(sl_parks_csv, get_sl_data("data/streetlight_parks.zip", "parks"),
@@ -56,7 +57,8 @@ list(
   
   # Groceries =====================
   tar_target(groceries, get_groceries("data/groceries.geojson", "data/NEMS-S_UC2021_brief.sav", this_crs)),
-  tar_target(grocery_times, calculate_times(groceries, bgcentroid, graph, bglimit = bglimit)),
+  tar_target(grocery_times, calculate_times(groceries, bgcentroid, graph, bglimit = bglimit,
+                                            shortcircuit = "data/grocery_times.rds")),
   tar_target(grocery_lsums, calculate_logsums(grocery_times, utilities)),
   # streetlight ----
   tar_target(sl_grocery_csv, get_sl_data("data/streetlight_groceries.csv", "groceries"),
