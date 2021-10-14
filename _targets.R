@@ -76,8 +76,10 @@ list(
   
   
   # Libraries ======================
-  tar_target(libraries, get_libraries("data/libraries.geojson", this_crs)),
-  tar_target(library_times, calculate_times(libraries, bgcentroid, graph, bglimit = bglimit)),
+  tar_target(libgj, "data/libraries.geojson", format = "file"),
+  tar_target(libraries, get_libraries(libgj, this_crs)),
+  tar_target(library_times, calculate_times(libraries, bgcentroid, graph, bglimit = bglimit,
+                                            shortcircuit = "data/library_times.rds")),
   tar_target(library_lsums, calculate_logsums(library_times, utilities)),
   # streetlight ----
   tar_target(sl_libraries_csv, get_sl_data("data/streetlight_libraries.csv", "libraries"),
@@ -85,7 +87,8 @@ list(
   tar_target(sl_libraries, read_sl_data(sl_libraries_csv)),
   tar_target(lee_plot, plot_streetlight(sl_libraries, "Brigham Young University - Harold B. Lee Library")),
   # choice data and models ---
-  tar_target(libraries_estdata, make_estdata(sl_libraries, library_lsums, libraries, acsdata)),
+  tar_target(libraries_estdata, make_estdata(sl_libraries, library_lsums, libraries, acsdata,
+                                             n_obs = 10000, n_alts = 10)),
   tar_target(library_models, estimate_librarymodels(libraries_estdata)),
   
   tar_target(dummy,1+1)
