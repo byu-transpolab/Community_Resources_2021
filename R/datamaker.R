@@ -230,7 +230,7 @@ calculate_times <- function(landuse, bgcentroid, graph){
   
 
   # loop through the land use points
-  alltimes <- mclapply(1:total_lu, function(i){
+  alltimes <- lapply(1:total_lu, function(i){
     ll_latlong <- c(ll[i,]$LATITUDE, ll[i, ]$LONGITUDE)
     
     # loop through the block groups
@@ -260,9 +260,9 @@ calculate_times <- function(landuse, bgcentroid, graph){
       bind_rows(.id = "blockgroup")
 
     
-  }, mc.cores = detectCores() - 1) %>%
+  } %>%
     set_names(ll$id) %>%
-    bind_rows(.id = "resource")
+    bind_rows(.id = "resource"))
   
   # Do a little bit of cleanup
   alltimes %>% 
