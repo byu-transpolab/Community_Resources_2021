@@ -114,7 +114,12 @@ make_park_points <- function(park_polygons, density, crs){
 get_libraries <- function(file, crs){
   st_read(file) %>%
     st_transform(crs) %>%
-    transmute(id = Name) 
+    filter(keep) %>%
+    transmute(
+      id = NAME, computers, wifi, study_help, fooddrink, printer,  
+      classes, genealogy, 
+      nonres_fee = parse_number(nonres_fee)
+    ) 
 }
 
 #' Get Groceries shape information
