@@ -29,25 +29,28 @@ datasummary_skim(acs_for_table, title = "Block Group Summary Statistics",
   kableExtra::footnote(symbol = "Hispanic indicates Hispanic individuals of all races; non-Hispanic individuals report a single race alone.") 
 ```
 
+
+
 ```{r utco_map}
 tar_load(groceries)
 tar_load(park_polygons)
 tar_load(libraries)
 
-dj1 <- wesanderson::wes_palette("Darjeeling1")
+dj1 <- wesanderson::wes_palette("FantasticFox1")
 
 mapdata <- bind_rows(
   list("Groceries" = groceries,
        "Parks" = park_polygons,
        "Libraries" = libraries),
   .id = "LandUse"
-)
+) %>%
+  st_centroid()
 
 if(knitr::is_html_output()){
   
   polys <- mapdata %>% st_transform(4326) %>% filter(st_is(., "MULTIPOLYGON"))
   polypal <- colorFactor("Dark2", domain = polys$LandUse)
-  pnts  <- mapdata %>% st_transform(4326) %>% filter(!st_is(., "MULTIPOLYGON"))
+  pnts  <- mapdata %>% st_transform(4326) %>% filter(!st_is(., "MULTIPOINT"))
   pntspal <- colorFactor("Dark2",domain = pnts$LandUse)
                                                      
   leaflet(polys) %>%
@@ -56,15 +59,14 @@ if(knitr::is_html_output()){
     addCircles(data = pnts, color = ~pntspal(pnts$LandUse))
   
 } else {
-  pbox <- st_bbox(mapdata %>% st_transform(4326))
-  map_back <- get_map(c(lon = mean(pbox[c(1, 3)]), lat = mean(pbox[c(2, 4)]) ),  
-                      zoom = 11, source = "google", maptype = "roadmap", color = "bw")
   
-  ggmap(map_back, extent = "device") + 
+  ggplot() + 
+    annotation_map_tile("cartolight") + 
     coord_sf(crs = st_crs(3426),  expand = FALSE) + 
     geom_sf(data = mapdata %>% st_transform(4326), 
-            aes(color = LandUse, fill = `Land Use`),
-            inherit.aes = FALSE,  lwd = 1) +
+            aes(color = `LandUse`),
+            inherit.aes = FALSE) +
+    scale_color_manual("Resource Type", values = dj1) +
     theme(axis.line = element_line(color = NA))  + 
     xlab("") + ylab("") 
 }
@@ -74,3 +76,7 @@ if(knitr::is_html_output()){
 
 
 ## Models
+
+
+
+

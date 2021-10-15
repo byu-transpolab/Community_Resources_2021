@@ -51,7 +51,9 @@ options(dplyr.summarise.inform = FALSE)
 library(mlogit)
 library(leaflet)
 library(sf)
-library(ggmap)
+library(ggspatial)
+
+source("R/choice_modeling.R")
 # Instructions and options =========
 # prints missing data in tables as blank space
 options(knitr.kable.NA = '') 
