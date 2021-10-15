@@ -1,0 +1,6 @@
+# Acknowledgements {-}
+
+The authors are grateful to Alisha Redelfs, Lori Spruance, Kaeli Monahan, and
+Mali Smith for their help in gathering the grocery store information data.
+Connor Williams gathered the parks data. Tables and figures in the article are
+produced using a variety of packages for R [@modelsummary; @ggspatial]
