@@ -117,7 +117,8 @@ get_libraries <- function(file, crs){
     filter(keep) %>%
     transmute(
       id = NAME, computers, wifi, study_help, fooddrink, printer,  
-      classes, genealogy, 
+      classes = ifelse(is.na(classes), FALSE, classes), 
+      genealogy = ifelse(is.na(genealogy), FALSE, genealogy), 
       nonres_fee = parse_number(nonres_fee)
     ) 
 }
