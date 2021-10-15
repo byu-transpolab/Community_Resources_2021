@@ -2,18 +2,17 @@
 
 Utah County, Utah, is among the fastest-growing urbanized regions in the United
 States, with formerly agrarian areas and open rangeland being converted to
-predominately suburban built environments. 
-
-Table \@ref(tab:acstable) presents descriptive statistics of the block groups
-in Utah County obtained from the 2015-2019 American Community Survey (ACS) using
-the tidycensus package for R [@tidycensus].
+predominately suburban built environments.   Table \@ref(tab:acstable) presents
+descriptive statistics of the block groups in Utah County obtained from the
+2015-2019 American Community Survey (ACS) using the tidycensus package for R
+[@tidycensus].
 
 ```{r acstable}
 tar_load(acsdata)
 
 acs_for_table <- acsdata %>% select(
     "Density: Households per square kilometer" = density,
-    "Income: Median tract income" = income,
+    "Income: Median block group income" = income,
     "Low Income: Share of households making less than $35k" = lowincome,
     "High Income: Share of households making more than $125k" = highincome,
     "Children: Share of households with children under 6" = children,
@@ -31,7 +30,7 @@ datasummary_skim(acs_for_table, title = "Block Group Summary Statistics",
 
 
 
-```{r utco_map}
+```{r utco-map, fig.cap="Community Resources in Utah County", fig.align='center', dev='tikz'}
 tar_load(groceries)
 tar_load(park_polygons)
 tar_load(libraries)
@@ -61,14 +60,19 @@ if(knitr::is_html_output()){
 } else {
   
   ggplot() + 
-    annotation_map_tile("cartolight") + 
+    annotation_map_tile("stamenbw", zoom=11) + 
     coord_sf(crs = st_crs(3426),  expand = FALSE) + 
-    geom_sf(data = mapdata %>% st_transform(4326), 
-            aes(color = `LandUse`),
-            inherit.aes = FALSE) +
+    geom_sf(data = mapdata %>% st_transform(4326),  aes(color = `LandUse`),
+            inherit.aes = FALSE, alpha = 0.7) +
     scale_color_manual("Resource Type", values = dj1) +
-    theme(axis.line = element_line(color = NA))  + 
-    xlab("") + ylab("") 
+    theme(axis.line = element_line(color = NA),
+          axis.title.x=element_blank(),
+          axis.text.x=element_blank(),
+          axis.ticks.x=element_blank(),
+          axis.title.y=element_blank(),
+          axis.text.y=element_blank(),
+          axis.ticks.y=element_blank(),
+          )
 }
 
 ```
@@ -76,6 +80,7 @@ if(knitr::is_html_output()){
 
 
 ## Models
+
 
 
 
