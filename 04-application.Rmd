@@ -3,23 +3,54 @@
 
 ## Destination Choice Models
 
+Using the simulated trip choices assembled from the location-based services data,
+we estimate destination choice models with the `mlogit` package for 
+R [@R; @mlogit].
+
 ```{r park-models}
 tar_load(park_models)
 park_map = c(
     "duration_CAR" = "Drive time",
     "mclogsum" = "Mode Choice Logsum",
+    "yj_acres" = "log(Acres)",
     "playgroundTRUE" = "Playground",
+    "splashpadTRUE"  = "Splashpad",
     "volleyballTRUE" = "Volleyball",
     "basketballTRUE" = "Basketball",
     "tennisTRUE" = "Tennis"
 )
 
-modelsummary(park_models, estimate = "{estimate}({statistic}){stars}", stars = c('*' = .05, '**' = .01),
+modelsummary(park_models, estimate = "{estimate}({statistic}){stars}", 
+             title = "Park Destination Choice Utilities",
+             stars = c('*' = .05, '**' = .01),
              coef_map = park_map, gof_map = gm,
-             statistic = NULL, note = "t-statistics in parentheses. * p < 0.5, ** p < 0.1")
-
+             statistic = NULL, note = "t-statistics in parentheses. * p < 0.5, ** p < 0.1") %>%
+  landscape()
+ls_v_attr <- lrtest(park_models$Attributes, park_models$`All - Logsum`)
+ls_v_car <- horowitz_lrtest(park_models$`All - Logsum`, park_models$`All - Car`)
 ```
 
+Table \@ref(tab:park-models) presents the model estimation results for 
+five different specifications of park destination choice. The "Car" model
+includes only the network travel time by car as a predictor of park choice; 
+the "MCLS" model similarly contains only the mode choice logsum as an 
+impedance term. The signs on the coefficient indicate that people are more
+likely to choose parks with lower car distance or higher multi-modal access, all
+else equal. The "Attributes" model includes only information on the park attributes
+including size and amenities. On balance, people appear attracted to larger parks
+and parks with playgrounds, while somewhat deterred by various sports facilities. 
+The "All" models include both the relevant travel impedance term as well as
+destination attributes. A 
+
+For most block group-park pairs, the transit and walk travel disutilities
+are sufficiently high that choosing these travel modes is unlikely. As a
+result, the mode choice logsum is highly collinear with the car travel time.
+Nevertheless, there are small differences differences between the models 
+with the different impedance terms. Using a non-nested likelihood statistic 
+test presented by HOROWITZ, we can reject the null hypothesis that the two 
+"All" models have equivalent likelihood ($p$-value of `r ls_v_car`), and infer
+that the mode choice logsum is a marginally better estimator of park choice than
+the vehicle travel time alone.
 
 ```{r grocery-models}
 tar_load(grocery_models)
@@ -36,10 +67,29 @@ grocery_map = c(
     "selfchecko" = "Number of self-checkout"
   )
 
-modelsummary(grocery_models, estimate = "{estimate}({statistic}){stars}", stars = c('*' = .05, '**' = .01),
-             coef_map = grocery_map, gof_map = gm,
-             statistic = NULL, note = "t-statistics in parentheses. * p < 0.5, ** p < 0.1")
+modelsummary(grocery_models, 
+             estimate = "{estimate}({statistic}){stars}",  statistic = NULL, 
+             title = "Grocery Destination Choice Utilities",
+             stars = c('*' = .05, '**' = .01), coef_map = grocery_map, gof_map = gm,
+             note = "t-statistics in parentheses. * p < 0.5, ** p < 0.1") %>%
+  landscape()
+ls_v_car_g <- horowitz_lrtest(grocery_models$`All - Logsum`, grocery_models$`All - Car`)
+d_conv_ratio <- grocery_models$`All - Car`$coefficients["typeConvenience Store"] / 
+  grocery_models$`All - Car`$coefficients["duration_CAR"]  
 ```
+
+Table \@ref(tab:grocery-models) presents the model estimation results for the grocery 
+store models. As with the parks models in Table \@ref(tab:park-models), the 
+most predictive model contains both a travel impedance term and attributes of
+the destination grocery store. The number of registers suggests that people 
+prefer larger stores, all else equal; ethnic markets, convenience stores, and other
+facilities are less preferred while stores with pharmacies and other merchandise
+(clothes, home goods, etc.) attract visitors. The ratio of the drive time and 
+convenience store coefficients suggests that on average, people are willing to 
+drive `r d_conv_ratio` minutes to reach a store that is not a convenience store.
+In terms of the travel impedance, there is not a sufficiently large gap in the
+model likelihoods to reject that the mode choice logsum and the drive 
+time are equivalent predictors of grocery store choice.
 
 ```{r library-models}
 tar_load(library_models)
@@ -47,11 +97,29 @@ tar_load(library_models)
 library_map <- c(
     "duration_CAR" = "Drive time",
     "mclogsum" = "Mode Choice Logsum",
-    
+    "classesTRUE" = "Offers Classes",
+    "genealogyTRUE" = "Genealogy Resources"
 )
 
-
+modelsummary(library_models, estimate = "{estimate}({statistic}){stars}", 
+             title = "Library Destination Choice Utilities",
+             stars = c('*' = .05, '**' = .01),
+             coef_map = library_map, gof_map = gm,
+             statistic = NULL, note = "t-statistics in parentheses. * p < 0.5, ** p < 0.1") %>%
+  landscape()
+ls_v_car_l <- horowitz_lrtest(library_models$`All - Logsum`, library_models$`All - Car`)
 ```
 
+Table \@ref(tab:library-models) presents the model estimation results for the 
+library destination choice models. As with parks and grocery stores, both 
+travel impedance and destination attributes are significant predictors of 
+library choice. In this case, however, the library attributes provide very little
+predictive power of library choice. This is perhaps because virtually all 
+libraries in the dataset offer the same set of basic amenities, but also because 
+each municipality in Utah County tends to operate its own library rather than 
+having a system of interconnected library branches as might be typical in 
+larger cities or other regions. Additionally, there is no significant difference
+between the prediction power of the mode choice logsum versus the car travel 
+time.
 
-## Example two
+## Accessibilities
