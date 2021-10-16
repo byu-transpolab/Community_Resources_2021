@@ -40,7 +40,7 @@ else equal. The "Attributes" model includes only information on the park attribu
 including size and amenities. On balance, people appear attracted to larger parks
 and parks with playgrounds, while somewhat deterred by various sports facilities. 
 The "All" models include both the relevant travel impedance term as well as
-destination attributes. A 
+destination attributes. 
 
 For most block group-park pairs, the transit and walk travel disutilities
 are sufficiently high that choosing these travel modes is unlikely. As a
@@ -123,3 +123,67 @@ between the prediction power of the mode choice logsum versus the car travel
 time.
 
 ## Accessibilities
+
+
+```{r access}
+tar_load(access_bin)
+tar_load(access_ls)
+```
+
+```{r access-map, dev = "tikz", dev.args=list(pointsize=12), fig.cap = "Spatial comparison of grocery access buffer versus logsum."}
+amdata <- bind_rows(
+  access_ls %>% st_transform(4326) %>%
+    select(-total) %>% mutate(method = "Logsum"),
+  access_bin %>% st_transform(4326) %>%
+    select(!contains("_min")) %>% mutate(method = "Buffer")
+)
+
+ggplot() + 
+  annotation_map_tile("cartolight", zoom=11) + 
+  coord_sf(crs = st_crs(3426),  expand = FALSE) + 
+  geom_sf(data = amdata %>% filter(method == "Buffer"), aes(color = as.logical(grocery)), inherit.aes = FALSE, alpha = 0.7) +
+  scale_color_manual("$<5$ minute walk", values = dj1[c(5, 3)]) +  
+  new_scale_color() + 
+  geom_sf(data = amdata %>% filter(method == "Logsum"),  aes(color = grocery), inherit.aes = FALSE, alpha = 0.7) +
+  scale_color_viridis_c("Logsum", option = "magma") +  
+  facet_wrap(~method) + 
+  theme(axis.line = element_line(color = NA),
+        axis.title.x=element_blank(),
+        axis.text.x=element_blank(),
+        axis.ticks.x=element_blank(),
+        axis.title.y=element_blank(),
+        axis.text.y=element_blank(),
+        axis.ticks.y=element_blank())
+```
+
+
+
+```{r access-plot, fig.cap="Relationship between travel time, travel-time based buffer, and logsum value.", dev = "tikz", dev.args=list(pointsize=10)}
+left_join(
+  access_bin %>%
+    st_set_geometry(NULL) %>%
+    rename(buffer_grocery = grocery, buffer_library = library, buffer_park = park,
+           minutes_grocery = grocery_min, minutes_library = library_min, minutes_park = park_min),
+  access_ls %>%
+    st_set_geometry(NULL) %>%
+    select(-total) %>%
+    rename(logsum_grocery = grocery, logsum_library = library, logsum_park = park),
+  by = c("id", "POPULATION")
+)  %>%
+  pivot_longer(cols = minutes_grocery:logsum_park) %>%
+  separate(name, c("measure", "resource")) %>%
+  pivot_wider(names_from = measure, values_from = value) %>%
+  mutate(buffer = as.logical(buffer)) %>%
+  ggplot(aes(x = minutes, y = logsum, fill = buffer, color = resource, size = POPULATION + 1)) +
+  geom_point(pch = 21, alpha = 0.7, stroke = 1) + 
+  stat_smooth(method = "lm", show.legend = FALSE) + 
+  scale_size("Population", breaks = c(100, 500, 1000, 5000)) +
+  scale_color_manual("Resource", values = dj1) + 
+  scale_fill_manual("Within buffer", values = c("white", "grey")) + 
+  ylab("Accessibility Logsum") + xlab("Travel Time in Minutes")
+
+```
+
+
+
+
