@@ -1,3 +1,13 @@
-# Final Words
+# Limitations
 
-We have finished a nice book.
+The location-based services data reveals the likely home location of devices 
+observed within a geographic polygon, within some measurement error. 
+It cannot tell us whether the device holder actually accomplished the assumed
+activity; that is, there may be a reason why a device was observed near a
+library even though the person did not actually patronize the library.
+Additionally, the method we use to compile the estimation dataset presumes that
+the choice to make a trip to the community resource has already been made. Though
+it can suggest how the accessibility of a neighborhood to these resource would improve 
+were transportation impedance decreased or the resources expanded or improved, 
+it cannot tell us how many more people might take advantage of the resource 
+in that case. 
