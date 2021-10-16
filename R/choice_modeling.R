@@ -100,37 +100,6 @@ modeltable <- function(models){
 }
 
 
-calculate_grocery_access <- function(grocery_times, groceries, grocery_models) {
-  
-  coef <- grocery_models$Size$coefficients
-  
-  # construct prediction frame
-  grocery_times %>%
-    spread(mode, duration) %>%
-    filter(!is.na(CAR)) %>%
-    left_join(groceries %>% st_set_geometry(NULL), by = c("resource" = "id"))  %>%
-    
-    # calculate utilities
-    mutate(
-      other = ifelse(type == "Other (Write in a description)", TRUE, FALSE),
-      convenience = ifelse(type == "Convenience Store", TRUE, FALSE),
-      u = 
-        CAR * coef["CAR"] + 
-        convenience * coef["typeConvenience Store"] + 
-        other * coef["typeOther (Write in a description)"]  +
-        pharmacy * coef["pharmacyTRUE"] + 
-        ethnic * coef["ethnicTRUE"] + 
-        merch * coef["merchTRUE"] + 
-        registers * coef["registers"] + 
-        selfchecko * coef["selfchecko"] ,
-      eU = exp(u)
-    )  %>%
-    group_by(blockgroup) %>%
-    summarise(
-      logsum = log(sum(eU))
-    )
-  
-}
 
 
 estimate_librarymodels <- function(libraries_estdata){
@@ -140,29 +109,107 @@ estimate_librarymodels <- function(libraries_estdata){
   models <- list(
     "Car" = mlogit(chosen ~ duration_CAR | -1, data = ld),
     "MCLS" = mlogit(chosen ~ mclogsum | -1 , data = ld),
-    "Attributes" = mlogit(chosen ~  classes + genealogy | -1 , data = ld),
+    "Attributes" = mlogit(chosen ~ classes +  genealogy | -1 , data = ld),
     "All - Car" = mlogit(chosen ~  duration_CAR + classes + genealogy | -1 , data = ld),
     "All - Logsum" = mlogit(chosen ~  mclogsum + classes + genealogy | -1 , data = ld)
-    
   )
   
   models
   
 }
 
+
+
 estimate_parkmodels <- function(parks_estdata){
   ld <- dfidx(parks_estdata, idx = list("obs_id", "alt"), shape = "long",  
               choice = "chosen", idnames = "id", drop.index = FALSE)
   
-  
   models <- list(
     "Car" = mlogit(chosen ~ duration_CAR | -1, data = ld),
     "MCLS" = mlogit(chosen ~ mclogsum | -1 , data = ld),
-    "Attributes" = mlogit(chosen ~  playground + volleyball + basketball + tennis | -1 , data = ld),
-    "All - Car" = mlogit(chosen ~  duration_CAR + playground + volleyball + basketball + tennis | -1 , data = ld),
-    "All - Logsum" = mlogit(chosen ~  mclogsum + playground + volleyball + basketball + tennis | -1 , data = ld)
+    "Attributes" = mlogit(chosen ~  yj_acres               + playground + volleyball + basketball + tennis + trail | -1 , data = ld),
+    "All - Car" = mlogit(chosen ~  duration_CAR + yj_acres + playground + volleyball + basketball + tennis + trail | -1 , data = ld),
+    "All - Logsum" = mlogit(chosen ~  mclogsum + yj_acres  + playground + volleyball + basketball + tennis + trail | -1 , data = ld)
   )
   models
+}
+
+#' Calculate the accessibility logsums implied by a destination choice model
+#' 
+#' @param m An MNL model
+#' @param estadata The dataset on which the model was estimated
+#' 
+#' @return A tibble with the origin block group, and the total model logsum
+#' 
+calculate_access <- function(m, estdata){
+  
+  # Calculate utilities of the model, which get stored in .fitted
+  aug <- my_augment(m)
+  
+  # The estimation data has lots of repeated possible origin and destination 
+  # zones. We really only need to calculate one utility between each blockgroup 
+  # and each grocery store. So, let's join the model output to the estimation 
+  # datasets (because it has the blockgroup and destination ID's on it) 
+  left_join(
+    estdata %>% select(obs_id, alt, dest, geoid), 
+    aug %>% select(id, alternative, .probability, .fitted, .resid), 
+    by = c("obs_id" = "id", "alt" = "alternative")
+  ) %>%
+    #  now just get origin BG geoid, destination, id, and the model predicted utility
+    select(geoid, dest, .fitted) %>%
+    #  only need one of these for each pair
+    group_by(geoid, dest) %>% slice(1) %>%
+    #  Calculate the logsum of all destination options from each origin
+    #  block group.
+    group_by(geoid) %>%  summarise( access = logsum(.fitted) )
+  
+}
+
+#' Compute whether any destination is within a given 
+#' threshold
+#' 
+#' @param lsum Table of times and logsums
+#' @param tholdvar Variable to use for threshold
+#' @param thold Value to use for threshold
+get_binary_access <- function(lsum, tholdvar, thold = 10){
+  
+  lsum %>%
+    group_by(blockgroup) %>%
+    summarise( minv = min({{tholdvar}}, na.rm = TRUE)) %>%
+    mutate(within = minv < thold)
+  
+}
+
+
+accessbin_data <- function(bgcentroid, gbin_access, lbin_access, pbin_access){
+  bgcentroid %>%
+    left_join(gbin_access %>% rename(grocery_min = minv, grocery = within),
+              by = c("id" = "blockgroup")) %>%
+    left_join(lbin_access %>% rename(library_min = minv, library = within),
+              by = c("id" = "blockgroup")) %>%
+    left_join(gbin_access %>% rename(park_min = minv, park = within),
+              by = c("id" = "blockgroup")) 
+  
+}
+
+
+#' Gather all of the logsum accessibilities into one tibble
+#' 
+#' @param bgcentroid
+#' @param grocery_access
+#' @param library_access
+#' @param park_access
+#'  
+#' @return An sf object with a point for every block group centroid
+#' 
+accessls_data <- function(bgcentroid, grocery_access, library_access, park_access){
+   
+  bgcentroid %>%
+    left_join(grocery_access %>% rename(grocery = access), by = c("id" = "geoid")) %>%
+    left_join(library_access %>% rename(library = access), by = c("id" = "geoid")) %>%
+    left_join(park_access %>% rename(park = access), by = c("id" = "geoid")) %>%
+    mutate( total = rowSums(across(grocery:park), na.rm = TRUE) )
+  
 }
 
 my_augment <- function (x, data = x$model, ...) {

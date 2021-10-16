@@ -17,7 +17,7 @@ source("R/choice_modeling.R")
 # Set target-specific options such as packages.
 tar_option_set(packages = c("tidyverse", "sf","opentripplanner", "rstudioapi",
                             "otpr", "leaflet", "tidycensus", "parallel", "haven", 
-                            "mlogit", "jsonlite"))
+                            "mlogit", "jsonlite", "VGAM"))
 
 this_crs <- 3560 # http://epsg.io/3560-1746 Utah North usft
 bglimit <- NULL # This will limit the times calculation to this many random zones. Set to NULL for all
@@ -53,6 +53,8 @@ list(
   tar_target(parks_estdata, make_estdata(sl_parks, park_lsums, park_polygons, acsdata, 
                                          n_obs = 10000, n_alts = 10)),
   tar_target(park_models, estimate_parkmodels(parks_estdata)),
+  tar_target(park_access, calculate_access(park_models$`All - Logsum`, parks_estdata)),
+  tar_target(pbin_access, get_binary_access(park_lsums, duration_WALK, 10)),
 
   
   # Groceries =====================
@@ -68,8 +70,8 @@ list(
   tar_target(groceries_estdata, make_estdata(sl_grocery, grocery_lsums, groceries, acsdata,
                                              n_obs = 10000, n_alts = 10)),
   tar_target(grocery_models, estimate_grocerymodels(groceries_estdata)),
-  tar_target(grocery_mod_rds, write_rds(grocery_models, "data/grocery_models.rds"), format = "rds"),
-  tar_target(grocery_access, calculate_grocery_access(grocery_times, groceries, grocery_models)),
+  tar_target(grocery_access, calculate_access(grocery_models$`All - Logsum`, groceries_estdata)),
+  tar_target(gbin_access, get_binary_access(grocery_lsums, duration_CAR, 5)),
 
   
   
@@ -90,6 +92,21 @@ list(
   tar_target(libraries_estdata, make_estdata(sl_libraries, library_lsums, libraries, acsdata,
                                              n_obs = 10000, n_alts = 10)),
   tar_target(library_models, estimate_librarymodels(libraries_estdata)),
+  tar_target(library_access, calculate_access(library_models$`All - Logsum`, libraries_estdata)),
+  tar_target(lbin_access, get_binary_access(library_lsums, duration_CAR, 10)),
+  
+  # aggregate accessibilities ==============
+  tar_target(access_bin, accessbin_data(bgcentroid, gbin_access, lbin_access, pbin_access)),
+  tar_target(access_ls , accessls_data(bgcentroid, grocery_access, library_access, park_access)),
+  
   
   tar_target(dummy,1+1)
 )
+
+
+
+
+
+
+
+
