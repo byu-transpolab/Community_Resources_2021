@@ -2,7 +2,7 @@
 %%% Begin My package additions %%%%%%%%%%%%%%%%%%%
 \usepackage[hyphens]{url}
 
-  \journal{NARSC 2021} % Sets Journal name
+  \journal{Submitted to NARSC 2021} % Sets Journal name
 
 
 \usepackage{lineno} % add
@@ -35,6 +35,7 @@
 \usepackage{natbib}
 \bibliographystyle{apalike}
 \usepackage{longtable}
+\usepackage{graphicx}
 \ifxetex
   \usepackage[setpagesize=false, % page size defined by xetex
               unicode=false, % unicode breaks when used with xetex
@@ -84,9 +85,11 @@
    \ead{gregmacfarlane@byu.edu} 
     \author[BYU]{Emma Stucki}
    \ead{stuckiemma@gmail.com} 
-      \address[BYU]{Brigham Young University Civil and Construction Engineering Department, 430 Engineering Building, Provo, Utah 84602}
-    \address[Another University]{Some Other Place}
-      \cortext[1]{Corresponding Author}
+    \author[BYU]{Michael Copley}
+  
+    \author[]{}
+  
+        \cortext[1]{Corresponding Author}
   
   \begin{abstract}
   Understanding who in a community has access to its resources -- parks, libraries, grocery stores, etc. -- has profound equity implications, but typical methods to understand access to these resources are limited. Travel time buffers require researchers to assert mode of access as well as an arbitrary distance threshold; further, these methods do not distinguish between destination quality attributes in an effective way. In this research, we present a methodology to develop utility-based accessibility measures for parks, libraries, and grocery stores in Utah County, Utah. The method relies on passive location-based services data to model destination choice to these community resources; the destination choice model utility functions in turn allow us to develop a picture of regional access that is sensitive to: the quality and size of the destination resource; continuous (non-binary) travel impedance by multiple modes; and the sociodemographic attributes of the traveler. We then use this measure to explore equity in access to the specified community resources across income level and minority status in Utah County.
@@ -96,6 +99,25 @@
 
 \hypertarget{intro}{%
 \section{Introduction}\label{intro}}
+
+Communities provide important resources to their members, and spatial exclusion
+from these resources can negatively affect both subjective measures of well-being
+\citep{currie2010modeling} and economic opportunity.
+Measuring good or poor access to these resources is an important concern. But
+access involves more than merely distance or travel impedance: it is a function
+of the quality of the resource, and how many options for the resource are
+available.
+
+In this paper, we consider utility-based access to parks, grocery stores, and
+libraries in Utah County, Utah. The utility preferences are estimated on
+location-based services data obtained from a third-party commercial data
+aggregator. We then use the model estimates to construct a composite
+accessibility measure and compare the measure with neighborhood-level
+sociodemographic characteristics.
+
+The paper begins with a discussion of previous attempts to evaluate
+access to community resources. We then describe the methodology employed in
+this research, which makes use of novel third-party datasets
 
 \hypertarget{lit-review}{%
 \section{Literature}\label{lit-review}}
@@ -340,21 +362,217 @@ improving accessibility to the most desirable resources.
 \hypertarget{methods}{%
 \section{Methods}\label{methods}}
 
-\hypertarget{applications}{%
-\section{Applications}\label{applications}}
+Utah County, Utah, is among the fastest-growing urbanized regions in the United
+States, with formerly agrarian areas and open rangeland being converted to
+predominately suburban built environments. Table \ref{tab:acstable} presents
+descriptive statistics of the block groups in Utah County obtained from the
+2015-2019 American Community Survey (ACS) using the tidycensus package for R
+\citep{tidycensus}.
 
-Some \emph{significant} applications are demonstrated in this chapter.
+\begin{table}
 
-\hypertarget{example-one}{%
-\subsection{Example one}\label{example-one}}
+\caption{\label{tab:acstable}Block Group Summary Statistics}
+\centering
+\resizebox{\linewidth}{!}{
+\begin{tabular}[t]{>{\raggedright\arraybackslash}p{4cm}rrrrrrr}
+\toprule
+  & Unique (\#) & Missing (\%) & Mean & SD & Min & Median & Max\\
+\midrule
+Density: Households per square kilometer & 340 & 0 & 558.3 & 659.3 & 0.0 & 394.2 & 4741.9\\
+Income: Median block group income & 330 & 2 & 80309.1 & 31030.5 & 20588.0 & 77099.0 & 196458.0\\
+Low Income: Share of households making less than \$35k & 329 & 1 & 16.6 & 13.4 & 0.0 & 12.7 & 70.4\\
+High Income: Share of households making more than \$125k & 322 & 1 & 23.0 & 17.1 & 0.0 & 19.1 & 92.3\\
+Children: Share of households with children under 6 & 333 & 1 & 24.2 & 12.3 & 0.0 & 22.1 & 84.6\\
+Black: Share of population who is Black & 116 & 0 & 0.5 & 0.9 & 0.0 & 0.0 & 7.4\\
+Asian: Share of population who is Asian & 205 & 0 & 1.4 & 2.3 & 0.0 & 0.5 & 20.3\\
+Hispanic: Share of population who is Hispanic* & 330 & 0 & 11.6 & 10.6 & 0.0 & 8.6 & 62.1\\
+White: Share of population who is White & 339 & 0 & 82.6 & 11.9 & 32.8 & 84.3 & 100.0\\
+\bottomrule
+\multicolumn{8}{l}{\rule{0pt}{1em}\textsuperscript{*} Hispanic indicates Hispanic individuals of all races; non-Hispanic individuals report a single race alone.}\\
+\end{tabular}}
+\end{table}
 
-\hypertarget{example-two}{%
-\subsection{Example two}\label{example-two}}
+\begin{figure}
 
-\hypertarget{final-words}{%
-\section{Final Words}\label{final-words}}
+{\centering \includegraphics{Community_Resources_files/figure-latex/utco-map-1} 
 
-We have finished a nice book.
+}
+
+\caption{Community Resources in Utah County}\label{fig:utco-map}
+\end{figure}
+
+\hypertarget{models}{%
+\subsection{Models}\label{models}}
+
+\hypertarget{results}{%
+\section{Results}\label{results}}
+
+\hypertarget{destination-choice-models}{%
+\subsection{Destination Choice Models}\label{destination-choice-models}}
+
+Using the simulated trip choices assembled from the location-based services data,
+we estimate destination choice models with the \texttt{mlogit} package for
+R \citep{R, mlogit}.
+
+\begin{landscape}\begin{table}
+
+\caption{\label{tab:park-models}Park Destination Choice Utilities}
+\centering
+\begin{tabular}[t]{lccccc}
+\toprule
+  & Car & MCLS & Attributes & All - Car & All - Logsum\\
+\midrule
+Drive time & -0.215(-95.949)** &  &  & -0.211(-70.944)** & \\
+Mode Choice Logsum &  & 7.678(95.958)** &  &  & 7.512(70.948)**\\
+log(Acres) &  &  & 1.447(86.983)** & 1.448(53.482)** & 1.448(53.469)**\\
+Playground &  &  & 4.693(34.722)** & 4.632(31.107)** & 4.633(31.099)**\\
+Volleyball &  &  & -0.312(-8.157)** & -0.564(-9.576)** & -0.565(-9.580)**\\
+Basketball &  &  & -0.591(-13.940)** & -0.386(-5.651)** & -0.387(-5.663)**\\
+Tennis &  &  & -0.612(-14.673)** & -0.974(-16.165)** & -0.976(-16.182)**\\
+\midrule
+Num.Obs. & 8,984 & 8,984 & 8,984 & 8,984 & 8,984\\
+Log Likelihood & -9,288.8 & -9,284.7 & -12,348.3 & -4,974.7 & -4,971.6\\
+McFadden Rho-Sq & 0.569 & 0.569 & 0.427 & 0.769 & 0.769\\
+\bottomrule
+\multicolumn{6}{l}{\textsuperscript{} t-statistics in parentheses. * p $<$ 0.5, ** p $<$ 0.1}\\
+\end{tabular}
+\end{table}
+\end{landscape}
+
+Table \ref{tab:park-models} presents the model estimation results for
+five different specifications of park destination choice. The ``Car'' model
+includes only the network travel time by car as a predictor of park choice;
+the ``MCLS'' model similarly contains only the mode choice logsum as an
+impedance term. The signs on the coefficient indicate that people are more
+likely to choose parks with lower car distance or higher multi-modal access, all
+else equal. The ``Attributes'' model includes only information on the park attributes
+including size and amenities. On balance, people appear attracted to larger parks
+and parks with playgrounds, while somewhat deterred by various sports facilities.
+The ``All'' models include both the relevant travel impedance term as well as
+destination attributes.
+
+For most block group-park pairs, the transit and walk travel disutilities
+are sufficiently high that choosing these travel modes is unlikely. As a
+result, the mode choice logsum is highly collinear with the car travel time.
+Nevertheless, there are small differences differences between the models
+with the different impedance terms. Using a non-nested likelihood statistic
+test presented by HOROWITZ, we can reject the null hypothesis that the two
+``All'' models have equivalent likelihood (\(p\)-value of 0.00645), and infer
+that the mode choice logsum is a marginally better estimator of park choice than
+the vehicle travel time alone.
+
+\begin{landscape}\begin{table}
+
+\caption{\label{tab:grocery-models}Grocery Destination Choice Utilities}
+\centering
+\begin{tabular}[t]{lcccccc}
+\toprule
+  & Car & MCLS & Attributes & Size & All - Car & All - Logsum\\
+\midrule
+Drive time & -0.206(-90.014)** &  &  &  & -0.217(-78.388)** & \\
+Mode Choice Logsum &  & 7.340(90.019)** &  &  &  & 7.733(78.399)**\\
+Convenience Store &  &  & -2.339(-11.310)** & -1.600(-7.684)** & -1.486(-6.765)** & -1.488(-6.773)**\\
+Other non-standard &  &  & -1.894(-14.604)** & -1.255(-9.554)** & -1.055(-7.487)** & -1.056(-7.490)**\\
+Has pharmacy &  &  & 0.616(19.421)** & 0.329(8.901)** & 0.249(5.488)** & 0.249(5.502)**\\
+Ethnic market &  &  & -1.680(-16.846)** & -0.997(-9.750)** & -0.883(-8.072)** & -0.884(-8.078)**\\
+Has other merchandise &  &  & 1.523(48.309)** & 0.769(19.144)** & 0.881(17.631)** & 0.882(17.660)**\\
+Number of registers &  &  &  & 0.073(42.117)** & 0.083(36.312)** & 0.083(36.294)**\\
+Number of self-checkout &  &  &  & 0.031(15.255)** & 0.027(10.049)** & 0.027(10.041)**\\
+\midrule
+Num.Obs. & 8,404 & 8,404 & 8,404 & 8,404 & 8,404 & 8,404\\
+Log Likelihood & -11,861 & -11,861.8 & -16,898.4 & -15,806.6 & -8,802.4 & -8,802.2\\
+McFadden Rho-Sq & 0.411 & 0.411 & 0.161 & 0.216 & 0.563 & 0.563\\
+\bottomrule
+\multicolumn{7}{l}{\textsuperscript{} t-statistics in parentheses. * p $<$ 0.5, ** p $<$ 0.1}\\
+\end{tabular}
+\end{table}
+\end{landscape}
+
+Table \ref{tab:grocery-models} presents the model estimation results for the grocery
+store models. As with the parks models in Table \ref{tab:park-models}, the
+most predictive model contains both a travel impedance term and attributes of
+the destination grocery store. The number of registers suggests that people
+prefer larger stores, all else equal; ethnic markets, convenience stores, and other
+facilities are less preferred while stores with pharmacies and other merchandise
+(clothes, home goods, etc.) attract visitors. The ratio of the drive time and
+convenience store coefficients suggests that on average, people are willing to
+drive 6.86 minutes to reach a store that is not a convenience store.
+In terms of the travel impedance, there is not a sufficiently large gap in the
+model likelihoods to reject that the mode choice logsum and the drive
+time are equivalent predictors of grocery store choice.
+
+\begin{landscape}\begin{table}
+
+\caption{\label{tab:library-models}Library Destination Choice Utilities}
+\centering
+\begin{tabular}[t]{lccccc}
+\toprule
+  & Car & MCLS & Attributes & All - Car & All - Logsum\\
+\midrule
+Drive time & -0.233(-95.379)** &  &  & -0.232(-89.281)** & \\
+Mode Choice Logsum &  & 8.306(95.361)** &  &  & 8.270(89.266)**\\
+Offers Classes &  &  & 1.318(44.405)** & 1.258(23.053)** & 1.257(23.033)**\\
+Genealogy Resources &  &  & -1.127(-44.021)** & -1.024(-25.610)** & -1.024(-25.601)**\\
+\midrule
+Num.Obs. & 9,816 & 9,816 & 9,816 & 9,816 & 9,816\\
+Log Likelihood & -10,841.9 & -10,840.3 & -21,944.4 & -10,322.5 & -10,321.7\\
+McFadden Rho-Sq & 0.539 & 0.539 & 0.068 & 0.561 & 0.561\\
+\bottomrule
+\multicolumn{6}{l}{\textsuperscript{} t-statistics in parentheses. * p $<$ 0.5, ** p $<$ 0.1}\\
+\end{tabular}
+\end{table}
+\end{landscape}
+
+Table \ref{tab:library-models} presents the model estimation results for the
+library destination choice models. As with parks and grocery stores, both
+travel impedance and destination attributes are significant predictors of
+library choice. In this case, however, the library attributes provide very little
+predictive power of library choice. This is perhaps because virtually all
+libraries in the dataset offer the same set of basic amenities, but also because
+each municipality in Utah County tends to operate its own library rather than
+having a system of interconnected library branches as might be typical in
+larger cities or other regions. Additionally, there is no significant difference
+between the prediction power of the mode choice logsum versus the car travel
+time.
+
+\hypertarget{accessibilities}{%
+\subsection{Accessibilities}\label{accessibilities}}
+
+\begin{figure}
+\centering
+\includegraphics{Community_Resources_files/figure-latex/access-map-1.pdf}
+\caption{\label{fig:access-map}Spatial comparison of grocery access buffer versus logsum.}
+\end{figure}
+
+\begin{figure}
+\centering
+\includegraphics{Community_Resources_files/figure-latex/access-plot-1.pdf}
+\caption{\label{fig:access-plot}Relationship between travel time, travel-time based buffer, and logsum value.}
+\end{figure}
+
+\hypertarget{limitations}{%
+\section{Limitations}\label{limitations}}
+
+The location-based services data reveals the likely home location of devices
+observed within a geographic polygon, within some measurement error.
+It cannot tell us whether the device holder actually accomplished the assumed
+activity; that is, there may be a reason why a device was observed near a
+library even though the person did not actually patronize the library.
+Additionally, the method we use to compile the estimation dataset presumes that
+the choice to make a trip to the community resource has already been made. Though
+it can suggest how the accessibility of a neighborhood to these resource would improve
+were transportation impedance decreased or the resources expanded or improved,
+it cannot tell us how many more people might take advantage of the resource
+in that case.
+
+\hypertarget{acknowledgements}{%
+\section*{Acknowledgements}\label{acknowledgements}}
+\addcontentsline{toc}{section}{Acknowledgements}
+
+The authors are grateful to Alisha Redelfs, Lori Spruance, Kaeli Monahan, and
+Mali Smith for their help in gathering the grocery store information data.
+Connor Williams gathered the parks data. Tables and figures in the article are
+produced using a variety of packages for R \citep{modelsummary, ggspatial}
 
 \bibliography{book.bib}
 
