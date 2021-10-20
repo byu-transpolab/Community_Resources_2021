@@ -1,4 +1,4 @@
-# Limitations
+# Limitations and Future Research
 
 The location-based services data reveals the likely home location of devices 
 observed within a geographic polygon, within some measurement error. 
@@ -11,3 +11,59 @@ it can suggest how the accessibility of a neighborhood to these resource would i
 were transportation impedance decreased or the resources expanded or improved, 
 it cannot tell us how many more people might take advantage of the resource 
 in that case. 
+
+In this research, all simulated trips were grouped into a single pooled model 
+for analysis. This implies that the effect of amenities and travel impedance on 
+destination choice is similar for all neighborhoods. A segmented model 
+where, for example, low-income block groups and high-income block groups were
+estimated separately could allow for flexibility in these estimates and reveal
+differences in preferences among residents of the different neighborhoods. Some 
+neighborhoods might show a particular preference for access utilities by 
+transit, or for specific park amenities. A latent class choice model CITE JOAN
+would go further in potentially informing which demographic variables are
+meaningful in defining possible data segmentation schemes.
+
+A necessary assumption made when constructing the estimation dataset is that
+people experience access from their home neighborhood. This may not always be true;
+for instance, people may choose to shop at grocery stores or visit libraries that
+are near their workplace, or that are between their homes and some other 
+frequent destination. Methods to account for access and destination choices
+experienced at other points in the day would be a useful and interesting extension.
+Similarly, we assumed that the distance between a home and a community resource
+was represented by the distance between the block group centroid and the resource.
+For some block groups in less dense areas of the county, the error in measured
+travel time between the block group centroid and the actual home location might be
+larger than the total travel time. It might be possible to simulate home locations
+within each block group and use those locations in the travel time calculations. 
+Alternatively, it might be possible to estimate the model using block group data
+as in this study but apply the model at a more fine resolution (e.g. block) when
+investigating accessibilities and conducting policy analyses.
+
+This paper presents preliminary model estimates using plausible destination 
+choice utility values. Several additional variables might be further explored,
+particularly in regards to the grocery resources. The NEMS-S survey is a highly
+detailed picture of the offerings of a particular grocery store, including
+information on the availability of relatively healthier or fresher foods and 
+their prices. This study was only able to explore a few key size variables, but 
+a deeper investigation into grocery store amenities and offerings 
+preferences  --- and how they might influence a collective understanding of
+nutrition access more broadly --- is needed.
+
+Ultimately, the purpose of any accessibility measure to a community resources 
+is to enable a subsequent analysis of some metric of well-being. CITE EP:B PAPER
+suggest that a utility-based access to parks measure is more predictive of 
+physical health outcomes than a buffer-based measure. Is this true for more 
+community resources? Would using a more subtle or nuanced measure of access to 
+libraries help in understanding a link between community form and social isolation 
+or mental health? A key benefit of this method is that is provides a way to 
+evaluate the benefit of investments in resources against the benefits of investing
+in the transportation system. Will a community benefit more from a new grocery store
+nearby, or expanded options at an existing grocery store, or from improving bike 
+or bus connections to that existing store? An examination of this question is
+left for future research, but this paper presents a method for how this could be
+approached.
+
+# Conclusions
+
+NEED TO WRITE
+
