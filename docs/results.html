@@ -1,0 +1,1215 @@
+<!DOCTYPE html>
+<html lang="" xml:lang="">
+<head>
+
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <title> 4 Results | Utility-Based Accessibility to Community Resources: An Application of Location-Based Services Data</title>
+  <meta name="description" content="A short description" />
+  <meta name="generator" content="bookdown 0.24 and GitBook 2.6.7" />
+
+  <meta property="og:title" content=" 4 Results | Utility-Based Accessibility to Community Resources: An Application of Location-Based Services Data" />
+  <meta property="og:type" content="book" />
+  
+  
+  <meta property="og:description" content="A short description" />
+  
+
+  <meta name="twitter:card" content="summary" />
+  <meta name="twitter:title" content=" 4 Results | Utility-Based Accessibility to Community Resources: An Application of Location-Based Services Data" />
+  
+  <meta name="twitter:description" content="A short description" />
+  
+
+
+
+<meta name="date" content="2021-10-19" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black" />
+  
+  
+<link rel="prev" href="methods.html"/>
+<link rel="next" href="limitations-and-future-research.html"/>
+<style type="text/css">
+p.abstract{
+  text-align: center;
+  font-weight: bold;
+}
+div.abstract{
+  margin: auto;
+  width: 90%;
+}
+</style>
+<script src="libs/header-attrs-2.11/header-attrs.js"></script>
+<script src="libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/fuse.js@6.4.6/dist/fuse.min.js"></script>
+<link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-table.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-bookdown.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-highlight.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-search.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-fontsettings.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-clipboard.css" rel="stylesheet" />
+
+
+
+
+
+
+
+
+<link href="libs/anchor-sections-1.0.1/anchor-sections.css" rel="stylesheet" />
+<script src="libs/anchor-sections-1.0.1/anchor-sections.js"></script>
+<script src="libs/kePrint-0.0.1/kePrint.js"></script>
+<link href="libs/lightable-0.0.1/lightable.css" rel="stylesheet" />
+<script src="libs/htmlwidgets-1.5.3/htmlwidgets.js"></script>
+<link href="libs/leaflet-1.3.1/leaflet.css" rel="stylesheet" />
+<script src="libs/leaflet-1.3.1/leaflet.js"></script>
+<link href="libs/leafletfix-1.0.0/leafletfix.css" rel="stylesheet" />
+<script src="libs/proj4-2.6.2/proj4.min.js"></script>
+<script src="libs/Proj4Leaflet-1.0.1/proj4leaflet.js"></script>
+<link href="libs/rstudio_leaflet-1.3.1/rstudio_leaflet.css" rel="stylesheet" />
+<script src="libs/leaflet-binding-2.0.4.1/leaflet.js"></script>
+<script src="libs/leaflet-providers-1.9.0/leaflet-providers_1.9.0.js"></script>
+<script src="libs/leaflet-providers-plugin-2.0.4.1/leaflet-providers-plugin.js"></script>
+
+
+<style type="text/css">
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+    color: #aaaaaa;
+  }
+pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+code span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code span.at { color: #7d9029; } /* Attribute */
+code span.bn { color: #40a070; } /* BaseN */
+code span.bu { } /* BuiltIn */
+code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code span.ch { color: #4070a0; } /* Char */
+code span.cn { color: #880000; } /* Constant */
+code span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code span.dt { color: #902000; } /* DataType */
+code span.dv { color: #40a070; } /* DecVal */
+code span.er { color: #ff0000; font-weight: bold; } /* Error */
+code span.ex { } /* Extension */
+code span.fl { color: #40a070; } /* Float */
+code span.fu { color: #06287e; } /* Function */
+code span.im { } /* Import */
+code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+code span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code span.op { color: #666666; } /* Operator */
+code span.ot { color: #007020; } /* Other */
+code span.pp { color: #bc7a00; } /* Preprocessor */
+code span.sc { color: #4070a0; } /* SpecialChar */
+code span.ss { color: #bb6688; } /* SpecialString */
+code span.st { color: #4070a0; } /* String */
+code span.va { color: #19177c; } /* Variable */
+code span.vs { color: #4070a0; } /* VerbatimString */
+code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+</style>
+
+<style type="text/css">
+/* Used with Pandoc 2.11+ new --citeproc when CSL is used */
+div.csl-bib-body { }
+div.csl-entry {
+  clear: both;
+}
+.hanging div.csl-entry {
+  margin-left:2em;
+  text-indent:-2em;
+}
+div.csl-left-margin {
+  min-width:2em;
+  float:left;
+}
+div.csl-right-inline {
+  margin-left:2em;
+  padding-left:1em;
+}
+div.csl-indent {
+  margin-left: 2em;
+}
+</style>
+
+<link rel="stylesheet" href="style.css" type="text/css" />
+</head>
+
+<body>
+
+
+
+  <div class="book without-animation with-summary font-size-2 font-family-1" data-basepath=".">
+
+    <div class="book-summary">
+      <nav role="navigation">
+
+<ul class="summary">
+<li><a href="./">Access to Community Resources</a></li>
+
+<li class="divider"></li>
+<li class="chapter" data-level="1" data-path="intro.html"><a href="intro.html"><i class="fa fa-check"></i><b>1</b> Introduction</a></li>
+<li class="chapter" data-level="2" data-path="lit-review.html"><a href="lit-review.html"><i class="fa fa-check"></i><b>2</b> Literature</a></li>
+<li class="chapter" data-level="3" data-path="methods.html"><a href="methods.html"><i class="fa fa-check"></i><b>3</b> Methods</a>
+<ul>
+<li class="chapter" data-level="3.1" data-path="methods.html"><a href="methods.html#modeling-framework"><i class="fa fa-check"></i><b>3.1</b> Modeling Framework</a></li>
+<li class="chapter" data-level="3.2" data-path="methods.html"><a href="methods.html#data"><i class="fa fa-check"></i><b>3.2</b> Data</a>
+<ul>
+<li class="chapter" data-level="3.2.1" data-path="methods.html"><a href="methods.html#resource-data"><i class="fa fa-check"></i><b>3.2.1</b> Resource Data</a></li>
+<li class="chapter" data-level="3.2.2" data-path="methods.html"><a href="methods.html#mobile-device-data"><i class="fa fa-check"></i><b>3.2.2</b> Mobile Device Data</a></li>
+<li class="chapter" data-level="3.2.3" data-path="methods.html"><a href="methods.html#travel-times"><i class="fa fa-check"></i><b>3.2.3</b> Travel Times</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="4" data-path="results.html"><a href="results.html"><i class="fa fa-check"></i><b>4</b> Results</a>
+<ul>
+<li class="chapter" data-level="4.1" data-path="results.html"><a href="results.html#destination-choice-models"><i class="fa fa-check"></i><b>4.1</b> Destination Choice Models</a></li>
+<li class="chapter" data-level="4.2" data-path="results.html"><a href="results.html#accessibilities"><i class="fa fa-check"></i><b>4.2</b> Accessibilities</a></li>
+</ul></li>
+<li class="chapter" data-level="5" data-path="limitations-and-future-research.html"><a href="limitations-and-future-research.html"><i class="fa fa-check"></i><b>5</b> Limitations and Future Research</a></li>
+<li class="chapter" data-level="6" data-path="conclusions.html"><a href="conclusions.html"><i class="fa fa-check"></i><b>6</b> Conclusions</a></li>
+<li class="chapter" data-level="" data-path="acknowledgements.html"><a href="acknowledgements.html"><i class="fa fa-check"></i>Acknowledgements</a></li>
+<li class="chapter" data-level="" data-path="references.html"><a href="references.html"><i class="fa fa-check"></i>References</a></li>
+<li class="divider"></li>
+<li><a href="https://github.com/rstudio/bookdown" target="blank">Published with bookdown</a></li>
+
+</ul>
+
+      </nav>
+    </div>
+
+    <div class="book-body">
+      <div class="body-inner">
+        <div class="book-header" role="navigation">
+          <h1>
+            <i class="fa fa-circle-o-notch fa-spin"></i><a href="./">Utility-Based Accessibility to Community Resources: An Application of Location-Based Services Data</a>
+          </h1>
+        </div>
+
+        <div class="page-wrapper" tabindex="-1" role="main">
+          <div class="page-inner">
+
+            <section class="normal" id="section-">
+<div id="results" class="section level1" number="4">
+<h1><span class="header-section-number"> 4</span> Results</h1>
+<div id="destination-choice-models" class="section level2" number="4.1">
+<h2><span class="header-section-number">4.1</span> Destination Choice Models</h2>
+<p>Using the simulated trip choices assembled from the location-based services data,
+we estimate destination choice models with the <code>mlogit</code> package for
+R <span class="citation">(<a href="#ref-R" role="doc-biblioref">R Core Team 2021</a>; <a href="#ref-mlogit" role="doc-biblioref">Croissant 2020</a>)</span>.</p>
+<div class="sourceCode" id="cb6"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb6-1"><a href="results.html#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="fu">tar_load</span>(park_models)</span>
+<span id="cb6-2"><a href="results.html#cb6-2" aria-hidden="true" tabindex="-1"></a>park_map <span class="ot">=</span> <span class="fu">c</span>(</span>
+<span id="cb6-3"><a href="results.html#cb6-3" aria-hidden="true" tabindex="-1"></a>    <span class="st">&quot;duration_CAR&quot;</span> <span class="ot">=</span> <span class="st">&quot;Drive time&quot;</span>,</span>
+<span id="cb6-4"><a href="results.html#cb6-4" aria-hidden="true" tabindex="-1"></a>    <span class="st">&quot;mclogsum&quot;</span> <span class="ot">=</span> <span class="st">&quot;Mode Choice Logsum&quot;</span>,</span>
+<span id="cb6-5"><a href="results.html#cb6-5" aria-hidden="true" tabindex="-1"></a>    <span class="st">&quot;yj_acres&quot;</span> <span class="ot">=</span> <span class="st">&quot;log(Acres)&quot;</span>,</span>
+<span id="cb6-6"><a href="results.html#cb6-6" aria-hidden="true" tabindex="-1"></a>    <span class="st">&quot;playgroundTRUE&quot;</span> <span class="ot">=</span> <span class="st">&quot;Playground&quot;</span>,</span>
+<span id="cb6-7"><a href="results.html#cb6-7" aria-hidden="true" tabindex="-1"></a>    <span class="st">&quot;splashpadTRUE&quot;</span>  <span class="ot">=</span> <span class="st">&quot;Splashpad&quot;</span>,</span>
+<span id="cb6-8"><a href="results.html#cb6-8" aria-hidden="true" tabindex="-1"></a>    <span class="st">&quot;volleyballTRUE&quot;</span> <span class="ot">=</span> <span class="st">&quot;Volleyball&quot;</span>,</span>
+<span id="cb6-9"><a href="results.html#cb6-9" aria-hidden="true" tabindex="-1"></a>    <span class="st">&quot;basketballTRUE&quot;</span> <span class="ot">=</span> <span class="st">&quot;Basketball&quot;</span>,</span>
+<span id="cb6-10"><a href="results.html#cb6-10" aria-hidden="true" tabindex="-1"></a>    <span class="st">&quot;tennisTRUE&quot;</span> <span class="ot">=</span> <span class="st">&quot;Tennis&quot;</span></span>
+<span id="cb6-11"><a href="results.html#cb6-11" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb6-12"><a href="results.html#cb6-12" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-13"><a href="results.html#cb6-13" aria-hidden="true" tabindex="-1"></a><span class="fu">modelsummary</span>(park_models, <span class="at">estimate =</span> <span class="st">&quot;{estimate}({statistic}){stars}&quot;</span>, </span>
+<span id="cb6-14"><a href="results.html#cb6-14" aria-hidden="true" tabindex="-1"></a>             <span class="at">title =</span> <span class="st">&quot;Park Destination Choice Utilities&quot;</span>,</span>
+<span id="cb6-15"><a href="results.html#cb6-15" aria-hidden="true" tabindex="-1"></a>             <span class="at">stars =</span> <span class="fu">c</span>(<span class="st">&#39;*&#39;</span> <span class="ot">=</span> .<span class="dv">05</span>, <span class="st">&#39;**&#39;</span> <span class="ot">=</span> .<span class="dv">01</span>),</span>
+<span id="cb6-16"><a href="results.html#cb6-16" aria-hidden="true" tabindex="-1"></a>             <span class="at">coef_map =</span> park_map, <span class="at">gof_map =</span> gm,</span>
+<span id="cb6-17"><a href="results.html#cb6-17" aria-hidden="true" tabindex="-1"></a>             <span class="at">statistic =</span> <span class="cn">NULL</span>, <span class="at">note =</span> <span class="st">&quot;t-statistics in parentheses. * p &lt; 0.5, ** p &lt; 0.1&quot;</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb6-18"><a href="results.html#cb6-18" aria-hidden="true" tabindex="-1"></a>  <span class="fu">landscape</span>()</span></code></pre></div>
+<table class="table" style="width: auto !important; margin-left: auto; margin-right: auto;">
+<caption>
+<span id="tab:park-models">Table 4.1: </span>Park Destination Choice Utilities
+</caption>
+<thead>
+<tr>
+<th style="text-align:left;">
+</th>
+<th style="text-align:center;">
+Car
+</th>
+<th style="text-align:center;">
+MCLS
+</th>
+<th style="text-align:center;">
+Attributes
+</th>
+<th style="text-align:center;">
+All - Car
+</th>
+<th style="text-align:center;">
+All - Logsum
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left;">
+Drive time
+</td>
+<td style="text-align:center;">
+-0.215(-95.949)**
+</td>
+<td style="text-align:center;">
+</td>
+<td style="text-align:center;">
+</td>
+<td style="text-align:center;">
+-0.209(-69.212)**
+</td>
+<td style="text-align:center;">
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Mode Choice Logsum
+</td>
+<td style="text-align:center;">
+</td>
+<td style="text-align:center;">
+7.678(95.958)**
+</td>
+<td style="text-align:center;">
+</td>
+<td style="text-align:center;">
+</td>
+<td style="text-align:center;">
+7.450(69.216)**
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+log(Acres)
+</td>
+<td style="text-align:center;">
+</td>
+<td style="text-align:center;">
+</td>
+<td style="text-align:center;">
+1.308(77.120)**
+</td>
+<td style="text-align:center;">
+1.300(46.869)**
+</td>
+<td style="text-align:center;">
+1.301(46.858)**
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Playground
+</td>
+<td style="text-align:center;">
+</td>
+<td style="text-align:center;">
+</td>
+<td style="text-align:center;">
+4.567(33.939)**
+</td>
+<td style="text-align:center;">
+4.476(30.127)**
+</td>
+<td style="text-align:center;">
+4.477(30.118)**
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Volleyball
+</td>
+<td style="text-align:center;">
+</td>
+<td style="text-align:center;">
+</td>
+<td style="text-align:center;">
+-0.369(-9.580)**
+</td>
+<td style="text-align:center;">
+-0.663(-11.065)**
+</td>
+<td style="text-align:center;">
+-0.664(-11.067)**
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Basketball
+</td>
+<td style="text-align:center;">
+</td>
+<td style="text-align:center;">
+</td>
+<td style="text-align:center;">
+-0.669(-15.625)**
+</td>
+<td style="text-align:center;">
+-0.534(-7.632)**
+</td>
+<td style="text-align:center;">
+-0.535(-7.642)**
+</td>
+</tr>
+<tr>
+<td style="text-align:left;box-shadow: 0px 1px">
+Tennis
+</td>
+<td style="text-align:center;box-shadow: 0px 1px">
+</td>
+<td style="text-align:center;box-shadow: 0px 1px">
+</td>
+<td style="text-align:center;box-shadow: 0px 1px">
+-0.549(-13.065)**
+</td>
+<td style="text-align:center;box-shadow: 0px 1px">
+-0.884(-14.678)**
+</td>
+<td style="text-align:center;box-shadow: 0px 1px">
+-0.886(-14.693)**
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Num.Obs.
+</td>
+<td style="text-align:center;">
+8,984
+</td>
+<td style="text-align:center;">
+8,984
+</td>
+<td style="text-align:center;">
+8,984
+</td>
+<td style="text-align:center;">
+8,984
+</td>
+<td style="text-align:center;">
+8,984
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Log Likelihood
+</td>
+<td style="text-align:center;">
+-9,288.8
+</td>
+<td style="text-align:center;">
+-9,284.7
+</td>
+<td style="text-align:center;">
+-11,822.1
+</td>
+<td style="text-align:center;">
+-4,774.9
+</td>
+<td style="text-align:center;">
+-4,772.2
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+McFadden Rho-Sq
+</td>
+<td style="text-align:center;">
+0.569
+</td>
+<td style="text-align:center;">
+0.569
+</td>
+<td style="text-align:center;">
+0.451
+</td>
+<td style="text-align:center;">
+0.778
+</td>
+<td style="text-align:center;">
+0.778
+</td>
+</tr>
+</tbody>
+<tfoot>
+<tr>
+<td style="padding: 0; border:0;" colspan="100%">
+<sup></sup> t-statistics in parentheses. * p &lt; 0.5, ** p &lt; 0.1
+</td>
+</tr>
+</tfoot>
+</table>
+<div class="sourceCode" id="cb7"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb7-1"><a href="results.html#cb7-1" aria-hidden="true" tabindex="-1"></a>ls_v_attr <span class="ot">&lt;-</span> <span class="fu">lrtest</span>(park_models<span class="sc">$</span>Attributes, park_models<span class="sc">$</span><span class="st">`</span><span class="at">All - Logsum</span><span class="st">`</span>)</span>
+<span id="cb7-2"><a href="results.html#cb7-2" aria-hidden="true" tabindex="-1"></a>ls_v_car <span class="ot">&lt;-</span> <span class="fu">horowitz_lrtest</span>(park_models<span class="sc">$</span><span class="st">`</span><span class="at">All - Logsum</span><span class="st">`</span>, park_models<span class="sc">$</span><span class="st">`</span><span class="at">All - Car</span><span class="st">`</span>)</span></code></pre></div>
+<pre><code>## Test statistic value: -2.33811992187784</code></pre>
+<p>Table <a href="results.html#tab:park-models">4.1</a> presents the model estimation results for
+five different specifications of park destination choice. The “Car” model
+includes only the network travel time by car as a predictor of park choice;
+the “MCLS” model similarly contains only the mode choice logsum as an
+impedance term. The signs on the coefficient indicate that people are more
+likely to choose parks with lower car distance or higher multi-modal access, all
+else equal. The “Attributes” model includes only information on the park attributes
+including size and amenities. On balance, people appear attracted to larger parks
+and parks with playgrounds, while somewhat deterred by various sports facilities.
+The “All” models include both the relevant travel impedance term as well as
+destination attributes.</p>
+<p>For most block group-park pairs, the transit and walk travel disutilities
+are sufficiently high that choosing these travel modes is unlikely. As a
+result, the mode choice logsum is highly collinear with the car travel time.
+Nevertheless, there are small differences differences between the models
+with the different impedance terms. Using a non-nested likelihood statistic
+test presented by HOROWITZ, we can reject the null hypothesis that the two
+“All” models have equivalent likelihood (<span class="math inline">\(p\)</span>-value of 0.00969), and infer
+that the mode choice logsum is a marginally better estimator of park choice than
+the vehicle travel time alone.</p>
+<div class="sourceCode" id="cb9"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb9-1"><a href="results.html#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="fu">tar_load</span>(grocery_models)</span>
+<span id="cb9-2"><a href="results.html#cb9-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-3"><a href="results.html#cb9-3" aria-hidden="true" tabindex="-1"></a>grocery_map <span class="ot">=</span> <span class="fu">c</span>(</span>
+<span id="cb9-4"><a href="results.html#cb9-4" aria-hidden="true" tabindex="-1"></a>    <span class="st">&quot;duration_CAR&quot;</span> <span class="ot">=</span> <span class="st">&quot;Drive time&quot;</span>,</span>
+<span id="cb9-5"><a href="results.html#cb9-5" aria-hidden="true" tabindex="-1"></a>    <span class="st">&quot;mclogsum&quot;</span> <span class="ot">=</span> <span class="st">&quot;Mode Choice Logsum&quot;</span>,</span>
+<span id="cb9-6"><a href="results.html#cb9-6" aria-hidden="true" tabindex="-1"></a>    <span class="st">&quot;typeConvenience Store&quot;</span> <span class="ot">=</span> <span class="st">&quot;Convenience Store&quot;</span>,</span>
+<span id="cb9-7"><a href="results.html#cb9-7" aria-hidden="true" tabindex="-1"></a>    <span class="st">&quot;typeOther (Write in a description)&quot;</span> <span class="ot">=</span> <span class="st">&quot;Other non-standard&quot;</span>,</span>
+<span id="cb9-8"><a href="results.html#cb9-8" aria-hidden="true" tabindex="-1"></a>    <span class="st">&quot;pharmacyTRUE&quot;</span> <span class="ot">=</span> <span class="st">&quot;Has pharmacy&quot;</span>,</span>
+<span id="cb9-9"><a href="results.html#cb9-9" aria-hidden="true" tabindex="-1"></a>    <span class="st">&quot;ethnicTRUE&quot;</span> <span class="ot">=</span> <span class="st">&quot;Ethnic market&quot;</span>,</span>
+<span id="cb9-10"><a href="results.html#cb9-10" aria-hidden="true" tabindex="-1"></a>    <span class="st">&quot;merchTRUE&quot;</span> <span class="ot">=</span> <span class="st">&quot;Has other merchandise&quot;</span>,</span>
+<span id="cb9-11"><a href="results.html#cb9-11" aria-hidden="true" tabindex="-1"></a>    <span class="st">&quot;registers&quot;</span> <span class="ot">=</span> <span class="st">&quot;Number of registers&quot;</span>,</span>
+<span id="cb9-12"><a href="results.html#cb9-12" aria-hidden="true" tabindex="-1"></a>    <span class="st">&quot;selfchecko&quot;</span> <span class="ot">=</span> <span class="st">&quot;Number of self-checkout&quot;</span></span>
+<span id="cb9-13"><a href="results.html#cb9-13" aria-hidden="true" tabindex="-1"></a>  )</span>
+<span id="cb9-14"><a href="results.html#cb9-14" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-15"><a href="results.html#cb9-15" aria-hidden="true" tabindex="-1"></a><span class="fu">modelsummary</span>(grocery_models, </span>
+<span id="cb9-16"><a href="results.html#cb9-16" aria-hidden="true" tabindex="-1"></a>             <span class="at">estimate =</span> <span class="st">&quot;{estimate}({statistic}){stars}&quot;</span>,  <span class="at">statistic =</span> <span class="cn">NULL</span>, </span>
+<span id="cb9-17"><a href="results.html#cb9-17" aria-hidden="true" tabindex="-1"></a>             <span class="at">title =</span> <span class="st">&quot;Grocery Destination Choice Utilities&quot;</span>,</span>
+<span id="cb9-18"><a href="results.html#cb9-18" aria-hidden="true" tabindex="-1"></a>             <span class="at">stars =</span> <span class="fu">c</span>(<span class="st">&#39;*&#39;</span> <span class="ot">=</span> .<span class="dv">05</span>, <span class="st">&#39;**&#39;</span> <span class="ot">=</span> .<span class="dv">01</span>), <span class="at">coef_map =</span> grocery_map, <span class="at">gof_map =</span> gm,</span>
+<span id="cb9-19"><a href="results.html#cb9-19" aria-hidden="true" tabindex="-1"></a>             <span class="at">note =</span> <span class="st">&quot;t-statistics in parentheses. * p &lt; 0.5, ** p &lt; 0.1&quot;</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb9-20"><a href="results.html#cb9-20" aria-hidden="true" tabindex="-1"></a>  <span class="fu">landscape</span>()</span></code></pre></div>
+<table class="table" style="width: auto !important; margin-left: auto; margin-right: auto;">
+<caption>
+<span id="tab:grocery-models">Table 4.2: </span>Grocery Destination Choice Utilities
+</caption>
+<thead>
+<tr>
+<th style="text-align:left;">
+</th>
+<th style="text-align:center;">
+Car
+</th>
+<th style="text-align:center;">
+MCLS
+</th>
+<th style="text-align:center;">
+Attributes
+</th>
+<th style="text-align:center;">
+Size
+</th>
+<th style="text-align:center;">
+All - Car
+</th>
+<th style="text-align:center;">
+All - Logsum
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left;">
+Drive time
+</td>
+<td style="text-align:center;">
+-0.206(-90.014)**
+</td>
+<td style="text-align:center;">
+</td>
+<td style="text-align:center;">
+</td>
+<td style="text-align:center;">
+</td>
+<td style="text-align:center;">
+-0.217(-78.388)**
+</td>
+<td style="text-align:center;">
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Mode Choice Logsum
+</td>
+<td style="text-align:center;">
+</td>
+<td style="text-align:center;">
+7.340(90.019)**
+</td>
+<td style="text-align:center;">
+</td>
+<td style="text-align:center;">
+</td>
+<td style="text-align:center;">
+</td>
+<td style="text-align:center;">
+7.733(78.399)**
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Convenience Store
+</td>
+<td style="text-align:center;">
+</td>
+<td style="text-align:center;">
+</td>
+<td style="text-align:center;">
+-2.339(-11.310)**
+</td>
+<td style="text-align:center;">
+-1.600(-7.684)**
+</td>
+<td style="text-align:center;">
+-1.486(-6.765)**
+</td>
+<td style="text-align:center;">
+-1.488(-6.773)**
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Other non-standard
+</td>
+<td style="text-align:center;">
+</td>
+<td style="text-align:center;">
+</td>
+<td style="text-align:center;">
+-1.894(-14.604)**
+</td>
+<td style="text-align:center;">
+-1.255(-9.554)**
+</td>
+<td style="text-align:center;">
+-1.055(-7.487)**
+</td>
+<td style="text-align:center;">
+-1.056(-7.490)**
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Has pharmacy
+</td>
+<td style="text-align:center;">
+</td>
+<td style="text-align:center;">
+</td>
+<td style="text-align:center;">
+0.616(19.421)**
+</td>
+<td style="text-align:center;">
+0.329(8.901)**
+</td>
+<td style="text-align:center;">
+0.249(5.488)**
+</td>
+<td style="text-align:center;">
+0.249(5.502)**
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Ethnic market
+</td>
+<td style="text-align:center;">
+</td>
+<td style="text-align:center;">
+</td>
+<td style="text-align:center;">
+-1.680(-16.846)**
+</td>
+<td style="text-align:center;">
+-0.997(-9.750)**
+</td>
+<td style="text-align:center;">
+-0.883(-8.072)**
+</td>
+<td style="text-align:center;">
+-0.884(-8.078)**
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Has other merchandise
+</td>
+<td style="text-align:center;">
+</td>
+<td style="text-align:center;">
+</td>
+<td style="text-align:center;">
+1.523(48.309)**
+</td>
+<td style="text-align:center;">
+0.769(19.144)**
+</td>
+<td style="text-align:center;">
+0.881(17.631)**
+</td>
+<td style="text-align:center;">
+0.882(17.660)**
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Number of registers
+</td>
+<td style="text-align:center;">
+</td>
+<td style="text-align:center;">
+</td>
+<td style="text-align:center;">
+</td>
+<td style="text-align:center;">
+0.073(42.117)**
+</td>
+<td style="text-align:center;">
+0.083(36.312)**
+</td>
+<td style="text-align:center;">
+0.083(36.294)**
+</td>
+</tr>
+<tr>
+<td style="text-align:left;box-shadow: 0px 1px">
+Number of self-checkout
+</td>
+<td style="text-align:center;box-shadow: 0px 1px">
+</td>
+<td style="text-align:center;box-shadow: 0px 1px">
+</td>
+<td style="text-align:center;box-shadow: 0px 1px">
+</td>
+<td style="text-align:center;box-shadow: 0px 1px">
+0.031(15.255)**
+</td>
+<td style="text-align:center;box-shadow: 0px 1px">
+0.027(10.049)**
+</td>
+<td style="text-align:center;box-shadow: 0px 1px">
+0.027(10.041)**
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Num.Obs.
+</td>
+<td style="text-align:center;">
+8,404
+</td>
+<td style="text-align:center;">
+8,404
+</td>
+<td style="text-align:center;">
+8,404
+</td>
+<td style="text-align:center;">
+8,404
+</td>
+<td style="text-align:center;">
+8,404
+</td>
+<td style="text-align:center;">
+8,404
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Log Likelihood
+</td>
+<td style="text-align:center;">
+-11,861
+</td>
+<td style="text-align:center;">
+-11,861.8
+</td>
+<td style="text-align:center;">
+-16,898.4
+</td>
+<td style="text-align:center;">
+-15,806.6
+</td>
+<td style="text-align:center;">
+-8,802.4
+</td>
+<td style="text-align:center;">
+-8,802.2
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+McFadden Rho-Sq
+</td>
+<td style="text-align:center;">
+0.411
+</td>
+<td style="text-align:center;">
+0.411
+</td>
+<td style="text-align:center;">
+0.161
+</td>
+<td style="text-align:center;">
+0.216
+</td>
+<td style="text-align:center;">
+0.563
+</td>
+<td style="text-align:center;">
+0.563
+</td>
+</tr>
+</tbody>
+<tfoot>
+<tr>
+<td style="padding: 0; border:0;" colspan="100%">
+<sup></sup> t-statistics in parentheses. * p &lt; 0.5, ** p &lt; 0.1
+</td>
+</tr>
+</tfoot>
+</table>
+<div class="sourceCode" id="cb10"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb10-1"><a href="results.html#cb10-1" aria-hidden="true" tabindex="-1"></a>ls_v_car_g <span class="ot">&lt;-</span> <span class="fu">horowitz_lrtest</span>(grocery_models<span class="sc">$</span><span class="st">`</span><span class="at">All - Logsum</span><span class="st">`</span>, grocery_models<span class="sc">$</span><span class="st">`</span><span class="at">All - Car</span><span class="st">`</span>)</span></code></pre></div>
+<pre><code>## Test statistic value: -0.572018548183689</code></pre>
+<div class="sourceCode" id="cb12"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb12-1"><a href="results.html#cb12-1" aria-hidden="true" tabindex="-1"></a>d_conv_ratio <span class="ot">&lt;-</span> grocery_models<span class="sc">$</span><span class="st">`</span><span class="at">All - Car</span><span class="st">`</span><span class="sc">$</span>coefficients[<span class="st">&quot;typeConvenience Store&quot;</span>] <span class="sc">/</span> </span>
+<span id="cb12-2"><a href="results.html#cb12-2" aria-hidden="true" tabindex="-1"></a>  grocery_models<span class="sc">$</span><span class="st">`</span><span class="at">All - Car</span><span class="st">`</span><span class="sc">$</span>coefficients[<span class="st">&quot;duration_CAR&quot;</span>]  </span></code></pre></div>
+<p>Table <a href="results.html#tab:grocery-models">4.2</a> presents the model estimation results for the grocery
+store models. As with the parks models in Table <a href="results.html#tab:park-models">4.1</a>, the
+most predictive model contains both a travel impedance term and attributes of
+the destination grocery store. The number of registers suggests that people
+prefer larger stores, all else equal; ethnic markets, convenience stores, and other
+facilities are less preferred while stores with pharmacies and other merchandise
+(clothes, home goods, etc.) attract visitors. The ratio of the drive time and
+convenience store coefficients suggests that on average, people are willing to
+drive 6.86 minutes to reach a store that is not a convenience store.
+In terms of the travel impedance, there is not a sufficiently large gap in the
+model likelihoods to reject that the mode choice logsum and the drive
+time are equivalent predictors of grocery store choice.</p>
+<div class="sourceCode" id="cb13"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb13-1"><a href="results.html#cb13-1" aria-hidden="true" tabindex="-1"></a><span class="fu">tar_load</span>(library_models)</span>
+<span id="cb13-2"><a href="results.html#cb13-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb13-3"><a href="results.html#cb13-3" aria-hidden="true" tabindex="-1"></a>library_map <span class="ot">&lt;-</span> <span class="fu">c</span>(</span>
+<span id="cb13-4"><a href="results.html#cb13-4" aria-hidden="true" tabindex="-1"></a>    <span class="st">&quot;duration_CAR&quot;</span> <span class="ot">=</span> <span class="st">&quot;Drive time&quot;</span>,</span>
+<span id="cb13-5"><a href="results.html#cb13-5" aria-hidden="true" tabindex="-1"></a>    <span class="st">&quot;mclogsum&quot;</span> <span class="ot">=</span> <span class="st">&quot;Mode Choice Logsum&quot;</span>,</span>
+<span id="cb13-6"><a href="results.html#cb13-6" aria-hidden="true" tabindex="-1"></a>    <span class="st">&quot;classesTRUE&quot;</span> <span class="ot">=</span> <span class="st">&quot;Offers Classes&quot;</span>,</span>
+<span id="cb13-7"><a href="results.html#cb13-7" aria-hidden="true" tabindex="-1"></a>    <span class="st">&quot;genealogyTRUE&quot;</span> <span class="ot">=</span> <span class="st">&quot;Genealogy Resources&quot;</span></span>
+<span id="cb13-8"><a href="results.html#cb13-8" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb13-9"><a href="results.html#cb13-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb13-10"><a href="results.html#cb13-10" aria-hidden="true" tabindex="-1"></a><span class="fu">modelsummary</span>(library_models, <span class="at">estimate =</span> <span class="st">&quot;{estimate}({statistic}){stars}&quot;</span>, </span>
+<span id="cb13-11"><a href="results.html#cb13-11" aria-hidden="true" tabindex="-1"></a>             <span class="at">title =</span> <span class="st">&quot;Library Destination Choice Utilities&quot;</span>,</span>
+<span id="cb13-12"><a href="results.html#cb13-12" aria-hidden="true" tabindex="-1"></a>             <span class="at">stars =</span> <span class="fu">c</span>(<span class="st">&#39;*&#39;</span> <span class="ot">=</span> .<span class="dv">05</span>, <span class="st">&#39;**&#39;</span> <span class="ot">=</span> .<span class="dv">01</span>),</span>
+<span id="cb13-13"><a href="results.html#cb13-13" aria-hidden="true" tabindex="-1"></a>             <span class="at">coef_map =</span> library_map, <span class="at">gof_map =</span> gm,</span>
+<span id="cb13-14"><a href="results.html#cb13-14" aria-hidden="true" tabindex="-1"></a>             <span class="at">statistic =</span> <span class="cn">NULL</span>, <span class="at">note =</span> <span class="st">&quot;t-statistics in parentheses. * p &lt; 0.5, ** p &lt; 0.1&quot;</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb13-15"><a href="results.html#cb13-15" aria-hidden="true" tabindex="-1"></a>  <span class="fu">landscape</span>()</span></code></pre></div>
+<table class="table" style="width: auto !important; margin-left: auto; margin-right: auto;">
+<caption>
+<span id="tab:library-models">Table 4.3: </span>Library Destination Choice Utilities
+</caption>
+<thead>
+<tr>
+<th style="text-align:left;">
+</th>
+<th style="text-align:center;">
+Car
+</th>
+<th style="text-align:center;">
+MCLS
+</th>
+<th style="text-align:center;">
+Attributes
+</th>
+<th style="text-align:center;">
+All - Car
+</th>
+<th style="text-align:center;">
+All - Logsum
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left;">
+Drive time
+</td>
+<td style="text-align:center;">
+-0.233(-95.379)**
+</td>
+<td style="text-align:center;">
+</td>
+<td style="text-align:center;">
+</td>
+<td style="text-align:center;">
+-0.232(-89.281)**
+</td>
+<td style="text-align:center;">
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Mode Choice Logsum
+</td>
+<td style="text-align:center;">
+</td>
+<td style="text-align:center;">
+8.306(95.361)**
+</td>
+<td style="text-align:center;">
+</td>
+<td style="text-align:center;">
+</td>
+<td style="text-align:center;">
+8.270(89.266)**
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Offers Classes
+</td>
+<td style="text-align:center;">
+</td>
+<td style="text-align:center;">
+</td>
+<td style="text-align:center;">
+1.318(44.405)**
+</td>
+<td style="text-align:center;">
+1.258(23.053)**
+</td>
+<td style="text-align:center;">
+1.257(23.033)**
+</td>
+</tr>
+<tr>
+<td style="text-align:left;box-shadow: 0px 1px">
+Genealogy Resources
+</td>
+<td style="text-align:center;box-shadow: 0px 1px">
+</td>
+<td style="text-align:center;box-shadow: 0px 1px">
+</td>
+<td style="text-align:center;box-shadow: 0px 1px">
+-1.127(-44.021)**
+</td>
+<td style="text-align:center;box-shadow: 0px 1px">
+-1.024(-25.610)**
+</td>
+<td style="text-align:center;box-shadow: 0px 1px">
+-1.024(-25.601)**
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Num.Obs.
+</td>
+<td style="text-align:center;">
+9,816
+</td>
+<td style="text-align:center;">
+9,816
+</td>
+<td style="text-align:center;">
+9,816
+</td>
+<td style="text-align:center;">
+9,816
+</td>
+<td style="text-align:center;">
+9,816
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Log Likelihood
+</td>
+<td style="text-align:center;">
+-10,841.9
+</td>
+<td style="text-align:center;">
+-10,840.3
+</td>
+<td style="text-align:center;">
+-21,944.4
+</td>
+<td style="text-align:center;">
+-10,322.5
+</td>
+<td style="text-align:center;">
+-10,321.7
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+McFadden Rho-Sq
+</td>
+<td style="text-align:center;">
+0.539
+</td>
+<td style="text-align:center;">
+0.539
+</td>
+<td style="text-align:center;">
+0.068
+</td>
+<td style="text-align:center;">
+0.561
+</td>
+<td style="text-align:center;">
+0.561
+</td>
+</tr>
+</tbody>
+<tfoot>
+<tr>
+<td style="padding: 0; border:0;" colspan="100%">
+<sup></sup> t-statistics in parentheses. * p &lt; 0.5, ** p &lt; 0.1
+</td>
+</tr>
+</tfoot>
+</table>
+<div class="sourceCode" id="cb14"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb14-1"><a href="results.html#cb14-1" aria-hidden="true" tabindex="-1"></a>ls_v_car_l <span class="ot">&lt;-</span> <span class="fu">horowitz_lrtest</span>(library_models<span class="sc">$</span><span class="st">`</span><span class="at">All - Logsum</span><span class="st">`</span>, library_models<span class="sc">$</span><span class="st">`</span><span class="at">All - Car</span><span class="st">`</span>)</span></code></pre></div>
+<pre><code>## Test statistic value: -1.33038637150938</code></pre>
+<p>Table <a href="results.html#tab:library-models">4.3</a> presents the model estimation results for the
+library destination choice models. As with parks and grocery stores, both
+travel impedance and destination attributes are significant predictors of
+library choice. In this case, however, the library attributes provide very little
+predictive power of library choice. This is perhaps because virtually all
+libraries in the dataset offer the same set of basic amenities, but also because
+each municipality in Utah County tends to operate its own library rather than
+having a system of interconnected library branches as might be typical in
+larger cities or other regions. Additionally, there is no significant difference
+between the prediction power of the mode choice logsum versus the car travel
+time.</p>
+</div>
+<div id="accessibilities" class="section level2" number="4.2">
+<h2><span class="header-section-number">4.2</span> Accessibilities</h2>
+<p>Using the results of the “All - Logsum” models estimated for each community resource
+in the last section, we calculate the total utility-based accessibility measure
+for each block group in Utah County. For comparison to a more traditional measure,
+we also created buffer-based accessibility terms where a block group has
+“access” to a grocery store if there is one within a 5-minute drive, a
+park if there is one within a five-minute walk, and a library if there is one within
+a ten-minute drive.</p>
+<div class="sourceCode" id="cb16"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb16-1"><a href="results.html#cb16-1" aria-hidden="true" tabindex="-1"></a><span class="fu">tar_load</span>(access_bin)</span>
+<span id="cb16-2"><a href="results.html#cb16-2" aria-hidden="true" tabindex="-1"></a><span class="fu">tar_load</span>(access_ls)</span></code></pre></div>
+<div class="sourceCode" id="cb17"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb17-1"><a href="results.html#cb17-1" aria-hidden="true" tabindex="-1"></a>amdata <span class="ot">&lt;-</span> <span class="fu">bind_rows</span>(</span>
+<span id="cb17-2"><a href="results.html#cb17-2" aria-hidden="true" tabindex="-1"></a>  access_ls <span class="sc">%&gt;%</span> <span class="fu">st_transform</span>(<span class="dv">4326</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb17-3"><a href="results.html#cb17-3" aria-hidden="true" tabindex="-1"></a>    <span class="fu">select</span>(<span class="sc">-</span>total) <span class="sc">%&gt;%</span> <span class="fu">mutate</span>(<span class="at">method =</span> <span class="st">&quot;Logsum&quot;</span>),</span>
+<span id="cb17-4"><a href="results.html#cb17-4" aria-hidden="true" tabindex="-1"></a>  access_bin <span class="sc">%&gt;%</span> <span class="fu">st_transform</span>(<span class="dv">4326</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb17-5"><a href="results.html#cb17-5" aria-hidden="true" tabindex="-1"></a>    <span class="fu">select</span>(<span class="sc">!</span><span class="fu">contains</span>(<span class="st">&quot;_min&quot;</span>)) <span class="sc">%&gt;%</span> <span class="fu">mutate</span>(<span class="at">method =</span> <span class="st">&quot;Buffer&quot;</span>)</span>
+<span id="cb17-6"><a href="results.html#cb17-6" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb17-7"><a href="results.html#cb17-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb17-8"><a href="results.html#cb17-8" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>() <span class="sc">+</span> </span>
+<span id="cb17-9"><a href="results.html#cb17-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">annotation_map_tile</span>(<span class="st">&quot;cartolight&quot;</span>, <span class="at">zoom=</span><span class="dv">11</span>) <span class="sc">+</span> </span>
+<span id="cb17-10"><a href="results.html#cb17-10" aria-hidden="true" tabindex="-1"></a>  <span class="fu">coord_sf</span>(<span class="at">crs =</span> <span class="fu">st_crs</span>(<span class="dv">3426</span>),  <span class="at">expand =</span> <span class="cn">FALSE</span>) <span class="sc">+</span> </span>
+<span id="cb17-11"><a href="results.html#cb17-11" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_sf</span>(<span class="at">data =</span> amdata <span class="sc">%&gt;%</span> <span class="fu">filter</span>(method <span class="sc">==</span> <span class="st">&quot;Buffer&quot;</span>), <span class="fu">aes</span>(<span class="at">color =</span> <span class="fu">as.logical</span>(grocery)), <span class="at">inherit.aes =</span> <span class="cn">FALSE</span>, <span class="at">alpha =</span> <span class="fl">0.7</span>) <span class="sc">+</span></span>
+<span id="cb17-12"><a href="results.html#cb17-12" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_color_manual</span>(<span class="st">&quot;$&lt;5$ minute drive&quot;</span>, <span class="at">values =</span> dj1[<span class="fu">c</span>(<span class="dv">5</span>, <span class="dv">3</span>)]) <span class="sc">+</span>  </span>
+<span id="cb17-13"><a href="results.html#cb17-13" aria-hidden="true" tabindex="-1"></a>  <span class="fu">new_scale_color</span>() <span class="sc">+</span> </span>
+<span id="cb17-14"><a href="results.html#cb17-14" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_sf</span>(<span class="at">data =</span> amdata <span class="sc">%&gt;%</span> <span class="fu">filter</span>(method <span class="sc">==</span> <span class="st">&quot;Logsum&quot;</span>),  <span class="fu">aes</span>(<span class="at">color =</span> grocery), <span class="at">inherit.aes =</span> <span class="cn">FALSE</span>, <span class="at">alpha =</span> <span class="fl">0.7</span>) <span class="sc">+</span></span>
+<span id="cb17-15"><a href="results.html#cb17-15" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_color_viridis_c</span>(<span class="st">&quot;Logsum&quot;</span>, <span class="at">option =</span> <span class="st">&quot;magma&quot;</span>) <span class="sc">+</span>  </span>
+<span id="cb17-16"><a href="results.html#cb17-16" aria-hidden="true" tabindex="-1"></a>  <span class="fu">facet_wrap</span>(<span class="sc">~</span>method) <span class="sc">+</span> </span>
+<span id="cb17-17"><a href="results.html#cb17-17" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme</span>(<span class="at">axis.line =</span> <span class="fu">element_line</span>(<span class="at">color =</span> <span class="cn">NA</span>),</span>
+<span id="cb17-18"><a href="results.html#cb17-18" aria-hidden="true" tabindex="-1"></a>        <span class="at">axis.title.x=</span><span class="fu">element_blank</span>(),</span>
+<span id="cb17-19"><a href="results.html#cb17-19" aria-hidden="true" tabindex="-1"></a>        <span class="at">axis.text.x=</span><span class="fu">element_blank</span>(),</span>
+<span id="cb17-20"><a href="results.html#cb17-20" aria-hidden="true" tabindex="-1"></a>        <span class="at">axis.ticks.x=</span><span class="fu">element_blank</span>(),</span>
+<span id="cb17-21"><a href="results.html#cb17-21" aria-hidden="true" tabindex="-1"></a>        <span class="at">axis.title.y=</span><span class="fu">element_blank</span>(),</span>
+<span id="cb17-22"><a href="results.html#cb17-22" aria-hidden="true" tabindex="-1"></a>        <span class="at">axis.text.y=</span><span class="fu">element_blank</span>(),</span>
+<span id="cb17-23"><a href="results.html#cb17-23" aria-hidden="true" tabindex="-1"></a>        <span class="at">axis.ticks.y=</span><span class="fu">element_blank</span>())</span></code></pre></div>
+<pre><code>## Coordinate system already present. Adding new coordinate system, which will replace the existing one.</code></pre>
+<pre><code>## Zoom: 11
+## Zoom: 11</code></pre>
+<div class="figure"><span style="display:block;" id="fig:access-map"></span>
+<img src="Community_Resources_files/figure-html/access-map-1.pdf" alt="Spatial comparison of grocery access buffer versus logsum." width="672" />
+<p class="caption">
+Figure 4.1: Spatial comparison of grocery access buffer versus logsum.
+</p>
+</div>
+<p>Figure <a href="#fig::access-map"><strong>??</strong></a> spatially presents the difference between the
+buffer-based measure and the logsum-based measure. The two measures largely
+show the same basic shape: block groups along the spine of the county tend
+to have binary access in the buffer and also have a higher logsum value. The
+difference is at the margins, where the discontinuity of the buffer measure
+is replaced by a smoother access surface, more spatially reflective of what
+people are likely to experience.</p>
+<div class="sourceCode" id="cb20"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb20-1"><a href="results.html#cb20-1" aria-hidden="true" tabindex="-1"></a><span class="fu">left_join</span>(</span>
+<span id="cb20-2"><a href="results.html#cb20-2" aria-hidden="true" tabindex="-1"></a>  access_bin <span class="sc">%&gt;%</span></span>
+<span id="cb20-3"><a href="results.html#cb20-3" aria-hidden="true" tabindex="-1"></a>    <span class="fu">st_set_geometry</span>(<span class="cn">NULL</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb20-4"><a href="results.html#cb20-4" aria-hidden="true" tabindex="-1"></a>    <span class="fu">rename</span>(<span class="at">buffer_grocery =</span> grocery, <span class="at">buffer_library =</span> library, <span class="at">buffer_park =</span> park,</span>
+<span id="cb20-5"><a href="results.html#cb20-5" aria-hidden="true" tabindex="-1"></a>           <span class="at">minutes_grocery =</span> grocery_min, <span class="at">minutes_library =</span> library_min, <span class="at">minutes_park =</span> park_min),</span>
+<span id="cb20-6"><a href="results.html#cb20-6" aria-hidden="true" tabindex="-1"></a>  access_ls <span class="sc">%&gt;%</span></span>
+<span id="cb20-7"><a href="results.html#cb20-7" aria-hidden="true" tabindex="-1"></a>    <span class="fu">st_set_geometry</span>(<span class="cn">NULL</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb20-8"><a href="results.html#cb20-8" aria-hidden="true" tabindex="-1"></a>    <span class="fu">select</span>(<span class="sc">-</span>total) <span class="sc">%&gt;%</span></span>
+<span id="cb20-9"><a href="results.html#cb20-9" aria-hidden="true" tabindex="-1"></a>    <span class="fu">rename</span>(<span class="at">logsum_grocery =</span> grocery, <span class="at">logsum_library =</span> library, <span class="at">logsum_park =</span> park),</span>
+<span id="cb20-10"><a href="results.html#cb20-10" aria-hidden="true" tabindex="-1"></a>  <span class="at">by =</span> <span class="fu">c</span>(<span class="st">&quot;id&quot;</span>, <span class="st">&quot;POPULATION&quot;</span>)</span>
+<span id="cb20-11"><a href="results.html#cb20-11" aria-hidden="true" tabindex="-1"></a>)  <span class="sc">%&gt;%</span></span>
+<span id="cb20-12"><a href="results.html#cb20-12" aria-hidden="true" tabindex="-1"></a>  <span class="fu">pivot_longer</span>(<span class="at">cols =</span> minutes_grocery<span class="sc">:</span>logsum_park) <span class="sc">%&gt;%</span></span>
+<span id="cb20-13"><a href="results.html#cb20-13" aria-hidden="true" tabindex="-1"></a>  <span class="fu">separate</span>(name, <span class="fu">c</span>(<span class="st">&quot;measure&quot;</span>, <span class="st">&quot;resource&quot;</span>)) <span class="sc">%&gt;%</span></span>
+<span id="cb20-14"><a href="results.html#cb20-14" aria-hidden="true" tabindex="-1"></a>  <span class="fu">pivot_wider</span>(<span class="at">names_from =</span> measure, <span class="at">values_from =</span> value) <span class="sc">%&gt;%</span></span>
+<span id="cb20-15"><a href="results.html#cb20-15" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">buffer =</span> <span class="fu">as.logical</span>(buffer)) <span class="sc">%&gt;%</span></span>
+<span id="cb20-16"><a href="results.html#cb20-16" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x =</span> minutes, <span class="at">y =</span> logsum, <span class="at">fill =</span> buffer, <span class="at">color =</span> resource, <span class="at">size =</span> POPULATION <span class="sc">+</span> <span class="dv">1</span>)) <span class="sc">+</span></span>
+<span id="cb20-17"><a href="results.html#cb20-17" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>(<span class="at">pch =</span> <span class="dv">21</span>, <span class="at">alpha =</span> <span class="fl">0.7</span>, <span class="at">stroke =</span> <span class="dv">1</span>) <span class="sc">+</span> </span>
+<span id="cb20-18"><a href="results.html#cb20-18" aria-hidden="true" tabindex="-1"></a>  <span class="fu">stat_smooth</span>(<span class="at">method =</span> <span class="st">&quot;lm&quot;</span>, <span class="at">show.legend =</span> <span class="cn">FALSE</span>) <span class="sc">+</span> </span>
+<span id="cb20-19"><a href="results.html#cb20-19" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_size</span>(<span class="st">&quot;Population&quot;</span>, <span class="at">breaks =</span> <span class="fu">c</span>(<span class="dv">100</span>, <span class="dv">500</span>, <span class="dv">1000</span>, <span class="dv">5000</span>)) <span class="sc">+</span></span>
+<span id="cb20-20"><a href="results.html#cb20-20" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_color_manual</span>(<span class="st">&quot;Resource&quot;</span>, <span class="at">values =</span> dj1) <span class="sc">+</span> </span>
+<span id="cb20-21"><a href="results.html#cb20-21" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_fill_manual</span>(<span class="st">&quot;Within buffer&quot;</span>, <span class="at">values =</span> <span class="fu">c</span>(<span class="st">&quot;white&quot;</span>, <span class="st">&quot;grey&quot;</span>)) <span class="sc">+</span> </span>
+<span id="cb20-22"><a href="results.html#cb20-22" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ylab</span>(<span class="st">&quot;Accessibility Logsum&quot;</span>) <span class="sc">+</span> <span class="fu">xlab</span>(<span class="st">&quot;Travel Time in Minutes&quot;</span>)</span></code></pre></div>
+<pre><code>## `geom_smooth()` using formula &#39;y ~ x&#39;</code></pre>
+<pre><code>## Warning: Removed 64 rows containing non-finite values (stat_smooth).</code></pre>
+<pre><code>## Warning: Removed 64 rows containing missing values (geom_point).</code></pre>
+<div class="figure"><span style="display:block;" id="fig:access-plot"></span>
+<img src="Community_Resources_files/figure-html/access-plot-1.pdf" alt="Relationship between travel time, travel-time based buffer, and logsum access value for block groups in Utah County." width="672" />
+<p class="caption">
+Figure 4.2: Relationship between travel time, travel-time based buffer, and logsum access value for block groups in Utah County.
+</p>
+</div>
+<p>The discontinuity of the buffer measure is perhaps more clearly seen with in
+Figure <a href="results.html#fig:access-plot">4.2</a>, which plots the logsum against the travel time
+in minutes (drive time for grocery stores and libraries; walk time for parks),
+for block groups in the study region. For block groups with equivalent travel
+time to a particular community resource, the accessibility logsum value
+varies substantially. This variance might be due to a travel time differential
+between drive, walk, and transit modes captured in the mode choice logsum, or it
+could also be because the resources available near the set of block groups have
+substantial variance in their amenities. Being near a single poor-quality
+grocery store is not the same thing as being near multiple high-quality
+groceries, and the logsum value can capture this variance in its construction.</p>
+<div class="sourceCode" id="cb24"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb24-1"><a href="results.html#cb24-1" aria-hidden="true" tabindex="-1"></a>no_buffer <span class="ot">&lt;-</span> access_bin <span class="sc">%&gt;%</span> <span class="fu">left_join</span>(acsdata, <span class="at">by =</span> <span class="fu">c</span>(<span class="st">&quot;id&quot;</span> <span class="ot">=</span>  <span class="st">&quot;geoid&quot;</span>)) <span class="sc">%&gt;%</span></span>
+<span id="cb24-2"><a href="results.html#cb24-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(<span class="sc">!</span>grocery, <span class="sc">!</span>park,<span class="sc">!</span>library)</span>
+<span id="cb24-3"><a href="results.html#cb24-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb24-4"><a href="results.html#cb24-4" aria-hidden="true" tabindex="-1"></a>no_logsum <span class="ot">&lt;-</span> access_ls <span class="sc">%&gt;%</span> <span class="fu">left_join</span>(acsdata, <span class="at">by =</span> <span class="fu">c</span>(<span class="st">&quot;id&quot;</span> <span class="ot">=</span>  <span class="st">&quot;geoid&quot;</span>)) <span class="sc">%&gt;%</span></span>
+<span id="cb24-5"><a href="results.html#cb24-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(grocery <span class="sc">&lt;</span> <span class="fu">mean</span>(grocery, <span class="at">na.rm =</span> <span class="cn">TRUE</span>),  </span>
+<span id="cb24-6"><a href="results.html#cb24-6" aria-hidden="true" tabindex="-1"></a>         park <span class="sc">&lt;</span> <span class="fu">mean</span>(park, <span class="at">na.rm =</span> <span class="cn">TRUE</span>), </span>
+<span id="cb24-7"><a href="results.html#cb24-7" aria-hidden="true" tabindex="-1"></a>         library <span class="sc">&lt;</span> <span class="fu">mean</span>(library, <span class="at">na.rm =</span> <span class="cn">TRUE</span>))</span>
+<span id="cb24-8"><a href="results.html#cb24-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb24-9"><a href="results.html#cb24-9" aria-hidden="true" tabindex="-1"></a>meaninc_nobuf <span class="ot">&lt;-</span> <span class="fu">weighted.mean</span>(no_buffer<span class="sc">$</span>income, no_buffer<span class="sc">$</span>population, <span class="at">na.rm =</span> <span class="cn">TRUE</span>)</span>
+<span id="cb24-10"><a href="results.html#cb24-10" aria-hidden="true" tabindex="-1"></a>meaninc_ls <span class="ot">&lt;-</span> <span class="fu">weighted.mean</span>(no_logsum<span class="sc">$</span>income, no_logsum<span class="sc">$</span>population, <span class="at">na.rm =</span> <span class="cn">TRUE</span>)</span>
+<span id="cb24-11"><a href="results.html#cb24-11" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb24-12"><a href="results.html#cb24-12" aria-hidden="true" tabindex="-1"></a>nhh_nobuf <span class="ot">&lt;-</span> <span class="fu">sum</span>(no_buffer<span class="sc">$</span>lowincome <span class="sc">*</span> .<span class="dv">01</span> <span class="sc">*</span> no_buffer<span class="sc">$</span>households)</span>
+<span id="cb24-13"><a href="results.html#cb24-13" aria-hidden="true" tabindex="-1"></a>nhh_nols  <span class="ot">&lt;-</span> <span class="fu">sum</span>(no_logsum<span class="sc">$</span>lowincome <span class="sc">*</span> .<span class="dv">01</span> <span class="sc">*</span> no_logsum<span class="sc">$</span>households)</span></code></pre></div>
+<p>What this distinction between access estimation methods might mean for policy
+analysis is yet to be determined, and future research is required. In this analysis,
+we estimate that 2,385 households live in block groups outside the
+boundary of all three resource buffers. At the same time, 1,633 households
+live in block groups that are beneath the regional mean utility-based access to
+all three resources. The population-weighted mean of the block group median
+incomes of these two groups is almost identical however, with $98,848
+for the buffer-based measure and $97,929 for the utility-based version.
+This indicates that the areas of Utah County that are without access to these
+community resources tend to be exurban regions on the edges of the county,
+with relatively high income areas.</p>
+
+</div>
+</div>
+<h3>References</h3>
+<div id="refs" class="references csl-bib-body hanging-indent">
+<div id="ref-mlogit" class="csl-entry">
+Croissant, Yves. 2020. <span>“Estimation of Random Utility Models in <span>R</span>: The <span class="nocase">mlogit</span> Package.”</span> <em>Journal of Statistical Software</em> 95 (11): 1–41. <a href="https://doi.org/10.18637/jss.v095.i11">https://doi.org/10.18637/jss.v095.i11</a>.
+</div>
+<div id="ref-R" class="csl-entry">
+R Core Team. 2021. <em>R: A Language and Environment for Statistical Computing</em>. Vienna, Austria: R Foundation for Statistical Computing. <a href="https://www.R-project.org/">https://www.R-project.org/</a>.
+</div>
+</div>
+            </section>
+
+          </div>
+        </div>
+      </div>
+<a href="methods.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+<a href="limitations-and-future-research.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
+    </div>
+  </div>
+<script src="libs/gitbook-2.6.7/js/app.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/clipboard.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-search.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-sharing.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-fontsettings.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-bookdown.js"></script>
+<script src="libs/gitbook-2.6.7/js/jquery.highlight.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-clipboard.js"></script>
+<script>
+gitbook.require(["gitbook"], function(gitbook) {
+gitbook.start({
+"sharing": {
+"github": false,
+"facebook": true,
+"twitter": true,
+"linkedin": false,
+"weibo": false,
+"instapaper": false,
+"vk": false,
+"whatsapp": false,
+"all": ["facebook", "twitter", "linkedin", "weibo", "instapaper"]
+},
+"fontsettings": {
+"theme": "white",
+"family": "sans",
+"size": 2
+},
+"edit": {
+"link": null,
+"text": null
+},
+"history": {
+"link": null,
+"text": null
+},
+"view": {
+"link": null,
+"text": null
+},
+"download": ["Community_Resources.pdf", "Community_Resources.epub"],
+"search": {
+"engine": "fuse",
+"options": null
+},
+"toc": {
+"collapse": "subsection"
+}
+});
+});
+</script>
+
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    var src = "true";
+    if (src === "" || src === "true") src = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-MML-AM_CHTML";
+    if (location.protocol !== "file:")
+      if (/^https?:/.test(src))
+        src = src.replace(/^https?:/, '');
+    script.src = src;
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
+</body>
+
+</html>

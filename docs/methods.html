@@ -1,0 +1,983 @@
+<!DOCTYPE html>
+<html lang="" xml:lang="">
+<head>
+
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <title> 3 Methods | Utility-Based Accessibility to Community Resources: An Application of Location-Based Services Data</title>
+  <meta name="description" content="A short description" />
+  <meta name="generator" content="bookdown 0.24 and GitBook 2.6.7" />
+
+  <meta property="og:title" content=" 3 Methods | Utility-Based Accessibility to Community Resources: An Application of Location-Based Services Data" />
+  <meta property="og:type" content="book" />
+  
+  
+  <meta property="og:description" content="A short description" />
+  
+
+  <meta name="twitter:card" content="summary" />
+  <meta name="twitter:title" content=" 3 Methods | Utility-Based Accessibility to Community Resources: An Application of Location-Based Services Data" />
+  
+  <meta name="twitter:description" content="A short description" />
+  
+
+
+
+<meta name="date" content="2021-10-19" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black" />
+  
+  
+<link rel="prev" href="lit-review.html"/>
+<link rel="next" href="results.html"/>
+<style type="text/css">
+p.abstract{
+  text-align: center;
+  font-weight: bold;
+}
+div.abstract{
+  margin: auto;
+  width: 90%;
+}
+</style>
+<script src="libs/header-attrs-2.11/header-attrs.js"></script>
+<script src="libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/fuse.js@6.4.6/dist/fuse.min.js"></script>
+<link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-table.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-bookdown.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-highlight.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-search.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-fontsettings.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-clipboard.css" rel="stylesheet" />
+
+
+
+
+
+
+
+
+<link href="libs/anchor-sections-1.0.1/anchor-sections.css" rel="stylesheet" />
+<script src="libs/anchor-sections-1.0.1/anchor-sections.js"></script>
+<script src="libs/kePrint-0.0.1/kePrint.js"></script>
+<link href="libs/lightable-0.0.1/lightable.css" rel="stylesheet" />
+<script src="libs/htmlwidgets-1.5.3/htmlwidgets.js"></script>
+<link href="libs/leaflet-1.3.1/leaflet.css" rel="stylesheet" />
+<script src="libs/leaflet-1.3.1/leaflet.js"></script>
+<link href="libs/leafletfix-1.0.0/leafletfix.css" rel="stylesheet" />
+<script src="libs/proj4-2.6.2/proj4.min.js"></script>
+<script src="libs/Proj4Leaflet-1.0.1/proj4leaflet.js"></script>
+<link href="libs/rstudio_leaflet-1.3.1/rstudio_leaflet.css" rel="stylesheet" />
+<script src="libs/leaflet-binding-2.0.4.1/leaflet.js"></script>
+<script src="libs/leaflet-providers-1.9.0/leaflet-providers_1.9.0.js"></script>
+<script src="libs/leaflet-providers-plugin-2.0.4.1/leaflet-providers-plugin.js"></script>
+
+
+<style type="text/css">
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+    color: #aaaaaa;
+  }
+pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+code span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code span.at { color: #7d9029; } /* Attribute */
+code span.bn { color: #40a070; } /* BaseN */
+code span.bu { } /* BuiltIn */
+code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code span.ch { color: #4070a0; } /* Char */
+code span.cn { color: #880000; } /* Constant */
+code span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code span.dt { color: #902000; } /* DataType */
+code span.dv { color: #40a070; } /* DecVal */
+code span.er { color: #ff0000; font-weight: bold; } /* Error */
+code span.ex { } /* Extension */
+code span.fl { color: #40a070; } /* Float */
+code span.fu { color: #06287e; } /* Function */
+code span.im { } /* Import */
+code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+code span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code span.op { color: #666666; } /* Operator */
+code span.ot { color: #007020; } /* Other */
+code span.pp { color: #bc7a00; } /* Preprocessor */
+code span.sc { color: #4070a0; } /* SpecialChar */
+code span.ss { color: #bb6688; } /* SpecialString */
+code span.st { color: #4070a0; } /* String */
+code span.va { color: #19177c; } /* Variable */
+code span.vs { color: #4070a0; } /* VerbatimString */
+code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+</style>
+
+<style type="text/css">
+/* Used with Pandoc 2.11+ new --citeproc when CSL is used */
+div.csl-bib-body { }
+div.csl-entry {
+  clear: both;
+}
+.hanging div.csl-entry {
+  margin-left:2em;
+  text-indent:-2em;
+}
+div.csl-left-margin {
+  min-width:2em;
+  float:left;
+}
+div.csl-right-inline {
+  margin-left:2em;
+  padding-left:1em;
+}
+div.csl-indent {
+  margin-left: 2em;
+}
+</style>
+
+<link rel="stylesheet" href="style.css" type="text/css" />
+</head>
+
+<body>
+
+
+
+  <div class="book without-animation with-summary font-size-2 font-family-1" data-basepath=".">
+
+    <div class="book-summary">
+      <nav role="navigation">
+
+<ul class="summary">
+<li><a href="./">Access to Community Resources</a></li>
+
+<li class="divider"></li>
+<li class="chapter" data-level="1" data-path="intro.html"><a href="intro.html"><i class="fa fa-check"></i><b>1</b> Introduction</a></li>
+<li class="chapter" data-level="2" data-path="lit-review.html"><a href="lit-review.html"><i class="fa fa-check"></i><b>2</b> Literature</a></li>
+<li class="chapter" data-level="3" data-path="methods.html"><a href="methods.html"><i class="fa fa-check"></i><b>3</b> Methods</a>
+<ul>
+<li class="chapter" data-level="3.1" data-path="methods.html"><a href="methods.html#modeling-framework"><i class="fa fa-check"></i><b>3.1</b> Modeling Framework</a></li>
+<li class="chapter" data-level="3.2" data-path="methods.html"><a href="methods.html#data"><i class="fa fa-check"></i><b>3.2</b> Data</a>
+<ul>
+<li class="chapter" data-level="3.2.1" data-path="methods.html"><a href="methods.html#resource-data"><i class="fa fa-check"></i><b>3.2.1</b> Resource Data</a></li>
+<li class="chapter" data-level="3.2.2" data-path="methods.html"><a href="methods.html#mobile-device-data"><i class="fa fa-check"></i><b>3.2.2</b> Mobile Device Data</a></li>
+<li class="chapter" data-level="3.2.3" data-path="methods.html"><a href="methods.html#travel-times"><i class="fa fa-check"></i><b>3.2.3</b> Travel Times</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="4" data-path="results.html"><a href="results.html"><i class="fa fa-check"></i><b>4</b> Results</a>
+<ul>
+<li class="chapter" data-level="4.1" data-path="results.html"><a href="results.html#destination-choice-models"><i class="fa fa-check"></i><b>4.1</b> Destination Choice Models</a></li>
+<li class="chapter" data-level="4.2" data-path="results.html"><a href="results.html#accessibilities"><i class="fa fa-check"></i><b>4.2</b> Accessibilities</a></li>
+</ul></li>
+<li class="chapter" data-level="5" data-path="limitations-and-future-research.html"><a href="limitations-and-future-research.html"><i class="fa fa-check"></i><b>5</b> Limitations and Future Research</a></li>
+<li class="chapter" data-level="6" data-path="conclusions.html"><a href="conclusions.html"><i class="fa fa-check"></i><b>6</b> Conclusions</a></li>
+<li class="chapter" data-level="" data-path="acknowledgements.html"><a href="acknowledgements.html"><i class="fa fa-check"></i>Acknowledgements</a></li>
+<li class="chapter" data-level="" data-path="references.html"><a href="references.html"><i class="fa fa-check"></i>References</a></li>
+<li class="divider"></li>
+<li><a href="https://github.com/rstudio/bookdown" target="blank">Published with bookdown</a></li>
+
+</ul>
+
+      </nav>
+    </div>
+
+    <div class="book-body">
+      <div class="body-inner">
+        <div class="book-header" role="navigation">
+          <h1>
+            <i class="fa fa-circle-o-notch fa-spin"></i><a href="./">Utility-Based Accessibility to Community Resources: An Application of Location-Based Services Data</a>
+          </h1>
+        </div>
+
+        <div class="page-wrapper" tabindex="-1" role="main">
+          <div class="page-inner">
+
+            <section class="normal" id="section-">
+<div id="methods" class="section level1" number="3">
+<h1><span class="header-section-number"> 3</span> Methods</h1>
+<p>In this section, we present a method to estimate utility-based access to
+community resources in Utah County, Utah.</p>
+<div id="modeling-framework" class="section level2" number="3.1">
+<h2><span class="header-section-number">3.1</span> Modeling Framework</h2>
+<p>In a destination choice modeling framework <span class="citation">(<a href="#ref-recker1978factors" role="doc-biblioref">Recker and Kostyniuk 1978</a>)</span>, an individual
+at origin <span class="math inline">\(i\)</span> considering a destination <span class="math inline">\(j\)</span> from a set of possible destinations
+<span class="math inline">\(J\)</span> has a choice probability
+<span class="math display" id="eq:mnlp">\[\begin{equation}
+P_{ij} = \frac{e^{V_{ij}}}{\sum_{j&#39; \in J} e^{V_{ij&#39;}}}
+  \tag{3.1}
+\end{equation}\]</span>
+where <span class="math inline">\(V_{ij}\)</span> is a linear-in-parameters function representing the utility of
+destination <span class="math inline">\(j\)</span>. The destination utility consists of two basic elements:
+<span class="math display" id="eq:dcu">\[\begin{equation}
+ V_{ij} = \beta t_{ij} + X_j\gamma 
+  \tag{3.2}
+\end{equation}\]</span>
+where <span class="math inline">\(t_{ij}\)</span> is a measure of the travel impedance between <span class="math inline">\(i\)</span> and <span class="math inline">\(j\)</span>, <span class="math inline">\(X_j\)</span>
+is a vector of attributes of destination <span class="math inline">\(j\)</span>, and <span class="math inline">\(\beta, \gamma\)</span> are estimated
+parameters relating the travel impedance and the destination attributes to the
+utility. These parameters may be estimated by maximum likelihood given sufficient
+observational data.</p>
+<p>The logarithm of the denominator of the choice probability given in Equation
+<a href="methods.html#eq:mnlp">(3.1)</a> is a quantity called the <em>logsum</em> and represents the total
+value — or accessibility <span class="math inline">\(A\)</span> — of the choice set for individual <span class="math inline">\(i\)</span>
+<span class="citation">(<a href="#ref-williams1977formation" role="doc-biblioref">Williams 1977</a>; <a href="#ref-handy1997measuring" role="doc-biblioref">Handy and Niemeier 1997</a>)</span>
+<span class="math display" id="eq:dclogsum">\[\begin{equation}
+ A_i = \log\left(\sum_{j&#39; \in J} e^{V_{ij&#39;}}\right) + C
+  \tag{3.3}
+\end{equation}\]</span>
+where <span class="math inline">\(C\)</span> is an unknown constant resulting from the fact that the utility
+represented in Equation <a href="methods.html#eq:dcu">(3.2)</a> is not absolute, but rather relative to
+the utilities of the other options. The difference in logsum values between two
+different origin points could be compared to determine which location has “better”
+accessibility to the destinations in question, based on the elements included
+in Equation <a href="methods.html#eq:dcu">(3.2)</a>. Accessibility might be improved by lower travel
+impedance, or by improved amenities, or even by simply having more options available.</p>
+<div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1-1"><a href="methods.html#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">tar_load</span>(utilities)</span></code></pre></div>
+<p>These other elements include attributes of the community resource relevant to
+the destination choice problem: the size of the resource, amenities available,
+the price of goods on sale, etc. Each of these variables has an
+importance weighted against the travel impedance <span class="math inline">\(t_{ij}\)</span>, which might take
+various forms depending on the data available and the destination resource in
+question.</p>
+<p>Simple measures such as the highway travel time or the walk distance
+might be more or less appropriate for particular resources. Another option
+commonly used in travel demand models is actually the logsum of a <em>mode</em>
+choice model with the utility of choosing each mode given by a set of utility
+equations. In this study we adopt generic mode choice utility equations
+<span class="math display">\[\begin{align*}
+  V_{ij\mathrm{auto}} &amp;= -0.028* (t_{ij\mathrm{auto}})\\
+  V_{ij\mathrm{transit}} &amp;= -4 -0.028* (t_{ij\mathrm{transit}}) 
+    -0.056* (wt_{ij}) -0.372*(at_{ij})\\
+  V_{ij\mathrm{walk}} &amp;= -5 -0.028* (t_{ij\mathrm{walk}}) 
+    -1.12* (d_{ij} | d_{ij} &lt; 1.5)  
+    -5.58* (d_{ij} | d_{ij} \geq 1.5) 
+\end{align*}\]</span><br />
+where <span class="math inline">\(t_{ij}\)</span> is the travel time in minutes from <span class="math inline">\(i\)</span> to <span class="math inline">\(j\)</span> by each mode
+(including only in-vehicle time for transit), <span class="math inline">\(wt\)</span> is the transit wait and
+transfer time, <span class="math inline">\(at\)</span> is the time to access and egress transit by walking, and <span class="math inline">\(d_{ij}\)</span>
+is the walking distance in miles. The walking distance uses two different
+utility parameters depending on whether the walking distance is greater than 1.5
+miles. The travel impedance logsum between <span class="math inline">\(i\)</span> and <span class="math inline">\(j\)</span> is then
+<span class="math display" id="eq:mcls">\[\begin{equation}
+MCLS_{ij} = \log\left(\exp(V_{ij\mathrm{auto}}) + \exp(V_{ij\mathrm{transit}}) + \exp(V_{ij\mathrm{walk}}) \right)
+  \tag{3.4}
+\end{equation}\]</span></p>
+</div>
+<div id="data" class="section level2" number="3.2">
+<h2><span class="header-section-number">3.2</span> Data</h2>
+<p>Utah County, Utah, is among the fastest-growing urbanized regions in the United
+States, with formerly agrarian areas and open rangeland being converted to
+predominately suburban built environments. The population and economic center of
+the county is in Provo and Orem, home to two large universities (Brigham Young
+and Utah Valley), but the most rapid development in commercial and residential
+terms has been in communities north of Utah Lake, between Provo and Salt Lake
+City to the north. Interstate 15 travels the spine of the county, and a commuter
+rail system travels multiple times a day between Provo and Salt Lake City with
+stations in Orem, American Fork, and Lehi. A bus rapid transit (BRT) system connects
+the universities, two commuter rail stations, and the densest portions of Provo
+and Orem, and other local bus services operate in other communities in the region.
+Table <a href="methods.html#tab:acstable">3.1</a> presents descriptive statistics of
+the block groups in Utah County obtained from the 2015-2019 American Community
+Survey (ACS) using the tidycensus package for R <span class="citation">(<a href="#ref-tidycensus" role="doc-biblioref">Walker and Herman 2021</a>)</span>.</p>
+<div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb2-1"><a href="methods.html#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="fu">tar_load</span>(acsdata)</span>
+<span id="cb2-2"><a href="methods.html#cb2-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-3"><a href="methods.html#cb2-3" aria-hidden="true" tabindex="-1"></a>acs_for_table <span class="ot">&lt;-</span> acsdata <span class="sc">%&gt;%</span> <span class="fu">select</span>(</span>
+<span id="cb2-4"><a href="methods.html#cb2-4" aria-hidden="true" tabindex="-1"></a>    <span class="st">&quot;Density: Households per square kilometer&quot;</span> <span class="ot">=</span> density,</span>
+<span id="cb2-5"><a href="methods.html#cb2-5" aria-hidden="true" tabindex="-1"></a>    <span class="st">&quot;Income: Median block group income&quot;</span> <span class="ot">=</span> income,</span>
+<span id="cb2-6"><a href="methods.html#cb2-6" aria-hidden="true" tabindex="-1"></a>    <span class="st">&quot;Low Income: Share of households making less than $35k&quot;</span> <span class="ot">=</span> lowincome,</span>
+<span id="cb2-7"><a href="methods.html#cb2-7" aria-hidden="true" tabindex="-1"></a>    <span class="st">&quot;High Income: Share of households making more than $125k&quot;</span> <span class="ot">=</span> highincome,</span>
+<span id="cb2-8"><a href="methods.html#cb2-8" aria-hidden="true" tabindex="-1"></a>    <span class="st">&quot;Children: Share of households with children under 6&quot;</span> <span class="ot">=</span> children,</span>
+<span id="cb2-9"><a href="methods.html#cb2-9" aria-hidden="true" tabindex="-1"></a>    <span class="st">&quot;Black: Share of population who is Black&quot;</span> <span class="ot">=</span> black,</span>
+<span id="cb2-10"><a href="methods.html#cb2-10" aria-hidden="true" tabindex="-1"></a>    <span class="st">&quot;Asian: Share of population who is Asian&quot;</span> <span class="ot">=</span> asian,</span>
+<span id="cb2-11"><a href="methods.html#cb2-11" aria-hidden="true" tabindex="-1"></a>    <span class="st">&quot;Hispanic: Share of population who is Hispanic*&quot;</span> <span class="ot">=</span> hispanic,</span>
+<span id="cb2-12"><a href="methods.html#cb2-12" aria-hidden="true" tabindex="-1"></a>    <span class="st">&quot;White: Share of population who is White&quot;</span> <span class="ot">=</span> white)</span>
+<span id="cb2-13"><a href="methods.html#cb2-13" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-14"><a href="methods.html#cb2-14" aria-hidden="true" tabindex="-1"></a><span class="fu">datasummary_skim</span>(acs_for_table, <span class="at">title =</span> <span class="st">&quot;Block Group Summary Statistics&quot;</span>,</span>
+<span id="cb2-15"><a href="methods.html#cb2-15" aria-hidden="true" tabindex="-1"></a>  <span class="at">histogram =</span> <span class="sc">!</span>knitr<span class="sc">::</span><span class="fu">is_latex_output</span>()) <span class="sc">%&gt;%</span></span>
+<span id="cb2-16"><a href="methods.html#cb2-16" aria-hidden="true" tabindex="-1"></a>  kableExtra<span class="sc">::</span><span class="fu">kable_styling</span>(<span class="at">latex_options =</span> <span class="fu">c</span>(<span class="st">&quot;scale_down&quot;</span>)) <span class="sc">%&gt;%</span></span>
+<span id="cb2-17"><a href="methods.html#cb2-17" aria-hidden="true" tabindex="-1"></a>  kableExtra<span class="sc">::</span><span class="fu">column_spec</span>(<span class="dv">1</span>, <span class="at">width =</span> <span class="st">&quot;4cm&quot;</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb2-18"><a href="methods.html#cb2-18" aria-hidden="true" tabindex="-1"></a>  kableExtra<span class="sc">::</span><span class="fu">footnote</span>(<span class="at">symbol =</span> <span class="st">&quot;Hispanic indicates Hispanic individuals of all races; non-Hispanic individuals report a single race alone.&quot;</span>) </span></code></pre></div>
+<table class="table table" style="width: auto !important; margin-left: auto; margin-right: auto; margin-left: auto; margin-right: auto;border-bottom: 0;">
+<caption>
+<span id="tab:acstable">Table 3.1: </span>Block Group Summary Statistics
+</caption>
+<thead>
+<tr>
+<th style="text-align:left;">
+</th>
+<th style="text-align:right;">
+Unique (#)
+</th>
+<th style="text-align:right;">
+Missing (%)
+</th>
+<th style="text-align:right;">
+Mean
+</th>
+<th style="text-align:right;">
+SD
+</th>
+<th style="text-align:right;">
+Min
+</th>
+<th style="text-align:right;">
+Median
+</th>
+<th style="text-align:right;">
+Max
+</th>
+<th style="text-align:right;">
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left;width: 4cm; ">
+Density: Households per square kilometer
+</td>
+<td style="text-align:right;">
+340
+</td>
+<td style="text-align:right;">
+0
+</td>
+<td style="text-align:right;">
+558.3
+</td>
+<td style="text-align:right;">
+659.3
+</td>
+<td style="text-align:right;">
+0.0
+</td>
+<td style="text-align:right;">
+394.2
+</td>
+<td style="text-align:right;">
+4741.9
+</td>
+<td style="text-align:right;">
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" class="svglite" width="48.00pt" height="12.00pt" viewbox="0 0 48.00 12.00">
+<defs>
+<style type="text/css">
+    .svglite line, .svglite polyline, .svglite polygon, .svglite path, .svglite rect, .svglite circle {
+      fill: none;
+      stroke: #000000;
+      stroke-linecap: round;
+      stroke-linejoin: round;
+      stroke-miterlimit: 10.00;
+    }
+  </style>
+</defs><rect width="100%" height="100%" style="stroke: none; fill: none;"></rect><defs><clippath id="cpMC4wMHw0OC4wMHwwLjAwfDEyLjAw"><rect x="0.00" y="0.00" width="48.00" height="12.00"></rect></clippath></defs><g clip-path="url(#cpMC4wMHw0OC4wMHwwLjAwfDEyLjAw)">
+</g><defs><clippath id="cpMC4wMHw0OC4wMHwyLjg4fDEyLjAw"><rect x="0.00" y="2.88" width="48.00" height="9.12"></rect></clippath></defs><g clip-path="url(#cpMC4wMHw0OC4wMHwyLjg4fDEyLjAw)"><rect x="1.78" y="3.22" width="4.69" height="8.44" style="stroke-width: 0.38; fill: #000000;"></rect><rect x="6.46" y="7.97" width="4.69" height="3.69" style="stroke-width: 0.38; fill: #000000;"></rect><rect x="11.15" y="10.81" width="4.69" height="0.85" style="stroke-width: 0.38; fill: #000000;"></rect><rect x="15.84" y="11.22" width="4.69" height="0.45" style="stroke-width: 0.38; fill: #000000;"></rect><rect x="20.52" y="11.50" width="4.69" height="0.16" style="stroke-width: 0.38; fill: #000000;"></rect><rect x="25.21" y="11.54" width="4.69" height="0.12" style="stroke-width: 0.38; fill: #000000;"></rect><rect x="29.90" y="11.62" width="4.69" height="0.041" style="stroke-width: 0.38; fill: #000000;"></rect><rect x="34.58" y="11.54" width="4.69" height="0.12" style="stroke-width: 0.38; fill: #000000;"></rect><rect x="39.27" y="11.62" width="4.69" height="0.041" style="stroke-width: 0.38; fill: #000000;"></rect><rect x="43.95" y="11.62" width="4.69" height="0.041" style="stroke-width: 0.38; fill: #000000;"></rect></g>
+</svg>
+</td>
+</tr>
+<tr>
+<td style="text-align:left;width: 4cm; ">
+Income: Median block group income
+</td>
+<td style="text-align:right;">
+330
+</td>
+<td style="text-align:right;">
+2
+</td>
+<td style="text-align:right;">
+80309.1
+</td>
+<td style="text-align:right;">
+31030.5
+</td>
+<td style="text-align:right;">
+20588.0
+</td>
+<td style="text-align:right;">
+77099.0
+</td>
+<td style="text-align:right;">
+196458.0
+</td>
+<td style="text-align:right;">
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" class="svglite" width="48.00pt" height="12.00pt" viewbox="0 0 48.00 12.00">
+<defs>
+<style type="text/css">
+    .svglite line, .svglite polyline, .svglite polygon, .svglite path, .svglite rect, .svglite circle {
+      fill: none;
+      stroke: #000000;
+      stroke-linecap: round;
+      stroke-linejoin: round;
+      stroke-miterlimit: 10.00;
+    }
+  </style>
+</defs><rect width="100%" height="100%" style="stroke: none; fill: none;"></rect><defs><clippath id="cpMC4wMHw0OC4wMHwwLjAwfDEyLjAw"><rect x="0.00" y="0.00" width="48.00" height="12.00"></rect></clippath></defs><g clip-path="url(#cpMC4wMHw0OC4wMHwwLjAwfDEyLjAw)">
+</g><defs><clippath id="cpMC4wMHw0OC4wMHwyLjg4fDEyLjAw"><rect x="0.00" y="2.88" width="48.00" height="9.12"></rect></clippath></defs><g clip-path="url(#cpMC4wMHw0OC4wMHwyLjg4fDEyLjAw)"><rect x="1.63" y="9.05" width="5.05" height="2.61" style="stroke-width: 0.38; fill: #000000;"></rect><rect x="6.68" y="5.03" width="5.05" height="6.63" style="stroke-width: 0.38; fill: #000000;"></rect><rect x="11.74" y="3.22" width="5.05" height="8.44" style="stroke-width: 0.38; fill: #000000;"></rect><rect x="16.79" y="4.02" width="5.05" height="7.64" style="stroke-width: 0.38; fill: #000000;"></rect><rect x="21.85" y="6.84" width="5.05" height="4.83" style="stroke-width: 0.38; fill: #000000;"></rect><rect x="26.90" y="9.65" width="5.05" height="2.01" style="stroke-width: 0.38; fill: #000000;"></rect><rect x="31.95" y="10.56" width="5.05" height="1.11" style="stroke-width: 0.38; fill: #000000;"></rect><rect x="37.01" y="11.36" width="5.05" height="0.30" style="stroke-width: 0.38; fill: #000000;"></rect><rect x="42.06" y="11.46" width="5.05" height="0.20" style="stroke-width: 0.38; fill: #000000;"></rect></g>
+</svg>
+</td>
+</tr>
+<tr>
+<td style="text-align:left;width: 4cm; ">
+Low Income: Share of households making less than $35k
+</td>
+<td style="text-align:right;">
+329
+</td>
+<td style="text-align:right;">
+1
+</td>
+<td style="text-align:right;">
+16.6
+</td>
+<td style="text-align:right;">
+13.4
+</td>
+<td style="text-align:right;">
+0.0
+</td>
+<td style="text-align:right;">
+12.7
+</td>
+<td style="text-align:right;">
+70.4
+</td>
+<td style="text-align:right;">
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" class="svglite" width="48.00pt" height="12.00pt" viewbox="0 0 48.00 12.00">
+<defs>
+<style type="text/css">
+    .svglite line, .svglite polyline, .svglite polygon, .svglite path, .svglite rect, .svglite circle {
+      fill: none;
+      stroke: #000000;
+      stroke-linecap: round;
+      stroke-linejoin: round;
+      stroke-miterlimit: 10.00;
+    }
+  </style>
+</defs><rect width="100%" height="100%" style="stroke: none; fill: none;"></rect><defs><clippath id="cpMC4wMHw0OC4wMHwwLjAwfDEyLjAw"><rect x="0.00" y="0.00" width="48.00" height="12.00"></rect></clippath></defs><g clip-path="url(#cpMC4wMHw0OC4wMHwwLjAwfDEyLjAw)">
+</g><defs><clippath id="cpMC4wMHw0OC4wMHwyLjg4fDEyLjAw"><rect x="0.00" y="2.88" width="48.00" height="9.12"></rect></clippath></defs><g clip-path="url(#cpMC4wMHw0OC4wMHwyLjg4fDEyLjAw)"><rect x="1.78" y="3.22" width="6.32" height="8.44" style="stroke-width: 0.38; fill: #000000;"></rect><rect x="8.09" y="4.82" width="6.32" height="6.85" style="stroke-width: 0.38; fill: #000000;"></rect><rect x="14.41" y="8.14" width="6.32" height="3.52" style="stroke-width: 0.38; fill: #000000;"></rect><rect x="20.73" y="10.51" width="6.32" height="1.15" style="stroke-width: 0.38; fill: #000000;"></rect><rect x="27.04" y="10.70" width="6.32" height="0.96" style="stroke-width: 0.38; fill: #000000;"></rect><rect x="33.36" y="11.02" width="6.32" height="0.64" style="stroke-width: 0.38; fill: #000000;"></rect><rect x="39.68" y="11.60" width="6.32" height="0.064" style="stroke-width: 0.38; fill: #000000;"></rect><rect x="45.99" y="11.60" width="6.32" height="0.064" style="stroke-width: 0.38; fill: #000000;"></rect></g>
+</svg>
+</td>
+</tr>
+<tr>
+<td style="text-align:left;width: 4cm; ">
+High Income: Share of households making more than $125k
+</td>
+<td style="text-align:right;">
+322
+</td>
+<td style="text-align:right;">
+1
+</td>
+<td style="text-align:right;">
+23.0
+</td>
+<td style="text-align:right;">
+17.1
+</td>
+<td style="text-align:right;">
+0.0
+</td>
+<td style="text-align:right;">
+19.1
+</td>
+<td style="text-align:right;">
+92.3
+</td>
+<td style="text-align:right;">
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" class="svglite" width="48.00pt" height="12.00pt" viewbox="0 0 48.00 12.00">
+<defs>
+<style type="text/css">
+    .svglite line, .svglite polyline, .svglite polygon, .svglite path, .svglite rect, .svglite circle {
+      fill: none;
+      stroke: #000000;
+      stroke-linecap: round;
+      stroke-linejoin: round;
+      stroke-miterlimit: 10.00;
+    }
+  </style>
+</defs><rect width="100%" height="100%" style="stroke: none; fill: none;"></rect><defs><clippath id="cpMC4wMHw0OC4wMHwwLjAwfDEyLjAw"><rect x="0.00" y="0.00" width="48.00" height="12.00"></rect></clippath></defs><g clip-path="url(#cpMC4wMHw0OC4wMHwwLjAwfDEyLjAw)">
+</g><defs><clippath id="cpMC4wMHw0OC4wMHwyLjg4fDEyLjAw"><rect x="0.00" y="2.88" width="48.00" height="9.12"></rect></clippath></defs><g clip-path="url(#cpMC4wMHw0OC4wMHwyLjg4fDEyLjAw)"><rect x="1.78" y="3.22" width="4.81" height="8.44" style="stroke-width: 0.38; fill: #000000;"></rect><rect x="6.59" y="3.50" width="4.81" height="8.16" style="stroke-width: 0.38; fill: #000000;"></rect><rect x="11.41" y="6.16" width="4.81" height="5.50" style="stroke-width: 0.38; fill: #000000;"></rect><rect x="16.22" y="7.11" width="4.81" height="4.55" style="stroke-width: 0.38; fill: #000000;"></rect><rect x="21.04" y="8.72" width="4.81" height="2.94" style="stroke-width: 0.38; fill: #000000;"></rect><rect x="25.85" y="10.05" width="4.81" height="1.61" style="stroke-width: 0.38; fill: #000000;"></rect><rect x="30.67" y="11.00" width="4.81" height="0.66" style="stroke-width: 0.38; fill: #000000;"></rect><rect x="35.48" y="11.47" width="4.81" height="0.19" style="stroke-width: 0.38; fill: #000000;"></rect><rect x="40.30" y="11.66" width="4.81" height="0.00" style="stroke-width: 0.38; fill: #000000;"></rect><rect x="45.11" y="11.57" width="4.81" height="0.095" style="stroke-width: 0.38; fill: #000000;"></rect></g>
+</svg>
+</td>
+</tr>
+<tr>
+<td style="text-align:left;width: 4cm; ">
+Children: Share of households with children under 6
+</td>
+<td style="text-align:right;">
+333
+</td>
+<td style="text-align:right;">
+1
+</td>
+<td style="text-align:right;">
+24.2
+</td>
+<td style="text-align:right;">
+12.3
+</td>
+<td style="text-align:right;">
+0.0
+</td>
+<td style="text-align:right;">
+22.1
+</td>
+<td style="text-align:right;">
+84.6
+</td>
+<td style="text-align:right;">
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" class="svglite" width="48.00pt" height="12.00pt" viewbox="0 0 48.00 12.00">
+<defs>
+<style type="text/css">
+    .svglite line, .svglite polyline, .svglite polygon, .svglite path, .svglite rect, .svglite circle {
+      fill: none;
+      stroke: #000000;
+      stroke-linecap: round;
+      stroke-linejoin: round;
+      stroke-miterlimit: 10.00;
+    }
+  </style>
+</defs><rect width="100%" height="100%" style="stroke: none; fill: none;"></rect><defs><clippath id="cpMC4wMHw0OC4wMHwwLjAwfDEyLjAw"><rect x="0.00" y="0.00" width="48.00" height="12.00"></rect></clippath></defs><g clip-path="url(#cpMC4wMHw0OC4wMHwwLjAwfDEyLjAw)">
+</g><defs><clippath id="cpMC4wMHw0OC4wMHwyLjg4fDEyLjAw"><rect x="0.00" y="2.88" width="48.00" height="9.12"></rect></clippath></defs><g clip-path="url(#cpMC4wMHw0OC4wMHwyLjg4fDEyLjAw)"><rect x="1.78" y="9.32" width="5.25" height="2.34" style="stroke-width: 0.38; fill: #000000;"></rect><rect x="7.03" y="3.22" width="5.25" height="8.44" style="stroke-width: 0.38; fill: #000000;"></rect><rect x="12.28" y="4.20" width="5.25" height="7.46" style="stroke-width: 0.38; fill: #000000;"></rect><rect x="17.54" y="7.44" width="5.25" height="4.22" style="stroke-width: 0.38; fill: #000000;"></rect><rect x="22.79" y="9.25" width="5.25" height="2.41" style="stroke-width: 0.38; fill: #000000;"></rect><rect x="28.04" y="11.13" width="5.25" height="0.53" style="stroke-width: 0.38; fill: #000000;"></rect><rect x="33.29" y="11.66" width="5.25" height="0.00" style="stroke-width: 0.38; fill: #000000;"></rect><rect x="38.55" y="11.59" width="5.25" height="0.075" style="stroke-width: 0.38; fill: #000000;"></rect><rect x="43.80" y="11.59" width="5.25" height="0.075" style="stroke-width: 0.38; fill: #000000;"></rect></g>
+</svg>
+</td>
+</tr>
+<tr>
+<td style="text-align:left;width: 4cm; ">
+Black: Share of population who is Black
+</td>
+<td style="text-align:right;">
+116
+</td>
+<td style="text-align:right;">
+0
+</td>
+<td style="text-align:right;">
+0.5
+</td>
+<td style="text-align:right;">
+0.9
+</td>
+<td style="text-align:right;">
+0.0
+</td>
+<td style="text-align:right;">
+0.0
+</td>
+<td style="text-align:right;">
+7.4
+</td>
+<td style="text-align:right;">
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" class="svglite" width="48.00pt" height="12.00pt" viewbox="0 0 48.00 12.00">
+<defs>
+<style type="text/css">
+    .svglite line, .svglite polyline, .svglite polygon, .svglite path, .svglite rect, .svglite circle {
+      fill: none;
+      stroke: #000000;
+      stroke-linecap: round;
+      stroke-linejoin: round;
+      stroke-miterlimit: 10.00;
+    }
+  </style>
+</defs><rect width="100%" height="100%" style="stroke: none; fill: none;"></rect><defs><clippath id="cpMC4wMHw0OC4wMHwwLjAwfDEyLjAw"><rect x="0.00" y="0.00" width="48.00" height="12.00"></rect></clippath></defs><g clip-path="url(#cpMC4wMHw0OC4wMHwwLjAwfDEyLjAw)">
+</g><defs><clippath id="cpMC4wMHw0OC4wMHwyLjg4fDEyLjAw"><rect x="0.00" y="2.88" width="48.00" height="9.12"></rect></clippath></defs><g clip-path="url(#cpMC4wMHw0OC4wMHwyLjg4fDEyLjAw)"><rect x="1.78" y="3.22" width="6.03" height="8.44" style="stroke-width: 0.38; fill: #000000;"></rect><rect x="7.81" y="10.46" width="6.03" height="1.20" style="stroke-width: 0.38; fill: #000000;"></rect><rect x="13.83" y="11.27" width="6.03" height="0.39" style="stroke-width: 0.38; fill: #000000;"></rect><rect x="19.86" y="11.54" width="6.03" height="0.12" style="stroke-width: 0.38; fill: #000000;"></rect><rect x="25.89" y="11.57" width="6.03" height="0.090" style="stroke-width: 0.38; fill: #000000;"></rect><rect x="31.92" y="11.66" width="6.03" height="0.00" style="stroke-width: 0.38; fill: #000000;"></rect><rect x="37.95" y="11.63" width="6.03" height="0.030" style="stroke-width: 0.38; fill: #000000;"></rect><rect x="43.98" y="11.63" width="6.03" height="0.030" style="stroke-width: 0.38; fill: #000000;"></rect></g>
+</svg>
+</td>
+</tr>
+<tr>
+<td style="text-align:left;width: 4cm; ">
+Asian: Share of population who is Asian
+</td>
+<td style="text-align:right;">
+205
+</td>
+<td style="text-align:right;">
+0
+</td>
+<td style="text-align:right;">
+1.4
+</td>
+<td style="text-align:right;">
+2.3
+</td>
+<td style="text-align:right;">
+0.0
+</td>
+<td style="text-align:right;">
+0.5
+</td>
+<td style="text-align:right;">
+20.3
+</td>
+<td style="text-align:right;">
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" class="svglite" width="48.00pt" height="12.00pt" viewbox="0 0 48.00 12.00">
+<defs>
+<style type="text/css">
+    .svglite line, .svglite polyline, .svglite polygon, .svglite path, .svglite rect, .svglite circle {
+      fill: none;
+      stroke: #000000;
+      stroke-linecap: round;
+      stroke-linejoin: round;
+      stroke-miterlimit: 10.00;
+    }
+  </style>
+</defs><rect width="100%" height="100%" style="stroke: none; fill: none;"></rect><defs><clippath id="cpMC4wMHw0OC4wMHwwLjAwfDEyLjAw"><rect x="0.00" y="0.00" width="48.00" height="12.00"></rect></clippath></defs><g clip-path="url(#cpMC4wMHw0OC4wMHwwLjAwfDEyLjAw)">
+</g><defs><clippath id="cpMC4wMHw0OC4wMHwyLjg4fDEyLjAw"><rect x="0.00" y="2.88" width="48.00" height="9.12"></rect></clippath></defs><g clip-path="url(#cpMC4wMHw0OC4wMHwyLjg4fDEyLjAw)"><rect x="1.78" y="3.22" width="4.37" height="8.44" style="stroke-width: 0.38; fill: #000000;"></rect><rect x="6.15" y="9.77" width="4.37" height="1.90" style="stroke-width: 0.38; fill: #000000;"></rect><rect x="10.52" y="11.16" width="4.37" height="0.50" style="stroke-width: 0.38; fill: #000000;"></rect><rect x="14.89" y="11.40" width="4.37" height="0.27" style="stroke-width: 0.38; fill: #000000;"></rect><rect x="19.26" y="11.43" width="4.37" height="0.23" style="stroke-width: 0.38; fill: #000000;"></rect><rect x="23.62" y="11.60" width="4.37" height="0.066" style="stroke-width: 0.38; fill: #000000;"></rect><rect x="27.99" y="11.66" width="4.37" height="0.00" style="stroke-width: 0.38; fill: #000000;"></rect><rect x="32.36" y="11.66" width="4.37" height="0.00" style="stroke-width: 0.38; fill: #000000;"></rect><rect x="36.73" y="11.66" width="4.37" height="0.00" style="stroke-width: 0.38; fill: #000000;"></rect><rect x="41.10" y="11.66" width="4.37" height="0.00" style="stroke-width: 0.38; fill: #000000;"></rect><rect x="45.47" y="11.63" width="4.37" height="0.033" style="stroke-width: 0.38; fill: #000000;"></rect></g>
+</svg>
+</td>
+</tr>
+<tr>
+<td style="text-align:left;width: 4cm; ">
+Hispanic: Share of population who is Hispanic*
+</td>
+<td style="text-align:right;">
+330
+</td>
+<td style="text-align:right;">
+0
+</td>
+<td style="text-align:right;">
+11.6
+</td>
+<td style="text-align:right;">
+10.6
+</td>
+<td style="text-align:right;">
+0.0
+</td>
+<td style="text-align:right;">
+8.6
+</td>
+<td style="text-align:right;">
+62.1
+</td>
+<td style="text-align:right;">
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" class="svglite" width="48.00pt" height="12.00pt" viewbox="0 0 48.00 12.00">
+<defs>
+<style type="text/css">
+    .svglite line, .svglite polyline, .svglite polygon, .svglite path, .svglite rect, .svglite circle {
+      fill: none;
+      stroke: #000000;
+      stroke-linecap: round;
+      stroke-linejoin: round;
+      stroke-miterlimit: 10.00;
+    }
+  </style>
+</defs><rect width="100%" height="100%" style="stroke: none; fill: none;"></rect><defs><clippath id="cpMC4wMHw0OC4wMHwwLjAwfDEyLjAw"><rect x="0.00" y="0.00" width="48.00" height="12.00"></rect></clippath></defs><g clip-path="url(#cpMC4wMHw0OC4wMHwwLjAwfDEyLjAw)">
+</g><defs><clippath id="cpMC4wMHw0OC4wMHwyLjg4fDEyLjAw"><rect x="0.00" y="2.88" width="48.00" height="9.12"></rect></clippath></defs><g clip-path="url(#cpMC4wMHw0OC4wMHwyLjg4fDEyLjAw)"><rect x="1.78" y="3.22" width="3.58" height="8.44" style="stroke-width: 0.38; fill: #000000;"></rect><rect x="5.36" y="5.67" width="3.58" height="5.99" style="stroke-width: 0.38; fill: #000000;"></rect><rect x="8.93" y="7.67" width="3.58" height="3.99" style="stroke-width: 0.38; fill: #000000;"></rect><rect x="12.51" y="8.28" width="3.58" height="3.38" style="stroke-width: 0.38; fill: #000000;"></rect><rect x="16.09" y="9.59" width="3.58" height="2.07" style="stroke-width: 0.38; fill: #000000;"></rect><rect x="19.67" y="10.59" width="3.58" height="1.07" style="stroke-width: 0.38; fill: #000000;"></rect><rect x="23.24" y="11.28" width="3.58" height="0.38" style="stroke-width: 0.38; fill: #000000;"></rect><rect x="26.82" y="11.12" width="3.58" height="0.54" style="stroke-width: 0.38; fill: #000000;"></rect><rect x="30.40" y="11.43" width="3.58" height="0.23" style="stroke-width: 0.38; fill: #000000;"></rect><rect x="33.98" y="11.66" width="3.58" height="0.00" style="stroke-width: 0.38; fill: #000000;"></rect><rect x="37.56" y="11.59" width="3.58" height="0.077" style="stroke-width: 0.38; fill: #000000;"></rect><rect x="41.13" y="11.51" width="3.58" height="0.15" style="stroke-width: 0.38; fill: #000000;"></rect><rect x="44.71" y="11.59" width="3.58" height="0.077" style="stroke-width: 0.38; fill: #000000;"></rect></g>
+</svg>
+</td>
+</tr>
+<tr>
+<td style="text-align:left;width: 4cm; ">
+White: Share of population who is White
+</td>
+<td style="text-align:right;">
+339
+</td>
+<td style="text-align:right;">
+0
+</td>
+<td style="text-align:right;">
+82.6
+</td>
+<td style="text-align:right;">
+11.9
+</td>
+<td style="text-align:right;">
+32.8
+</td>
+<td style="text-align:right;">
+84.3
+</td>
+<td style="text-align:right;">
+100.0
+</td>
+<td style="text-align:right;">
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" class="svglite" width="48.00pt" height="12.00pt" viewbox="0 0 48.00 12.00">
+<defs>
+<style type="text/css">
+    .svglite line, .svglite polyline, .svglite polygon, .svglite path, .svglite rect, .svglite circle {
+      fill: none;
+      stroke: #000000;
+      stroke-linecap: round;
+      stroke-linejoin: round;
+      stroke-miterlimit: 10.00;
+    }
+  </style>
+</defs><rect width="100%" height="100%" style="stroke: none; fill: none;"></rect><defs><clippath id="cpMC4wMHw0OC4wMHwwLjAwfDEyLjAw"><rect x="0.00" y="0.00" width="48.00" height="12.00"></rect></clippath></defs><g clip-path="url(#cpMC4wMHw0OC4wMHwwLjAwfDEyLjAw)">
+</g><defs><clippath id="cpMC4wMHw0OC4wMHwyLjg4fDEyLjAw"><rect x="0.00" y="2.88" width="48.00" height="9.12"></rect></clippath></defs><g clip-path="url(#cpMC4wMHw0OC4wMHwyLjg4fDEyLjAw)"><rect x="-0.10" y="11.53" width="3.31" height="0.13" style="stroke-width: 0.38; fill: #000000;"></rect><rect x="3.20" y="11.53" width="3.31" height="0.13" style="stroke-width: 0.38; fill: #000000;"></rect><rect x="6.51" y="11.53" width="3.31" height="0.13" style="stroke-width: 0.38; fill: #000000;"></rect><rect x="9.82" y="11.27" width="3.31" height="0.40" style="stroke-width: 0.38; fill: #000000;"></rect><rect x="13.13" y="11.13" width="3.31" height="0.53" style="stroke-width: 0.38; fill: #000000;"></rect><rect x="16.44" y="11.00" width="3.31" height="0.66" style="stroke-width: 0.38; fill: #000000;"></rect><rect x="19.75" y="9.68" width="3.31" height="1.98" style="stroke-width: 0.38; fill: #000000;"></rect><rect x="23.06" y="9.55" width="3.31" height="2.11" style="stroke-width: 0.38; fill: #000000;"></rect><rect x="26.37" y="7.31" width="3.31" height="4.35" style="stroke-width: 0.38; fill: #000000;"></rect><rect x="29.68" y="6.38" width="3.31" height="5.28" style="stroke-width: 0.38; fill: #000000;"></rect><rect x="32.99" y="3.61" width="3.31" height="8.05" style="stroke-width: 0.38; fill: #000000;"></rect><rect x="36.29" y="4.27" width="3.31" height="7.39" style="stroke-width: 0.38; fill: #000000;"></rect><rect x="39.60" y="3.22" width="3.31" height="8.44" style="stroke-width: 0.38; fill: #000000;"></rect><rect x="42.91" y="5.86" width="3.31" height="5.81" style="stroke-width: 0.38; fill: #000000;"></rect></g>
+</svg>
+</td>
+</tr>
+</tbody>
+<tfoot>
+<tr>
+<td style="padding: 0; " colspan="100%">
+<sup>*</sup> Hispanic indicates Hispanic individuals of all races; non-Hispanic individuals report a single race alone.
+</td>
+</tr>
+</tfoot>
+</table>
+<div class="sourceCode" id="cb3"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb3-1"><a href="methods.html#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="fu">tar_load</span>(groceries)</span>
+<span id="cb3-2"><a href="methods.html#cb3-2" aria-hidden="true" tabindex="-1"></a><span class="fu">tar_load</span>(park_polygons)</span>
+<span id="cb3-3"><a href="methods.html#cb3-3" aria-hidden="true" tabindex="-1"></a><span class="fu">tar_load</span>(libraries)</span>
+<span id="cb3-4"><a href="methods.html#cb3-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-5"><a href="methods.html#cb3-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-6"><a href="methods.html#cb3-6" aria-hidden="true" tabindex="-1"></a>mapdata <span class="ot">&lt;-</span> <span class="fu">bind_rows</span>(</span>
+<span id="cb3-7"><a href="methods.html#cb3-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">list</span>(<span class="st">&quot;Groceries&quot;</span> <span class="ot">=</span> groceries,</span>
+<span id="cb3-8"><a href="methods.html#cb3-8" aria-hidden="true" tabindex="-1"></a>       <span class="st">&quot;Parks&quot;</span> <span class="ot">=</span> park_polygons,</span>
+<span id="cb3-9"><a href="methods.html#cb3-9" aria-hidden="true" tabindex="-1"></a>       <span class="st">&quot;Libraries&quot;</span> <span class="ot">=</span> libraries),</span>
+<span id="cb3-10"><a href="methods.html#cb3-10" aria-hidden="true" tabindex="-1"></a>  <span class="at">.id =</span> <span class="st">&quot;LandUse&quot;</span></span>
+<span id="cb3-11"><a href="methods.html#cb3-11" aria-hidden="true" tabindex="-1"></a>) <span class="sc">%&gt;%</span></span>
+<span id="cb3-12"><a href="methods.html#cb3-12" aria-hidden="true" tabindex="-1"></a>  <span class="fu">st_centroid</span>()</span></code></pre></div>
+<pre><code>## Warning in st_centroid.sf(.): st_centroid assumes attributes are constant over
+## geometries of x</code></pre>
+<div class="sourceCode" id="cb5"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb5-1"><a href="methods.html#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span>(knitr<span class="sc">::</span><span class="fu">is_latex_output</span>()){</span>
+<span id="cb5-2"><a href="methods.html#cb5-2" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb5-3"><a href="methods.html#cb5-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>() <span class="sc">+</span> </span>
+<span id="cb5-4"><a href="methods.html#cb5-4" aria-hidden="true" tabindex="-1"></a>    <span class="fu">annotation_map_tile</span>(<span class="st">&quot;stamenbw&quot;</span>, <span class="at">zoom=</span><span class="dv">11</span>) <span class="sc">+</span> </span>
+<span id="cb5-5"><a href="methods.html#cb5-5" aria-hidden="true" tabindex="-1"></a>    <span class="fu">coord_sf</span>(<span class="at">crs =</span> <span class="fu">st_crs</span>(<span class="dv">3426</span>),  <span class="at">expand =</span> <span class="cn">FALSE</span>) <span class="sc">+</span> </span>
+<span id="cb5-6"><a href="methods.html#cb5-6" aria-hidden="true" tabindex="-1"></a>    <span class="fu">geom_sf</span>(<span class="at">data =</span> mapdata <span class="sc">%&gt;%</span> <span class="fu">st_transform</span>(<span class="dv">4326</span>),  <span class="fu">aes</span>(<span class="at">color =</span> <span class="st">`</span><span class="at">LandUse</span><span class="st">`</span>),</span>
+<span id="cb5-7"><a href="methods.html#cb5-7" aria-hidden="true" tabindex="-1"></a>            <span class="at">inherit.aes =</span> <span class="cn">FALSE</span>, <span class="at">alpha =</span> <span class="fl">0.7</span>) <span class="sc">+</span></span>
+<span id="cb5-8"><a href="methods.html#cb5-8" aria-hidden="true" tabindex="-1"></a>    <span class="fu">scale_color_manual</span>(<span class="st">&quot;Resource Type&quot;</span>, <span class="at">values =</span> dj1) <span class="sc">+</span></span>
+<span id="cb5-9"><a href="methods.html#cb5-9" aria-hidden="true" tabindex="-1"></a>    <span class="fu">theme</span>(<span class="at">axis.line =</span> <span class="fu">element_line</span>(<span class="at">color =</span> <span class="cn">NA</span>),</span>
+<span id="cb5-10"><a href="methods.html#cb5-10" aria-hidden="true" tabindex="-1"></a>          <span class="at">axis.title.x=</span><span class="fu">element_blank</span>(),</span>
+<span id="cb5-11"><a href="methods.html#cb5-11" aria-hidden="true" tabindex="-1"></a>          <span class="at">axis.text.x=</span><span class="fu">element_blank</span>(),</span>
+<span id="cb5-12"><a href="methods.html#cb5-12" aria-hidden="true" tabindex="-1"></a>          <span class="at">axis.ticks.x=</span><span class="fu">element_blank</span>(),</span>
+<span id="cb5-13"><a href="methods.html#cb5-13" aria-hidden="true" tabindex="-1"></a>          <span class="at">axis.title.y=</span><span class="fu">element_blank</span>(),</span>
+<span id="cb5-14"><a href="methods.html#cb5-14" aria-hidden="true" tabindex="-1"></a>          <span class="at">axis.text.y=</span><span class="fu">element_blank</span>(),</span>
+<span id="cb5-15"><a href="methods.html#cb5-15" aria-hidden="true" tabindex="-1"></a>          <span class="at">axis.ticks.y=</span><span class="fu">element_blank</span>(),</span>
+<span id="cb5-16"><a href="methods.html#cb5-16" aria-hidden="true" tabindex="-1"></a>          )</span>
+<span id="cb5-17"><a href="methods.html#cb5-17" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb5-18"><a href="methods.html#cb5-18" aria-hidden="true" tabindex="-1"></a>} <span class="cf">else</span> {</span>
+<span id="cb5-19"><a href="methods.html#cb5-19" aria-hidden="true" tabindex="-1"></a>  polys <span class="ot">&lt;-</span> mapdata <span class="sc">%&gt;%</span> <span class="fu">st_transform</span>(<span class="dv">4326</span>) <span class="sc">%&gt;%</span> <span class="fu">filter</span>(<span class="fu">st_is</span>(., <span class="st">&quot;MULTIPOLYGON&quot;</span>))</span>
+<span id="cb5-20"><a href="methods.html#cb5-20" aria-hidden="true" tabindex="-1"></a>  polypal <span class="ot">&lt;-</span> <span class="fu">colorFactor</span>(<span class="st">&quot;Dark2&quot;</span>, <span class="at">domain =</span> polys<span class="sc">$</span>LandUse)</span>
+<span id="cb5-21"><a href="methods.html#cb5-21" aria-hidden="true" tabindex="-1"></a>  pnts  <span class="ot">&lt;-</span> mapdata <span class="sc">%&gt;%</span> <span class="fu">st_transform</span>(<span class="dv">4326</span>) <span class="sc">%&gt;%</span> <span class="fu">filter</span>(<span class="sc">!</span><span class="fu">st_is</span>(., <span class="st">&quot;MULTIPOINT&quot;</span>))</span>
+<span id="cb5-22"><a href="methods.html#cb5-22" aria-hidden="true" tabindex="-1"></a>  pntspal <span class="ot">&lt;-</span> <span class="fu">colorFactor</span>(<span class="st">&quot;Dark2&quot;</span>,<span class="at">domain =</span> pnts<span class="sc">$</span>LandUse)</span>
+<span id="cb5-23"><a href="methods.html#cb5-23" aria-hidden="true" tabindex="-1"></a>                                                     </span>
+<span id="cb5-24"><a href="methods.html#cb5-24" aria-hidden="true" tabindex="-1"></a>  <span class="fu">leaflet</span>(polys) <span class="sc">%&gt;%</span></span>
+<span id="cb5-25"><a href="methods.html#cb5-25" aria-hidden="true" tabindex="-1"></a>    <span class="fu">addProviderTiles</span>(providers<span class="sc">$</span>Esri.WorldGrayCanvas) <span class="sc">%&gt;%</span></span>
+<span id="cb5-26"><a href="methods.html#cb5-26" aria-hidden="true" tabindex="-1"></a>    <span class="fu">addPolygons</span>(<span class="at">color =</span> <span class="sc">~</span><span class="fu">polypal</span>(LandUse)) <span class="sc">%&gt;%</span></span>
+<span id="cb5-27"><a href="methods.html#cb5-27" aria-hidden="true" tabindex="-1"></a>    <span class="fu">addCircles</span>(<span class="at">data =</span> pnts, <span class="at">color =</span> <span class="sc">~</span><span class="fu">pntspal</span>(pnts<span class="sc">$</span>LandUse))</span>
+<span id="cb5-28"><a href="methods.html#cb5-28" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb5-29"><a href="methods.html#cb5-29" aria-hidden="true" tabindex="-1"></a>}</span></code></pre></div>
+<div class="figure" style="text-align: center"><span style="display:block;" id="fig:utco-map"></span>
+<div id="htmlwidget-d93ae2696e81914ebf6c" style="width:672px;height:480px;" class="leaflet html-widget"></div>
+<script type="application/json" data-for="htmlwidget-d93ae2696e81914ebf6c">{"x":{"options":{"crs":{"crsClass":"L.CRS.EPSG3857","code":null,"proj4def":null,"projectedBounds":null,"options":{}}},"calls":[{"method":"addProviderTiles","args":["Esri.WorldGrayCanvas",null,null,{"errorTileUrl":"","noWrap":false,"detectRetina":false}]},{"method":"addPolygons","args":[[],null,null,{"interactive":true,"className":"","stroke":true,"color":[],"weight":5,"opacity":0.5,"fill":true,"fillColor":[],"fillOpacity":0.2,"smoothFactor":1,"noClip":false},null,null,null,{"interactive":false,"permanent":false,"direction":"auto","opacity":1,"offset":[0,0],"textsize":"10px","textOnly":false,"className":"","sticky":true},null]},{"method":"addCircles","args":[[39.9606865427179,39.9760693489833,39.9758004598751,39.9780098011539,40.0293798684665,40.0281388256247,40.0342206745175,40.0438414684371,40.0448233292516,40.2378407936597,40.2530842446443,40.2565575541559,40.2633554313012,40.2761292665807,40.3109228089535,40.2729205243143,40.2718571946046,40.2750517389602,40.288066118101,40.2769130027339,40.2964260640386,40.3022339759758,40.3071203148907,40.3131352725387,40.3131486495682,40.3139294126213,40.3748760197576,40.3780400768482,40.3772536073175,40.3853074868997,40.3873306525786,40.3865957408928,40.3874130371791,40.1212174601931,40.1236825226603,40.1614452307262,40.1593300516481,40.1579280404213,40.1646203206025,40.3747046896634,40.3890011875747,40.363644100842,40.4312825380794,40.3489200568512,40.43323133211,40.3540441349196,40.4310368899173,40.3784325608873,40.0979278224081,40.2955689626308,40.2517154444189,40.051952331329,40.0667340443196,40.2342618478185,40.2343326972494,40.2451806040709,40.3676375224528,40.1240684488593,40.2482533191534,40.3252746172149,40.043475753975,40.1126131209751,40.0171747611246,40.1135126447416,40.0440655577773,40.0290328738851,40.0238253948221,40.0136303956009,40.0505326674949,40.0404751452881,40.2386544831149,40.2980293031011,40.3073613108703,40.2760242502597,40.3088812289857,40.3285509834756,40.3441279907419,40.3352604066074,40.3409024209165,40.3367709052691,40.2998551378444,40.2861255167539,40.2775171090748,40.2672035969472,40.251072997904,40.2546974392211,40.2469059251599,40.2414526687424,40.2425268718639,40.2410939707238,40.2346429417105,40.2330371158073,40.2246328712335,40.2260072231605,40.2176705299592,40.214086950391,40.2028711472703,40.1784284603867,40.1761681765949,40.1693029728197,40.1630545629462,40.1460922146751,40.1294439987982,40.1442090388755,40.125689416707,40.1194525558785,40.1024540190009,40.1046147429226,40.0291053817209,39.9839220746169,40.3127359243603,40.3552960092971,39.9649078291342,39.9760759995067,39.9730132242396,39.988388057667,40.3100502642963,40.3497888045456,40.2921989444371,40.2917844846277,40.2977352806058,40.2998890971747,40.3090420181457,40.2723034045636,40.2621688402091,40.3804510408949,40.4446640443043,40.4056869179194,40.4102474827105,40.4070834254289,40.4141431392015,40.4140664447694,40.4217654060256,40.4191170838473,40.4403867485303,40.4533446743105,40.452645501616,40.3812015751569,40.3761981384803,40.3847997033008,40.3836307084301,40.389601705714,40.3904293670756,40.3952459468876,40.3909950866923,40.3664985652081,40.3943118985058,40.3988271894377,40.4119645491276,40.3611296892465,40.4086497125218,40.4359954448021,40.3587069703629,40.3702316997086,40.4017389613552,40.4051148025606,40.4094819973891,40.3839911583764,40.3800623293117,40.3781841034489,40.3938616548221,40.38863785038,40.3867677273406,40.3837872058959,40.371121318376,40.3635585482273,40.3675530409097,40.3626158943531,40.3635012761907,40.3924914958968,40.3924945993806,40.4004732864908,40.3954716773657,40.40538797237,40.3804367473426,40.3828575229488,40.3967564122273,40.3921011146005,40.3755936190554,40.356217070275,40.3492902640508,40.3127359243603,40.3379501589871,40.3367036908771,40.3379644603633,40.3344666956575,40.3348450514214,40.3198966524937,40.3087132250793,40.3002719618474,40.3597367806358,40.3131465891559,40.3017760544481,40.3128219743932,40.3132394590177,40.3153636816374,40.3154000097522,40.3154585528857,40.3107436927152,40.3097056583414,40.2986440029594,40.3009796764829,40.3069909644608,40.3301442722779,40.295051023864,40.2898684785585,40.2877059726796,40.302095592999,40.3862482670047,40.3843050622871,40.383497275187,40.3798402904677,40.390240979754,40.4094094837016,40.3938662633224,40.440380538918,40.4425070347724,40.4505484663712,40.3499424821314,40.349640231414,40.4026007852642,40.3527219702287,40.3560529216157,40.3599886342575,40.3584476794363,40.3612166039168,40.357567300517,40.359124118526,40.3603670404164,40.3682746344763,40.3664762068907,40.3733081840973,40.3609391336039,40.3577907939078,40.3560390710284,40.3766621891303,40.3731343283279,40.3498244758351,40.3722614662092,40.4141556773726,40.4174447223599,40.4097610670612,40.4061057966779,40.416012440201,40.3704042477672,40.4189259826326,40.4165178666869,40.4087775578475,40.4087775578475,40.4150264658559,40.409362762605,40.4410405851177,40.4259942758477,40.4511645608886,40.4264546554641,40.4191226858986,40.4032838800926,40.4013460227264,40.3972071054508,40.3896057627169,40.3881398262228,40.3709679275245,40.3592226215914,40.3591352609228,40.359461055841,40.3497467958596,40.3411295699719,40.3430002928258,40.3468889176234,40.3213021973804,40.3898922095459,40.3932711629693,40.3979697787212,40.39607795876,40.3980362412944,40.4024118002075,40.4031899907688,40.4196428781745,40.3992659597071,40.3925668362439,40.3746133298082,40.3702140042148,40.3663092189546,40.3593102815313,40.3169283108234,40.3154474454741,40.3237203833472,40.3298682154983,40.3361171569724,40.3555708455285,40.3028518934244,40.2962588480068,40.2814521833598,40.27948585079,40.2652484515435,40.2617139638336,40.2659812506738,40.295356005561,40.2932921636576,40.266520115033,40.2507483132259,40.244798437442,40.2364335330022,40.2288168513076,40.2305335494177,40.2309569662632,40.230787619235,40.2263865575818,40.2081985651017,40.1232431036463,40.1241388654648,40.1101660040109,40.0989483367569,40.0213392262558,40.048418374964,40.0213392262558,39.9731471665488,39.9635462952789,40.288092216197,40.306280301114,40.1683347789384,40.1215704126092,40.0241317061208,40.3027984526152,40.4734443528725,40.4626267912573,40.3334801980879,40.3716091709548,40.4269430350156,40.4443251148737,40.4288388131739,40.3610306687374,40.3925022270861,40.3619127695992,40.1818118103335,40.1659239175084,40.4434179424407,40.158553697525,40.1519892394566,40.1584270316111,40.1707874535668,40.1387986868405,40.4150173261326,40.382458408718,40.2371310110043,40.2776603244966,40.2552077940999,40.1491838486598,40.290394435098,40.3722987977356,40.1759266586447,40.3775609553655,40.4597191947144,40.4377098214391,40.2352267521866,40.3075421854874,40.0447828358239,40.0432560608238,40.0340660878174,40.219392247255,40.0334289688973,40.0326349332292,40.0307849084724,40.0229534547496,40.4472406715709,40.2140267086876,40.2351209636657,40.2418615495272,40.005635921686,40.4103865657945,40.3521765580534,40.261000772958,40.3878278307446,40.0909698406413,40.1091090568748,40.1566743987958,40.304208188308,40.3018721627313,40.3473911219884,40.2644448119136,40.1656263497601,40.3600608844702,40.3990037398446,40.1483644585603,40.2943220979996,40.0913826856008,40.2380762820789,40.1850411465874,40.3293893481548,40.3931699462288,40.3598219870142,40.4269430351552,40.3036786592523,40.3293893488012,39.942834038043,40.3628333887709,40.0955618231134,40.0542177368896,40.0530736578487,40.4386635983034,40.002031290008,40.1037690376054,40.1056984772721,40.1182053137262,40.1176501145635,40.1037880770972,40.1022267826416,40.096772516855,40.2380432666098,40.2256900243047,39.9824889602873,40.358114200522,40.4001107521863,40.1298048086771,40.1250202835105,40.3636305286195,40.1639859882375,40.3279033453021,40.1046877594076,40.3400827442362,40.3478843032822,40.3821396730701,40.1233831522831,39.980646781214,40.4067688700716,40.0737160241183,40.4528335568473,40.4400411393279,40.3248600602851,40.4443964481819,40.3865673748761,40.3998637661788,39.9504346567366,40.4358991656027,40.3970639215345,40.3954192482891,40.323693054396,40.3164518694074,40.3137982177837,40.3755909352073,40.3156461471052,40.4579827770126,40.289925639926,40.3598527650488,40.0169187323545,40.4416974150837,40.4364659234833,40.4364800093956,40.0201171008085,40.4755839371961,40.4248936104314,40.3913967428174,40.4592015543786,40.339511103611,40.4613325042147,40.0295600164431,40.3911182401247,40.4395965295376,40.376805044614,40.271271391747,40.315719010562,40.3701676582556,40.4419420616678,40.4462843478375,40.4537096374941,40.4769095000194,40.3464986060247,40.1660496129906,40.3855300007457,40.4192525274856,40.4213943928586,40.4180569815822,40.1635002002774,40.4223099097371,40.1753027346421,40.3664929378591,40.0189319952648,40.0821836684331,40.167638285642,40.3349651247551,40.0972906138105,40.1115686774846,40.3074384058113,40.3872710547507,40.3845022495071,40.3849198429717,40.3762033148662,40.0015044764304,40.4394921769436,40.4643496429678,40.367850318829,40.3755683886664,40.0553481362083,40.363028776294,40.4482275365616,40.4191982060302,40.4203296035094,40.4122913758586,40.4126249400175,40.4223326793997,40.434725146387,40.3561269151419,40.4256856669834,40.4291169575111,40.4307007351861,40.4290479220331,40.3925025693285,40.312548780946,40.3188440752664,40.4744998104954,40.4448347988287,40.4056098024667,40.2830227949872,40.0258717102604,40.3952496928845,40.0256582947839,40.0256610744855,40.287969590187,40.2880663781369,40.3100722462226,40.310857333912,40.3640608314047,40.2794261390421,40.3428765365036,39.9732874723444,40.3556089979194,40.123828127583,39.9701982399227,40.0252252872024,40.0318393484271,40.0435108187749,40.0658388292798,40.0541441562978,40.0397376533257,40.0268770315494,40.0507296253979,40.0483607846227,40.0571892183167,40.1124832610414,40.1168043968722,40.1111517699309,40.1089856769387,40.0854197648725,40.0923760464799,40.1316985757718,40.1391593347391,40.149510192607,40.1480405444116,40.1540430183889,40.156524562151,40.1644460533449,40.1679276987237,40.1658014169227,40.1651815657166,40.1529754604398,40.1767693623333,40.1750575652735,40.1833735071888,40.181780481432,40.1882463083657,40.2397562437853,40.2286063292604,40.2500031670107,40.2558183462578,40.2620740107146,40.3099002580541,40.3142652552616,40.309129062435,40.2790229860727,40.297541617738,40.3206339748056,40.3109146934651,40.3095573387053,40.3209489577919,40.3350822958379,40.3550076463959,40.3610065497945,40.3719512319893,40.3724973025089,40.3727367327377,40.3626626573633,40.381852784358,40.3394569038106,40.3805076529424,40.393277596313,40.3986821573755,40.4218176067964,40.439621398887,40.4466831746923,40.4560265306841,40.4485746506024,40.4501582798134,40.448998498265,40.4517057659557,40.4290739726296,40.385452406682,40.3815283948467,40.3877399790947,40.3708727681394,40.3594066223359,40.3558720797142,40.3574573414866,40.330904288178,40.3632949833432,40.365206325717,40.3547344868961,40.2947925378458,40.4039309852422,40.4263714084383,40.4283607844516,40.3342257926975,40.3340530235695,40.4386089302015,40.4366435442097,40.3933004395969,40.3939636117599,40.4404556415914,40.3970744998565,40.3999467929711,40.4004665345401,40.4016503851276,40.4016239287742,40.3984343918055,40.3646580540977,40.3673897115457,40.3548351100865,40.3847782296551,40.3890739705069,40.3568486336052,40.3686949534376,40.373086292788,40.3728754153846,40.3720916784577,40.3748455640698,40.4031559792785,40.3998871305163,40.3709395599093,40.368583205485,40.3653894530721,40.358996000925,40.2410932198778,40.0430056599955,40.053566809331,40.1091585758041,40.1662410374514,40.2986597242077,40.3634979623887,40.3754756526823,40.3892360302864,40.3861890318757,40.3093611732424,40.4284740089424,40.1343451540297],[-111.794633997393,-111.790632713835,-111.784984959488,-111.776243450468,-111.757474780045,-111.756289505816,-111.734708779491,-111.73267041448,-111.734243526874,-111.661365936814,-111.666606031633,-111.670704578733,-111.669690665743,-111.68437111758,-111.675428004865,-111.710824519512,-111.682636740513,-111.651978710007,-111.691620133924,-111.686706080556,-111.692025308635,-111.695940493701,-111.698703278869,-111.700574946724,-111.706080453886,-111.720901245106,-111.788268182866,-111.795045186868,-111.807345961243,-111.824775550632,-111.836153441548,-111.837045907932,-111.844215474047,-111.643032246082,-111.651386408326,-111.597104565607,-111.630110533949,-111.644187435556,-111.610333070338,-111.918799861805,-111.919863218137,-111.966172125296,-111.790746565562,-111.731712644355,-111.878331221552,-111.737184097612,-111.786671795148,-111.815919695793,-111.613579776618,-111.698838200901,-111.666654344558,-111.73112261654,-111.666712272152,-111.667118286962,-111.66836171272,-111.646138403207,-111.765126964458,-111.639201020228,-111.670460694986,-111.714614758915,-111.72443014306,-111.654402024461,-111.738278227863,-111.589373837723,-111.669649864953,-111.683669648412,-111.686619893645,-111.681246497168,-111.676464887068,-111.730942449984,-111.65117717066,-111.689210421435,-111.689249034431,-111.681011760451,-111.758930552646,-111.692221464401,-111.708663283735,-111.702431383352,-111.717565294793,-111.729688205966,-111.67386175544,-111.687688361656,-111.697151622831,-111.6355477716,-111.676456844821,-111.686313564529,-111.640068719476,-111.666048443503,-111.680808996167,-111.686073184689,-111.644620837546,-111.668402096663,-111.67287609715,-111.65087285821,-111.638461560627,-111.630823557975,-111.621085311446,-111.631111677785,-111.601467723644,-111.628985835464,-111.586071676655,-111.637235380767,-111.57756803239,-111.595014268212,-111.648756316497,-111.648539208632,-111.644882963068,-111.658904981042,-111.725280668748,-111.844099937487,-111.901740071629,-111.952527218354,-111.779741441429,-111.78416345608,-111.786506028409,-111.791169280224,-112.010453364838,-111.964543214241,-111.710375090519,-111.739194636066,-111.739242907883,-111.742830544455,-111.748591700835,-111.67827125006,-111.703145085291,-111.742517366914,-111.892496992661,-111.743240166431,-111.763495421529,-111.76998975703,-111.753036597096,-111.763930824862,-111.759554971438,-111.789655811264,-111.762221077403,-111.768957400798,-111.777422239077,-111.77884285237,-111.796538261586,-111.813574543041,-111.796339627636,-111.816312317084,-111.806425551926,-111.805205018371,-111.837552050868,-111.793138539307,-111.848546292318,-111.853484346532,-111.832642135464,-111.954820688595,-111.878823423532,-111.90186456621,-111.985594264228,-111.927676675237,-111.879262986104,-111.879502305556,-111.893294060473,-111.876016564418,-111.873798433811,-111.881113895691,-111.861495597231,-111.863254711435,-111.874119019759,-111.838528485919,-111.837614943079,-111.839052582043,-111.855648365793,-111.862790933556,-111.865793064698,-111.928369239562,-111.928369122974,-111.931614547749,-111.933947635636,-111.926925334709,-111.905059989193,-111.899780855195,-111.923469138379,-111.918731777313,-111.936186500374,-111.905887725573,-111.911765055927,-111.901740071629,-111.924215344323,-111.930529468702,-111.919896959641,-111.916819342135,-111.907016362507,-111.910254004161,-111.900728287357,-111.888225202097,-111.968593131593,-112.005310722167,-112.001677703591,-112.025455365979,-112.01687036178,-112.007822550649,-112.003576979473,-111.999364608794,-112.010400521469,-112.006440558453,-112.006584527069,-112.007663018702,-112.025036540613,-112.017495034093,-111.884299987019,-111.882862902692,-111.880874798388,-111.891932236,-111.98741348943,-112.000401300505,-111.989602826236,-112.010710513999,-111.883315080273,-111.907572760987,-111.895238707453,-111.887227002854,-111.890547812096,-111.892994049078,-111.968808747448,-111.961868704893,-111.934020371181,-111.965219712579,-111.966179769074,-111.961357740647,-111.970162803963,-111.971595163031,-111.97552098284,-111.981698332785,-111.98888000781,-111.973895372249,-111.970133512625,-111.978813284897,-111.946834563696,-111.950866424216,-112.00254202903,-111.99718067928,-112.015860811447,-111.904643864148,-111.876211800364,-111.882731034428,-111.89317198255,-111.873291171614,-111.850768695074,-111.857738978828,-111.799503273755,-111.819581316526,-111.817026454027,-111.79965716417,-111.79965716417,-111.817097160221,-111.784081306533,-111.808763093157,-111.790078418993,-111.783868546132,-111.756428841937,-111.750707526264,-111.768228759303,-111.765926483571,-111.747377818521,-111.765846955775,-111.762057730315,-111.75615008881,-111.706888436835,-111.719777740016,-111.729320657969,-111.714652940365,-111.694402545016,-111.736241980647,-111.755250354923,-111.699435231551,-111.809000327212,-111.782898555143,-111.783503584746,-111.798581838055,-111.803854012311,-111.801945885043,-111.799924965548,-111.81312916436,-111.824835105185,-111.828337386747,-111.807519144617,-111.792235737684,-111.777660248743,-111.72306595816,-111.679393182989,-111.667301338344,-111.645043746348,-111.624268068444,-111.61242757991,-111.572819334652,-111.75182695895,-111.74749448501,-111.74446541978,-111.737236809019,-111.689376691482,-111.693428869559,-111.672592187151,-111.650568658695,-111.641539129223,-111.652169458638,-111.70889823791,-111.702721886763,-111.693110199286,-111.685001488659,-111.705850438206,-111.643516454377,-111.640499519467,-111.641021037919,-111.626118408692,-111.603217048975,-111.627076710997,-111.622272434354,-111.661536936015,-111.740268995707,-111.660603683131,-111.740268995707,-111.791968312366,-111.820008600983,-111.870523626604,-111.752588189409,-111.624218833592,-111.600837775752,-111.50448731205,-111.70997113444,-111.836772158382,-111.828251272234,-111.931504584691,-111.853170854837,-111.871185387786,-111.896036943793,-111.83858092455,-111.86347052313,-111.88828865651,-111.740175129924,-111.610045350675,-111.611592561201,-111.777360066816,-111.59747587871,-111.599701026547,-111.589336602292,-111.599604668599,-111.603697894067,-111.781832580542,-111.996573630207,-111.719072046552,-111.646020682206,-111.67830505177,-111.587952551772,-111.661942906029,-112.00477082994,-111.61515054801,-111.962892643604,-111.83186086778,-111.902032702958,-111.689133200579,-111.65800225364,-111.732565941425,-111.739247594942,-111.731487922468,-111.68144284906,-111.733849154974,-111.74733491379,-111.741800063664,-111.72120764552,-111.773160187874,-111.665178079856,-111.726085126429,-111.664105177898,-111.74487022469,-111.8663627847,-111.912627306087,-112.093298209544,-111.787743719185,-111.620617480386,-111.653885103887,-111.592219230125,-112.003917199687,-111.711552702054,-111.549965170378,-111.630420694054,-111.499426188296,-111.751380605137,-111.929028914293,-111.570541691744,-111.664701408845,-111.634089152819,-111.705802132166,-111.607655648186,-112.106395521069,-111.774971816551,-111.978174263636,-111.87118538763,-111.72488647683,-112.106395513158,-111.901318438173,-111.856935961835,-111.635939451487,-111.679424785224,-111.678204437055,-111.885152559216,-111.70296883738,-111.641737945421,-111.66522234396,-111.646939922333,-111.631811477137,-111.643203833913,-111.634711502957,-111.613176124474,-111.699476123667,-111.642988442712,-111.76316961515,-111.899513810234,-111.814545593026,-111.586341188212,-111.60349891982,-111.701095454011,-111.599908018836,-111.761712525785,-111.640942385014,-111.694906505721,-111.696969519298,-111.88099110149,-111.567550470801,-111.769422131926,-111.802200558348,-111.603668761688,-111.799465826734,-111.810536394504,-111.645855370249,-111.885024212457,-111.882660717866,-111.929045246815,-111.955086181853,-111.899423887288,-111.921229418275,-111.926195710166,-111.911637724043,-111.903028564701,-111.903470997072,-111.912167295933,-111.90010812648,-111.799306172085,-111.878482545991,-112.006374641024,-111.747315388388,-111.883524937981,-111.759038698498,-111.756575155281,-111.746785181119,-111.845731600134,-111.864448327849,-111.91042262366,-111.780767981277,-111.926694615114,-111.784003847373,-111.730536444239,-111.913390790396,-111.758496125553,-111.863834426832,-111.663400091008,-112.014242281716,-111.847891790695,-111.762492520383,-111.771540442456,-111.77670824693,-111.75380447252,-111.593171379007,-111.494340542082,-111.817367640462,-111.816679922481,-111.801213207696,-111.816977514925,-111.499736080341,-111.817868291383,-111.626851174802,-111.977351300143,-111.737165451519,-111.603619699453,-111.498148155499,-111.523269220147,-111.732465898837,-111.667653497418,-111.652625534305,-111.797717898769,-111.804653515285,-111.780143052074,-111.790230842281,-111.656234402425,-111.781537748637,-111.766699079793,-111.810904796278,-111.780869065638,-111.670379269536,-111.720347638504,-111.807516626967,-111.779410348144,-111.771250435908,-111.791305521224,-111.793937272369,-111.85267332544,-111.787774756234,-111.978468415622,-111.772568513654,-111.828032221295,-111.846001721529,-111.789132086779,-111.888288868361,-112.028209323075,-111.894123698751,-111.826336464279,-111.878319774626,-111.761071847166,-111.74694600624,-111.6851584656,-111.741835737713,-111.682412409209,-111.683485783761,-111.872250977785,-111.873924364414,-112.009469264012,-112.009388224407,-111.979173391858,-111.709594970554,-111.695112799113,-111.794614251836,-111.574541346165,-111.563710545327,-111.772976991187,-111.722597055005,-111.727425350886,-111.716776630701,-111.671603180105,-111.67583256477,-111.676544286442,-111.738455863014,-111.72738228043,-111.736690668178,-111.678219547406,-111.663576845262,-111.662176624661,-111.635659583394,-111.616696944874,-111.610745904292,-111.627658826283,-111.581277249328,-111.576116253113,-111.557749191004,-111.574053822421,-111.578599991007,-111.630005900266,-111.581504077589,-111.595891628088,-111.609292832492,-111.631111197813,-111.639878351287,-111.607597065237,-111.606097579008,-111.615139774769,-111.616553371906,-111.608392537803,-111.668946874484,-111.670535652161,-111.717815934004,-111.644208661893,-111.643556955506,-111.660692870004,-111.664032432429,-111.69431502675,-111.702939651452,-111.719342582957,-111.675180171999,-111.713081515506,-111.703280369689,-111.690712267558,-111.696006243165,-111.726732037971,-111.803953822343,-111.773414997482,-111.743192763514,-111.737888736401,-111.738493626184,-111.747948096511,-111.713905138,-111.771405488841,-111.765223125,-111.751347947663,-111.75054524193,-111.775794994643,-111.781136968239,-111.770583229597,-111.791299407563,-111.809093734328,-111.804801793388,-111.812684317706,-111.804500817314,-111.815166009931,-111.794269346936,-111.801856441835,-111.796306929058,-111.771187715029,-111.770103345193,-111.770787246443,-111.718934428847,-111.755650754756,-111.734226250904,-111.709635154015,-111.681379497423,-111.835762643946,-111.857852796995,-111.8620158909,-111.686232799524,-111.679453602537,-111.90346215556,-111.905257188344,-111.868135354044,-111.874832821901,-111.857693354571,-111.928210745483,-111.925701188689,-111.923030542935,-111.922590611623,-111.926864589322,-111.934631942874,-111.925462758086,-111.930428439919,-111.961523757459,-111.977844748671,-111.910724032783,-111.986848391022,-111.9790152129,-111.975665646814,-111.972094580119,-111.969144999382,-111.962911271589,-111.928582655633,-111.934691096123,-111.839158923508,-111.840222380163,-111.836312167049,-111.745504987262,-111.658498988098,-111.732568282827,-111.672973037613,-111.654225826029,-111.610096426727,-111.694648242456,-111.739624644746,-111.796552978181,-111.849103030583,-111.912994016499,-112.012191334541,-111.789023983969,-111.590711837848],10,null,null,{"interactive":true,"className":"","stroke":true,"color":["#1B9E77","#1B9E77","#1B9E77","#1B9E77","#1B9E77","#1B9E77","#1B9E77","#1B9E77","#1B9E77","#1B9E77","#1B9E77","#1B9E77","#1B9E77","#1B9E77","#1B9E77","#1B9E77","#1B9E77","#1B9E77","#1B9E77","#1B9E77","#1B9E77","#1B9E77","#1B9E77","#1B9E77","#1B9E77","#1B9E77","#1B9E77","#1B9E77","#1B9E77","#1B9E77","#1B9E77","#1B9E77","#1B9E77","#1B9E77","#1B9E77","#1B9E77","#1B9E77","#1B9E77","#1B9E77","#1B9E77","#1B9E77","#1B9E77","#1B9E77","#1B9E77","#1B9E77","#1B9E77","#1B9E77","#1B9E77","#1B9E77","#1B9E77","#1B9E77","#1B9E77","#1B9E77","#1B9E77","#1B9E77","#1B9E77","#1B9E77","#1B9E77","#7570B3","#7570B3","#7570B3","#7570B3","#7570B3","#7570B3","#7570B3","#7570B3","#7570B3","#7570B3","#7570B3","#7570B3","#7570B3","#7570B3","#7570B3","#7570B3","#7570B3","#7570B3","#7570B3","#7570B3","#7570B3","#7570B3","#7570B3","#7570B3","#7570B3","#7570B3","#7570B3","#7570B3","#7570B3","#7570B3","#7570B3","#7570B3","#7570B3","#7570B3","#7570B3","#7570B3","#7570B3","#7570B3","#7570B3","#7570B3","#7570B3","#7570B3","#7570B3","#7570B3","#7570B3","#7570B3","#7570B3","#7570B3","#7570B3","#7570B3","#7570B3","#7570B3","#7570B3","#7570B3","#7570B3","#7570B3","#7570B3","#7570B3","#7570B3","#7570B3","#7570B3","#7570B3","#7570B3","#7570B3","#7570B3","#7570B3","#7570B3","#7570B3","#7570B3","#7570B3","#7570B3","#7570B3","#7570B3","#7570B3","#7570B3","#7570B3","#7570B3","#7570B3","#7570B3","#7570B3","#7570B3","#7570B3","#7570B3","#7570B3","#7570B3","#7570B3","#7570B3","#7570B3","#7570B3","#7570B3","#7570B3","#7570B3","#7570B3","#7570B3","#7570B3","#7570B3","#7570B3","#7570B3","#7570B3","#7570B3","#7570B3","#7570B3","#7570B3","#7570B3","#7570B3","#7570B3","#7570B3","#7570B3","#7570B3","#7570B3","#7570B3","#7570B3","#7570B3","#7570B3","#7570B3","#7570B3","#7570B3","#7570B3","#7570B3","#7570B3","#7570B3","#7570B3","#7570B3","#7570B3","#7570B3","#7570B3","#7570B3","#7570B3","#7570B3","#7570B3","#7570B3","#7570B3","#7570B3","#7570B3","#7570B3","#7570B3","#7570B3","#7570B3","#7570B3","#7570B3","#7570B3","#7570B3","#7570B3","#7570B3","#7570B3","#7570B3","#7570B3","#7570B3","#7570B3","#7570B3","#7570B3","#7570B3","#7570B3","#7570B3","#7570B3","#7570B3","#7570B3","#7570B3","#7570B3","#7570B3","#7570B3","#7570B3","#7570B3","#7570B3","#7570B3","#7570B3","#7570B3","#7570B3","#7570B3","#7570B3","#7570B3","#7570B3","#7570B3","#7570B3","#7570B3","#7570B3","#7570B3","#7570B3","#7570B3","#7570B3","#7570B3","#7570B3","#7570B3","#7570B3","#7570B3","#7570B3","#7570B3","#7570B3","#7570B3","#7570B3","#7570B3","#7570B3","#7570B3","#7570B3","#7570B3","#7570B3","#7570B3","#7570B3","#7570B3","#7570B3","#7570B3","#7570B3","#7570B3","#7570B3","#7570B3","#7570B3","#7570B3","#7570B3","#7570B3","#7570B3","#7570B3","#7570B3","#7570B3","#7570B3","#7570B3","#7570B3","#7570B3","#7570B3","#7570B3","#7570B3","#7570B3","#7570B3","#7570B3","#7570B3","#7570B3","#7570B3","#7570B3","#7570B3","#7570B3","#7570B3","#7570B3","#7570B3","#7570B3","#7570B3","#7570B3","#7570B3","#7570B3","#7570B3","#7570B3","#7570B3","#7570B3","#7570B3","#7570B3","#7570B3","#7570B3","#7570B3","#7570B3","#7570B3","#7570B3","#7570B3","#7570B3","#7570B3","#7570B3","#7570B3","#7570B3","#7570B3","#7570B3","#7570B3","#7570B3","#7570B3","#7570B3","#7570B3","#7570B3","#7570B3","#7570B3","#7570B3","#7570B3","#7570B3","#7570B3","#7570B3","#7570B3","#7570B3","#7570B3","#7570B3","#7570B3","#7570B3","#7570B3","#7570B3","#7570B3","#7570B3","#7570B3","#7570B3","#7570B3","#7570B3","#7570B3","#7570B3","#7570B3","#7570B3","#7570B3","#7570B3","#7570B3","#7570B3","#7570B3","#7570B3","#7570B3","#7570B3","#7570B3","#7570B3","#7570B3","#7570B3","#7570B3","#7570B3","#7570B3","#7570B3","#7570B3","#7570B3","#7570B3","#7570B3","#7570B3","#7570B3","#7570B3","#7570B3","#7570B3","#7570B3","#7570B3","#7570B3","#7570B3","#7570B3","#7570B3","#7570B3","#7570B3","#7570B3","#7570B3","#7570B3","#7570B3","#7570B3","#7570B3","#7570B3","#7570B3","#7570B3","#7570B3","#7570B3","#7570B3","#7570B3","#7570B3","#7570B3","#7570B3","#7570B3","#7570B3","#7570B3","#7570B3","#7570B3","#7570B3","#7570B3","#7570B3","#7570B3","#7570B3","#7570B3","#7570B3","#7570B3","#7570B3","#7570B3","#7570B3","#7570B3","#7570B3","#7570B3","#7570B3","#7570B3","#7570B3","#7570B3","#7570B3","#7570B3","#7570B3","#7570B3","#7570B3","#7570B3","#7570B3","#7570B3","#7570B3","#7570B3","#7570B3","#7570B3","#7570B3","#7570B3","#7570B3","#7570B3","#7570B3","#7570B3","#7570B3","#7570B3","#7570B3","#7570B3","#7570B3","#7570B3","#7570B3","#7570B3","#7570B3","#7570B3","#7570B3","#7570B3","#7570B3","#7570B3","#7570B3","#7570B3","#7570B3","#7570B3","#7570B3","#7570B3","#7570B3","#7570B3","#7570B3","#7570B3","#7570B3","#7570B3","#7570B3","#7570B3","#7570B3","#7570B3","#7570B3","#7570B3","#7570B3","#7570B3","#7570B3","#7570B3","#7570B3","#7570B3","#7570B3","#7570B3","#7570B3","#7570B3","#7570B3","#7570B3","#7570B3","#7570B3","#7570B3","#7570B3","#7570B3","#7570B3","#7570B3","#7570B3","#7570B3","#7570B3","#7570B3","#7570B3","#7570B3","#7570B3","#7570B3","#7570B3","#7570B3","#7570B3","#7570B3","#7570B3","#7570B3","#7570B3","#7570B3","#7570B3","#7570B3","#7570B3","#7570B3","#7570B3","#7570B3","#7570B3","#7570B3","#7570B3","#7570B3","#7570B3","#7570B3","#7570B3","#7570B3","#7570B3","#7570B3","#7570B3","#7570B3","#7570B3","#7570B3","#7570B3","#7570B3","#7570B3","#7570B3","#7570B3","#7570B3","#7570B3","#7570B3","#7570B3","#7570B3","#7570B3","#7570B3","#7570B3","#7570B3","#7570B3","#7570B3","#7570B3","#7570B3","#7570B3","#7570B3","#7570B3","#7570B3","#7570B3","#7570B3","#7570B3","#7570B3","#7570B3","#7570B3","#7570B3","#7570B3","#7570B3","#7570B3","#7570B3","#7570B3","#7570B3","#7570B3","#7570B3","#7570B3","#7570B3","#7570B3","#7570B3","#7570B3","#7570B3","#7570B3","#7570B3","#7570B3","#7570B3","#7570B3","#7570B3","#7570B3","#7570B3","#7570B3","#7570B3","#7570B3","#7570B3","#7570B3","#7570B3","#7570B3","#7570B3","#7570B3","#7570B3","#7570B3","#7570B3","#7570B3","#7570B3","#7570B3","#7570B3","#7570B3","#7570B3","#7570B3","#7570B3","#7570B3","#7570B3","#7570B3","#7570B3","#7570B3","#7570B3","#7570B3","#7570B3","#7570B3","#7570B3","#7570B3","#7570B3","#7570B3","#7570B3","#7570B3","#7570B3","#7570B3","#7570B3","#7570B3","#7570B3","#7570B3","#7570B3","#7570B3","#7570B3","#7570B3","#7570B3","#7570B3","#7570B3","#7570B3","#7570B3","#7570B3","#7570B3","#7570B3","#7570B3","#7570B3","#7570B3","#7570B3","#7570B3","#7570B3","#7570B3","#7570B3","#7570B3","#7570B3","#7570B3","#7570B3","#7570B3","#D95F02","#D95F02","#D95F02","#D95F02","#D95F02","#D95F02","#D95F02","#D95F02","#D95F02","#D95F02","#D95F02","#D95F02","#D95F02"],"weight":5,"opacity":0.5,"fill":true,"fillColor":["#1B9E77","#1B9E77","#1B9E77","#1B9E77","#1B9E77","#1B9E77","#1B9E77","#1B9E77","#1B9E77","#1B9E77","#1B9E77","#1B9E77","#1B9E77","#1B9E77","#1B9E77","#1B9E77","#1B9E77","#1B9E77","#1B9E77","#1B9E77","#1B9E77","#1B9E77","#1B9E77","#1B9E77","#1B9E77","#1B9E77","#1B9E77","#1B9E77","#1B9E77","#1B9E77","#1B9E77","#1B9E77","#1B9E77","#1B9E77","#1B9E77","#1B9E77","#1B9E77","#1B9E77","#1B9E77","#1B9E77","#1B9E77","#1B9E77","#1B9E77","#1B9E77","#1B9E77","#1B9E77","#1B9E77","#1B9E77","#1B9E77","#1B9E77","#1B9E77","#1B9E77","#1B9E77","#1B9E77","#1B9E77","#1B9E77","#1B9E77","#1B9E77","#7570B3","#7570B3","#7570B3","#7570B3","#7570B3","#7570B3","#7570B3","#7570B3","#7570B3","#7570B3","#7570B3","#7570B3","#7570B3","#7570B3","#7570B3","#7570B3","#7570B3","#7570B3","#7570B3","#7570B3","#7570B3","#7570B3","#7570B3","#7570B3","#7570B3","#7570B3","#7570B3","#7570B3","#7570B3","#7570B3","#7570B3","#7570B3","#7570B3","#7570B3","#7570B3","#7570B3","#7570B3","#7570B3","#7570B3","#7570B3","#7570B3","#7570B3","#7570B3","#7570B3","#7570B3","#7570B3","#7570B3","#7570B3","#7570B3","#7570B3","#7570B3","#7570B3","#7570B3","#7570B3","#7570B3","#7570B3","#7570B3","#7570B3","#7570B3","#7570B3","#7570B3","#7570B3","#7570B3","#7570B3","#7570B3","#7570B3","#7570B3","#7570B3","#7570B3","#7570B3","#7570B3","#7570B3","#7570B3","#7570B3","#7570B3","#7570B3","#7570B3","#7570B3","#7570B3","#7570B3","#7570B3","#7570B3","#7570B3","#7570B3","#7570B3","#7570B3","#7570B3","#7570B3","#7570B3","#7570B3","#7570B3","#7570B3","#7570B3","#7570B3","#7570B3","#7570B3","#7570B3","#7570B3","#7570B3","#7570B3","#7570B3","#7570B3","#7570B3","#7570B3","#7570B3","#7570B3","#7570B3","#7570B3","#7570B3","#7570B3","#7570B3","#7570B3","#7570B3","#7570B3","#7570B3","#7570B3","#7570B3","#7570B3","#7570B3","#7570B3","#7570B3","#7570B3","#7570B3","#7570B3","#7570B3","#7570B3","#7570B3","#7570B3","#7570B3","#7570B3","#7570B3","#7570B3","#7570B3","#7570B3","#7570B3","#7570B3","#7570B3","#7570B3","#7570B3","#7570B3","#7570B3","#7570B3","#7570B3","#7570B3","#7570B3","#7570B3","#7570B3","#7570B3","#7570B3","#7570B3","#7570B3","#7570B3","#7570B3","#7570B3","#7570B3","#7570B3","#7570B3","#7570B3","#7570B3","#7570B3","#7570B3","#7570B3","#7570B3","#7570B3","#7570B3","#7570B3","#7570B3","#7570B3","#7570B3","#7570B3","#7570B3","#7570B3","#7570B3","#7570B3","#7570B3","#7570B3","#7570B3","#7570B3","#7570B3","#7570B3","#7570B3","#7570B3","#7570B3","#7570B3","#7570B3","#7570B3","#7570B3","#7570B3","#7570B3","#7570B3","#7570B3","#7570B3","#7570B3","#7570B3","#7570B3","#7570B3","#7570B3","#7570B3","#7570B3","#7570B3","#7570B3","#7570B3","#7570B3","#7570B3","#7570B3","#7570B3","#7570B3","#7570B3","#7570B3","#7570B3","#7570B3","#7570B3","#7570B3","#7570B3","#7570B3","#7570B3","#7570B3","#7570B3","#7570B3","#7570B3","#7570B3","#7570B3","#7570B3","#7570B3","#7570B3","#7570B3","#7570B3","#7570B3","#7570B3","#7570B3","#7570B3","#7570B3","#7570B3","#7570B3","#7570B3","#7570B3","#7570B3","#7570B3","#7570B3","#7570B3","#7570B3","#7570B3","#7570B3","#7570B3","#7570B3","#7570B3","#7570B3","#7570B3","#7570B3","#7570B3","#7570B3","#7570B3","#7570B3","#7570B3","#7570B3","#7570B3","#7570B3","#7570B3","#7570B3","#7570B3","#7570B3","#7570B3","#7570B3","#7570B3","#7570B3","#7570B3","#7570B3","#7570B3","#7570B3","#7570B3","#7570B3","#7570B3","#7570B3","#7570B3","#7570B3","#7570B3","#7570B3","#7570B3","#7570B3","#7570B3","#7570B3","#7570B3","#7570B3","#7570B3","#7570B3","#7570B3","#7570B3","#7570B3","#7570B3","#7570B3","#7570B3","#7570B3","#7570B3","#7570B3","#7570B3","#7570B3","#7570B3","#7570B3","#7570B3","#7570B3","#7570B3","#7570B3","#7570B3","#7570B3","#7570B3","#7570B3","#7570B3","#7570B3","#7570B3","#7570B3","#7570B3","#7570B3","#7570B3","#7570B3","#7570B3","#7570B3","#7570B3","#7570B3","#7570B3","#7570B3","#7570B3","#7570B3","#7570B3","#7570B3","#7570B3","#7570B3","#7570B3","#7570B3","#7570B3","#7570B3","#7570B3","#7570B3","#7570B3","#7570B3","#7570B3","#7570B3","#7570B3","#7570B3","#7570B3","#7570B3","#7570B3","#7570B3","#7570B3","#7570B3","#7570B3","#7570B3","#7570B3","#7570B3","#7570B3","#7570B3","#7570B3","#7570B3","#7570B3","#7570B3","#7570B3","#7570B3","#7570B3","#7570B3","#7570B3","#7570B3","#7570B3","#7570B3","#7570B3","#7570B3","#7570B3","#7570B3","#7570B3","#7570B3","#7570B3","#7570B3","#7570B3","#7570B3","#7570B3","#7570B3","#7570B3","#7570B3","#7570B3","#7570B3","#7570B3","#7570B3","#7570B3","#7570B3","#7570B3","#7570B3","#7570B3","#7570B3","#7570B3","#7570B3","#7570B3","#7570B3","#7570B3","#7570B3","#7570B3","#7570B3","#7570B3","#7570B3","#7570B3","#7570B3","#7570B3","#7570B3","#7570B3","#7570B3","#7570B3","#7570B3","#7570B3","#7570B3","#7570B3","#7570B3","#7570B3","#7570B3","#7570B3","#7570B3","#7570B3","#7570B3","#7570B3","#7570B3","#7570B3","#7570B3","#7570B3","#7570B3","#7570B3","#7570B3","#7570B3","#7570B3","#7570B3","#7570B3","#7570B3","#7570B3","#7570B3","#7570B3","#7570B3","#7570B3","#7570B3","#7570B3","#7570B3","#7570B3","#7570B3","#7570B3","#7570B3","#7570B3","#7570B3","#7570B3","#7570B3","#7570B3","#7570B3","#7570B3","#7570B3","#7570B3","#7570B3","#7570B3","#7570B3","#7570B3","#7570B3","#7570B3","#7570B3","#7570B3","#7570B3","#7570B3","#7570B3","#7570B3","#7570B3","#7570B3","#7570B3","#7570B3","#7570B3","#7570B3","#7570B3","#7570B3","#7570B3","#7570B3","#7570B3","#7570B3","#7570B3","#7570B3","#7570B3","#7570B3","#7570B3","#7570B3","#7570B3","#7570B3","#7570B3","#7570B3","#7570B3","#7570B3","#7570B3","#7570B3","#7570B3","#7570B3","#7570B3","#7570B3","#7570B3","#7570B3","#7570B3","#7570B3","#7570B3","#7570B3","#7570B3","#7570B3","#7570B3","#7570B3","#7570B3","#7570B3","#7570B3","#7570B3","#7570B3","#7570B3","#7570B3","#7570B3","#7570B3","#7570B3","#7570B3","#7570B3","#7570B3","#7570B3","#7570B3","#7570B3","#7570B3","#7570B3","#7570B3","#7570B3","#7570B3","#7570B3","#7570B3","#7570B3","#7570B3","#7570B3","#7570B3","#7570B3","#7570B3","#7570B3","#7570B3","#7570B3","#7570B3","#7570B3","#7570B3","#7570B3","#7570B3","#7570B3","#7570B3","#7570B3","#7570B3","#7570B3","#7570B3","#7570B3","#7570B3","#7570B3","#7570B3","#7570B3","#7570B3","#7570B3","#7570B3","#7570B3","#7570B3","#7570B3","#7570B3","#7570B3","#7570B3","#7570B3","#7570B3","#7570B3","#7570B3","#7570B3","#7570B3","#7570B3","#7570B3","#7570B3","#7570B3","#7570B3","#7570B3","#7570B3","#7570B3","#7570B3","#7570B3","#7570B3","#7570B3","#7570B3","#7570B3","#7570B3","#7570B3","#7570B3","#7570B3","#7570B3","#D95F02","#D95F02","#D95F02","#D95F02","#D95F02","#D95F02","#D95F02","#D95F02","#D95F02","#D95F02","#D95F02","#D95F02","#D95F02"],"fillOpacity":0.2},null,null,null,{"interactive":false,"permanent":false,"direction":"auto","opacity":1,"offset":[0,0],"textsize":"10px","textOnly":false,"className":"","sticky":true},null,null]}],"limits":{"lat":[39.942834038043,40.4769095000194],"lng":[-112.106395521069,-111.494340542082]}},"evals":[],"jsHooks":[]}</script>
+<p class="caption">
+Figure 3.1: Community Resources in Utah County
+</p>
+</div>
+<div id="resource-data" class="section level3" number="3.2.1">
+<h3><span class="header-section-number">3.2.1</span> Resource Data</h3>
+<p>Figure <a href="methods.html#fig:utco-map">3.1</a> shows the locations of three types of
+community resources in Utah County: parks, grocery stores, and libraries.
+For each resource, and initial list of resources and elementary attributes was
+obtained by executing a relevant query to OpenStreetMap (OSM) CITE OSM.</p>
+<p>Public parks and their attributes retrieved from OSM were verified and
+corrected using aerial imagery and some site visits. The attributes included
+the size of the park in acres, whether the park includes a playground, and
+whether the park includes facilities for volleyball, basketball, and tennis.
+The constructed dataset includes <code>nrow(park_polygons)</code> attributed parks.</p>
+<p>Grocery stores were retrieved from OSM and validated using internet resources and
+site visits. The complete Nutritional Environment Measures Survey (NEMS-S) CITE NEMS
+was collected for each store, but this preliminary analysis only includes
+cursory information on the stores including whether the store is a convenience store
+or some other non-traditional grocery, whether the store includes a pharmacy or
+other non-food merchandise, and the number of registers as a measure of the
+store’s size. The constructed dataset includes <code>r</code>nrow(groceries)` stores.</p>
+<p>Libraries were retrieved from OSM, and validated using library websites and
+some site visits. The initial query returned university libraries and other
+specialty resources; though some of these libraries are open to those outside
+the university community, these were removed so that the resource list only
+includes libraries generally catering to the general public. The amenities
+available include whether the library offers additional classes and programs,
+and whether the library includes genealogical or family history resources.
+Other variables discussed in the literature such as the availability of computers
+and public wi-fi networks were present in every library and therefore cannot
+be included in the destination utility equations.</p>
+</div>
+<div id="mobile-device-data" class="section level3" number="3.2.2">
+<h3><span class="header-section-number">3.2.2</span> Mobile Device Data</h3>
+<p>Estimating the utility coefficients in Equation <a href="methods.html#eq:dcu">(3.2)</a> requires
+observations of people making trips to the various resources. Regional household
+travel surveys could be used for this task, if a sufficiently large sample size
+allows an analyst to create a subsample of trips to the specific community resource.
+Unfortunately, low data availability requires that most discretionary activities
+be grouped into more general purposes CITE NCHRP 716.</p>
+<p>In the last several years, various commercial data products developed from
+mobile device and location-based services (LBS) data have entered common use in
+transportation planning activities. Applications or websites that serve mobile
+content based on a users location will log this location information and
+sell the data to commercial third-party aggregators. These aggregators in turn will weight
+and anonymize the data before selling the prepared datasets to transportation
+planning agencies. These LBS datasets typically contain
+vehicle or person flows between spatially defined zones, sometimes segmented by
+inferred transportation mode, time of day, day of week, or imputed trip purpose.
+These datasets have been shown to accurately reflect visits to recreation areas
+and other land uses CITE MONZ, and are becoming a common part of transportation
+planning practice CITE TCRP, UDOT REPORT.</p>
+<p><span class="citation"><a href="#ref-alamedaparks" role="doc-biblioref">Gregory S. Macfarlane, Turley Voulgaris, and Tapia</a> (<a href="#ref-alamedaparks" role="doc-biblioref">2021</a>)</span> present a method for estimating destination choice models from
+such data, which we repeat in this study. We provided a set of geometric
+polygons for each park, grocery store, and library to StreetLight Data, Inc., a
+commercial aggregator. StreetLight Data in turn provided data on the number of
+mobile devices observed in each polygon grouped by the inferred residence block
+group of of those devices on an average day in 2019. IS THIS CORRECT?
+We then created a simulated destination choice estimation dataset for each
+community resource by sampling 10,000 block group - resource “trips” from the
+StreetLight dataset. This created a “chosen” alternative; we then sampled ten additional
+resources at random (each simulated trip was paired with a different sample) to
+serve as the non-chosen alternatives. Random sampling of alternatives is a
+common practice that results in unbiased estimates, though the standard errors
+of the estimates might be larger than could be obtained through a more carefully
+designed sampling schemed CITE TRAIN.</p>
+</div>
+<div id="travel-times" class="section level3" number="3.2.3">
+<h3><span class="header-section-number">3.2.3</span> Travel Times</h3>
+<p>Once the choice, alternatives, and attributes of the alternatives have been
+defined, the last element of the choice utility is the travel impedance between
+each block group and each resource. Using the <code>otpr</code> R interface <span class="citation">(<a href="#ref-otpr" role="doc-biblioref">Marcus Young 2020</a>)</span> to
+OpenTripPlanner CITE, we estimated the highway drive travel time, the walking
+route time, and the transit travel time for trips departing on October 1,
+2021 at 8 AM. The time and date are most relevant for the transit path builder
+in OpenTripPlanner, which uses detailed transit path information stored in the
+Utah Transit Authority GTFS feed file for Fall 2021. The transit path contains
+separate measures of the total travel time, the time in the transit vehicle,
+transfer time, and access / egress time, allowing us full use of the
+mode choice utility equations and resulting logsum described in Equation <a href="methods.html#eq:mcls">(3.4)</a>.</p>
+<p>For groceries and libraries, we queried from OTP the shortest time path on each
+mode from the population-weighted block group centroid to the centroid of the grocery
+store or library centroid. Because some parks in the dataset can be relatively
+large and the centroid might be far from the park access or use point, we instead
+sampled points along the boundary of the park polygon, and queried the shortest
+time path by each mode to the nearest boundary point.</p>
+
+</div>
+</div>
+</div>
+<h3>References</h3>
+<div id="refs" class="references csl-bib-body hanging-indent">
+<div id="ref-handy1997measuring" class="csl-entry">
+Handy, Susan L, and Debbie A Niemeier. 1997. <span>“Measuring Accessibility: An Exploration of Issues and Alternatives.”</span> <em>Environment and Planning A</em> 29 (7): 1175–94.
+</div>
+<div id="ref-alamedaparks" class="csl-entry">
+Macfarlane, Gregory S., Carole Turley Voulgaris, and Teresa Tapia. 2021. <span>“If You Build It Who Will Come? Equity Analysis of Park System Changes During COVID-19 Using Passive Origin-Destination Data.”</span> <em>Journal of Transport and Land Use</em>.
+</div>
+<div id="ref-otpr" class="csl-entry">
+Marcus Young. 2020. <em><span class="nocase">otpr: An API wrapper for OpenTripPlanner</span></em>. <a href="https://doi.org/10.5281/zenodo.4065250">https://doi.org/10.5281/zenodo.4065250</a>.
+</div>
+<div id="ref-recker1978factors" class="csl-entry">
+Recker, Wilfred W, and Lidia P Kostyniuk. 1978. <span>“Factors Influencing Destination Choice for the Urban Grocery Shopping Trip.”</span> <em>Transportation</em> 7 (1): 19–33.
+</div>
+<div id="ref-tidycensus" class="csl-entry">
+Walker, Kyle, and Matt Herman. 2021. <em>Tidycensus: Load US Census Boundary and Attribute Data as ’Tidyverse’ and ’Sf’-Ready Data Frames</em>. <a href="https://CRAN.R-project.org/package=tidycensus">https://CRAN.R-project.org/package=tidycensus</a>.
+</div>
+<div id="ref-williams1977formation" class="csl-entry">
+Williams, Huw CWL. 1977. <span>“On the Formation of Travel Demand Models and Economic Evaluation Measures of User Benefit.”</span> <em>Environment and Planning A</em> 9 (3): 285–344.
+</div>
+</div>
+            </section>
+
+          </div>
+        </div>
+      </div>
+<a href="lit-review.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+<a href="results.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
+    </div>
+  </div>
+<script src="libs/gitbook-2.6.7/js/app.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/clipboard.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-search.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-sharing.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-fontsettings.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-bookdown.js"></script>
+<script src="libs/gitbook-2.6.7/js/jquery.highlight.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-clipboard.js"></script>
+<script>
+gitbook.require(["gitbook"], function(gitbook) {
+gitbook.start({
+"sharing": {
+"github": false,
+"facebook": true,
+"twitter": true,
+"linkedin": false,
+"weibo": false,
+"instapaper": false,
+"vk": false,
+"whatsapp": false,
+"all": ["facebook", "twitter", "linkedin", "weibo", "instapaper"]
+},
+"fontsettings": {
+"theme": "white",
+"family": "sans",
+"size": 2
+},
+"edit": {
+"link": null,
+"text": null
+},
+"history": {
+"link": null,
+"text": null
+},
+"view": {
+"link": null,
+"text": null
+},
+"download": ["Community_Resources.pdf", "Community_Resources.epub"],
+"search": {
+"engine": "fuse",
+"options": null
+},
+"toc": {
+"collapse": "subsection"
+}
+});
+});
+</script>
+
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    var src = "true";
+    if (src === "" || src === "true") src = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-MML-AM_CHTML";
+    if (location.protocol !== "file:")
+      if (/^https?:/.test(src))
+        src = src.replace(/^https?:/, '');
+    script.src = src;
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
+</body>
+
+</html>

@@ -100,6 +100,8 @@
 \hypertarget{intro}{%
 \section{Introduction}\label{intro}}
 
+NEED TO EXPAND, PROBABLY WITH SOME REFERENCES NOW IN LITERATURE REVIEW
+
 Communities provide important resources to their members, and spatial exclusion
 from these resources can negatively affect both subjective measures of well-being
 \citep{currie2010modeling} and economic opportunity.
@@ -121,6 +123,8 @@ this research, which makes use of novel third-party datasets
 
 \hypertarget{lit-review}{%
 \section{Literature}\label{lit-review}}
+
+NEED TO SIMPLIFY / STREAMLINE
 
 Research about accessibility in the recent years has placed a considerable focus
 on access to jobs and the corresponding negative impact that there is on a
@@ -362,12 +366,95 @@ improving accessibility to the most desirable resources.
 \hypertarget{methods}{%
 \section{Methods}\label{methods}}
 
+In this section, we present a method to estimate utility-based access to
+community resources in Utah County, Utah.
+
+\hypertarget{modeling-framework}{%
+\subsection{Modeling Framework}\label{modeling-framework}}
+
+In a destination choice modeling framework \citep{recker1978factors}, an individual
+at origin \(i\) considering a destination \(j\) from a set of possible destinations
+\(J\) has a choice probability
+\begin{equation}
+P_{ij} = \frac{e^{V_{ij}}}{\sum_{j' \in J} e^{V_{ij'}}}
+  \label{eq:mnlp}
+\end{equation}
+where \(V_{ij}\) is a linear-in-parameters function representing the utility of
+destination \(j\). The destination utility consists of two basic elements:
+\begin{equation}
+ V_{ij} = \beta t_{ij} + X_j\gamma 
+  \label{eq:dcu}
+\end{equation}
+where \(t_{ij}\) is a measure of the travel impedance between \(i\) and \(j\), \(X_j\)
+is a vector of attributes of destination \(j\), and \(\beta, \gamma\) are estimated
+parameters relating the travel impedance and the destination attributes to the
+utility. These parameters may be estimated by maximum likelihood given sufficient
+observational data.
+
+The logarithm of the denominator of the choice probability given in Equation
+\eqref{eq:mnlp} is a quantity called the \emph{logsum} and represents the total
+value --- or accessibility \(A\) --- of the choice set for individual \(i\)
+\citep{williams1977formation, handy1997measuring}
+\begin{equation}
+ A_i = \log\left(\sum_{j' \in J} e^{V_{ij'}}\right) + C
+  \label{eq:dclogsum}
+\end{equation}
+where \(C\) is an unknown constant resulting from the fact that the utility
+represented in Equation \eqref{eq:dcu} is not absolute, but rather relative to
+the utilities of the other options. The difference in logsum values between two
+different origin points could be compared to determine which location has ``better''
+accessibility to the destinations in question, based on the elements included
+in Equation \eqref{eq:dcu}. Accessibility might be improved by lower travel
+impedance, or by improved amenities, or even by simply having more options available.
+
+These other elements include attributes of the community resource relevant to
+the destination choice problem: the size of the resource, amenities available,
+the price of goods on sale, etc. Each of these variables has an
+importance weighted against the travel impedance \(t_{ij}\), which might take
+various forms depending on the data available and the destination resource in
+question.
+
+Simple measures such as the highway travel time or the walk distance
+might be more or less appropriate for particular resources. Another option
+commonly used in travel demand models is actually the logsum of a \emph{mode}
+choice model with the utility of choosing each mode given by a set of utility
+equations. In this study we adopt generic mode choice utility equations
+\begin{align*}
+  V_{ij\mathrm{auto}} &= -0.028* (t_{ij\mathrm{auto}})\\
+  V_{ij\mathrm{transit}} &= -4 -0.028* (t_{ij\mathrm{transit}}) 
+    -0.056* (wt_{ij}) -0.372*(at_{ij})\\
+  V_{ij\mathrm{walk}} &= -5 -0.028* (t_{ij\mathrm{walk}}) 
+    -1.12* (d_{ij} | d_{ij} < 1.5)  
+    -5.58* (d_{ij} | d_{ij} \geq 1.5) 
+\end{align*}\\
+where \(t_{ij}\) is the travel time in minutes from \(i\) to \(j\) by each mode
+(including only in-vehicle time for transit), \(wt\) is the transit wait and
+transfer time, \(at\) is the time to access and egress transit by walking, and \(d_{ij}\)
+is the walking distance in miles. The walking distance uses two different
+utility parameters depending on whether the walking distance is greater than 1.5
+miles. The travel impedance logsum between \(i\) and \(j\) is then
+\begin{equation}
+MCLS_{ij} = \log\left(\exp(V_{ij\mathrm{auto}}) + \exp(V_{ij\mathrm{transit}}) + \exp(V_{ij\mathrm{walk}}) \right)
+  \label{eq:mcls}
+\end{equation}
+
+\hypertarget{data}{%
+\subsection{Data}\label{data}}
+
 Utah County, Utah, is among the fastest-growing urbanized regions in the United
 States, with formerly agrarian areas and open rangeland being converted to
-predominately suburban built environments. Table \ref{tab:acstable} presents
-descriptive statistics of the block groups in Utah County obtained from the
-2015-2019 American Community Survey (ACS) using the tidycensus package for R
-\citep{tidycensus}.
+predominately suburban built environments. The population and economic center of
+the county is in Provo and Orem, home to two large universities (Brigham Young
+and Utah Valley), but the most rapid development in commercial and residential
+terms has been in communities north of Utah Lake, between Provo and Salt Lake
+City to the north. Interstate 15 travels the spine of the county, and a commuter
+rail system travels multiple times a day between Provo and Salt Lake City with
+stations in Orem, American Fork, and Lehi. A bus rapid transit (BRT) system connects
+the universities, two commuter rail stations, and the densest portions of Provo
+and Orem, and other local bus services operate in other communities in the region.
+Table \ref{tab:acstable} presents descriptive statistics of
+the block groups in Utah County obtained from the 2015-2019 American Community
+Survey (ACS) using the tidycensus package for R \citep{tidycensus}.
 
 \begin{table}
 
@@ -401,8 +488,98 @@ White: Share of population who is White & 339 & 0 & 82.6 & 11.9 & 32.8 & 84.3 & 
 \caption{Community Resources in Utah County}\label{fig:utco-map}
 \end{figure}
 
-\hypertarget{models}{%
-\subsection{Models}\label{models}}
+\hypertarget{resource-data}{%
+\subsubsection{Resource Data}\label{resource-data}}
+
+Figure \ref{fig:utco-map} shows the locations of three types of
+community resources in Utah County: parks, grocery stores, and libraries.
+For each resource, and initial list of resources and elementary attributes was
+obtained by executing a relevant query to OpenStreetMap (OSM) CITE OSM.
+
+Public parks and their attributes retrieved from OSM were verified and
+corrected using aerial imagery and some site visits. The attributes included
+the size of the park in acres, whether the park includes a playground, and
+whether the park includes facilities for volleyball, basketball, and tennis.
+The constructed dataset includes \texttt{nrow(park\_polygons)} attributed parks.
+
+Grocery stores were retrieved from OSM and validated using internet resources and
+site visits. The complete Nutritional Environment Measures Survey (NEMS-S) CITE NEMS
+was collected for each store, but this preliminary analysis only includes
+cursory information on the stores including whether the store is a convenience store
+or some other non-traditional grocery, whether the store includes a pharmacy or
+other non-food merchandise, and the number of registers as a measure of the
+store's size. The constructed dataset includes \texttt{r}nrow(groceries)` stores.
+
+Libraries were retrieved from OSM, and validated using library websites and
+some site visits. The initial query returned university libraries and other
+specialty resources; though some of these libraries are open to those outside
+the university community, these were removed so that the resource list only
+includes libraries generally catering to the general public. The amenities
+available include whether the library offers additional classes and programs,
+and whether the library includes genealogical or family history resources.
+Other variables discussed in the literature such as the availability of computers
+and public wi-fi networks were present in every library and therefore cannot
+be included in the destination utility equations.
+
+\hypertarget{mobile-device-data}{%
+\subsubsection{Mobile Device Data}\label{mobile-device-data}}
+
+Estimating the utility coefficients in Equation \eqref{eq:dcu} requires
+observations of people making trips to the various resources. Regional household
+travel surveys could be used for this task, if a sufficiently large sample size
+allows an analyst to create a subsample of trips to the specific community resource.
+Unfortunately, low data availability requires that most discretionary activities
+be grouped into more general purposes CITE NCHRP 716.
+
+In the last several years, various commercial data products developed from
+mobile device and location-based services (LBS) data have entered common use in
+transportation planning activities. Applications or websites that serve mobile
+content based on a users location will log this location information and
+sell the data to commercial third-party aggregators. These aggregators in turn will weight
+and anonymize the data before selling the prepared datasets to transportation
+planning agencies. These LBS datasets typically contain
+vehicle or person flows between spatially defined zones, sometimes segmented by
+inferred transportation mode, time of day, day of week, or imputed trip purpose.
+These datasets have been shown to accurately reflect visits to recreation areas
+and other land uses CITE MONZ, and are becoming a common part of transportation
+planning practice CITE TCRP, UDOT REPORT.
+
+\citet{alamedaparks} present a method for estimating destination choice models from
+such data, which we repeat in this study. We provided a set of geometric
+polygons for each park, grocery store, and library to StreetLight Data, Inc., a
+commercial aggregator. StreetLight Data in turn provided data on the number of
+mobile devices observed in each polygon grouped by the inferred residence block
+group of of those devices on an average day in 2019. IS THIS CORRECT?
+We then created a simulated destination choice estimation dataset for each
+community resource by sampling 10,000 block group - resource ``trips'' from the
+StreetLight dataset. This created a ``chosen'' alternative; we then sampled ten additional
+resources at random (each simulated trip was paired with a different sample) to
+serve as the non-chosen alternatives. Random sampling of alternatives is a
+common practice that results in unbiased estimates, though the standard errors
+of the estimates might be larger than could be obtained through a more carefully
+designed sampling schemed CITE TRAIN.
+
+\hypertarget{travel-times}{%
+\subsubsection{Travel Times}\label{travel-times}}
+
+Once the choice, alternatives, and attributes of the alternatives have been
+defined, the last element of the choice utility is the travel impedance between
+each block group and each resource. Using the \texttt{otpr} R interface \citep{otpr} to
+OpenTripPlanner CITE, we estimated the highway drive travel time, the walking
+route time, and the transit travel time for trips departing on October 1,
+2021 at 8 AM. The time and date are most relevant for the transit path builder
+in OpenTripPlanner, which uses detailed transit path information stored in the
+Utah Transit Authority GTFS feed file for Fall 2021. The transit path contains
+separate measures of the total travel time, the time in the transit vehicle,
+transfer time, and access / egress time, allowing us full use of the
+mode choice utility equations and resulting logsum described in Equation \eqref{eq:mcls}.
+
+For groceries and libraries, we queried from OTP the shortest time path on each
+mode from the population-weighted block group centroid to the centroid of the grocery
+store or library centroid. Because some parks in the dataset can be relatively
+large and the centroid might be far from the park access or use point, we instead
+sampled points along the boundary of the park polygon, and queried the shortest
+time path by each mode to the nearest boundary point.
 
 \hypertarget{results}{%
 \section{Results}\label{results}}
@@ -414,30 +591,30 @@ Using the simulated trip choices assembled from the location-based services data
 we estimate destination choice models with the \texttt{mlogit} package for
 R \citep{R, mlogit}.
 
-\begin{landscape}\begin{table}
+\begin{table}
 
 \caption{\label{tab:park-models}Park Destination Choice Utilities}
 \centering
+\resizebox{\linewidth}{!}{
 \begin{tabular}[t]{lccccc}
 \toprule
   & Car & MCLS & Attributes & All - Car & All - Logsum\\
 \midrule
-Drive time & -0.215(-95.949)** &  &  & -0.211(-70.944)** & \\
-Mode Choice Logsum &  & 7.678(95.958)** &  &  & 7.512(70.948)**\\
-log(Acres) &  &  & 1.447(86.983)** & 1.448(53.482)** & 1.448(53.469)**\\
-Playground &  &  & 4.693(34.722)** & 4.632(31.107)** & 4.633(31.099)**\\
-Volleyball &  &  & -0.312(-8.157)** & -0.564(-9.576)** & -0.565(-9.580)**\\
-Basketball &  &  & -0.591(-13.940)** & -0.386(-5.651)** & -0.387(-5.663)**\\
-Tennis &  &  & -0.612(-14.673)** & -0.974(-16.165)** & -0.976(-16.182)**\\
+Drive time & -0.215(-95.949)** &  &  & -0.209(-69.212)** & \\
+Mode Choice Logsum &  & 7.678(95.958)** &  &  & 7.450(69.216)**\\
+log(Acres) &  &  & 1.308(77.120)** & 1.300(46.869)** & 1.301(46.858)**\\
+Playground &  &  & 4.567(33.939)** & 4.476(30.127)** & 4.477(30.118)**\\
+Volleyball &  &  & -0.369(-9.580)** & -0.663(-11.065)** & -0.664(-11.067)**\\
+Basketball &  &  & -0.669(-15.625)** & -0.534(-7.632)** & -0.535(-7.642)**\\
+Tennis &  &  & -0.549(-13.065)** & -0.884(-14.678)** & -0.886(-14.693)**\\
 \midrule
 Num.Obs. & 8,984 & 8,984 & 8,984 & 8,984 & 8,984\\
-Log Likelihood & -9,288.8 & -9,284.7 & -12,348.3 & -4,974.7 & -4,971.6\\
-McFadden Rho-Sq & 0.569 & 0.569 & 0.427 & 0.769 & 0.769\\
+Log Likelihood & -9,288.8 & -9,284.7 & -11,822.1 & -4,774.9 & -4,772.2\\
+McFadden Rho-Sq & 0.569 & 0.569 & 0.451 & 0.778 & 0.778\\
 \bottomrule
 \multicolumn{6}{l}{\textsuperscript{} t-statistics in parentheses. * p $<$ 0.5, ** p $<$ 0.1}\\
-\end{tabular}
+\end{tabular}}
 \end{table}
-\end{landscape}
 
 Table \ref{tab:park-models} presents the model estimation results for
 five different specifications of park destination choice. The ``Car'' model
@@ -457,14 +634,15 @@ result, the mode choice logsum is highly collinear with the car travel time.
 Nevertheless, there are small differences differences between the models
 with the different impedance terms. Using a non-nested likelihood statistic
 test presented by HOROWITZ, we can reject the null hypothesis that the two
-``All'' models have equivalent likelihood (\(p\)-value of 0.00645), and infer
+``All'' models have equivalent likelihood (\(p\)-value of 0.00969), and infer
 that the mode choice logsum is a marginally better estimator of park choice than
 the vehicle travel time alone.
 
-\begin{landscape}\begin{table}
+\begin{table}
 
 \caption{\label{tab:grocery-models}Grocery Destination Choice Utilities}
 \centering
+\resizebox{\linewidth}{!}{
 \begin{tabular}[t]{lcccccc}
 \toprule
   & Car & MCLS & Attributes & Size & All - Car & All - Logsum\\
@@ -484,9 +662,8 @@ Log Likelihood & -11,861 & -11,861.8 & -16,898.4 & -15,806.6 & -8,802.4 & -8,802
 McFadden Rho-Sq & 0.411 & 0.411 & 0.161 & 0.216 & 0.563 & 0.563\\
 \bottomrule
 \multicolumn{7}{l}{\textsuperscript{} t-statistics in parentheses. * p $<$ 0.5, ** p $<$ 0.1}\\
-\end{tabular}
+\end{tabular}}
 \end{table}
-\end{landscape}
 
 Table \ref{tab:grocery-models} presents the model estimation results for the grocery
 store models. As with the parks models in Table \ref{tab:park-models}, the
@@ -501,10 +678,11 @@ In terms of the travel impedance, there is not a sufficiently large gap in the
 model likelihoods to reject that the mode choice logsum and the drive
 time are equivalent predictors of grocery store choice.
 
-\begin{landscape}\begin{table}
+\begin{table}
 
 \caption{\label{tab:library-models}Library Destination Choice Utilities}
 \centering
+\resizebox{\linewidth}{!}{
 \begin{tabular}[t]{lccccc}
 \toprule
   & Car & MCLS & Attributes & All - Car & All - Logsum\\
@@ -519,9 +697,8 @@ Log Likelihood & -10,841.9 & -10,840.3 & -21,944.4 & -10,322.5 & -10,321.7\\
 McFadden Rho-Sq & 0.539 & 0.539 & 0.068 & 0.561 & 0.561\\
 \bottomrule
 \multicolumn{6}{l}{\textsuperscript{} t-statistics in parentheses. * p $<$ 0.5, ** p $<$ 0.1}\\
-\end{tabular}
+\end{tabular}}
 \end{table}
-\end{landscape}
 
 Table \ref{tab:library-models} presents the model estimation results for the
 library destination choice models. As with parks and grocery stores, both
@@ -538,20 +715,60 @@ time.
 \hypertarget{accessibilities}{%
 \subsection{Accessibilities}\label{accessibilities}}
 
+Using the results of the ``All - Logsum'' models estimated for each community resource
+in the last section, we calculate the total utility-based accessibility measure
+for each block group in Utah County. For comparison to a more traditional measure,
+we also created buffer-based accessibility terms where a block group has
+``access'' to a grocery store if there is one within a 5-minute drive, a
+park if there is one within a five-minute walk, and a library if there is one within
+a ten-minute drive.
+
 \begin{figure}
 \centering
 \includegraphics{Community_Resources_files/figure-latex/access-map-1.pdf}
 \caption{\label{fig:access-map}Spatial comparison of grocery access buffer versus logsum.}
 \end{figure}
 
+Figure \ref{fig:access-map} spatially presents the difference between the
+buffer-based measure and the logsum-based measure. The two measures largely
+show the same basic shape: block groups along the spine of the county tend
+to have binary access in the buffer and also have a higher logsum value. The
+difference is at the margins, where the discontinuity of the buffer measure
+is replaced by a smoother access surface, more spatially reflective of what
+people are likely to experience.
+
 \begin{figure}
 \centering
 \includegraphics{Community_Resources_files/figure-latex/access-plot-1.pdf}
-\caption{\label{fig:access-plot}Relationship between travel time, travel-time based buffer, and logsum value.}
+\caption{\label{fig:access-plot}Relationship between travel time, travel-time based buffer, and logsum access value for block groups in Utah County.}
 \end{figure}
 
-\hypertarget{limitations}{%
-\section{Limitations}\label{limitations}}
+The discontinuity of the buffer measure is perhaps more clearly seen with in
+Figure \ref{fig:access-plot}, which plots the logsum against the travel time
+in minutes (drive time for grocery stores and libraries; walk time for parks),
+for block groups in the study region. For block groups with equivalent travel
+time to a particular community resource, the accessibility logsum value
+varies substantially. This variance might be due to a travel time differential
+between drive, walk, and transit modes captured in the mode choice logsum, or it
+could also be because the resources available near the set of block groups have
+substantial variance in their amenities. Being near a single poor-quality
+grocery store is not the same thing as being near multiple high-quality
+groceries, and the logsum value can capture this variance in its construction.
+
+What this distinction between access estimation methods might mean for policy
+analysis is yet to be determined, and future research is required. In this analysis,
+we estimate that 2,385 households live in block groups outside the
+boundary of all three resource buffers. At the same time, 1,633 households
+live in block groups that are beneath the regional mean utility-based access to
+all three resources. The population-weighted mean of the block group median
+incomes of these two groups is almost identical however, with \$98,848
+for the buffer-based measure and \$97,929 for the utility-based version.
+This indicates that the areas of Utah County that are without access to these
+community resources tend to be exurban regions on the edges of the county,
+with relatively high income areas.
+
+\hypertarget{limitations-and-future-research}{%
+\section{Limitations and Future Research}\label{limitations-and-future-research}}
 
 The location-based services data reveals the likely home location of devices
 observed within a geographic polygon, within some measurement error.
@@ -564,6 +781,62 @@ it can suggest how the accessibility of a neighborhood to these resource would i
 were transportation impedance decreased or the resources expanded or improved,
 it cannot tell us how many more people might take advantage of the resource
 in that case.
+
+In this research, all simulated trips were grouped into a single pooled model
+for analysis. This implies that the effect of amenities and travel impedance on
+destination choice is similar for all neighborhoods. A segmented model
+where, for example, low-income block groups and high-income block groups were
+estimated separately could allow for flexibility in these estimates and reveal
+differences in preferences among residents of the different neighborhoods. Some
+neighborhoods might show a particular preference for access utilities by
+transit, or for specific park amenities. A latent class choice model CITE JOAN
+would go further in potentially informing which demographic variables are
+meaningful in defining possible data segmentation schemes.
+
+A necessary assumption made when constructing the estimation dataset is that
+people experience access from their home neighborhood. This may not always be true;
+for instance, people may choose to shop at grocery stores or visit libraries that
+are near their workplace, or that are between their homes and some other
+frequent destination. Methods to account for access and destination choices
+experienced at other points in the day would be a useful and interesting extension.
+Similarly, we assumed that the distance between a home and a community resource
+was represented by the distance between the block group centroid and the resource.
+For some block groups in less dense areas of the county, the error in measured
+travel time between the block group centroid and the actual home location might be
+larger than the total travel time. It might be possible to simulate home locations
+within each block group and use those locations in the travel time calculations.
+Alternatively, it might be possible to estimate the model using block group data
+as in this study but apply the model at a more fine resolution (e.g.~block) when
+investigating accessibilities and conducting policy analyses.
+
+This paper presents preliminary model estimates using plausible destination
+choice utility values. Several additional variables might be further explored,
+particularly in regards to the grocery resources. The NEMS-S survey is a highly
+detailed picture of the offerings of a particular grocery store, including
+information on the availability of relatively healthier or fresher foods and
+their prices. This study was only able to explore a few key size variables, but
+a deeper investigation into grocery store amenities and offerings
+preferences --- and how they might influence a collective understanding of
+nutrition access more broadly --- is needed.
+
+Ultimately, the purpose of any accessibility measure to a community resources
+is to enable a subsequent analysis of some metric of well-being. CITE EP:B PAPER
+suggest that a utility-based access to parks measure is more predictive of
+physical health outcomes than a buffer-based measure. Is this true for more
+community resources? Would using a more subtle or nuanced measure of access to
+libraries help in understanding a link between community form and social isolation
+or mental health? A key benefit of this method is that is provides a way to
+evaluate the benefit of investments in resources against the benefits of investing
+in the transportation system. Will a community benefit more from a new grocery store
+nearby, or expanded options at an existing grocery store, or from improving bike
+or bus connections to that existing store? An examination of this question is
+left for future research, but this paper presents a method for how this could be
+approached.
+
+\hypertarget{conclusions}{%
+\section{Conclusions}\label{conclusions}}
+
+NEED TO WRITE
 
 \hypertarget{acknowledgements}{%
 \section*{Acknowledgements}\label{acknowledgements}}
