@@ -1,5 +1,7 @@
 # Literature {#lit-review}
 
+NEED TO SIMPLIFY / STREAMLINE
+
 Research about accessibility in the recent years has placed a considerable focus
 on access to jobs and the corresponding negative impact that there is on a
 community when there is a lack of accessibility to quality jobs. A research
