@@ -1,11 +1,96 @@
 # Methods
+In this section, we present a method to estimate utility-based access to 
+community resources in Utah County, Utah. 
 
+## Modeling Framework
+
+In a destination choice modeling framework [@recker1978factors], an individual
+at origin $i$ considering a destination $j$ from a set of possible destinations
+$J$ has a choice probability
+\begin{equation}
+P_{ij} = \frac{e^{V_{ij}}}{\sum_{j' \in J} e^{V_{ij'}}}
+  (\#eq:mnlp)
+\end{equation}
+where $V_{ij}$ is a linear-in-parameters function representing the utility of 
+destination $j$. The destination utility consists of two basic elements:
+\begin{equation}
+ V_{ij} = \beta t_{ij} + X_j\gamma 
+  (\#eq:dcu)
+\end{equation}
+where $t_{ij}$ is a measure of the travel impedance between $i$ and $j$, $X_j$
+is a vector of attributes of destination $j$, and $\beta, \gamma$ are estimated 
+parameters relating the travel impedance and the destination attributes to the 
+utility.  These parameters may be estimated by maximum likelihood given sufficient
+observational data.
+
+The logarithm of the denominator of the choice probability given in Equation
+\@ref(eq:mnlp) is a quantity called the *logsum* and represents the total 
+value --- or accessibility $A$ --- of the choice set for individual $i$ 
+[@williams1977formation; @handy1997measuring]
+\begin{equation}
+ A_i = \log\left(\sum_{j' \in J} e^{V_{ij'}}\right) + C
+  (\#eq:dclogsum)
+\end{equation}
+where $C$ is an unknown constant resulting from the fact that the utility 
+represented in Equation \@ref(eq:dcu) is not absolute, but rather relative to 
+the utilities of the other options.  The difference in logsum values between two 
+different origin points could be compared to determine which location has "better" 
+accessibility to the destinations in question, based on the elements included 
+in Equation \@ref(eq:dcu). Accessibility might be improved by lower travel 
+impedance, or by improved amenities, or even by simply having more options available.
+
+```{r utilities}
+tar_load(utilities)
+```
+
+These other elements include attributes of the community resource relevant to 
+the destination choice problem: the size of the resource, amenities available,
+the price of goods on sale, etc. Each of these variables has an 
+importance weighted against the travel impedance $t_{ij}$, which might take
+various forms depending on the data available and the destination resource in
+question. 
+
+Simple measures such as the highway travel time or the walk distance
+might be more or less appropriate for particular resources. Another option 
+commonly used in travel demand models is actually the logsum of a *mode*
+choice model with the utility of choosing each mode  given by a set of utility
+equations. In this study we adopt generic mode choice utility equations 
+\begin{align*}
+  V_{ij\mathrm{auto}} &= `r utilities$CAR$ivtt`* (t_{ij\mathrm{auto}})\\
+  V_{ij\mathrm{transit}} &= `r utilities$TRANSIT$constant` `r utilities$TRANSIT$ivtt`* (t_{ij\mathrm{transit}}) 
+    `r utilities$TRANSIT$wait`* (wt_{ij}) `r utilities$TRANSIT$access`*(at_{ij})\\
+  V_{ij\mathrm{walk}} &= `r utilities$WALK$constant` `r utilities$WALK$ivtt`* (t_{ij\mathrm{walk}}) 
+    `r utilities$WALK$short_distance`* (d_{ij} | d_{ij} < 1.5)  
+    `r utilities$WALK$long_distance`* (d_{ij} | d_{ij} \geq 1.5) 
+\end{align*}  
+where $t_{ij}$ is the travel time in minutes from $i$ to $j$ by each mode
+(including only in-vehicle time for transit), $wt$ is the transit wait and 
+transfer time, $at$ is the time to access and egress transit by walking, and $d_{ij}$
+is the walking distance in miles. The walking distance uses two different
+utility parameters depending on whether the walking distance is greater than 1.5
+miles. The travel impedance logsum between $i$ and $j$ is then 
+\begin{equation}
+MCLS_{ij} = \log\left(\exp(V_{ij\mathrm{auto}}) + \exp(V_{ij\mathrm{transit}}) + \exp(V_{ij\mathrm{walk}}) \right)
+  (\#eq:mcls)
+\end{equation}
+
+
+
+## Data 
 Utah County, Utah, is among the fastest-growing urbanized regions in the United
 States, with formerly agrarian areas and open rangeland being converted to
-predominately suburban built environments.   Table \@ref(tab:acstable) presents
-descriptive statistics of the block groups in Utah County obtained from the
-2015-2019 American Community Survey (ACS) using the tidycensus package for R
-[@tidycensus].
+predominately suburban built environments. The population and economic center of 
+the county is in Provo and Orem, home to two large universities (Brigham Young 
+and Utah Valley), but the most rapid development in commercial and residential 
+terms has been in communities north of Utah Lake, between Provo and Salt Lake
+City to the north. Interstate 15 travels the spine of the county, and a commuter 
+rail system travels multiple times a day between Provo and Salt Lake City with 
+stations in Orem, American Fork, and Lehi. A bus rapid transit (BRT) system connects
+the universities, two commuter rail stations, and the densest portions of Provo 
+and Orem, and other local bus services operate in other communities in the region. 
+Table \@ref(tab:acstable) presents descriptive statistics of
+the block groups in Utah County obtained from the 2015-2019 American Community
+Survey (ACS) using the tidycensus package for R [@tidycensus].
 
 ```{r acstable}
 tar_load(acsdata)
@@ -28,9 +113,7 @@ datasummary_skim(acs_for_table, title = "Block Group Summary Statistics",
   kableExtra::footnote(symbol = "Hispanic indicates Hispanic individuals of all races; non-Hispanic individuals report a single race alone.") 
 ```
 
-
-
-```{r utco-map, fig.cap="Community Resources in Utah County", fig.align='center', dev='tikz'}
+```{r utco-map, fig.cap="Community Resources in Utah County", fig.align='center', dev='tikz', cache = FALSE}
 tar_load(groceries)
 tar_load(park_polygons)
 tar_load(libraries)
@@ -44,19 +127,7 @@ mapdata <- bind_rows(
 ) %>%
   st_centroid()
 
-if(knitr::is_html_output()){
-  
-  polys <- mapdata %>% st_transform(4326) %>% filter(st_is(., "MULTIPOLYGON"))
-  polypal <- colorFactor("Dark2", domain = polys$LandUse)
-  pnts  <- mapdata %>% st_transform(4326) %>% filter(!st_is(., "MULTIPOINT"))
-  pntspal <- colorFactor("Dark2",domain = pnts$LandUse)
-                                                     
-  leaflet(polys) %>%
-    addProviderTiles(providers$Esri.WorldGrayCanvas) %>%
-    addPolygons(color = ~polypal(LandUse)) %>%
-    addCircles(data = pnts, color = ~pntspal(pnts$LandUse))
-  
-} else {
+if(knitr::is_latex_output()){
   
   ggplot() + 
     annotation_map_tile("stamenbw", zoom=11) + 
@@ -72,13 +143,112 @@ if(knitr::is_html_output()){
           axis.text.y=element_blank(),
           axis.ticks.y=element_blank(),
           )
+  
+} else {
+  polys <- mapdata %>% st_transform(4326) %>% filter(st_is(., "MULTIPOLYGON"))
+  polypal <- colorFactor("Dark2", domain = polys$LandUse)
+  pnts  <- mapdata %>% st_transform(4326) %>% filter(!st_is(., "MULTIPOINT"))
+  pntspal <- colorFactor("Dark2",domain = pnts$LandUse)
+                                                     
+  leaflet(polys) %>%
+    addProviderTiles(providers$Esri.WorldGrayCanvas) %>%
+    addPolygons(color = ~polypal(LandUse)) %>%
+    addCircles(data = pnts, color = ~pntspal(pnts$LandUse))
+  
 }
 
 ```
 
+### Resource Data
+Figure \@ref(fig:utco-map) shows the locations of three types of 
+community resources in Utah County: parks, grocery stores, and libraries.
+For each resource, and initial list of resources and elementary attributes was
+obtained by executing a relevant query to OpenStreetMap (OSM) CITE OSM.
+
+Public parks and their attributes retrieved from OSM were verified and 
+corrected using aerial imagery and some site visits. The attributes included 
+the size of the park in acres, whether the park includes a playground, and 
+whether the park includes facilities for volleyball, basketball, and tennis.
+The constructed dataset includes `nrow(park_polygons)` attributed parks.
+
+Grocery stores were retrieved from OSM and validated using internet resources and
+site visits. The complete Nutritional Environment Measures Survey (NEMS-S) CITE NEMS
+was collected for each store, but this preliminary analysis only includes 
+cursory information on the stores including whether the store is a convenience store
+or some other non-traditional grocery, whether the store includes a pharmacy or 
+other non-food merchandise, and the number of registers as a measure of the 
+store's size. The constructed dataset includes `r `nrow(groceries)` stores.
+
+Libraries were retrieved from OSM, and validated using library websites and 
+some site visits. The initial query returned university libraries and other
+specialty resources; though some of these libraries are open to those outside
+the university community, these were removed so that the resource list only
+includes libraries generally catering to the general public. The amenities 
+available include whether the library offers additional classes and programs,
+and whether the library includes genealogical or family history resources. 
+Other variables discussed in the literature such as the availability of computers
+and public wi-fi networks were present in every library and therefore cannot
+be included in the destination utility equations.
+
+### Mobile Device Data
+
+Estimating the utility coefficients in Equation \@ref(eq:dcu) requires
+observations of people making trips to the various resources. Regional household
+travel surveys could be used for this task, if a sufficiently large sample size 
+allows an analyst to create a subsample of trips to the specific community resource.
+Unfortunately, low data availability requires that most discretionary activities
+be grouped into more general purposes CITE NCHRP 716.
+
+In the last several years, various commercial data products developed from
+mobile device and location-based services (LBS) data have entered common use in
+transportation planning activities. Applications or websites that serve mobile 
+content based on a users location will log this location information and 
+sell the data to commercial third-party aggregators. These aggregators in turn will weight 
+and anonymize the data before selling the prepared datasets to transportation 
+planning agencies. These LBS datasets typically contain
+vehicle or person flows between spatially defined zones, sometimes segmented by
+inferred transportation mode, time of day, day of week, or imputed trip purpose.
+These datasets have been shown to accurately reflect visits to recreation areas
+and other land uses CITE MONZ, and are becoming a common part of transportation
+planning practice CITE TCRP, UDOT REPORT.
+
+@alamedaparks present a method for estimating destination choice models from 
+such data, which we repeat in this study. We provided a set of geometric 
+polygons for each park, grocery store, and library to StreetLight Data, Inc., a 
+commercial aggregator. StreetLight Data in turn provided data on the number of
+mobile devices observed in each polygon grouped by the inferred residence block
+group of of those devices on an average day in 2019. IS THIS CORRECT?
+We then created a simulated destination choice estimation dataset for each
+community resource by sampling 10,000 block group - resource "trips" from the 
+StreetLight dataset. This created a "chosen" alternative; we then sampled ten additional
+resources at random (each simulated trip was paired with a different sample) to
+serve as the non-chosen alternatives. Random sampling of alternatives is a 
+common practice that results in unbiased estimates, though the standard errors
+of the estimates might be larger than could be obtained through a more carefully
+designed sampling schemed CITE TRAIN. 
+
+### Travel Times
+
+Once the choice, alternatives, and attributes of the alternatives have been 
+defined, the last element of the choice utility is the travel impedance between 
+each block group and each resource. Using the `otpr` R interface [@otpr] to 
+OpenTripPlanner CITE, we estimated the highway drive travel time, the walking
+route time, and the transit travel time for trips departing on October 1,
+2021 at 8 AM. The time and date are most relevant for the transit path builder
+in OpenTripPlanner, which uses detailed transit path information stored in the
+Utah Transit Authority GTFS feed file for Fall 2021. The transit path contains
+separate measures of the total travel time, the time in the transit vehicle,
+transfer time, and access / egress time, allowing us full use of the 
+mode choice utility equations and resulting logsum described in Equation \@ref(eq:mcls).
+
+For groceries and libraries, we queried from OTP the shortest time path on each
+mode from the population-weighted block group centroid to the centroid of the grocery
+store or library centroid. Because some parks in the dataset can be relatively
+large and the centroid might be far from the park access or use point, we instead
+sampled points along the boundary of the park polygon, and queried the shortest
+time path by each mode to the nearest boundary point.
 
 
-## Models
 
 
 
