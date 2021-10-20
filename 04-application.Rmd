@@ -20,14 +20,14 @@ park_map = c(
     "tennisTRUE" = "Tennis"
 )
 
+ls_v_attr <- lrtest(park_models$Attributes, park_models$`All - Logsum`)
+ls_v_car <- horowitz_lrtest(park_models$`All - Logsum`, park_models$`All - Car`)
 modelsummary(park_models, estimate = "{estimate}({statistic}){stars}", 
              title = "Park Destination Choice Utilities",
              stars = c('*' = .05, '**' = .01),
              coef_map = park_map, gof_map = gm,
              statistic = NULL, note = "t-statistics in parentheses. * p < 0.5, ** p < 0.1") %>%
-  landscape()
-ls_v_attr <- lrtest(park_models$Attributes, park_models$`All - Logsum`)
-ls_v_car <- horowitz_lrtest(park_models$`All - Logsum`, park_models$`All - Car`)
+  kable_styling(latex_options = c("scale_down"))
 ```
 
 Table \@ref(tab:park-models) presents the model estimation results for 
@@ -54,7 +54,9 @@ the vehicle travel time alone.
 
 ```{r grocery-models}
 tar_load(grocery_models)
-
+ls_v_car_g <- horowitz_lrtest(grocery_models$`All - Logsum`, grocery_models$`All - Car`)
+d_conv_ratio <- grocery_models$`All - Car`$coefficients["typeConvenience Store"] / 
+  grocery_models$`All - Car`$coefficients["duration_CAR"]  
 grocery_map = c(
     "duration_CAR" = "Drive time",
     "mclogsum" = "Mode Choice Logsum",
@@ -72,10 +74,7 @@ modelsummary(grocery_models,
              title = "Grocery Destination Choice Utilities",
              stars = c('*' = .05, '**' = .01), coef_map = grocery_map, gof_map = gm,
              note = "t-statistics in parentheses. * p < 0.5, ** p < 0.1") %>%
-  landscape()
-ls_v_car_g <- horowitz_lrtest(grocery_models$`All - Logsum`, grocery_models$`All - Car`)
-d_conv_ratio <- grocery_models$`All - Car`$coefficients["typeConvenience Store"] / 
-  grocery_models$`All - Car`$coefficients["duration_CAR"]  
+  kable_styling(latex_options = c("scale_down"))
 ```
 
 Table \@ref(tab:grocery-models) presents the model estimation results for the grocery 
@@ -101,13 +100,13 @@ library_map <- c(
     "genealogyTRUE" = "Genealogy Resources"
 )
 
+ls_v_car_l <- horowitz_lrtest(library_models$`All - Logsum`, library_models$`All - Car`)
 modelsummary(library_models, estimate = "{estimate}({statistic}){stars}", 
              title = "Library Destination Choice Utilities",
              stars = c('*' = .05, '**' = .01),
              coef_map = library_map, gof_map = gm,
              statistic = NULL, note = "t-statistics in parentheses. * p < 0.5, ** p < 0.1") %>%
-  landscape()
-ls_v_car_l <- horowitz_lrtest(library_models$`All - Logsum`, library_models$`All - Car`)
+  kable_styling(latex_options = c("scale_down"))
 ```
 
 Table \@ref(tab:library-models) presents the model estimation results for the 
@@ -124,11 +123,20 @@ time.
 
 ## Accessibilities
 
+Using the results of the "All - Logsum" models estimated for each community resource 
+in the last section, we calculate the total utility-based accessibility measure
+for each block group in Utah County. For comparison to a more traditional measure,
+we also created buffer-based accessibility terms where a block group has 
+"access" to a grocery store if there is one within a 5-minute drive, a 
+park if there is one within a five-minute walk, and a library if there is one within 
+a ten-minute drive.
+
 
 ```{r access}
 tar_load(access_bin)
 tar_load(access_ls)
 ```
+
 
 ```{r access-map, dev = "tikz", dev.args=list(pointsize=12), fig.cap = "Spatial comparison of grocery access buffer versus logsum."}
 amdata <- bind_rows(
@@ -142,7 +150,7 @@ ggplot() +
   annotation_map_tile("cartolight", zoom=11) + 
   coord_sf(crs = st_crs(3426),  expand = FALSE) + 
   geom_sf(data = amdata %>% filter(method == "Buffer"), aes(color = as.logical(grocery)), inherit.aes = FALSE, alpha = 0.7) +
-  scale_color_manual("$<5$ minute walk", values = dj1[c(5, 3)]) +  
+  scale_color_manual("$<5$ minute drive", values = dj1[c(5, 3)]) +  
   new_scale_color() + 
   geom_sf(data = amdata %>% filter(method == "Logsum"),  aes(color = grocery), inherit.aes = FALSE, alpha = 0.7) +
   scale_color_viridis_c("Logsum", option = "magma") +  
@@ -156,9 +164,15 @@ ggplot() +
         axis.ticks.y=element_blank())
 ```
 
+Figure \@ref(fig:access-map) spatially presents the difference between the
+buffer-based measure and the logsum-based measure. The two measures largely 
+show the same basic shape: block groups along the spine of the county tend 
+to have binary access in the buffer and also have a higher logsum value. The 
+difference is at the margins, where the discontinuity of the buffer measure 
+is replaced by a smoother access surface, more spatially reflective of what 
+people are likely to experience.
 
-
-```{r access-plot, fig.cap="Relationship between travel time, travel-time based buffer, and logsum value.", dev = "tikz", dev.args=list(pointsize=10)}
+```{r access-plot, fig.cap="Relationship between travel time, travel-time based buffer, and logsum access value for block groups in Utah County.", dev = "tikz", dev.args=list(pointsize=10)}
 left_join(
   access_bin %>%
     st_set_geometry(NULL) %>%
@@ -184,6 +198,44 @@ left_join(
 
 ```
 
+The discontinuity of the buffer measure is perhaps more clearly seen with in 
+Figure \@ref(fig:access-plot), which plots the logsum against the travel time 
+in minutes (drive time for grocery stores and libraries; walk time for parks), 
+for block groups in the study region. For block groups with equivalent travel 
+time to a particular community resource, the accessibility logsum value 
+varies substantially. This variance might be due to a travel time differential 
+between drive, walk, and transit modes captured in the mode choice logsum, or it
+could also be because the resources available near the set of block groups have 
+substantial variance in their amenities. Being near a single poor-quality
+grocery store is not the same thing as being near multiple high-quality
+groceries, and the logsum value can capture this variance in its construction.
 
 
+```{r income-disp}
+no_buffer <- access_bin %>% left_join(acsdata, by = c("id" =  "geoid")) %>%
+  filter(!grocery, !park,!library)
+
+no_logsum <- access_ls %>% left_join(acsdata, by = c("id" =  "geoid")) %>%
+  filter(grocery < mean(grocery, na.rm = TRUE),  
+         park < mean(park, na.rm = TRUE), 
+         library < mean(library, na.rm = TRUE))
+
+meaninc_nobuf <- weighted.mean(no_buffer$income, no_buffer$population, na.rm = TRUE)
+meaninc_ls <- weighted.mean(no_logsum$income, no_logsum$population, na.rm = TRUE)
+
+nhh_nobuf <- sum(no_buffer$lowincome * .01 * no_buffer$households)
+nhh_nols  <- sum(no_logsum$lowincome * .01 * no_logsum$households)
+```
+
+What this distinction between access estimation methods might mean for policy
+analysis is yet to be determined, and future research is required. In this analysis, 
+we estimate that `r nhh_nobuf` households live in block groups outside the
+boundary of all three resource buffers. At the same time, `r nhh_nols` households
+live in block groups that are beneath the regional mean utility-based access to
+all three resources. The population-weighted mean of the block group median 
+incomes of these two groups is almost identical however, with \$`r meaninc_nobuf`
+for the buffer-based measure and \$`r meaninc_ls` for the utility-based version.
+This indicates that the areas of Utah County that are without access to these 
+community resources tend to be exurban regions on the edges of the county, 
+with relatively high income areas. 
 
