@@ -61,7 +61,10 @@ get_osmbpf <- function(path){
 get_parks <- function(file, crs){
   st_read(file) %>%
     st_transform(crs)  %>%
-    mutate(id = as.character(id))
+    mutate(id = as.character(id),
+           acres = as.numeric(st_area(.))/43560,
+           yj_acres = yeo.johnson(acres, 0)) %>%
+    rename(splashpad = splashpad.)
 }
 
 #' Get points along park polygons
