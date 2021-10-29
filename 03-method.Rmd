@@ -130,11 +130,11 @@ mapdata <- bind_rows(
 if(knitr::is_latex_output()){
   
   ggplot() + 
-    annotation_map_tile("stamenbw", zoom=11) + 
+    annotation_map_tile("cartolight", zoom=11) + 
     coord_sf(crs = st_crs(3426),  expand = FALSE) + 
     geom_sf(data = mapdata %>% st_transform(4326),  aes(color = `LandUse`),
-            inherit.aes = FALSE, alpha = 0.7) +
-    scale_color_manual("Resource Type", values = dj1) +
+            inherit.aes = FALSE, alpha = 0.5) +
+    scale_color_manual("Resource Type", values = dj1[c(1, 5, 3)]) +
     theme(axis.line = element_line(color = NA),
           axis.title.x=element_blank(),
           axis.text.x=element_blank(),
