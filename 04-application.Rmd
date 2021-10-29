@@ -172,7 +172,7 @@ difference is at the margins, where the discontinuity of the buffer measure
 is replaced by a smoother access surface, more spatially reflective of what 
 people are likely to experience.
 
-```{r access-plot, fig.cap="Relationship between travel time, travel-time based buffer, and logsum access value for block groups in Utah County.", dev = "tikz", dev.args=list(pointsize=10)}
+```{r access-plot, fig.cap="Relationship between travel time, and logsum access value for block groups in Utah County. Travel-time based buffers shown as dashed lines.", dev = "tikz", dev.args=list(pointsize=10)}
 left_join(
   access_bin %>%
     st_set_geometry(NULL) %>%
@@ -188,54 +188,76 @@ left_join(
   separate(name, c("measure", "resource")) %>%
   pivot_wider(names_from = measure, values_from = value) %>%
   mutate(buffer = as.logical(buffer)) %>%
-  ggplot(aes(x = minutes, y = logsum, fill = buffer, color = resource, size = POPULATION + 1)) +
+  ggplot(aes(x = minutes, y = logsum, color = resource)) +
   geom_point(pch = 21, alpha = 0.7, stroke = 1) + 
-  stat_smooth(method = "lm", show.legend = FALSE) + 
-  scale_size("Population", breaks = c(100, 500, 1000, 5000)) +
-  scale_color_manual("Resource", values = dj1) + 
+  stat_smooth(method = "lm", show.legend = FALSE, ribbon = FALSE) + 
+  annotate("segment", x = 5, xend = 5, y = 0, yend =  4, lty = "dashed", lwd = 2, color = dj1[1]) + 
+  annotate("segment", x =10, xend =10, y =-3, yend =  0, lty = "dashed", lwd = 2, color = dj1[5]) + 
+  annotate("segment", x = 5, xend = 5, y = 6, yend = 12, lty = "dashed", lwd = 2, color = dj1[3]) + 
+  scale_color_manual("Resource", values = dj1[c(1, 5, 3)]) + 
   scale_fill_manual("Within buffer", values = c("white", "grey")) + 
   ylab("Accessibility Logsum") + xlab("Travel Time in Minutes")
 
 ```
 
-The discontinuity of the buffer measure is perhaps more clearly seen with in 
-Figure \@ref(fig:access-plot), which plots the logsum against the travel time 
-in minutes (drive time for grocery stores and libraries; walk time for parks), 
-for block groups in the study region. For block groups with equivalent travel 
-time to a particular community resource, the accessibility logsum value 
-varies substantially. This variance might be due to a travel time differential 
-between drive, walk, and transit modes captured in the mode choice logsum, or it
-could also be because the resources available near the set of block groups have 
-substantial variance in their amenities. Being near a single poor-quality
-grocery store is not the same thing as being near multiple high-quality
-groceries, and the logsum value can capture this variance in its construction.
+The potential for the buffer measure to oversimplify the accessiblity problem is further 
+illustrated in 
+Figure \@ref(fig:access-plot). This figure shows the utility-based accessibility
+logsum calculated using the mode choice logsum as an impedance term against the
+travel time in minutes (drive time for grocery stores and libraries; walk time
+for parks), for block groups in the study region. It is clear that for all three
+land uses,
+lower travel time is significantly correlated with higher accessibility.
+But for block groups with with equivalent travel time to a particular community
+resource, the accessibility logsum value
+varies substantially. Even for block groups along the buffer --- where a small change
+in travel time might place a block within or without the buffer --- the variance 
+in accessibility logsum appears to be almost as large as the variance as the variance 
+in the travel time. This variance in accessiblity logsum might be due to a
+travel time differential between drive, walk, and transit modes captured in the
+mode choice logsum, or it could also be because the resources available near the
+set of block groups have substantial variance in their amenities. Being near a
+single poor-quality grocery store is not the same thing as being near multiple
+high-quality groceries, and the logsum value can capture this variance in its
+construction.
 
 
 ```{r income-disp}
 no_buffer <- access_bin %>% left_join(acsdata, by = c("id" =  "geoid")) %>%
-  filter(!grocery, !park,!library)
+  filter(!grocery, !park,!library) %>%
+  st_set_geometry(NULL)
 
 no_logsum <- access_ls %>% left_join(acsdata, by = c("id" =  "geoid")) %>%
   filter(grocery < mean(grocery, na.rm = TRUE),  
          park < mean(park, na.rm = TRUE), 
-         library < mean(library, na.rm = TRUE))
+         library < mean(library, na.rm = TRUE)) %>%
+  st_set_geometry(NULL)
 
-meaninc_nobuf <- weighted.mean(no_buffer$income, no_buffer$population, na.rm = TRUE)
-meaninc_ls <- weighted.mean(no_logsum$income, no_logsum$population, na.rm = TRUE)
 
-nhh_nobuf <- sum(no_buffer$lowincome * .01 * no_buffer$households)
-nhh_nols  <- sum(no_logsum$lowincome * .01 * no_logsum$households)
+# calculate number of households in each group, and number of low-income
+nhh_nobuf <- sum(no_buffer$households)
+nhh_nols  <- sum(no_logsum$households)
+nhh_nobuflow <- sum(no_buffer$households * 0.01 * no_buffer$lowincome)
+nhh_nolslow  <- sum(no_logsum$households * 0.01 * no_logsum$lowincome)
+
+# how many households are  in both groups?
+nhh_both <- inner_join(no_buffer[, c("id", "households", "lowincome")], 
+                       no_logsum[, "id"], by = "id")  %>%
+  summarise(n_hh = sum(households), n_lo = sum(households * lowincome * 0.01))
 ```
 
 What this distinction between access estimation methods might mean for policy
 analysis is yet to be determined, and future research is required. In this analysis, 
 we estimate that `r nhh_nobuf` households live in block groups outside the
-boundary of all three resource buffers. At the same time, `r nhh_nols` households
+boundary of all three resource buffers: 10-minute drive for a library, 5-minute drive for 
+a grocery store, and 5-minute walk for a park. Of these, `r nhh_nobuflow` make less
+than \$35,000 per year.
+At the same time, only `r nhh_nols` households
 live in block groups that are beneath the regional mean utility-based access to
-all three resources. The population-weighted mean of the block group median 
-incomes of these two groups is almost identical however, with \$`r meaninc_nobuf`
-for the buffer-based measure and \$`r meaninc_ls` for the utility-based version.
-This indicates that the areas of Utah County that are without access to these 
-community resources tend to be exurban regions on the edges of the county, 
-with relatively high income areas. 
+all three resources; that is, they have less-than the regional average access to 
+grocery stores, and to libraries, and to parks. Of these households, `r nhh_nolslow`
+are similarly low-income. Perhaps more importantly, the overlap between the households
+in *both* groups is not very high: only `r nhh_both$n_hh[1]` households live
+in block groups with low access determined by both buffers and by accessiblity 
+logsum, `r nhh_both$n_lo[1]` of which are low-income households.
 
