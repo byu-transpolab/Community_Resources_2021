@@ -49,8 +49,19 @@ a deeper investigation into grocery store amenities and offerings
 preferences  --- and how they might influence a collective understanding of
 nutrition access more broadly --- is needed.
 
+
+
+# Conclusions
+This paper developed accessibility-based measures of accessibility to three 
+types of community resource: parks, grocery stores, and libraries. These metrics
+were informed by observing trips to specific facilities in mobile
+device data, allowing the measures to incorporate attributes of the resource 
+as well as attributes of the journey there. The computed measures are 
+fundamentally different from buffer-based measures more commonly used to 
+inform spatial policy analysis.
+
 Ultimately, the purpose of any accessibility measure to a community resources 
-is to enable a subsequent analysis of some metric of well-being. CITE EP:B PAPER
+is to enable a subsequent analysis of some metric of well-being. @macfarlane2020
 suggest that a utility-based access to parks measure is more predictive of 
 physical health outcomes than a buffer-based measure. Is this true for more 
 community resources? Would using a more subtle or nuanced measure of access to 
@@ -62,8 +73,3 @@ nearby, or expanded options at an existing grocery store, or from improving bike
 or bus connections to that existing store? An examination of this question is
 left for future research, but this paper presents a method for how this could be
 approached.
-
-# Conclusions
-
-NEED TO WRITE
-

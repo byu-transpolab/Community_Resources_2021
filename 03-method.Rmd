@@ -197,7 +197,7 @@ observations of people making trips to the various resources. Regional household
 travel surveys could be used for this task, if a sufficiently large sample size 
 allows an analyst to create a subsample of trips to the specific community resource.
 Unfortunately, low data availability requires that most discretionary activities
-be grouped into more general purposes CITE NCHRP 716.
+be grouped into more general purposes [@cambridge2012travel]. 
 
 In the last several years, various commercial data products developed from
 mobile device and location-based services (LBS) data have entered common use in
@@ -209,15 +209,15 @@ planning agencies. These LBS datasets typically contain
 vehicle or person flows between spatially defined zones, sometimes segmented by
 inferred transportation mode, time of day, day of week, or imputed trip purpose.
 These datasets have been shown to accurately reflect visits to recreation areas
-and other land uses CITE MONZ, and are becoming a common part of transportation
-planning practice CITE TCRP, UDOT REPORT.
+and other land uses [@monz2019], and are becoming a common part of transportation
+planning practice [@zalewski2019public].
 
 @alamedaparks present a method for estimating destination choice models from 
 such data, which we repeat in this study. We provided a set of geometric 
 polygons for each park, grocery store, and library to StreetLight Data, Inc., a 
 commercial aggregator. StreetLight Data in turn provided data on the number of
 mobile devices observed in each polygon grouped by the inferred residence block
-group of of those devices on an average day in 2019. IS THIS CORRECT?
+group of of those devices during summer and fall 2019.
 We then created a simulated destination choice estimation dataset for each
 community resource by sampling 10,000 block group - resource "trips" from the 
 StreetLight dataset. This created a "chosen" alternative; we then sampled ten additional
@@ -225,7 +225,7 @@ resources at random (each simulated trip was paired with a different sample) to
 serve as the non-chosen alternatives. Random sampling of alternatives is a 
 common practice that results in unbiased estimates, though the standard errors
 of the estimates might be larger than could be obtained through a more carefully
-designed sampling schemed CITE TRAIN. 
+designed sampling scheme [@train2009].
 
 ### Travel Times
 
