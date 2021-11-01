@@ -26,7 +26,7 @@ link-citations: yes
 abstract: |
     Understanding who in a community has access to its resources – parks, libraries, grocery stores, etc. – has profound equity implications, but typical methods to understand access to these resources are limited. Travel time buffers require researchers to assert mode of access as well as an arbitrary distance threshold; further, these methods do not distinguish between destination quality attributes in an effective way. In this research, we present a methodology to develop utility-based accessibility measures for parks, libraries, and grocery stores in Utah County, Utah. The method relies on passive location-based services data to model destination choice to these community resources; the destination choice model utility functions in turn allow us to develop a picture of regional access that is sensitive to: the quality and size of the destination resource; continuous (non-binary) travel impedance by multiple modes; and the sociodemographic attributes of the traveler. We then use this measure to explore equity in access to the specified community resources across income level and minority status in Utah County.
 description: "A short description"
-layout: "3p, authoryear"
+layout: "3p, authoryear, review"
 keywords:
   - Accessibility
   - Passive Data
