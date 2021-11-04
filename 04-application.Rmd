@@ -47,7 +47,7 @@ are sufficiently high that choosing these travel modes is unlikely. As a
 result, the mode choice logsum is highly collinear with the car travel time.
 Nevertheless, there are small differences differences between the models 
 with the different impedance terms. Using a non-nested likelihood statistic 
-test presented by HOROWITZ, we can reject the null hypothesis that the two 
+test presented by @horowitz1987, we can reject the null hypothesis that the two 
 "All" models have equivalent likelihood ($p$-value of `r ls_v_car`), and infer
 that the mode choice logsum is a marginally better estimator of park choice than
 the vehicle travel time alone.

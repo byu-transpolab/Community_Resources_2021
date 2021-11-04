@@ -2,9 +2,9 @@
 In this section, we present a method to estimate utility-based access to 
 community resources in Utah County, Utah. 
 
-## Modeling Framework
+## Modeling Framework {#framework}
 
-In a destination choice modeling framework [@recker1978factors], an individual
+In a destination choice modeling framework [@recker1978], an individual
 at origin $i$ considering a destination $j$ from a set of possible destinations
 $J$ has a choice probability
 \begin{equation}
@@ -26,7 +26,7 @@ observational data.
 The logarithm of the denominator of the choice probability given in Equation
 \@ref(eq:mnlp) is a quantity called the *logsum* and represents the total 
 value --- or accessibility $A$ --- of the choice set for individual $i$ 
-[@williams1977formation; @handy1997measuring]
+[@williams1977formation; @handy1997]
 \begin{equation}
  A_i = \log\left(\sum_{j' \in J} e^{V_{ij'}}\right) + C
   (\#eq:dclogsum)
@@ -131,7 +131,7 @@ if(knitr::is_latex_output()){
   
   ggplot() + 
     annotation_map_tile("cartolight", zoom=11) + 
-    coord_sf(crs = st_crs(3426),  expand = FALSE) + 
+    coord_sf(crs = st_crs(4326),  expand = FALSE) + 
     geom_sf(data = mapdata %>% st_transform(4326),  aes(color = `LandUse`),
             inherit.aes = FALSE, alpha = 0.5) +
     scale_color_manual("Resource Type", values = dj1[c(1, 5, 3)]) +
@@ -192,25 +192,7 @@ be included in the destination utility equations.
 
 ### Mobile Device Data
 
-Estimating the utility coefficients in Equation \@ref(eq:dcu) requires
-observations of people making trips to the various resources. Regional household
-travel surveys could be used for this task, if a sufficiently large sample size 
-allows an analyst to create a subsample of trips to the specific community resource.
-Unfortunately, low data availability requires that most discretionary activities
-be grouped into more general purposes [@cambridge2012travel]. 
 
-In the last several years, various commercial data products developed from
-mobile device and location-based services (LBS) data have entered common use in
-transportation planning activities. Applications or websites that serve mobile 
-content based on a users location will log this location information and 
-sell the data to commercial third-party aggregators. These aggregators in turn will weight 
-and anonymize the data before selling the prepared datasets to transportation 
-planning agencies. These LBS datasets typically contain
-vehicle or person flows between spatially defined zones, sometimes segmented by
-inferred transportation mode, time of day, day of week, or imputed trip purpose.
-These datasets have been shown to accurately reflect visits to recreation areas
-and other land uses [@monz2019], and are becoming a common part of transportation
-planning practice [@zalewski2019public].
 
 @alamedaparks present a method for estimating destination choice models from 
 such data, which we repeat in this study. We provided a set of geometric 

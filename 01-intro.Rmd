@@ -1,21 +1,43 @@
 # Introduction {#intro}
-NEED TO EXPAND, PROBABLY WITH SOME REFERENCES NOW IN LITERATURE REVIEW
 
-Communities provide important resources to their members, and spatial exclusion
-from these resources can negatively affect both subjective measures of well-being 
-[@currie2010modeling] and economic opportunity.
-Measuring good or poor access to these resources is an important concern. But
-access involves more than merely distance or travel impedance: it is a function
-of the quality of the resource, and how many options for the resource are
-available.
+Communities provide important resources to the people who live in them. These
+resources might include physical and economic resources
+--- shared open space, libraries, commercial establishments, etc. --- as well as less identifiable resources
+including a sense of membership and other forms of social capital
+[@lochner1999]. Indeed, access to these resources is a primary reason why
+communities exist [@muth1971], as well as a long-motivating objective in
+transportation infrastructure planning [@hansen1959].
 
-In this paper, we consider utility-based access to parks, grocery stores, and
-libraries in Utah County, Utah. The utility preferences are estimated on
-location-based services data obtained from a third-party commercial data
-aggregator. We then use the model estimates to construct a composite
-accessibility measure and compare the measure with neighborhood-level
-sociodemographic characteristics. 
+Given the importance of these community resources, it is not surprising that 
+so much scholarly attention has been paid to examining the spatial and 
+socioeconomic variation in access to them [@handy1997; @witten2003]. What
+is surprising is the simplistic and arbitrary definition of many
+quantitative resource accessibility measures,  in spite of the widespread
+availability of geographical information systems (GIS) software [@logan2019] and
+an understanding that proximity to a resource is not the only consideration 
+in its use [@dong2006]. Individuals do not always shop at the nearest grocery 
+store, nor do they necessarily perceive an 11-minute walk to a park as 
+meaningfully different from a 9-minute walk. A measure of access that can
+incorporate travel impedance by multiple transportation modes alongside
+qualitative attributes of the resources in question would provide a better
+theoretical comparison to what people experience and observe in their own 
+communities. This measure in turn may result in a different understanding 
+of which groups have or do not have good access --- and therefore in different
+policy interventions to resolve the access gap --- than more traditionally used
+measures [@logan2019; @macfarlane2020]. 
 
-The paper begins with a discussion of previous attempts to evaluate 
-access to community resources. We then describe the methodology employed in 
-this research, which makes use of novel third-party datasets 
+In this paper, we develop utility-based access measures to parks, grocery stores, and
+libraries in Utah County, Utah. These measures are based in econometric choice
+theory relating continuous multimodal travel impedance to attributes of the
+resource. The utility preferences are estimated on location-based services data
+obtained from a third-party commercial data aggregator. We then use the model
+estimates to construct a composite accessibility measure and examine potential
+discrepancies between this measure and a more common travel-time buffer 
+measurement. 
+
+The paper begins with a discussion of previous findings relating access to 
+community resources with social, health, and equity benefits. We then describe
+the methodology employed in this research, which makes use of novel third-party
+mobile device.  A results section describes both the estimated choice models and
+a comparative analysis; the paper closes with a discussion of several 
+limitations of the approach as well as associated opportunities for future research.
