@@ -163,21 +163,21 @@ if(knitr::is_latex_output()){
 Figure \@ref(fig:utco-map) shows the locations of three types of 
 community resources in Utah County: parks, grocery stores, and libraries.
 For each resource, and initial list of resources and elementary attributes was
-obtained by executing a relevant query to OpenStreetMap (OSM) CITE OSM.
+obtained by executing a relevant query to OpenStreetMap (OSM).
 
 Public parks and their attributes retrieved from OSM were verified and 
 corrected using aerial imagery and some site visits. The attributes included 
 the size of the park in acres, whether the park includes a playground, and 
 whether the park includes facilities for volleyball, basketball, and tennis.
-The constructed dataset includes `nrow(park_polygons)` attributed parks.
+The constructed dataset includes `r nrow(park_polygons)` attributed parks.
 
 Grocery stores were retrieved from OSM and validated using internet resources and
-site visits. The complete Nutritional Environment Measures Survey (NEMS-S) CITE NEMS
+site visits. The complete Nutritional Environment Measures Survey (NEMS-S) [@glanz2007]
 was collected for each store, but this preliminary analysis only includes 
 cursory information on the stores including whether the store is a convenience store
 or some other non-traditional grocery, whether the store includes a pharmacy or 
 other non-food merchandise, and the number of registers as a measure of the 
-store's size. The constructed dataset includes `r `nrow(groceries)` stores.
+store's size. The constructed dataset includes `r nrow(groceries)` stores.
 
 Libraries were retrieved from OSM, and validated using library websites and 
 some site visits. The initial query returned university libraries and other
@@ -214,7 +214,7 @@ designed sampling scheme [@train2009].
 Once the choice, alternatives, and attributes of the alternatives have been 
 defined, the last element of the choice utility is the travel impedance between 
 each block group and each resource. Using the `otpr` R interface [@otpr] to 
-OpenTripPlanner CITE, we estimated the highway drive travel time, the walking
+OpenTripPlanner, we estimated the highway drive travel time, the walking
 route time, and the transit travel time for trips departing on October 1,
 2021 at 8 AM. The time and date are most relevant for the transit path builder
 in OpenTripPlanner, which uses detailed transit path information stored in the
@@ -223,7 +223,7 @@ separate measures of the total travel time, the time in the transit vehicle,
 transfer time, and access / egress time, allowing us full use of the 
 mode choice utility equations and resulting logsum described in Equation \@ref(eq:mcls).
 
-For groceries and libraries, we queried from OTP the shortest time path on each
+For groceries and libraries, we queried from OpenTripPlanner the shortest time path on each
 mode from the population-weighted block group centroid to the centroid of the grocery
 store or library centroid. Because some parks in the dataset can be relatively
 large and the centroid might be far from the park access or use point, we instead

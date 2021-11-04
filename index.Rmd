@@ -21,7 +21,7 @@ site: bookdown::bookdown_site
 documentclass: article
 journal: "Submitted to NARSC 2021"
 bibliography: [book.bib]
-csl: elsevier-harvard.csl
+csl: elsevier-harvard-italics.csl
 link-citations: yes
 abstract: |
     Understanding who in a community has access to its resources – parks, libraries, 
@@ -42,8 +42,8 @@ abstract: |
 description: "A short description"
 layout: "3p, authoryear, review"
 keywords:
-  - Accessibility
-  - Passive Data
+  - Accessibility;
+  - Passive Data;
   - Location Choice
 ---
 

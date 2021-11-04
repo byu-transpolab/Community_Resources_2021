@@ -19,7 +19,7 @@ where, for example, low-income block groups and high-income block groups were
 estimated separately could allow for flexibility in these estimates and reveal
 differences in preferences among residents of the different neighborhoods. Some 
 neighborhoods might show a particular preference for access utilities by 
-transit, or for specific park amenities. A latent class choice model CITE JOAN
+transit, or for specific park amenities. A latent class choice model [@walker2002]
 would go further in potentially informing which demographic variables are
 meaningful in defining possible data segmentation schemes.
 

@@ -71,7 +71,7 @@ group many infrequent discretionary trips into catch-all categories [@nchrp716].
 In the last several years, various commercial data products developed from
 mobile device and location-based services (LBS) data have entered common use in
 transportation planning activities. Applications or websites that serve mobile 
-content based on a users location will log this location information and 
+content based on a user's location will log this location information and 
 sell the data to commercial third-party aggregators. These aggregators in turn will weight 
 and anonymize the data before selling the prepared datasets to transportation 
 planning agencies. These LBS datasets typically contain
@@ -154,8 +154,8 @@ Certainly there are other community resources that warrant consideration;
 @ermagun2020 consider a multiple-resource gravity accessibility measure that
 includes schools, jobs, and hospitals in addition to the three that have been used here. 
 Churches, museums, or various other facilities might be relevant elements
-in shaping the quality of life in a community.  Regardless of what resources are  
-selected, it is clear that existing accessibility practice considers spatial
+in shaping the quality of life in a community.  Regardless of what resources 
+are selected, it is clear that existing accessibility practice considers spatial
 proximity as paramount, and quality of the destination as secondary. Further, 
 travel times by particular modes are the default measure rather than holistic,
 multimodal travel impedance measures. Using utility-based measures for both

@@ -23,7 +23,7 @@
 
 
 
-<meta name="date" content="2021-10-19" />
+<meta name="date" content="2021-11-02" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -181,10 +181,17 @@ div.csl-indent {
 
 <li class="divider"></li>
 <li class="chapter" data-level="1" data-path="intro.html"><a href="intro.html"><i class="fa fa-check"></i><b>1</b> Introduction</a></li>
-<li class="chapter" data-level="2" data-path="lit-review.html"><a href="lit-review.html"><i class="fa fa-check"></i><b>2</b> Literature</a></li>
+<li class="chapter" data-level="2" data-path="lit-review.html"><a href="lit-review.html"><i class="fa fa-check"></i><b>2</b> Literature</a>
+<ul>
+<li class="chapter" data-level="2.1" data-path="lit-review.html"><a href="lit-review.html#developing-access-measures"><i class="fa fa-check"></i><b>2.1</b> Developing Access Measures</a></li>
+<li class="chapter" data-level="2.2" data-path="lit-review.html"><a href="lit-review.html#access-to-parks-grocery-stores-and-libraries"><i class="fa fa-check"></i><b>2.2</b> Access to Parks, Grocery Stores, and Libraries</a></li>
+<li class="chapter" data-level="2.3" data-path="lit-review.html"><a href="lit-review.html#utility-based-access-and-passive-data"><i class="fa fa-check"></i><b>2.3</b> Utility-Based Access and Passive Data</a></li>
+<li class="chapter" data-level="2.4" data-path="lit-review.html"><a href="lit-review.html#methods-of-access-measurement"><i class="fa fa-check"></i><b>2.4</b> Methods of access measurement</a></li>
+<li class="chapter" data-level="2.5" data-path="lit-review.html"><a href="lit-review.html#accessibility-measures"><i class="fa fa-check"></i><b>2.5</b> Accessibility Measures</a></li>
+</ul></li>
 <li class="chapter" data-level="3" data-path="methods.html"><a href="methods.html"><i class="fa fa-check"></i><b>3</b> Methods</a>
 <ul>
-<li class="chapter" data-level="3.1" data-path="methods.html"><a href="methods.html#modeling-framework"><i class="fa fa-check"></i><b>3.1</b> Modeling Framework</a></li>
+<li class="chapter" data-level="3.1" data-path="methods.html"><a href="methods.html#framework"><i class="fa fa-check"></i><b>3.1</b> Modeling Framework</a></li>
 <li class="chapter" data-level="3.2" data-path="methods.html"><a href="methods.html#data"><i class="fa fa-check"></i><b>3.2</b> Data</a>
 <ul>
 <li class="chapter" data-level="3.2.1" data-path="methods.html"><a href="methods.html#resource-data"><i class="fa fa-check"></i><b>3.2.1</b> Resource Data</a></li>
@@ -225,9 +232,9 @@ div.csl-indent {
 <h1><span class="header-section-number"> 3</span> Methods</h1>
 <p>In this section, we present a method to estimate utility-based access to
 community resources in Utah County, Utah.</p>
-<div id="modeling-framework" class="section level2" number="3.1">
+<div id="framework" class="section level2" number="3.1">
 <h2><span class="header-section-number">3.1</span> Modeling Framework</h2>
-<p>In a destination choice modeling framework <span class="citation">(<a href="#ref-recker1978factors" role="doc-biblioref">Recker and Kostyniuk 1978</a>)</span>, an individual
+<p>In a destination choice modeling framework <span class="citation">(<a href="#ref-recker1978factors" role="doc-biblioref">Recker and Kostyniuk, 1978</a>)</span>, an individual
 at origin <span class="math inline">\(i\)</span> considering a destination <span class="math inline">\(j\)</span> from a set of possible destinations
 <span class="math inline">\(J\)</span> has a choice probability
 <span class="math display" id="eq:mnlp">\[\begin{equation}
@@ -248,7 +255,7 @@ observational data.</p>
 <p>The logarithm of the denominator of the choice probability given in Equation
 <a href="methods.html#eq:mnlp">(3.1)</a> is a quantity called the <em>logsum</em> and represents the total
 value — or accessibility <span class="math inline">\(A\)</span> — of the choice set for individual <span class="math inline">\(i\)</span>
-<span class="citation">(<a href="#ref-williams1977formation" role="doc-biblioref">Williams 1977</a>; <a href="#ref-handy1997measuring" role="doc-biblioref">Handy and Niemeier 1997</a>)</span>
+<span class="citation">(<a href="#ref-williams1977formation" role="doc-biblioref">Williams, 1977</a>; <a href="#ref-handy1997measuring" role="doc-biblioref"><strong>handy1997measuring?</strong></a>)</span>
 <span class="math display" id="eq:dclogsum">\[\begin{equation}
  A_i = \log\left(\sum_{j&#39; \in J} e^{V_{ij&#39;}}\right) + C
   \tag{3.3}
@@ -306,7 +313,7 @@ the universities, two commuter rail stations, and the densest portions of Provo
 and Orem, and other local bus services operate in other communities in the region.
 Table <a href="methods.html#tab:acstable">3.1</a> presents descriptive statistics of
 the block groups in Utah County obtained from the 2015-2019 American Community
-Survey (ACS) using the tidycensus package for R <span class="citation">(<a href="#ref-tidycensus" role="doc-biblioref">Walker and Herman 2021</a>)</span>.</p>
+Survey (ACS) using the tidycensus package for R <span class="citation">(<a href="#ref-tidycensus" role="doc-biblioref">Walker and Herman, 2021</a>)</span>.</p>
 <div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb2-1"><a href="methods.html#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="fu">tar_load</span>(acsdata)</span>
 <span id="cb2-2"><a href="methods.html#cb2-2" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb2-3"><a href="methods.html#cb2-3" aria-hidden="true" tabindex="-1"></a>acs_for_table <span class="ot">&lt;-</span> acsdata <span class="sc">%&gt;%</span> <span class="fu">select</span>(</span>
@@ -763,11 +770,11 @@ White: Share of population who is White
 <div class="sourceCode" id="cb5"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb5-1"><a href="methods.html#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span>(knitr<span class="sc">::</span><span class="fu">is_latex_output</span>()){</span>
 <span id="cb5-2"><a href="methods.html#cb5-2" aria-hidden="true" tabindex="-1"></a>  </span>
 <span id="cb5-3"><a href="methods.html#cb5-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>() <span class="sc">+</span> </span>
-<span id="cb5-4"><a href="methods.html#cb5-4" aria-hidden="true" tabindex="-1"></a>    <span class="fu">annotation_map_tile</span>(<span class="st">&quot;stamenbw&quot;</span>, <span class="at">zoom=</span><span class="dv">11</span>) <span class="sc">+</span> </span>
+<span id="cb5-4"><a href="methods.html#cb5-4" aria-hidden="true" tabindex="-1"></a>    <span class="fu">annotation_map_tile</span>(<span class="st">&quot;cartolight&quot;</span>, <span class="at">zoom=</span><span class="dv">11</span>) <span class="sc">+</span> </span>
 <span id="cb5-5"><a href="methods.html#cb5-5" aria-hidden="true" tabindex="-1"></a>    <span class="fu">coord_sf</span>(<span class="at">crs =</span> <span class="fu">st_crs</span>(<span class="dv">3426</span>),  <span class="at">expand =</span> <span class="cn">FALSE</span>) <span class="sc">+</span> </span>
 <span id="cb5-6"><a href="methods.html#cb5-6" aria-hidden="true" tabindex="-1"></a>    <span class="fu">geom_sf</span>(<span class="at">data =</span> mapdata <span class="sc">%&gt;%</span> <span class="fu">st_transform</span>(<span class="dv">4326</span>),  <span class="fu">aes</span>(<span class="at">color =</span> <span class="st">`</span><span class="at">LandUse</span><span class="st">`</span>),</span>
-<span id="cb5-7"><a href="methods.html#cb5-7" aria-hidden="true" tabindex="-1"></a>            <span class="at">inherit.aes =</span> <span class="cn">FALSE</span>, <span class="at">alpha =</span> <span class="fl">0.7</span>) <span class="sc">+</span></span>
-<span id="cb5-8"><a href="methods.html#cb5-8" aria-hidden="true" tabindex="-1"></a>    <span class="fu">scale_color_manual</span>(<span class="st">&quot;Resource Type&quot;</span>, <span class="at">values =</span> dj1) <span class="sc">+</span></span>
+<span id="cb5-7"><a href="methods.html#cb5-7" aria-hidden="true" tabindex="-1"></a>            <span class="at">inherit.aes =</span> <span class="cn">FALSE</span>, <span class="at">alpha =</span> <span class="fl">0.5</span>) <span class="sc">+</span></span>
+<span id="cb5-8"><a href="methods.html#cb5-8" aria-hidden="true" tabindex="-1"></a>    <span class="fu">scale_color_manual</span>(<span class="st">&quot;Resource Type&quot;</span>, <span class="at">values =</span> dj1[<span class="fu">c</span>(<span class="dv">1</span>, <span class="dv">5</span>, <span class="dv">3</span>)]) <span class="sc">+</span></span>
 <span id="cb5-9"><a href="methods.html#cb5-9" aria-hidden="true" tabindex="-1"></a>    <span class="fu">theme</span>(<span class="at">axis.line =</span> <span class="fu">element_line</span>(<span class="at">color =</span> <span class="cn">NA</span>),</span>
 <span id="cb5-10"><a href="methods.html#cb5-10" aria-hidden="true" tabindex="-1"></a>          <span class="at">axis.title.x=</span><span class="fu">element_blank</span>(),</span>
 <span id="cb5-11"><a href="methods.html#cb5-11" aria-hidden="true" tabindex="-1"></a>          <span class="at">axis.text.x=</span><span class="fu">element_blank</span>(),</span>
@@ -832,7 +839,7 @@ observations of people making trips to the various resources. Regional household
 travel surveys could be used for this task, if a sufficiently large sample size
 allows an analyst to create a subsample of trips to the specific community resource.
 Unfortunately, low data availability requires that most discretionary activities
-be grouped into more general purposes CITE NCHRP 716.</p>
+be grouped into more general purposes <span class="citation">(<a href="#ref-cambridge2012travel" role="doc-biblioref">Systematics, 2012</a>)</span>.</p>
 <p>In the last several years, various commercial data products developed from
 mobile device and location-based services (LBS) data have entered common use in
 transportation planning activities. Applications or websites that serve mobile
@@ -843,14 +850,14 @@ planning agencies. These LBS datasets typically contain
 vehicle or person flows between spatially defined zones, sometimes segmented by
 inferred transportation mode, time of day, day of week, or imputed trip purpose.
 These datasets have been shown to accurately reflect visits to recreation areas
-and other land uses CITE MONZ, and are becoming a common part of transportation
-planning practice CITE TCRP, UDOT REPORT.</p>
-<p><span class="citation"><a href="#ref-alamedaparks" role="doc-biblioref">Gregory S. Macfarlane, Turley Voulgaris, and Tapia</a> (<a href="#ref-alamedaparks" role="doc-biblioref">2021</a>)</span> present a method for estimating destination choice models from
+and other land uses <span class="citation">(<a href="#ref-monz2019" role="doc-biblioref"><strong>monz2019?</strong></a>)</span>, and are becoming a common part of transportation
+planning practice <span class="citation">(<a href="#ref-zalewski2019public" role="doc-biblioref">Zalewski et al., 2019</a>)</span>.</p>
+<p><span class="citation"><a href="#ref-alamedaparks" role="doc-biblioref">Macfarlane et al.</a> (<a href="#ref-alamedaparks" role="doc-biblioref">2021</a>)</span> present a method for estimating destination choice models from
 such data, which we repeat in this study. We provided a set of geometric
 polygons for each park, grocery store, and library to StreetLight Data, Inc., a
 commercial aggregator. StreetLight Data in turn provided data on the number of
 mobile devices observed in each polygon grouped by the inferred residence block
-group of of those devices on an average day in 2019. IS THIS CORRECT?
+group of of those devices during summer and fall 2019.
 We then created a simulated destination choice estimation dataset for each
 community resource by sampling 10,000 block group - resource “trips” from the
 StreetLight dataset. This created a “chosen” alternative; we then sampled ten additional
@@ -858,13 +865,13 @@ resources at random (each simulated trip was paired with a different sample) to
 serve as the non-chosen alternatives. Random sampling of alternatives is a
 common practice that results in unbiased estimates, though the standard errors
 of the estimates might be larger than could be obtained through a more carefully
-designed sampling schemed CITE TRAIN.</p>
+designed sampling scheme <span class="citation">(<a href="#ref-train2009" role="doc-biblioref">Train, 2009</a>)</span>.</p>
 </div>
 <div id="travel-times" class="section level3" number="3.2.3">
 <h3><span class="header-section-number">3.2.3</span> Travel Times</h3>
 <p>Once the choice, alternatives, and attributes of the alternatives have been
 defined, the last element of the choice utility is the travel impedance between
-each block group and each resource. Using the <code>otpr</code> R interface <span class="citation">(<a href="#ref-otpr" role="doc-biblioref">Marcus Young 2020</a>)</span> to
+each block group and each resource. Using the <code>otpr</code> R interface <span class="citation">(<a href="#ref-otpr" role="doc-biblioref">Marcus Young, 2020</a>)</span> to
 OpenTripPlanner CITE, we estimated the highway drive travel time, the walking
 route time, and the transit travel time for trips departing on October 1,
 2021 at 8 AM. The time and date are most relevant for the transit path builder
@@ -885,23 +892,29 @@ time path by each mode to the nearest boundary point.</p>
 </div>
 <h3>References</h3>
 <div id="refs" class="references csl-bib-body hanging-indent">
-<div id="ref-handy1997measuring" class="csl-entry">
-Handy, Susan L, and Debbie A Niemeier. 1997. <span>“Measuring Accessibility: An Exploration of Issues and Alternatives.”</span> <em>Environment and Planning A</em> 29 (7): 1175–94.
-</div>
 <div id="ref-alamedaparks" class="csl-entry">
-Macfarlane, Gregory S., Carole Turley Voulgaris, and Teresa Tapia. 2021. <span>“If You Build It Who Will Come? Equity Analysis of Park System Changes During COVID-19 Using Passive Origin-Destination Data.”</span> <em>Journal of Transport and Land Use</em>.
+Macfarlane, G.S., Turley Voulgaris, C., Tapia, T., 2021. If you build it who will come? Equity analysis of park system changes during COVID-19 using passive origin-destination data. Journal of Transport and Land Use.
 </div>
 <div id="ref-otpr" class="csl-entry">
-Marcus Young. 2020. <em><span class="nocase">otpr: An API wrapper for OpenTripPlanner</span></em>. <a href="https://doi.org/10.5281/zenodo.4065250">https://doi.org/10.5281/zenodo.4065250</a>.
+Marcus Young, 2020. <span class="nocase">otpr: An API wrapper for OpenTripPlanner</span>. doi:<a href="https://doi.org/10.5281/zenodo.4065250">10.5281/zenodo.4065250</a>
 </div>
 <div id="ref-recker1978factors" class="csl-entry">
-Recker, Wilfred W, and Lidia P Kostyniuk. 1978. <span>“Factors Influencing Destination Choice for the Urban Grocery Shopping Trip.”</span> <em>Transportation</em> 7 (1): 19–33.
+Recker, W.W., Kostyniuk, L.P., 1978. Factors influencing destination choice for the urban grocery shopping trip. Transportation 7, 19–33.
+</div>
+<div id="ref-cambridge2012travel" class="csl-entry">
+Systematics, C., 2012. Travel demand forecasting: Parameters and techniques. Transportation Research Board.
+</div>
+<div id="ref-train2009" class="csl-entry">
+Train, K.E., 2009. <span class="nocase">Discrete Choice Methods with Simulation, 2nd Edition</span>. Cambridge University Press, Cambridge. doi:<a href="https://doi.org/10.1016/S0898-1221(04)90100-9">10.1016/S0898-1221(04)90100-9</a>
 </div>
 <div id="ref-tidycensus" class="csl-entry">
-Walker, Kyle, and Matt Herman. 2021. <em>Tidycensus: Load US Census Boundary and Attribute Data as ’Tidyverse’ and ’Sf’-Ready Data Frames</em>. <a href="https://CRAN.R-project.org/package=tidycensus">https://CRAN.R-project.org/package=tidycensus</a>.
+Walker, K., Herman, M., 2021. Tidycensus: Load US census boundary and attribute data as ’tidyverse’ and ’sf’-ready data frames.
 </div>
 <div id="ref-williams1977formation" class="csl-entry">
-Williams, Huw CWL. 1977. <span>“On the Formation of Travel Demand Models and Economic Evaluation Measures of User Benefit.”</span> <em>Environment and Planning A</em> 9 (3): 285–344.
+Williams, H.C., 1977. On the formation of travel demand models and economic evaluation measures of user benefit. Environment and planning A 9, 285–344.
+</div>
+<div id="ref-zalewski2019public" class="csl-entry">
+Zalewski, A., Sonenklar, D., Cohen, A., Kressner, J., Macfarlane, G., 2019. Public transit rider origin–destination survey methods and technologies. TCRP Synthesis of Transit Practice.
 </div>
 </div>
             </section>
