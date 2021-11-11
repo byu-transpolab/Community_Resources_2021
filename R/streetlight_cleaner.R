@@ -95,20 +95,32 @@ plot_streetlight <- function(sldata, destinations, days = "1: Weekday (M-Th)",
   bg <- tigris::block_groups("UT", "Utah", class = "sf") %>%
     st_transform(4326)
   
-  lib_flows <- inner_join(
+  lib_flows <- left_join(
     bg %>% select(GEOID),
     sldata %>% 
       filter(dest %in% destinations) %>%
       filter(day %in% days, time %in% times) %>%
       select(GEOID = geoid, dest,  flow),
     by = "GEOID"
-  ) 
+  )  %>%
+    mutate(flow = ifelse(is.na(flow), 0, flow))
   
-  pal <- colorNumeric("Reds", domain = lib_flows$flow)
   
   ggplot(lib_flows, aes(fill = flow)) + 
-    geom_sf() + 
-    scale_fill_viridis_b()
+    annotation_map_tile("cartolight", zoom = 13) +
+    geom_sf(alpha = 0.3) + 
+    coord_sf(xlim = c(-111.73, -111.62), ylim = c(40.2, 40.3), expand = FALSE) + 
+    scale_fill_viridis_b("Number of Devices by Home Block Group") +     
+    theme(axis.line = element_line(color = NA),
+          axis.title.x=element_blank(),
+          axis.text.x=element_blank(),
+          axis.ticks.x=element_blank(),
+          axis.title.y=element_blank(),
+          axis.text.y=element_blank(),
+          axis.ticks.y=element_blank(),
+          legend.position="bottom"
+    )
+  
 }
 
 
