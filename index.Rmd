@@ -8,11 +8,9 @@ author:
   - name: Emma Stucki
     email: stuckiemma@gmail.com 
     affiliation: BYU
-  - name: Michael Copley
-    email: 
-    affiliation: BYU
+address: 
   - code: BYU
-    address: Brigham Young University Civil and Construction Engineering Department, 430 Engineering Building, Provo, Utah 84602
+    address: Brigham Young University, Civil and Construction Engineering Department, 430 Engineering Building, Provo, Utah 84602
 footnote:
   - code: 1
     text: "Corresponding Author"
