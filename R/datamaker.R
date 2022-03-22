@@ -223,7 +223,7 @@ calculate_times <- function(landuse, bgcentroid, graph, landuselimit = NULL, bgl
                             shortcircuit = NULL){
   
   # short-circuit times calculator if the paths are already computed.
-  if(!is.null(shortcircuit)){ 
+  if(!is.null(shortcircuit) & file.exists(shortcircuit)){ 
     warning("Using previously calculated times in ", shortcircuit)
     return(read_rds(shortcircuit))
   }
