@@ -22,6 +22,7 @@ get_bglatlong <- function(){
 #' @return Stores a GTFS file in the appropriate location
 #' 
 get_gtfs <- function(path){
+  if(!dir.exists(dirname(path))) dir.create(dirname(path))
   if(!file.exists(path)){
     # originally from UTA: June 4 2021
     download.file("https://gtfsfeed.rideuta.com/gtfs.zip",
@@ -56,7 +57,7 @@ get_osmbpf <- function(path){
             args = c(
               str_c("--read-pbf file=", geofabrik_file, sep = ""),
               "--bounding-box top=41.5733 left=-112.2638 bottom=39.8913 right=-111.5250 completeWays=yes",
-              "--tf accept-ways highway=motorway,motorway_link,trunk,trunk_link,primary,primary_link,secondary,tertiary",
+              "--tf accept-ways highway=*",
               "--used-node",
               str_c("--write-pbf file=", path, sep = "")
             ))
@@ -216,10 +217,16 @@ get_latlong <- function(sfc){
   tib
 }
 
-make_graph <- function(graph_dir){
-  path_otp <- otp_dl_jar(cache = TRUE)
-  otp_build_graph(otp = path_otp, dir = "otp")
-  return(file.path(graph_dir, "Graph.obj"))
+#' Make the R5 routing database
+#'
+#' @param graph_dir Where the R5 information is stored
+#' @param osmpbf  path to osm pbf file
+#' @param gtfs path to gtfs zip file
+make_graph <- function(graph_dir, osmpbf, gtfs){
+  if(!file.exists(osmpbf)) stop("OSM file not present.")
+  if(!file.exists(gtfs)) stop("GTFS file not present.")
+  
+  setup_r5(graph_dir, verbose = FALSE)
 }
 
 
