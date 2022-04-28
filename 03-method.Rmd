@@ -186,7 +186,8 @@ specialty resources; though some of these libraries are open to those outside
 the university community, these were removed so that the resource list only
 includes libraries generally catering to the general public. The amenities 
 available include whether the library offers additional classes and programs,
-and whether the library includes genealogical or family history resources. 
+and whether the library includes genealogical or family history resources. The 
+square footage of the library was estimated from online mapping services.
 Other variables discussed in the literature such as the availability of computers
 and public wi-fi networks were present in every library and therefore cannot
 be included in the destination utility equations.
