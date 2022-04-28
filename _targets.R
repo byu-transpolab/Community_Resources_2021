@@ -87,7 +87,6 @@ list(
   tar_target(sl_libraries_csv, get_sl_data("data/streetlight_libraries.csv", "libraries"),
              format = "file"),
   tar_target(sl_libraries, read_sl_data(sl_libraries_csv)),
-  tar_target(lee_plot, plot_streetlight(sl_libraries, "Provo City Library")),
   # choice data and models ---
   tar_target(libraries_estdata, make_estdata(sl_libraries, library_lsums, libraries, acsdata,
                                              n_obs = 10000, n_alts = 10)),
