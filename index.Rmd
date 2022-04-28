@@ -8,16 +8,24 @@ author:
   - name: Emma Stucki
     email: stuckiemma@gmail.com 
     affiliation: BYU
+  - name: Alisha Redelfs
+    email: alisha_redelfs@byu.edu
+    affiliation: BYUPH
+  - name: Lori Spruance
+    email: lori.spruance@byu.edu
+    affiliation: BYUPH
 address: 
   - code: BYU
-    address: Brigham Young University, Civil and Construction Engineering Department, 430 Engineering Building, Provo, Utah 84602
+    address: Brigham Young University, Civil and Construction Engineering Department, 430 EB, Provo, Utah 84602
+  - code: BYUPH
+    address: Brigham Young University, Public Health Department, 4103 LSB, Provo, Utah 84602
 footnote:
   - code: 1
     text: "Corresponding Author"
 date: "`r Sys.Date()`"
 site: bookdown::bookdown_site
 documentclass: article
-journal: "Submitted to NARSC 2021"
+journal: "submitted to Health and Place"
 bibliography: [book.bib]
 csl: elsevier-harvard-italics.csl
 link-citations: yes
