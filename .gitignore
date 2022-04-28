@@ -17,7 +17,8 @@ otp/graphs/default/Graph.obj
 data/streetlight_libraries.csv
 data/streetlight_groceries.csv
 data/streetlight_parks.zip
-
+data/streetlight_parks
+data/utah.osm.pbf
 
 *.log
 

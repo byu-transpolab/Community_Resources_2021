@@ -39,8 +39,27 @@ get_gtfs <- function(path){
 #' @return Stores and unzips a PBF file in the data folder
 #' 
 get_osmbpf <- function(path){
+  
+  # check if otp file is already there. 
   if(!file.exists(path)){
-    stop(path, " not available")
+    
+    # if not, download file from osm
+    geofabrik_file <- "data/utah.osm.pbf"
+    if(!file.exists(geofabrik_file)){
+      # get the osm pbf file from geofabrik
+      download.file("https://download.geofabrik.de/north-america/us/utah-220328.osm.pbf",
+                    geofabrik_file)
+    }
+    
+    # osmosis --read-pbf file=ohio.osm.pbf --bounding-polygon file=input.poly --tf accept-ways boundary=administrative --used-node --write-xml output.osm
+    system2("/opt/homebrew/bin/osmosis", 
+            args = c(
+              str_c("--read-pbf file=", geofabrik_file, sep = ""),
+              "--bounding-box top=41.5733 left=-112.2638 bottom=39.8913 right=-111.5250 completeWays=yes",
+              "--tf accept-ways highway=motorway,motorway_link,trunk,trunk_link,primary,primary_link,secondary,tertiary",
+              "--used-node",
+              str_c("--write-pbf file=", path, sep = "")
+            ))
   } else {
     message(path, " already available")
   }
