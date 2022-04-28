@@ -214,19 +214,21 @@ designed sampling scheme [@train2009].
 
 Once the choice, alternatives, and attributes of the alternatives have been 
 defined, the last element of the choice utility is the travel impedance between 
-each block group and each resource. Using the `otpr` R interface [@otpr] to 
-OpenTripPlanner, we estimated the highway drive travel time, the walking
-route time, and the transit travel time for trips departing on October 1,
-2021 at 8 AM. The time and date are most relevant for the transit path builder
-in OpenTripPlanner, which uses detailed transit path information stored in the
-Utah Transit Authority GTFS feed file for Fall 2021. The transit path contains
+each block group and each resource. Using the `r5r` R interface [@r5r] to the R5
+routing algorithm, we estimated the highway drive travel time, the walking
+route time, and the transit travel time for trips departing on April 26,
+2022 at 8 AM. The time and date are most relevant for the transit path builder
+in R5, which uses detailed transit path information stored in the
+Utah Transit Authority GTFS feed file for Spring and Summer 2022. The transit path contains
 separate measures of the total travel time, the time in the transit vehicle,
 transfer time, and access / egress time, allowing us full use of the 
 mode choice utility equations and resulting logsum described in Equation \@ref(eq:mcls).
+We limited valid paths to those involving less than 10 km of walking and
+2 hours of total travel time.
 
-For groceries and libraries, we queried from OpenTripPlanner the shortest time path on each
+For groceries and libraries, we queried the shortest time path on each
 mode from the population-weighted block group centroid to the centroid of the grocery
-store or library centroid. Because some parks in the dataset can be relatively
+store or library polygon. Because some parks in the dataset can be relatively
 large and the centroid might be far from the park access or use point, we instead
 sampled points along the boundary of the park polygon, and queried the shortest
 time path by each mode to the nearest boundary point.
