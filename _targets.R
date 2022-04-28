@@ -13,6 +13,7 @@ source("R/datamaker.R")
 source("R/streetlight_cleaner.R")
 source("R/choice_modeling.R")
 
+options(java.parameters = "-Xmx8G")
 
 # Set target-specific options such as packages.
 tar_option_set(packages = c("tidyverse", "sf", "r5r", "rstudioapi",
@@ -35,14 +36,13 @@ list(
   # us to bring it into the targets stream
   tar_target(osmpbf, get_osmbpf(file.path(otp_path, "osm.pbf")), format = "file"),
   tar_target(gtfs,   get_gtfs(file.path(otp_path, "gtfs.zip")), format = "file"),
-  tar_target(graph,  make_graph(otp_path, osmpbf, gtfs)),
   tar_target(util_file, "data/mode_utilities.json", format = "file"),
   tar_target(utilities, read_utilities(util_file)),
   
   # Parks ============
   tar_target(park_polygons, get_parks("data/parks.geojson", this_crs)),
   tar_target(park_points, make_park_points(park_polygons, 1/500, this_crs)),
-  tar_target(park_times, calculate_times(park_points, bgcentroid, graph, 
+  tar_target(park_times, calculate_times(park_points, bgcentroid, osmpbf, gtfs,
                                          bglimit = bglimit, shortcircuit = "data/park_times.rds")),
   tar_target(park_lsums, calculate_logsums(park_times, utilities)),
   # streetlight ----
@@ -59,7 +59,8 @@ list(
   
   # Groceries =====================
   tar_target(groceries, get_groceries("data/groceries.geojson", "data/NEMS-S_UC2021_brief.sav", this_crs)),
-  tar_target(grocery_times, calculate_times(groceries, bgcentroid, graph, bglimit = bglimit,
+  tar_target(grocery_times, calculate_times(groceries, bgcentroid, osmpbf, gtfs,
+                                            bglimit = bglimit,
                                             shortcircuit = "data/grocery_times.rds")),
   tar_target(grocery_lsums, calculate_logsums(grocery_times, utilities)),
   # streetlight ----
@@ -80,7 +81,8 @@ list(
   # Libraries ======================
   tar_target(libgj, "data/libraries.geojson", format = "file"),
   tar_target(libraries, get_libraries(libgj, this_crs)),
-  tar_target(library_times, calculate_times(libraries, bgcentroid, graph, bglimit = bglimit,
+  tar_target(library_times, calculate_times(libraries, bgcentroid, osmpbf, gtfs,
+                                            bglimit = bglimit,
                                             shortcircuit = "data/library_times.rds")),
   tar_target(library_lsums, calculate_logsums(library_times, utilities)),
   # streetlight ----
