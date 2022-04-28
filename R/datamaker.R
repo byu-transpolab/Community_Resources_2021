@@ -142,7 +142,8 @@ get_libraries <- function(file, crs){
       id = NAME, computers, wifi, study_help, fooddrink, printer,  
       classes = ifelse(is.na(classes), FALSE, classes), 
       genealogy = ifelse(is.na(genealogy), FALSE, genealogy), 
-      nonres_fee = parse_number(nonres_fee)
+      nonres_fee = parse_number(nonres_fee),
+      area =  yeo.johnson(area, 0)
     ) 
 }
 

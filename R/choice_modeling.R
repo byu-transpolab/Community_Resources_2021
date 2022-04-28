@@ -109,9 +109,9 @@ estimate_librarymodels <- function(libraries_estdata){
   models <- list(
     "Car" = mlogit(chosen ~ duration_CAR | -1, data = ld),
     "MCLS" = mlogit(chosen ~ mclogsum | -1 , data = ld),
-    "Attributes" = mlogit(chosen ~ classes +  genealogy | -1 , data = ld),
-    "All - Car" = mlogit(chosen ~  duration_CAR + classes + genealogy | -1 , data = ld),
-    "All - Logsum" = mlogit(chosen ~  mclogsum + classes + genealogy | -1 , data = ld)
+    "Attributes" = mlogit(chosen ~ classes +  genealogy + area | -1 , data = ld),
+    "All - Car" = mlogit(chosen ~  duration_CAR + classes + genealogy + area| -1 , data = ld),
+    "All - Logsum" = mlogit(chosen ~  mclogsum + classes + genealogy + area | -1 , data = ld)
   )
   
   models
