@@ -72,6 +72,7 @@ source("R/choice_modeling.R")
 options(knitr.kable.NA = '') 
 # tells kableExtra to not load latex table packages in the chunk output
 options(kableExtra.latex.load_packages = FALSE) 
+
 # round and format numbers that get printed in the text of the article.
 inline_hook <- function(x) {
   if (is.numeric(x)) {
@@ -80,7 +81,7 @@ inline_hook <- function(x) {
 }
 
 knitr::knit_hooks$set(inline = inline_hook)
-knitr::opts_chunk$set(echo = TRUE, cache = TRUE)
+knitr::opts_chunk$set(echo = TRUE)
 
 # options for latex-only output
 if(knitr::is_latex_output()) {
@@ -91,11 +92,11 @@ theme_set(theme_bw())
 dj1 <- wesanderson::wes_palette("FantasticFox1")
 dj2 <- wesanderson::wes_palette("Darjeeling1", type = "continuou")
 
-
+options("modelsummary_format_numeric_latex" = "plain")
 f <- function(x) format(round(x, 1), big.mark=",")
 gm <-  list(
   list("raw" = "nobs",  "clean" = "Num.Obs.", "fmt" = f),
-  list("raw" = "logLik","clean" = "Log Likelihood", "fmt" = f),
+  list("raw" = "logLik","clean" = "Log Likelihood", "fmt" = 1),
   list("raw" = "rho20", "clean" = "McFadden Rho-Sq", "fmt" = 3)
 )
 ```

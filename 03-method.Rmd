@@ -94,6 +94,7 @@ Survey (ACS) using the tidycensus package for R [@tidycensus].
 
 ```{r acstable}
 tar_load(acsdata)
+options("datasummary_format_numeric_latex" = "plain")
 
 acs_for_table <- acsdata %>% select(
     "Density: Households per square kilometer" = density,
