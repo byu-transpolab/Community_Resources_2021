@@ -5,24 +5,24 @@
   <meta charset="utf-8" />
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
   <title> 2 Literature | Utility-Based Accessibility to Community Resources: An Application of Location-Based Services Data</title>
-  <meta name="description" content="A short description" />
+  <meta name="description" content="Utah County Resources" />
   <meta name="generator" content="bookdown 0.26 and GitBook 2.6.7" />
 
   <meta property="og:title" content=" 2 Literature | Utility-Based Accessibility to Community Resources: An Application of Location-Based Services Data" />
   <meta property="og:type" content="book" />
   
-  <meta property="og:description" content="A short description" />
+  <meta property="og:description" content="Utah County Resources" />
   
 
   <meta name="twitter:card" content="summary" />
   <meta name="twitter:title" content=" 2 Literature | Utility-Based Accessibility to Community Resources: An Application of Location-Based Services Data" />
   
-  <meta name="twitter:description" content="A short description" />
+  <meta name="twitter:description" content="Utah County Resources" />
   
 
 
 
-<meta name="date" content="2022-04-28" />
+<meta name="date" content="2022-04-29" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -236,12 +236,12 @@ attempts to measure access to the resources selected for this analysis.</p>
 but this ease in definition belies a wide array of potential quantitative
 descriptions. <span class="citation">Dong et al. (<a href="#ref-dong2006" role="doc-biblioref">2006</a>)</span> present a helpful hierarchy of access measures, which we
 briefly summarize here.</p>
-<p>Among the simplest measures of access is a so-called isochrone measure, which
+<p>Among the simplest measures of access is a so-called isochrone or buffer measure, which
 considers whether a person at position <span class="math inline">\(i\)</span> traveling to a potential destination
 <span class="math inline">\(j\)</span> is within a particular travel time threshold <span class="math inline">\(t^*\)</span>. Using this measure, a
-person has access to the resource if <span class="math inline">\(t_{ij} &lt; t_*\)</span>. Sometimes it is
+person has access to the resource if <span class="math inline">\(t_{ij} &lt; t^*\)</span>. Sometimes it is
 possible to access multiple resources within this threshold, in which case a
-more continuous score can be defined as
+a cumulative opportunities measure can be defined as
 <span class="math display" id="eq:isochrone">\[\begin{equation}
   A_i^{\mathrm{isochrone}} = \sum_{j \in J} \delta_{ij},
   \mathrm{\ where\ } \delta_{ij} =
@@ -253,16 +253,16 @@ more continuous score can be defined as
 \end{equation}\]</span>
 Variations of this measure include elements like “number of grocery stores
 within 10 minutes” or “density of green space within 5 miles.” Strengths of
-this method are its relative simplicity, but it has three central limitations. First,
+this method include its relative simplicity, but it has three central limitations. First,
 the threshold <span class="math inline">\(t^*\)</span> must be defined by the researcher for a specific value by
 a certain travel mode, and different definitions
 can have different policy outcomes <span class="citation">(<a href="#ref-logan2019" role="doc-biblioref">Logan et al., 2019</a>)</span>. Second, the binary nature of the
-measure belies our understanding of behavior: a four minute and fifty second
+measure contradicts a practical understanding of travel behavior: a four minute and fifty second
 trip is not functionally different from a five minute and ten second trip. Finally,
 the measure assumes that all options in the choice set <span class="math inline">\(J\)</span> are of equivalent
 quality.</p>
 <p>Extensions to this basic framework relax some of these constricting assumptions.
-A gravity model accessibility measure
+A gravity-based accessibility measure
 <span class="math display" id="eq:gravity">\[\begin{equation}
   A_i^{\mathrm{gravity}} = \sum_{j \in J} S_j * f(t_{ij}, \beta)
   \tag{2.2}

@@ -1,3 +1,3 @@
 # Acknowledgements {.unnumbered}
 
-The authors are grateful to Brooke Jones, Kaeli Monahan, and Mali Smith for their help in gathering the grocery store and library information data. Connor Williams gathered the parks data, and Michael Copley assisted with the StreetLight data. Tables and figures in the article are produced using a variety of packages for R [@modelsummary; @ggspatial]
+The authors are grateful to Brooke Jones, Kaeli Monahan, and Mali Smith for their help in gathering the grocery store and library information data. Connor Williams gathered the parks data, and Michael Copley assisted with the StreetLight data. Tables and figures in the article are produced using a variety of packages for R [@modelsummary; @ggspatial]. This research did not receive any specific grant from funding agencies in the public, commercial, or not-for-profit sectors.

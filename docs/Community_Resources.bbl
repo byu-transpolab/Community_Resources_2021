@@ -1,0 +1,292 @@
+\begin{thebibliography}{}
+
+\bibitem[Aggarwal et~al., 2014]{aggarwal2014}
+Aggarwal, A., Cook, A.~J., Jiao, J.~F., Seguin, R.~A., Moudon, A.~V., Hurvitz,
+  P.~M., and Drewnowski, A. (2014).
+\newblock Access to supermarkets and fruit and vegetable consumption.
+\newblock {\em American Journal of Public Health}, 104(5):917--923.
+
+\bibitem[Algert et~al., 2006]{algert2006}
+Algert, S.~J., Agrawal, A., and Lewis, D.~S. (2006).
+\newblock Disparities in access to fresh produce in low-income neighborhoods in
+  los angeles.
+\newblock {\em American Journal of Preventive Medicine}, 30(5):365--370.
+
+\bibitem[Allen, 2019]{allen2019}
+Allen, J. (2019).
+\newblock Mapping differences in access to public libraries by travel mode and
+  time of day.
+\newblock {\em Library \& Information Science Research}, 41(1):11--18.
+
+\bibitem[Arel-Bundock, 2021]{modelsummary}
+Arel-Bundock, V. (2021).
+\newblock {\em modelsummary: Summary Tables and Plots for Statistical Models
+  and Data: Beautiful, Customizable, and Publication-Ready}.
+\newblock R package version 0.8.0.
+
+\bibitem[Bancroft et~al., 2015]{bancroft2015association}
+Bancroft, C., Joshi, S., Rundle, A., Hutson, M., Chong, C., Weiss, C.~C.,
+  Genkinger, J., Neckerman, K., and Lovasi, G. (2015).
+\newblock Association of proximity and density of parks and objectively
+  measured physical activity in the united states: A systematic review.
+\newblock {\em Social science \& medicine}, 138:22--30.
+
+\bibitem[Barclay, 2017]{barclay2017space}
+Barclay, D.~A. (2017).
+\newblock Space and the social worth of public libraries.
+\newblock {\em Public library quarterly}, 36(4):267--273.
+
+\bibitem[Bedimo-Rung et~al., 2005]{bedimo2005}
+Bedimo-Rung, A.~L., Mowen, A.~J., and Cohen, D.~A. (2005).
+\newblock The significance of parks to physical activity and public health.
+\newblock {\em American Journal of Preventive Medicine}, 28(2):159--168.
+
+\bibitem[{Cambridge Systematics}, 2012]{nchrp716}
+{Cambridge Systematics} (2012).
+\newblock Travel demand forecasting: Parameters and techniques.
+\newblock NCHRP Report 716, Transportation Research Board.
+\newblock Available at
+  \url{https://www.trb.org/Publications/Blurbs/167055.aspx}.
+
+\bibitem[Chen and Yeh, 2021]{chen2021effects}
+Chen, Z. and Yeh, A. G.-O. (2021).
+\newblock Effects of built environment on activity participation under
+  different space-time constraints: A case study of guangzhou, china.
+\newblock {\em Travel Behaviour and Society}, 22:84--93.
+
+\bibitem[Cheng et~al., 2021]{cheng2021}
+Cheng, W., Wu, J., Moen, W., and Hong, L. (2021).
+\newblock Assessing the spatial accessibility and spatial equity of public
+  libraries' physical locations.
+\newblock {\em Library \& Information Science Research}, 43(2):101089.
+
+\bibitem[Clifton, 2004]{clifton2004}
+Clifton, K.~J. (2004).
+\newblock Mobility strategies and food shopping for low-income families - a
+  case study.
+\newblock {\em Journal of Planning Education and Research}, 23(4):402--413.
+
+\bibitem[Croissant, 2020]{mlogit}
+Croissant, Y. (2020).
+\newblock Estimation of random utility models in {R}: The {mlogit} package.
+\newblock {\em Journal of Statistical Software}, 95(11):1--41.
+
+\bibitem[Dong et~al., 2006]{dong2006}
+Dong, X.~J., Ben-Akiva, M.~E., Bowman, J.~L., and Walker, J.~L. (2006).
+\newblock Moving from trip-based to activity-based measures of accessibility.
+\newblock {\em Transportation Research Part a-Policy and Practice},
+  40(2):163--180.
+
+\bibitem[Dunnington, 2021]{ggspatial}
+Dunnington, D. (2021).
+\newblock {\em ggspatial: Spatial Data Framework for ggplot2}.
+\newblock R package version 1.1.5.
+
+\bibitem[Ermagun and Tilahun, 2020]{ermagun2020}
+Ermagun, A. and Tilahun, N. (2020).
+\newblock Equity of transit accessibility across chicago.
+\newblock {\em Transportation Research Part D: Transport and Environment},
+  86:102461.
+
+\bibitem[Glanz et~al., 2007]{glanz2007}
+Glanz, K., Sallis, J.~F., Saelens, B.~E., and Frank, L.~D. (2007).
+\newblock Nutrition environment measures survey in stores (nems-s): development
+  and evaluation.
+\newblock {\em American journal of preventive medicine}, 32(4):282--289.
+
+\bibitem[Guo et~al., 2017]{guo2017}
+Guo, Y., Chan, C.~H., and Yip, P. S.~F. (2017).
+\newblock Spatial variation in accessibility of libraries in hong kong.
+\newblock {\em Library \& Information Science Research}, 39(4):319--329.
+
+\bibitem[Hamidi, 2020]{hamidi2020}
+Hamidi, S. (2020).
+\newblock Urban sprawl and the emergence of food deserts in the usa.
+\newblock {\em Urban Studies}, 57(8):1660--1675.
+
+\bibitem[Handy and Niemeier, 1997]{handy1997}
+Handy, S.~L. and Niemeier, D.~A. (1997).
+\newblock Measuring accessibility: an exploration of issues and alternatives.
+\newblock {\em Environment and planning A}, 29(7):1175--1194.
+
+\bibitem[Hansen, 1959]{hansen1959}
+Hansen, W.~G. (1959).
+\newblock How accessibility shapes land use.
+\newblock {\em Journal of the American Institute of Planners}, 25(2):73--76.
+
+\bibitem[Horowitz, 1987]{horowitz1987}
+Horowitz, J.~L. (1987).
+\newblock Specification tests for nested logit models.
+\newblock {\em Environment and Planning A: Economy and Space}, 19(3):395--402.
+
+\bibitem[Kaczynski et~al., 2016]{kacynski2016}
+Kaczynski, A.~T., Schipperijn, J., Hipp, J.~A., Besenyi, G.~M., Wilhelm~Stanis,
+  S.~A., Hughey, S.~M., and Wilcox, S. (2016).
+\newblock Parkindex: Development of a standardized metric of park access for
+  research and planning.
+\newblock {\em Preventive Medicine}, 87:110--114.
+
+\bibitem[Kinnell et~al., 2006]{kinnell2006}
+Kinnell, J.~C., Bingham, M.~F., Mohamed, A.~F., Desvousges, W.~H., Kiler,
+  T.~B., Hastings, E.~K., and Kuhns, K.~T. (2006).
+\newblock Estimating site choice decisions for urban recreators.
+\newblock {\em Land Economics}, 82(2):257--272.
+
+\bibitem[Lochner, 1999]{lochner1999}
+Lochner, K. (1999).
+\newblock Social capital: a guide to its measurement.
+\newblock {\em Health \& Place}, 5(4):259--270.
+
+\bibitem[Logan et~al., 2019]{logan2019}
+Logan, T.~M., Williams, T.~G., Nisbet, A.~J., Liberman, K.~D., Zuo, C.~T., and
+  Guikema, S.~D. (2019).
+\newblock Evaluating urban accessibility: leveraging open-source data and
+  analytics to overcome existing limitations.
+\newblock {\em Environment and Planning B-Urban Analytics and City Science},
+  46(5):897--913.
+
+\bibitem[Macfarlane et~al., 2020]{macfarlane2020}
+Macfarlane, G.~S., Boyd, N., Taylor, J.~E., and Watkins, K. (2020).
+\newblock Modeling the impacts of park access on health outcomes: A
+  utility-based accessibility approach.
+\newblock {\em Environment and Planning B: Urban Analytics and City Science}.
+
+\bibitem[Macfarlane et~al., 2021]{alamedaparks}
+Macfarlane, G.~S., Turley~Voulgaris, C., and Tapia, T. (2021).
+\newblock If you build it who will come? equity analysis of park system changes
+  during covid-19 using passive origin-destination data.
+\newblock {\em Journal of Transport and Land Use}.
+\newblock Under review, preprint available at
+  \url{https://byu-transpolab.github.io/alameda_destinationchoice/alameda_destinationchoice.pdf}.
+
+\bibitem[Maxwell, 2008]{maxwell2008libraries}
+Maxwell, N.~K. (2008).
+\newblock Libraries?—yes, in my backyard!
+\newblock {\em Journal of access services}, 5(3):391--396.
+
+\bibitem[Monz et~al., 2019]{monz2019}
+Monz, C., Mitrovich, M., D'Antonio, A., and Sisneros-Kidd, A. (2019).
+\newblock {Using Mobile Device Data to Estimate Visitation in Parks and
+  Protected Areas: An Example from the Nature Reserve of Orange County,
+  California}.
+\newblock {\em Journal of Park and Recreation Administration}.
+
+\bibitem[Morland et~al., 2002]{morland2002}
+Morland, K., Wing, S., Roux, A.~D., and Poole, C. (2002).
+\newblock Neighborhood characteristics associated with the location of food
+  stores and food service places.
+\newblock {\em American Journal of Preventive Medicine}, 22(1):23--29.
+
+\bibitem[Muth, 1971]{muth1971}
+Muth, R.~F. (1971).
+\newblock The derived demand for urban residential land.
+\newblock {\em Urban studies}, 8(3):243--254.
+
+\bibitem[Naboulsi et~al., 2016]{naboulsi2016}
+Naboulsi, D., Fiore, M., Ribot, S., and Stanica, R. (2016).
+\newblock Large-scale mobile traffic analysis: A survey.
+\newblock {\em IEEE Communications Surveys \& Tutorials}, 18(1):124--161.
+
+\bibitem[Neusel~Ussery et~al., 2016]{neusel2016}
+Neusel~Ussery, E., Yngve, L., Merriam, D., Whitfield, G., Foster, S., Wendel,
+  A., and Boehmer, T. (2016).
+\newblock The national environmental public health tracking network access to
+  parks indicator: A national county-level measure of park proximity.
+\newblock {\em Journal of Park and Recreation Administration}, 34(3).
+
+\bibitem[Philbin et~al., 2019]{philbin2019}
+Philbin, M.~M., Parker, C.~M., Flaherty, M.~G., and Hirsch, J.~S. (2019).
+\newblock Public libraries: A community-level resource to advance population
+  health.
+\newblock {\em Journal of Community Health}, 44(1):192--199.
+
+\bibitem[{R Core Team}, 2021]{R}
+{R Core Team} (2021).
+\newblock {\em R: A Language and Environment for Statistical Computing}.
+\newblock R Foundation for Statistical Computing, Vienna, Austria.
+
+\bibitem[{Rafael H. M. Pereira} et~al., 2021]{r5r}
+{Rafael H. M. Pereira}, {Marcus Saraiva}, {Daniel Herszenhut}, {Carlos Kaue
+  Vieira Braga}, and {Matthew Wigginton Conway} (2021).
+\newblock r5r: Rapid realistic routing on multimodal transport networks with r5
+  in r.
+\newblock {\em Findings}.
+
+\bibitem[Recker and Kostyniuk, 1978]{recker1978}
+Recker, W.~W. and Kostyniuk, L.~P. (1978).
+\newblock Factors influencing destination choice for the urban grocery shopping
+  trip.
+\newblock {\em Transportation}, 7(1):19--33.
+
+\bibitem[Rigolon et~al., 2018]{rigolon2018}
+Rigolon, A., Browning, M., and Jennings, V. (2018).
+\newblock Inequities in the quality of urban park systems: An environmental
+  justice investigation of cities in the united states.
+\newblock {\em Landscape and Urban Planning}, 178:156--169.
+
+\bibitem[Train, 2009]{train2009}
+Train, K.~E. (2009).
+\newblock {\em {Discrete Choice Methods with Simulation, 2nd Edition}}.
+\newblock Cambridge University Press, Cambridge.
+
+\bibitem[{Trust for Public Land}, 2019]{parkscore2019}
+{Trust for Public Land} (2019).
+\newblock {2019 ParkScore Index}.
+
+\bibitem[{U.S. Department of Agriculture}, 2021]{usdafara}
+{U.S. Department of Agriculture} (2021).
+\newblock Food access research atlas.
+\newblock
+  \url{https://www.ers.usda.gov/data-products/food-access-research-atlas/documentation/}.
+\newblock Accessed: 2021-10-30.
+
+\bibitem[Walker and Ben-Akiva, 2002]{walker2002}
+Walker, J. and Ben-Akiva, M. (2002).
+\newblock Generalized random utility model.
+\newblock {\em Mathematical Social Sciences}, 43(3):303--343.
+
+\bibitem[Walker and Herman, 2021]{tidycensus}
+Walker, K. and Herman, M. (2021).
+\newblock {\em tidycensus: Load US Census Boundary and Attribute Data as
+  'tidyverse' and 'sf'-Ready Data Frames}.
+\newblock R package version 1.0.
+
+\bibitem[Widener et~al., 2015]{widener2015spatiotemporal}
+Widener, M.~J., Farber, S., Neutens, T., and Horner, M. (2015).
+\newblock Spatiotemporal accessibility to supermarkets using public transit: an
+  interaction potential approach in cincinnati, ohio.
+\newblock {\em Journal of Transport Geography}, 42:72--83.
+
+\bibitem[Williams, 1977]{williams1977formation}
+Williams, H.~C. (1977).
+\newblock On the formation of travel demand models and economic evaluation
+  measures of user benefit.
+\newblock {\em Environment and planning A}, 9(3):285--344.
+
+\bibitem[Witten et~al., 2003]{witten2003}
+Witten, K., Exeter, D., and Field, A. (2003).
+\newblock The quality of urban environments: Mapping variation in access to
+  community resources.
+\newblock {\em Urban Studies}, 40(1):161--177.
+
+\bibitem[Wood and Horner, 2016]{wood2016}
+Wood, B.~S. and Horner, M.~W. (2016).
+\newblock Understanding accessibility to snap-accepting food store locations:
+  Disentangling the roles of transportation and socioeconomic status.
+\newblock {\em Applied Spatial Analysis and Policy}, 9(3):309--327.
+
+\bibitem[Zalewski et~al., 2019]{tcrp138}
+Zalewski, A., Sonenklar, D., Cohen, A., Kressner, J., and Macfarlane, G.
+  (2019).
+\newblock Public transit rider origin-destination survey methods and
+  technologies.
+\newblock TCRP Synthesis Report 138.
+
+\bibitem[Zhu and Ye, 2018]{zhu2018}
+Zhu, J. and Ye, X. (2018).
+\newblock Development of destination choice model with pairwise district-level
+  constants using taxi gps data.
+\newblock {\em Transportation Research Part C: Emerging Technologies},
+  93:410--424.
+
+\end{thebibliography}
