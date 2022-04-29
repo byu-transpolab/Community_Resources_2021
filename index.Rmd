@@ -24,11 +24,16 @@ footnote:
     text: "Corresponding Author"
 date: "`r Sys.Date()`"
 site: bookdown::bookdown_site
-documentclass: article
 journal: "submitted to Health and Place"
 bibliography: [book.bib]
+biblio-style: "apalike"
 csl: elsevier-harvard-italics.csl
 link-citations: yes
+layout: "3p, authoryear, review"
+keywords:
+  - Accessibility
+  - Passive Data
+  - Location Choice
 abstract: |
     Understanding who in a community has access to its resources – parks, libraries, 
     grocery stores, etc. – has profound equity implications, but typical methods 
@@ -45,12 +50,7 @@ abstract: |
     sociodemographic attributes of the traveler. We then use this measure 
     to explore equity in access to the specified community resources across
     income level in Utah County.
-description: "A short description"
-layout: "3p, authoryear, review"
-keywords:
-  - Accessibility;
-  - Passive Data;
-  - Location Choice
+description: "Utah County Resources"
 ---
 
 ```{r setup, include = FALSE}
