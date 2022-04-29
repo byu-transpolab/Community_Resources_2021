@@ -163,7 +163,7 @@ if(knitr::is_latex_output()){
 ### Resource Data
 Figure \@ref(fig:utco-map) shows the locations of three types of 
 community resources in Utah County: parks, grocery stores, and libraries.
-For each resource, and initial list of resources and elementary attributes was
+For each resource, an initial list of resources and elementary attributes was
 obtained by executing a relevant query to OpenStreetMap (OSM).
 
 Public parks and their attributes retrieved from OSM were verified and 

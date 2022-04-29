@@ -213,7 +213,7 @@ But for block groups with with equivalent travel time to a particular community
 resource, the accessibility logsum value
 varies substantially. Even for block groups along the buffer --- where a small change
 in travel time might place a block within or without the buffer --- the variance 
-in accessibility logsum appears to be almost as large as the variance as the variance 
+in accessibility logsum appears to be almost as large as the variance 
 in the travel time. This variance in accessiblity logsum might be due to a
 travel time differential between drive, walk, and transit modes captured in the
 mode choice logsum, or it could also be because the resources available near the

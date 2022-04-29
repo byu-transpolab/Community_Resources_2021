@@ -49,7 +49,8 @@ abstract: |
     continuous (non-binary) travel impedance by multiple modes; and the 
     sociodemographic attributes of the traveler. We then use this measure 
     to explore equity in access to the specified community resources across
-    income level in Utah County.
+    income level in Utah County: the results reveal a discrepancy between which
+    neighborhoods might be targeted for intervention using space-based analysis.
 description: "Utah County Resources"
 ---
 

@@ -50,7 +50,6 @@ preferences  --- and how they might influence a collective understanding of
 nutrition access more broadly --- is needed.
 
 
-
 # Conclusions
 This paper developed accessibility-based measures of accessibility to three 
 types of community resource: parks, grocery stores, and libraries. These metrics
@@ -66,7 +65,7 @@ suggest that a utility-based access to parks measure is more predictive of
 physical health outcomes than a buffer-based measure. Is this true for more 
 community resources? Would using a more subtle or nuanced measure of access to 
 libraries help in understanding a link between community form and social isolation 
-or mental health? A key benefit of this method is that is provides a way to 
+or mental health? A key benefit of this method is that it provides a way to 
 evaluate the benefit of investments in resources against the benefits of investing
 in the transportation system. Will a community benefit more from a new grocery store
 nearby, or expanded options at an existing grocery store, or from improving bike 
