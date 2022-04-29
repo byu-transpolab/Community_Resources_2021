@@ -236,10 +236,10 @@ no_logsum <- access_ls %>% left_join(acsdata, by = c("id" =  "geoid")) %>%
 
 
 # calculate number of households in each group, and number of low-income
-nhh_nobuf <- sum(no_buffer$households)
-nhh_nols  <- sum(no_logsum$households)
-nhh_nobuflow <- sum(no_buffer$households * 0.01 * no_buffer$lowincome)
-nhh_nolslow  <- sum(no_logsum$households * 0.01 * no_logsum$lowincome)
+nhh_nobuf <- sum(no_buffer$households, na.rm = TRUE)
+nhh_nols  <- sum(no_logsum$households, na.rm = TRUE)
+nhh_nobuflow <- sum(no_buffer$households * 0.01 * no_buffer$lowincome, na.rm = TRUE)
+nhh_nolslow  <- sum(no_logsum$households * 0.01 * no_logsum$lowincome, na.rm = TRUE)
 
 # how many households are  in both groups?
 nhh_both <- inner_join(no_buffer[, c("id", "households", "lowincome")], 
