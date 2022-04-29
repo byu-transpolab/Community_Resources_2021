@@ -114,7 +114,7 @@ datasummary_skim(acs_for_table, title = "Block Group Summary Statistics",
   kableExtra::footnote(symbol = "Hispanic indicates Hispanic individuals of all races; non-Hispanic individuals report a single race alone.") 
 ```
 
-```{r utco-map, fig.cap="Community Resources in Utah County", fig.align='center', dev='tikz', cache = FALSE}
+```{r utco-map, fig.cap="Location of community resources in Utah County", fig.align='center', dev='tikz', cache = FALSE, fig.width=6, fig.height=6,dev.args=list(pointsize=2)}
 tar_load(groceries)
 tar_load(park_polygons)
 tar_load(libraries)
@@ -133,9 +133,10 @@ if(knitr::is_latex_output()){
   ggplot() + 
     annotation_map_tile("cartolight", zoom=11) + 
     coord_sf(crs = st_crs(4326),  expand = FALSE) + 
-    geom_sf(data = mapdata %>% st_transform(4326),  aes(color = `LandUse`),
-            inherit.aes = FALSE, alpha = 0.5) +
+    geom_sf(data = mapdata %>% st_transform(4326),  aes(color = `LandUse`, size = `LandUse`),
+            inherit.aes = FALSE, alpha = 0.4) +
     scale_color_manual("Resource Type", values = dj1[c(1, 5, 3)]) +
+    scale_size_manual("Resource Type", values = c(2,3, 1)) +
     theme(axis.line = element_line(color = NA),
           axis.title.x=element_blank(),
           axis.text.x=element_blank(),
@@ -143,6 +144,7 @@ if(knitr::is_latex_output()){
           axis.title.y=element_blank(),
           axis.text.y=element_blank(),
           axis.ticks.y=element_blank(),
+          legend.position = "bottom"
           )
   
 } else {
@@ -163,7 +165,7 @@ if(knitr::is_latex_output()){
 ### Resource Data
 Figure \@ref(fig:utco-map) shows the locations of three types of 
 community resources in Utah County: parks, grocery stores, and libraries.
-For each resource, and initial list of resources and elementary attributes was
+For each resource, an initial list of resources and elementary attributes was
 obtained by executing a relevant query to OpenStreetMap (OSM).
 
 Public parks and their attributes retrieved from OSM were verified and 
@@ -186,7 +188,8 @@ specialty resources; though some of these libraries are open to those outside
 the university community, these were removed so that the resource list only
 includes libraries generally catering to the general public. The amenities 
 available include whether the library offers additional classes and programs,
-and whether the library includes genealogical or family history resources. 
+and whether the library includes genealogical or family history resources. The 
+square footage of the library was estimated from online mapping services.
 Other variables discussed in the literature such as the availability of computers
 and public wi-fi networks were present in every library and therefore cannot
 be included in the destination utility equations.
@@ -214,19 +217,21 @@ designed sampling scheme [@train2009].
 
 Once the choice, alternatives, and attributes of the alternatives have been 
 defined, the last element of the choice utility is the travel impedance between 
-each block group and each resource. Using the `otpr` R interface [@otpr] to 
-OpenTripPlanner, we estimated the highway drive travel time, the walking
-route time, and the transit travel time for trips departing on October 1,
-2021 at 8 AM. The time and date are most relevant for the transit path builder
-in OpenTripPlanner, which uses detailed transit path information stored in the
-Utah Transit Authority GTFS feed file for Fall 2021. The transit path contains
+each block group and each resource. Using the `r5r` R interface [@r5r] to the R5
+routing algorithm, we estimated the highway drive travel time, the walking
+route time, and the transit travel time for trips departing on April 26,
+2022 at 8 AM. The time and date are most relevant for the transit path builder
+in R5, which uses detailed transit path information stored in the
+Utah Transit Authority GTFS feed file for Spring and Summer 2022. The transit path contains
 separate measures of the total travel time, the time in the transit vehicle,
 transfer time, and access / egress time, allowing us full use of the 
 mode choice utility equations and resulting logsum described in Equation \@ref(eq:mcls).
+We limited valid paths to those involving less than 10 km of walking and
+2 hours of total travel time.
 
-For groceries and libraries, we queried from OpenTripPlanner the shortest time path on each
+For groceries and libraries, we queried the shortest time path on each
 mode from the population-weighted block group centroid to the centroid of the grocery
-store or library centroid. Because some parks in the dataset can be relatively
+store or library polygon. Because some parks in the dataset can be relatively
 large and the centroid might be far from the park access or use point, we instead
 sampled points along the boundary of the park polygon, and queried the shortest
 time path by each mode to the nearest boundary point.

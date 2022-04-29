@@ -8,19 +8,32 @@ author:
   - name: Emma Stucki
     email: stuckiemma@gmail.com 
     affiliation: BYU
+  - name: Alisha Redelfs
+    email: alisha_redelfs@byu.edu
+    affiliation: BYUPH
+  - name: Lori Spruance
+    email: lori.spruance@byu.edu
+    affiliation: BYUPH
 address: 
   - code: BYU
-    address: Brigham Young University, Civil and Construction Engineering Department, 430 Engineering Building, Provo, Utah 84602
+    address: Brigham Young University, Civil and Construction Engineering Department, 430 EB, Provo, Utah 84602
+  - code: BYUPH
+    address: Brigham Young University, Public Health Department, 4103 LSB, Provo, Utah 84602
 footnote:
   - code: 1
     text: "Corresponding Author"
 date: "`r Sys.Date()`"
 site: bookdown::bookdown_site
-documentclass: article
-journal: "Submitted to NARSC 2021"
+journal: "submitted to Health and Place"
 bibliography: [book.bib]
+biblio-style: "apalike"
 csl: elsevier-harvard-italics.csl
 link-citations: yes
+layout: "3p, authoryear, review"
+keywords:
+  - Accessibility
+  - Passive Data
+  - Location Choice
 abstract: |
     Understanding who in a community has access to its resources – parks, libraries, 
     grocery stores, etc. – has profound equity implications, but typical methods 
@@ -36,13 +49,9 @@ abstract: |
     continuous (non-binary) travel impedance by multiple modes; and the 
     sociodemographic attributes of the traveler. We then use this measure 
     to explore equity in access to the specified community resources across
-    income level in Utah County.
-description: "A short description"
-layout: "3p, authoryear, review"
-keywords:
-  - Accessibility;
-  - Passive Data;
-  - Location Choice
+    income level in Utah County: the results reveal a discrepancy between which
+    neighborhoods might be targeted for intervention using space-based analysis.
+description: "Utah County Resources"
 ---
 
 ```{r setup, include = FALSE}

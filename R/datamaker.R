@@ -22,6 +22,7 @@ get_bglatlong <- function(){
 #' @return Stores a GTFS file in the appropriate location
 #' 
 get_gtfs <- function(path){
+  if(!dir.exists(dirname(path))) dir.create(dirname(path))
   if(!file.exists(path)){
     # originally from UTA: June 4 2021
     download.file("https://gtfsfeed.rideuta.com/gtfs.zip",
@@ -56,7 +57,7 @@ get_osmbpf <- function(path){
             args = c(
               str_c("--read-pbf file=", geofabrik_file, sep = ""),
               "--bounding-box top=41.5733 left=-112.2638 bottom=39.8913 right=-111.5250 completeWays=yes",
-              "--tf accept-ways highway=motorway,motorway_link,trunk,trunk_link,primary,primary_link,secondary,tertiary",
+              "--tf accept-ways highway=*",
               "--used-node",
               str_c("--write-pbf file=", path, sep = "")
             ))
@@ -141,7 +142,8 @@ get_libraries <- function(file, crs){
       id = NAME, computers, wifi, study_help, fooddrink, printer,  
       classes = ifelse(is.na(classes), FALSE, classes), 
       genealogy = ifelse(is.na(genealogy), FALSE, genealogy), 
-      nonres_fee = parse_number(nonres_fee)
+      nonres_fee = parse_number(nonres_fee),
+      area =  yeo.johnson(area, 0)
     ) 
 }
 
@@ -200,26 +202,19 @@ groceries_map <- function(groceries){
 #' 
 get_latlong <- function(sfc){
   
-  
   suppressWarnings(
-  tib <- sfc %>%
-    st_centroid() %>% # will always warn for constant geometry
-    st_transform(4326) %>%
-    mutate(
-      LATITUDE  = st_coordinates(.)[, 2],
-      LONGITUDE = st_coordinates(.)[, 1],
-    ) %>%
-    transmute(id = as.character(id), LONGITUDE, LATITUDE)   %>%
-    st_set_geometry(NULL)
+  tib <- sfc |>
+    sf::st_centroid() |> # will always warn for constant geometry
+    sf::st_transform(4326) |>
+    dplyr::transmute(
+      id = as.character(id),
+      lat = sf::st_coordinates(geometry)[, 2],
+      lon = sf::st_coordinates(geometry)[, 1],
+    ) |>
+    sf::st_set_geometry(NULL)
   )
   
   tib
-}
-
-make_graph <- function(graph_dir){
-  path_otp <- otp_dl_jar(cache = TRUE)
-  otp_build_graph(otp = path_otp, dir = "otp")
-  return(file.path(graph_dir, "Graph.obj"))
 }
 
 
@@ -229,7 +224,9 @@ make_graph <- function(graph_dir){
 #' 
 #' @param landuse Destination features
 #' @param bgcentroid Population-weighted blockgroup centroid
-#' @param graph path to OSM pbf file
+#' @param graph path to r5 database
+#' @param osmpbf  path to osm pbf file
+#' @param gtfs path to gtfs zip file
 #' @param landuselimit The maximum number of resources to sample. Default NULL means all included
 #' @param bglimit The maximum number of block groups included in sample. deafult NULL means all included
 #' @param shortcircuit The path to a file that if given will skip the path calculations.
@@ -238,7 +235,7 @@ make_graph <- function(graph_dir){
 #' 
 #' @details Parallelized, will use parallel::detectCores() - 1
 #' 
-calculate_times <- function(landuse, bgcentroid, graph, landuselimit = NULL, bglimit = NULL,
+calculate_times <- function(landuse, bgcentroid, gtfs, osmpbf, landuselimit = NULL, bglimit = NULL,
                             shortcircuit = NULL){
   
   # short-circuit times calculator if the paths are already computed.
@@ -247,12 +244,10 @@ calculate_times <- function(landuse, bgcentroid, graph, landuselimit = NULL, bgl
     return(read_rds(shortcircuit))
   }
   
-  # start connection to OTP
-  path_otp <- otp_dl_jar(file.path("OTP"),cache = TRUE)
-  log2 <- otp_setup(otp = path_otp, dir = "otp")
-  otpcon <- otp_connect()
-  on.exit(otp_stop(warn = FALSE))
-  
+  # start connection to r5
+  if(!file.exists(osmpbf)) stop("OSM file not present.")
+  if(!file.exists(gtfs)) stop("GTFS file not present.")
+  setup_r5(dirname(osmpbf), verbose = FALSE)
   
   
   # get lat / long for the landuse and the centroids
@@ -260,66 +255,103 @@ calculate_times <- function(landuse, bgcentroid, graph, landuselimit = NULL, bgl
   bg <- get_latlong(bgcentroid)
   
   # limit the number of cells for the time calculations (for debugging)
-  if(!is.null(landuselimit)) ll <- ll %>% sample_n(landuselimit)
-  if(!is.null(bglimit)) bg <- bg %>% sample_n(bglimit)
+  if(!is.null(landuselimit)) ll <- ll |>  sample_n(landuselimit)
+  if(!is.null(bglimit)) bg <- bg |>  sample_n(bglimit)
   
   # Get distance between each ll and each bg
-  # loop through the land use points in parallel; this will not work on 
-  # Window because I'm too lazy to find an alternative to the very easy 
-  # parallel::mclapply
-  cores <- if(Sys.info()['sysname'] == "Windows") 1 else parallel::detectCores() - 1
-  cores <- 1
+  r5r_core <- setup_r5(dirname(osmpbf), verbose = FALSE)
   
-  alltimes <- mclapply(1:nrow(ll), function(i){
-    ll_latlong <- c(ll[i,]$LATITUDE, ll[i, ]$LONGITUDE)
-    
-    message("Getting travel times for land use ", ll[i, ]$id, ", ", i, " of ", nrow(ll))
-    # loop through the block groups
-    lapply(1:nrow(bg), function(j){
-      bg_latlong <- c(bg[j,]$LATITUDE, bg[j, ]$LONGITUDE)
-      
-      # loop through the modes
-      modes <- c("CAR","TRANSIT", "WALK")
-      lapply(modes, function(mode){
-        o <- otp_get_times(
-          otpcon, 
-          fromPlace = bg_latlong, toPlace = ll_latlong,
-
-          mode = mode, 
-          date = "10-05-2021", time = "08:00:00", detail = TRUE, includeLegs = TRUE
-        )
-        
-        o$errorId <- as.character(o$errorId)
-        
-        o
-      }) %>%
-        set_names(modes) %>%
-        bind_rows(.id = "mode")
-      
-    }) %>%
-      set_names(bg$id) %>%
-      bind_rows(.id = "blockgroup")
-
-    
-  }, mc.cores = cores) %>%
-    set_names(ll$id) %>%
-    bind_rows(.id = "resource")
+  # routing inputs
+  max_trip_duration <- 120 # in minutes
+  departure_datetime <- as.POSIXct("26-04-2022 08:00:00",
+                                   format = "%d-%m-%Y %H:%M:%S")
+  time_window <- 60L # how many minutes are scanned
+  percentiles <- 25L # assumes riders have some knowledge of transit schedules
   
-  # Do a little bit of cleanup
-  alltimes %>% 
-    bind_rows(.id = "origin") %>%
-    select(blockgroup, resource, mode, itineraries) %>%
-    transmute(resource, blockgroup, mode, 
-              duration = itineraries$duration, 
-              transfers = itineraries$transfers,
-              walktime = itineraries$walkTime,
-              waittime = itineraries$waitingTime, 
-              transittime = itineraries$transitTime) %>%
+  
+  # get the car travel times
+  car_tt <- travel_time_matrix(
+    r5r_core,
+    bg,
+    ll,
+    mode = "CAR",
+    departure_datetime = departure_datetime,
+    time_window = time_window,
+    percentiles = percentiles,
+    breakdown = FALSE, # don't need detail for car trips
+    breakdown_stat = "min",
+    max_trip_duration = max_trip_duration,
+    verbose = FALSE,
+    progress = TRUE
+  ) |> 
+    mutate(mode = "CAR")
+  
+  # get the walk times
+  walk_tt <- travel_time_matrix(
+    r5r_core,
+    bg,
+    ll,
+    mode = "WALK",
+    departure_datetime = departure_datetime,
+    time_window = time_window,
+    percentiles = percentiles,
+    breakdown = FALSE,
+    breakdown_stat = "min",
+    max_walk_dist = 10000, # in meters
+    max_trip_duration = max_trip_duration,
+    walk_speed = 3.6, # meters per second
+    verbose = FALSE,
+    progress = TRUE
+  ) |> 
+    mutate(mode = "WALK")
+  
+  
+  # get the transit times
+  transit_tt <- travel_time_matrix(
+    r5r_core,
+    bg,
+    ll,
+    mode = "TRANSIT",
+    mode_egress = "WALK",
+    departure_datetime = departure_datetime,
+    time_window = time_window,
+    percentiles = percentiles,
+    breakdown = TRUE,
+    breakdown_stat = "mean",
+    max_walk_dist = 1000, # in meters
+    max_trip_duration = max_trip_duration,
+    walk_speed = 3.6, # meters per second
+    verbose = FALSE,
+    progress = TRUE
+  ) |> 
+    mutate(mode = "TRANSIT")  %>%
+    filter(n_rides > 0)
+  
+  
+  alltimes <- bind_rows(
+    transit_tt, 
+    car_tt, 
+    walk_tt,
+  ) |> 
+    transmute(
+      blockgroup = fromId,
+      resource = toId,
+      mode = mode,
+      duration = travel_time,
+      transfers = n_rides,
+      walktime = access_time + egress_time,
+      waittime = wait_time,
+      transittime = ride_time
+    ) |> 
     # keep only the shortest itinerary by origin / destination / mode
-    group_by(resource, blockgroup, mode) %>%
-    arrange(duration, .by_group = TRUE) %>%
-    slice(1)
+    # this is necessary because the parks have multiple points.
+    group_by(resource, blockgroup, mode) |> 
+    arrange(duration, .by_group = TRUE) |> 
+    slice(1) |> 
+    as_tibble()
   
+  stop_r5()
+  alltimes
 }
 
 
@@ -360,7 +392,7 @@ calculate_logsums <- function(times, utilities, walkspeed = 2.8) {
       ), 
       
     ) %>%
-    select(contains("utility")) %>%
+    select(blockgroup, resource, contains("utility")) %>%
     pivot_longer(cols = contains("utility"), 
                  names_to = "mode", names_prefix = "utility_", values_to = "utility") %>%
     group_by(resource, blockgroup) %>%
@@ -416,7 +448,7 @@ get_acsdata <- function(state = "UT", county = "Utah") {
     "inc_125"  = "B19001_015", "inc_150"  = "B19001_016", "inc_200"  = "B19001_017"
   )
   
-  get_acs(geography = "block group", variables = variables,
+  get_acs(geography = "block group", variables = variables, year = 2019,
                  state = state, county = county, geometry = TRUE) %>%
     select(-moe) %>%
     spread(variable, estimate) %>%

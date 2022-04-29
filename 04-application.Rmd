@@ -47,14 +47,14 @@ are sufficiently high that choosing these travel modes is unlikely. As a
 result, the mode choice logsum is highly collinear with the car travel time.
 Nevertheless, there are small differences differences between the models 
 with the different impedance terms. Using a non-nested likelihood statistic 
-test presented by @horowitz1987, we can reject the null hypothesis that the two 
-"All" models have equivalent likelihood ($p$-value of `r ls_v_car`), and infer
-that the mode choice logsum is a marginally better estimator of park choice than
-the vehicle travel time alone.
+test presented by @horowitz1987, we cannot reject the null hypothesis that the two 
+"All" models have equivalent likelihood ($p$-value of `r ls_v_car`), and therefore 
+cannot infer that the mode choice logsum is a marginally better estimator of
+park choice than the vehicle travel time alone.
 
 ```{r grocery-models}
 tar_load(grocery_models)
-ls_v_car_g <- horowitz_lrtest(grocery_models$`All - Logsum`, grocery_models$`All - Car`)
+ls_v_car_g <- horowitz_lrtest(grocery_models$`All - Car`, grocery_models$`All - Logsum`)
 d_conv_ratio <- grocery_models$`All - Car`$coefficients["typeConvenience Store"] / 
   grocery_models$`All - Car`$coefficients["duration_CAR"]  
 grocery_map = c(
@@ -86,7 +86,7 @@ facilities are less preferred while stores with pharmacies and other merchandise
 (clothes, home goods, etc.) attract visitors. The ratio of the drive time and 
 convenience store coefficients suggests that on average, people are willing to 
 drive `r d_conv_ratio` minutes to reach a store that is not a convenience store.
-In terms of the travel impedance, there is not a sufficiently large gap in the
+In terms of the travel impedance, there is again not a sufficiently large gap in the
 model likelihoods to reject that the mode choice logsum and the drive 
 time are equivalent predictors of grocery store choice.
 
@@ -97,13 +97,14 @@ library_map <- c(
     "duration_CAR" = "Drive time",
     "mclogsum" = "Mode Choice Logsum",
     "classesTRUE" = "Offers Classes",
-    "genealogyTRUE" = "Genealogy Resources"
+    "genealogyTRUE" = "Genealogy Resources",
+    "area" = "log(Square Footage)"
 )
 
 ls_v_car_l <- horowitz_lrtest(library_models$`All - Logsum`, library_models$`All - Car`)
 modelsummary(library_models, estimate = "{estimate}({statistic}){stars}", 
              title = "Library Destination Choice Utilities",
-             stars = c('*' = .05, '**' = .01),
+             stars = c('*' = .05, '**' = .01), 
              coef_map = library_map, gof_map = gm,
              statistic = NULL, note = "t-statistics in parentheses. * p < 0.5, ** p < 0.1") %>%
   kable_styling(latex_options = c("scale_down"))
@@ -112,12 +113,12 @@ modelsummary(library_models, estimate = "{estimate}({statistic}){stars}",
 Table \@ref(tab:library-models) presents the model estimation results for the 
 library destination choice models. As with parks and grocery stores, both 
 travel impedance and destination attributes are significant predictors of 
-library choice. In this case, however, the library attributes provide very little
-predictive power of library choice. This is perhaps because virtually all 
-libraries in the dataset offer the same set of basic amenities, but also because 
-each municipality in Utah County tends to operate its own library rather than 
+library choice.  The strength of the attributes vector is somewhat surprising, 
+because virtually all  libraries in the data set offer the same set of basic amenities
+other than the size of the facility. Further,  
+each municipality in Utah County operates its own library rather than 
 having a system of interconnected library branches as might be typical in 
-larger cities or other regions. Additionally, there is no significant difference
+larger cities or other regions. As with grocery stores and parks, there is no significant difference
 between the prediction power of the mode choice logsum versus the car travel 
 time.
 
@@ -192,7 +193,7 @@ left_join(
   geom_point(pch = 21, alpha = 0.7, stroke = 1) + 
   stat_smooth(method = "lm", show.legend = FALSE, ribbon = FALSE) + 
   annotate("segment", x = 5, xend = 5, y = 0, yend =  4, lty = "dashed", lwd = 2, color = dj1[1]) + 
-  annotate("segment", x =10, xend =10, y =-3, yend =  0, lty = "dashed", lwd = 2, color = dj1[5]) + 
+  annotate("segment", x =10, xend =10, y = 6, yend = 11, lty = "dashed", lwd = 2, color = dj1[5]) + 
   annotate("segment", x = 5, xend = 5, y = 6, yend = 12, lty = "dashed", lwd = 2, color = dj1[3]) + 
   scale_color_manual("Resource", values = dj1[c(1, 5, 3)]) + 
   scale_fill_manual("Within buffer", values = c("white", "grey")) + 
@@ -212,7 +213,7 @@ But for block groups with with equivalent travel time to a particular community
 resource, the accessibility logsum value
 varies substantially. Even for block groups along the buffer --- where a small change
 in travel time might place a block within or without the buffer --- the variance 
-in accessibility logsum appears to be almost as large as the variance as the variance 
+in accessibility logsum appears to be almost as large as the variance 
 in the travel time. This variance in accessiblity logsum might be due to a
 travel time differential between drive, walk, and transit modes captured in the
 mode choice logsum, or it could also be because the resources available near the
@@ -235,10 +236,10 @@ no_logsum <- access_ls %>% left_join(acsdata, by = c("id" =  "geoid")) %>%
 
 
 # calculate number of households in each group, and number of low-income
-nhh_nobuf <- sum(no_buffer$households)
-nhh_nols  <- sum(no_logsum$households)
-nhh_nobuflow <- sum(no_buffer$households * 0.01 * no_buffer$lowincome)
-nhh_nolslow  <- sum(no_logsum$households * 0.01 * no_logsum$lowincome)
+nhh_nobuf <- sum(no_buffer$households, na.rm = TRUE)
+nhh_nols  <- sum(no_logsum$households, na.rm = TRUE)
+nhh_nobuflow <- sum(no_buffer$households * 0.01 * no_buffer$lowincome, na.rm = TRUE)
+nhh_nolslow  <- sum(no_logsum$households * 0.01 * no_logsum$lowincome, na.rm = TRUE)
 
 # how many households are  in both groups?
 nhh_both <- inner_join(no_buffer[, c("id", "households", "lowincome")], 
