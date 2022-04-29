@@ -448,7 +448,7 @@ get_acsdata <- function(state = "UT", county = "Utah") {
     "inc_125"  = "B19001_015", "inc_150"  = "B19001_016", "inc_200"  = "B19001_017"
   )
   
-  get_acs(geography = "block group", variables = variables,
+  get_acs(geography = "block group", variables = variables, year = 2019,
                  state = state, county = county, geometry = TRUE) %>%
     select(-moe) %>%
     spread(variable, estimate) %>%
