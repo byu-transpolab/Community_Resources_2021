@@ -1,9 +1,9 @@
-\documentclass[3p, authoryear, review, doubleblind]{elsarticle} %review=doublespace preprint=single 5p=2 column
+\documentclass[review, 3p]{elsarticle} %review=doublespace preprint=single 5p=2 column
 %%% Begin My package additions %%%%%%%%%%%%%%%%%%%
 
 \usepackage[hyphens]{url}
 
-  \journal{submitted to Health and Place} % Sets Journal name
+  \journal{submitted to Cities and Health} % Sets Journal name
 
 \usepackage{lineno} % add
 
@@ -29,8 +29,6 @@
 \fi
 % use microtype if available
 \IfFileExists{microtype.sty}{\usepackage{microtype}}{}
-\usepackage[]{natbib}
-\bibliographystyle{apalike}
 
 \usepackage{graphicx}
 \ifxetex
@@ -43,7 +41,7 @@
 \hypersetup{breaklinks=true,
             bookmarks=true,
             pdfauthor={},
-            pdftitle={Utility-Based Accessibility to Community Resources: An Application of Location-Based Services Data},
+            pdftitle={Utility-based accessibility to community resources: An application of location-based services data},
             colorlinks=false,
             urlcolor=blue,
             linkcolor=magenta,
@@ -69,10 +67,42 @@
 \IfFileExists{footnotehyper.sty}{\usepackage{footnotehyper}}{\usepackage{footnote}}
 \makesavenoteenv{longtable}
 
+% Pandoc citation processing
+\newlength{\cslhangindent}
+\setlength{\cslhangindent}{1.5em}
+\newlength{\csllabelwidth}
+\setlength{\csllabelwidth}{3em}
+\newlength{\cslentryspacingunit} % times entry-spacing
+\setlength{\cslentryspacingunit}{\parskip}
+% for Pandoc 2.8 to 2.10.1
+\newenvironment{cslreferences}%
+  {}%
+  {\par}
+% For Pandoc 2.11+
+\newenvironment{CSLReferences}[2] % #1 hanging-ident, #2 entry spacing
+ {% don't indent paragraphs
+  \setlength{\parindent}{0pt}
+  % turn on hanging indent if param 1 is 1
+  \ifodd #1
+  \let\oldpar\par
+  \def\par{\hangindent=\cslhangindent\oldpar}
+  \fi
+  % set entry spacing
+  \setlength{\parskip}{#2\cslentryspacingunit}
+ }%
+ {}
+\usepackage{calc}
+\newcommand{\CSLBlock}[1]{#1\hfill\break}
+\newcommand{\CSLLeftMargin}[1]{\parbox[t]{\csllabelwidth}{#1}}
+\newcommand{\CSLRightInline}[1]{\parbox[t]{\linewidth - \csllabelwidth}{#1}\break}
+\newcommand{\CSLIndent}[1]{\hspace{\cslhangindent}#1}
 
 \usepackage{booktabs}
 \usepackage{siunitx}
 \newcolumntype{d}{S[input-symbols = ()]}
+\usepackage{hyperref}
+\usepackage[utf8]{inputenc}
+\def\tightlist{}
 \usepackage{booktabs}
 \usepackage{longtable}
 \usepackage{array}
@@ -95,12 +125,12 @@
 
 \begin{frontmatter}
 
-  \title{Utility-Based Accessibility to Community Resources: An Application of Location-Based Services Data}
-    \author[BYU]{Gregory Macfarlane%
-  %
-  \fnref{1}}
+  \title{Utility-based accessibility to community resources: An application of location-based services data}
+    \author[BYUCE]{Gregory Macfarlane%
+  \corref{cor1}%
+  }
    \ead{gregmacfarlane@byu.edu} 
-    \author[BYU]{Emma Stucki%
+    \author[BYUCE]{Emma Stucki%
   %
   }
    \ead{stuckiemma@gmail.com} 
@@ -112,8 +142,8 @@
   %
   }
    \ead{lori.spruance@byu.edu} 
-      \affiliation[BYU]{Brigham Young University, Civil and Construction Engineering Department, 430 EB, Provo, Utah 84602}
-    \affiliation[BYUPH]{Brigham Young University, Public Health Department, 4103 LSB, Provo, Utah 84602}
+      \affiliation[BYUCE]{Brigham Young University, Civil and Construction Engineering Department,}
+    \affiliation[BYUPH]{Brigham Young University, Public Health Department}
     \cortext[cor1]{Corresponding author}
     \fntext[1]{Corresponding Author}
   
@@ -149,18 +179,18 @@ Communities provide important resources to the people who live in them. These
 resources might include physical and economic resources
 --- shared open space, libraries, commercial establishments, etc. --- as well as less identifiable resources
 including a sense of membership and other forms of social capital
-\citep{lochner1999}. Indeed, access to these resources is a primary reason why
-communities exist \citep{muth1971}, as well as a long-motivating objective in
-transportation infrastructure planning \citep{hansen1959}.
+(\protect\hyperlink{ref-lochner1999}{Lochner, 1999}). Indeed, access to these resources is a primary reason why
+communities exist (\protect\hyperlink{ref-muth1971}{Muth, 1971}), as well as a long-motivating objective in
+transportation infrastructure planning (\protect\hyperlink{ref-hansen1959}{Hansen, 1959}).
 
 Given the importance of these community resources, it is not surprising that
 so much scholarly attention has been paid to examining the spatial and
-socioeconomic variation in access to them \citep{handy1997, witten2003}. What
+socioeconomic variation in access to them (\protect\hyperlink{ref-handy1997}{Handy \& Niemeier, 1997}; \protect\hyperlink{ref-witten2003}{Witten et al., 2003}). What
 is surprising is the simplistic and arbitrary definition of many
 quantitative resource accessibility measures, in spite of the widespread
-availability of geographical information systems (GIS) software \citep{logan2019} and
+availability of geographical information systems (GIS) software (\protect\hyperlink{ref-logan2019}{Logan et al., 2019}) and
 an understanding that proximity to a resource is not the only consideration
-in its use \citep{dong2006}. Individuals do not always shop at the nearest grocery
+in its use (\protect\hyperlink{ref-dong2006}{Dong et al., 2006}). Individuals do not always shop at the nearest grocery
 store, nor do they necessarily perceive an 11-minute walk to a park as
 meaningfully different from a 9-minute walk. A measure of access that can
 incorporate travel impedance by multiple transportation modes alongside
@@ -169,7 +199,7 @@ theoretical comparison to what people experience and observe in their own
 communities. This measure in turn may result in a different understanding
 of which groups have or do not have good access --- and therefore in different
 policy interventions to resolve the access gap --- than more traditionally used
-measures \citep{logan2019, macfarlane2020}.
+measures (\protect\hyperlink{ref-logan2019}{Logan et al., 2019}; \protect\hyperlink{ref-macfarlane2020}{Macfarlane et al., 2020}).
 
 In this paper, we develop utility-based access measures to parks, grocery stores, and
 libraries in Utah County, Utah. These measures are based in econometric choice
@@ -199,9 +229,9 @@ attempts to measure access to the resources selected for this analysis.
 \hypertarget{developing-access-measures}{%
 \subsection{Developing Access Measures}\label{developing-access-measures}}
 
-Accessibility is easily defined as the ability to reach useful destinations \citep{handy1997},
+Accessibility is easily defined as the ability to reach useful destinations (\protect\hyperlink{ref-handy1997}{Handy \& Niemeier, 1997}),
 but this ease in definition belies a wide array of potential quantitative
-descriptions. \citet{dong2006} present a helpful hierarchy of access measures, which we
+descriptions. Dong et al. (\protect\hyperlink{ref-dong2006}{2006}) present a helpful hierarchy of access measures, which we
 briefly summarize here.
 
 Among the simplest measures of access is a so-called isochrone or buffer measure, which
@@ -224,7 +254,7 @@ within 10 minutes'' or ``density of green space within 5 miles.'' Strengths of
 this method include its relative simplicity, but it has three central limitations. First,
 the threshold \(t^*\) must be defined by the researcher for a specific value by
 a certain travel mode, and different definitions
-can have different policy outcomes \citep{logan2019}. Second, the binary nature of the
+can have different policy outcomes (\protect\hyperlink{ref-logan2019}{Logan et al., 2019}). Second, the binary nature of the
 measure contradicts a practical understanding of travel behavior: a four minute and fifty second
 trip is not functionally different from a five minute and ten second trip. Finally,
 the measure assumes that all options in the choice set \(J\) are of equivalent
@@ -257,7 +287,7 @@ One potential obstacle to developing utility-based accessibility measures is
 obtaining sufficient data on which to estimate the utility preference parameters \(\beta\).
 High-quality household surveys that reveal activity locations are most commonly
 used for this purpose in general travel demand modeling, but such surveys typically
-group many infrequent discretionary trips into catch-all categories \citep{nchrp716}.
+group many infrequent discretionary trips into catch-all categories (\protect\hyperlink{ref-nchrp716}{Cambridge Systematics, 2012}).
 
 In the last several years, various commercial data products developed from
 mobile device and location-based services (LBS) data have entered common use in
@@ -269,12 +299,12 @@ planning agencies. These LBS datasets typically contain
 vehicle or person flows between spatially defined zones, sometimes segmented by
 inferred transportation mode, time of day, day of week, or imputed trip purpose.
 These datasets have been shown to accurately reflect visits to recreation areas
-and other land uses \citep{monz2019}, and are becoming a common part of transportation
-planning practice \citep{naboulsi2016, tcrp138}. In recent years, researchers have
+and other land uses (\protect\hyperlink{ref-monz2019}{Monz et al., 2019}), and are becoming a common part of transportation
+planning practice (\protect\hyperlink{ref-naboulsi2016}{Naboulsi et al., 2016}; \protect\hyperlink{ref-tcrp138}{Zalewski et al., 2019}). In recent years, researchers have
 begun developing methods to estimate destination choice models (and their
-related utility parameters) from passive data. \citet{zhu2018} developed a method to
+related utility parameters) from passive data. Zhu \& Ye (\protect\hyperlink{ref-zhu2018}{2018}) developed a method to
 estimate a destination choice model for taxi trips in Shanghai, relying on the
-scale of the GPS dataset to estimate a robust model. \citet{alamedaparks} use
+scale of the GPS dataset to estimate a robust model. Macfarlane et al. (\protect\hyperlink{ref-alamedaparks}{2021}) use
 location-based services data for park visitors in Alameda County, California to
 estimate a destination choice model, and then apply that model to examine
 utility-based park accessibility and equity.
@@ -283,24 +313,24 @@ utility-based park accessibility and equity.
 \subsection{Access to Parks, Grocery Stores, and Libraries}\label{access-to-parks-grocery-stores-and-libraries}}
 
 Parks and other open spaces are frequently understood to provide mental and physical
-health benefits to the members of the community who use them \citep{bedimo2005}, but
+health benefits to the members of the community who use them (\protect\hyperlink{ref-bedimo2005}{Bedimo-Rung et al., 2005}), but
 specific evidence of a link between access and these benefits is somewhat mixed,
 perhaps due to a wide variety of accessibility measures used in various studies
-\citep{bancroft2015association}. Most use some form of isochrone-based measure. For example,
-\citet{neusel2016} developed a county-level green space density measure for the entire United
+(\protect\hyperlink{ref-bancroft2015association}{Bancroft et al., 2015}). Most use some form of isochrone-based measure. For example,
+Neusel Ussery et al. (\protect\hyperlink{ref-neusel2016}{2016}) developed a county-level green space density measure for the entire United
 States based on the percentage of developed green space in each county.
-A popular measure called ParkScore \citep{parkscore2019} uses the share of a
+A popular measure called ParkScore (\protect\hyperlink{ref-parkscore2019}{Trust for Public Land, 2019}) uses the share of a
 population that lives within a 10-minute walk of a park to provide a metropolitan-level
 accessibility score. Some studies have shown that metropolitan areas with a higher
-ParkScore have better health outcomes \citep{rigolon2018}, but this finding has not
+ParkScore have better health outcomes (\protect\hyperlink{ref-rigolon2018}{Rigolon et al., 2018}), but this finding has not
 been satisfactorily reproduced for neighborhoods within a metropolitan region.
-\citet{kacynski2016} developed ParkIndex, a
+Kaczynski et al. (\protect\hyperlink{ref-kacynski2016}{2016}) developed ParkIndex, a
 measure that gives extra weight to neighborhoods near high-quality parks by
 incorporating park choice preferences determined from a user survey; some of the
 usefulness of this measure is limited by only weighting neighborhoods within 1
 mile of a park rather than being applied continuously across the region as a utility-based
-access measure. \citet{macfarlane2020} constructed a utility-based access to parks
-measure derived from an earlier park choice survey \citep{kinnell2006}, and showed a
+access measure. Macfarlane et al. (\protect\hyperlink{ref-macfarlane2020}{2020}) constructed a utility-based access to parks
+measure derived from an earlier park choice survey (\protect\hyperlink{ref-kinnell2006}{Kinnell et al., 2006}), and showed a
 positive relationship between this measure and health outcomes that does not
 appear to exist when using the ParkScore isochrone access measure.
 
@@ -310,39 +340,39 @@ both in terms of identifying the existence of so-called ``food deserts'' as well
 as correlating these deserts with measures of well-being. The U.S. Department of
 Agriculture (USDA) defines food deserts for their own purposes as low-income census tracts
 where a certain threshold of people live more than a mile from the nearest
-grocery store, or a shorter threshold if automobile ownership is low \citep{usdafara}.
+grocery store, or a shorter threshold if automobile ownership is low (\protect\hyperlink{ref-usdafara}{U.S. Department of Agriculture, 2021}).
 Most other researchers have adopted similar definitions of access. For example,
-\citet{morland2002} use the number of grocery stores in the same census tract, \citet{algert2006}
-used the share of households within 0.8 kilometers of a store, and \citet{hamidi2020}
+Morland et al. (\protect\hyperlink{ref-morland2002}{2002}) use the number of grocery stores in the same census tract, Algert et al. (\protect\hyperlink{ref-algert2006}{2006})
+used the share of households within 0.8 kilometers of a store, and Hamidi (\protect\hyperlink{ref-hamidi2020}{2020})
 uses the USDA measures directly.
 In conflict with these simplistic definitions are
 a number of studies suggesting that the nearest grocery store is not necessarily
 where people --- including low-income people --- obtain their food
-\citep{recker1978, clifton2004, aggarwal2014}. \citet{wood2016} addressed this shortcoming
+(\protect\hyperlink{ref-aggarwal2014}{Aggarwal et al., 2014}; \protect\hyperlink{ref-clifton2004}{Clifton, 2004}; \protect\hyperlink{ref-recker1978}{Recker \& Kostyniuk, 1978}). Wood \& Horner (\protect\hyperlink{ref-wood2016}{2016}) addressed this shortcoming
 by considering a gravity-derived accessibility measure, weighting the number of
 opportunities against a continuous travel time function. Other more recent research
 has suggested that what matters
 is not home accessibility as much as location of a store within a time-space construction
-of a person's daily activities \citep{widener2015spatiotemporal, chen2021effects}.
+of a person's daily activities (\protect\hyperlink{ref-chen2021effects}{Chen \& Yeh, 2021}; \protect\hyperlink{ref-widener2015spatiotemporal}{Widener et al., 2015}).
 
 Libraries provide important educational and social opportunities for community
 members through computer facilities, reference materials, and special programs
-\citep{maxwell2008libraries, barclay2017space}. Libraries can also be used to
+(\protect\hyperlink{ref-barclay2017space}{Barclay, 2017}; \protect\hyperlink{ref-maxwell2008libraries}{Maxwell, 2008}). Libraries can also be used to
 enhance physical and emotional well-being in a community through public
-initiatives \citep{philbin2019}. Though perhaps not as commonly studied as either
+initiatives (\protect\hyperlink{ref-philbin2019}{Philbin et al., 2019}). Though perhaps not as commonly studied as either
 parks or libraries, a few recent efforts have examined the spatial distribution
-of libraries and socioeconomic disparities in access. \citet{allen2019} measured the
+of libraries and socioeconomic disparities in access. Allen (\protect\hyperlink{ref-allen2019}{2019}) measured the
 gap in travel time to the nearest library by car and by public transit, showing
-that transit-dependent communities were considerably disadvantaged. \citet{cheng2021}
+that transit-dependent communities were considerably disadvantaged. Cheng et al. (\protect\hyperlink{ref-cheng2021}{2021})
 applied travel time thresholds to examine the share of communities in Hong Kong
-that lacked access. \citet{guo2017} also measured library access disparities in Hong Kong,
+that lacked access. Guo et al. (\protect\hyperlink{ref-guo2017}{2017}) also measured library access disparities in Hong Kong,
 using two different travel-time focused measures. None of the measures we could
 find considered other attributes of the library beyond its proximity, even though
 these addtional features play a strong role in the library's role in community building
-\citep{barclay2017space}.
+(\protect\hyperlink{ref-barclay2017space}{Barclay, 2017}).
 
 Certainly there are other community resources that warrant consideration;
-\citet{ermagun2020} consider a multiple-resource gravity accessibility measure that
+Ermagun \& Tilahun (\protect\hyperlink{ref-ermagun2020}{2020}) consider a multiple-resource gravity accessibility measure that
 includes schools, jobs, and hospitals in addition to the three that have been used here.
 Churches, museums, or various other facilities might be relevant elements
 in shaping the quality of life in a community. Regardless of what resources
@@ -362,7 +392,7 @@ community resources in Utah County, Utah.
 \hypertarget{framework}{%
 \subsection{Modeling Framework}\label{framework}}
 
-In a destination choice modeling framework \citep{recker1978}, an individual
+In a destination choice modeling framework (\protect\hyperlink{ref-recker1978}{Recker \& Kostyniuk, 1978}), an individual
 at origin \(i\) considering a destination \(j\) from a set of possible destinations
 \(J\) has a choice probability
 \begin{equation}
@@ -384,7 +414,7 @@ observational data.
 The logarithm of the denominator of the choice probability given in Equation
 \eqref{eq:mnlp} is a quantity called the \emph{logsum} and represents the total
 value --- or accessibility \(A\) --- of the choice set for individual \(i\)
-\citep{williams1977formation, handy1997}
+(\protect\hyperlink{ref-handy1997}{Handy \& Niemeier, 1997}; \protect\hyperlink{ref-williams1977formation}{Williams, 1977})
 \begin{equation}
  A_i = \log\left(\sum_{j' \in J} e^{V_{ij'}}\right) + C
   \label{eq:dclogsum}
@@ -444,7 +474,7 @@ the universities, two commuter rail stations, and the densest portions of Provo
 and Orem, and other local bus services operate in other communities in the region.
 Table \ref{tab:acstable} presents descriptive statistics of
 the block groups in Utah County obtained from the 2015-2019 American Community
-Survey (ACS) using the tidycensus package for R \citep{tidycensus}.
+Survey (ACS) using the tidycensus package for R (\protect\hyperlink{ref-tidycensus}{K. Walker \& Herman, 2021}).
 
 \begin{table}
 
@@ -493,7 +523,7 @@ whether the park includes facilities for volleyball, basketball, and tennis.
 The constructed dataset includes 582 attributed parks.
 
 Grocery stores were retrieved from OSM and validated using internet resources and
-site visits. The complete Nutritional Environment Measures Survey (NEMS-S) \citep{glanz2007}
+site visits. The complete Nutritional Environment Measures Survey (NEMS-S) (\protect\hyperlink{ref-glanz2007}{Glanz et al., 2007})
 was collected for each store, but this preliminary analysis only includes
 cursory information on the stores including whether the store is a convenience store
 or some other non-traditional grocery, whether the store includes a pharmacy or
@@ -515,7 +545,7 @@ be included in the destination utility equations.
 \hypertarget{mobile-device-data}{%
 \subsubsection{Mobile Device Data}\label{mobile-device-data}}
 
-\citet{alamedaparks} present a method for estimating destination choice models from
+Macfarlane et al. (\protect\hyperlink{ref-alamedaparks}{2021}) present a method for estimating destination choice models from
 such data, which we repeat in this study. We provided a set of geometric
 polygons for each park, grocery store, and library to StreetLight Data, Inc., a
 commercial aggregator. StreetLight Data in turn provided data on the number of
@@ -528,14 +558,14 @@ resources at random (each simulated trip was paired with a different sample) to
 serve as the non-chosen alternatives. Random sampling of alternatives is a
 common practice that results in unbiased estimates, though the standard errors
 of the estimates might be larger than could be obtained through a more carefully
-designed sampling scheme \citep{train2009}.
+designed sampling scheme (\protect\hyperlink{ref-train2009}{Train, 2009}).
 
 \hypertarget{travel-times}{%
 \subsubsection{Travel Times}\label{travel-times}}
 
 Once the choice, alternatives, and attributes of the alternatives have been
 defined, the last element of the choice utility is the travel impedance between
-each block group and each resource. Using the \texttt{r5r} R interface \citep{r5r} to the R5
+each block group and each resource. Using the \texttt{r5r} R interface (\protect\hyperlink{ref-r5r}{Rafael H. M. Pereira et al., 2021}) to the R5
 routing algorithm, we estimated the highway drive travel time, the walking
 route time, and the transit travel time for trips departing on April 26,
 2022 at 8 AM. The time and date are most relevant for the transit path builder
@@ -562,7 +592,7 @@ time path by each mode to the nearest boundary point.
 
 Using the simulated trip choices assembled from the location-based services data,
 we estimate destination choice models with the \texttt{mlogit} package for
-R \citep{R, mlogit}.
+R (\protect\hyperlink{ref-mlogit}{Croissant, 2020}; \protect\hyperlink{ref-R}{R Core Team, 2021}).
 
 \begin{table}
 
@@ -606,7 +636,7 @@ are sufficiently high that choosing these travel modes is unlikely. As a
 result, the mode choice logsum is highly collinear with the car travel time.
 Nevertheless, there are small differences differences between the models
 with the different impedance terms. Using a non-nested likelihood statistic
-test presented by \citet{horowitz1987}, we cannot reject the null hypothesis that the two
+test presented by Horowitz (\protect\hyperlink{ref-horowitz1987}{1987}), we cannot reject the null hypothesis that the two
 ``All'' models have equivalent likelihood (\(p\)-value of 0.195), and therefore
 cannot infer that the mode choice logsum is a marginally better estimator of
 park choice than the vehicle travel time alone.
@@ -738,8 +768,10 @@ single poor-quality grocery store is not the same thing as being near multiple
 high-quality groceries, and the logsum value can capture this variance in its
 construction.
 
-What this distinction between access estimation methods might mean for policy
-analysis is yet to be determined, and future research is required. In this analysis,
+\hypertarget{spatial-distribution}{%
+\subsection{Spatial Distribution}\label{spatial-distribution}}
+
+In this analysis,
 we estimate that 18,750 households live in block groups outside the
 boundary of all three resource buffers: 10-minute drive for a library, 5-minute drive for
 a grocery store, and 5-minute walk for a park. Of these, 1,648 make less
@@ -750,23 +782,35 @@ all three resources; that is, they have less-than the regional average access to
 grocery stores, and to libraries, and to parks. Of these households, 3,073
 are similarly low-income. Perhaps more importantly, the overlap between the households
 in \emph{both} groups is not very high: only 9,405 households live
-in block groups with low access determined by both buffers and by accessiblity
+in block groups with low access determined by both buffers and by accessibility
 logsum, 739 of which are low-income households.
 
-\hypertarget{limitations-and-future-research}{%
-\section{Limitations and Future Research}\label{limitations-and-future-research}}
+\hypertarget{discussion}{%
+\section{Discussion}\label{discussion}}
 
-The location-based services data reveals the likely home location of devices
-observed within a geographic polygon, within some measurement error.
-It cannot tell us whether the device holder actually accomplished the assumed
-activity; that is, there may be a reason why a device was observed near a
-library even though the person did not actually patronize the library.
-Additionally, the method we use to compile the estimation dataset presumes that
-the choice to make a trip to the community resource has already been made. Though
-it can suggest how the accessibility of a neighborhood to these resource would improve
-were transportation impedance decreased or the resources expanded or improved,
-it cannot tell us how many more people might take advantage of the resource
-in that case.
+The results presented in the previous section suggest that professionals and
+academics must understand the implications of accessibility definitions when
+conducting spatial analysis of community resources. This study does not attempt
+to correlate the accessibility measure it presents with measures of nutrition,
+health, or numerous other potential covariates. But it is not difficult to forsee
+how the results of such an analysis could change substantially based on whether a
+binary distance-based or utility-based definition is used. Further, the lack of
+spatial agreement on which people in the community have access or do not have access
+implies that policy interventions constructed based on distance alone may target
+neighborhoods that actually have good access from a more holistic perspective.
+
+Surely there are limitations to the specific methods developed in this study.
+The location-based services data
+reveals the likely home location of devices observed within a geographic
+polygon, within some measurement error. It cannot tell us whether the device
+holder actually accomplished the assumed activity; that is, there may be a
+reason why a device was observed near a library even though the person did not
+actually patronize the library. Additionally, the method we use to compile the
+estimation dataset presumes that the choice to make a trip to the community
+resource has already been made. Though it can suggest how the accessibility of a
+neighborhood to these resource would improve were transportation impedance
+decreased or the resources expanded or improved, it cannot tell us how many more
+people might take advantage of the resource in that case.
 
 In this research, all simulated trips were grouped into a single pooled model
 for analysis. This implies that the effect of amenities and travel impedance on
@@ -775,9 +819,11 @@ where, for example, low-income block groups and high-income block groups were
 estimated separately could allow for flexibility in these estimates and reveal
 differences in preferences among residents of the different neighborhoods. Some
 neighborhoods might show a particular preference for access utilities by
-transit, or for specific park amenities. A latent class choice model \citep{walker2002}
+transit, or for specific park amenities. A latent class choice model (\protect\hyperlink{ref-walker2002}{J. Walker \& Ben-Akiva, 2002})
 would go further in potentially informing which demographic variables are
-meaningful in defining possible data segmentation schemes.
+meaningful in defining possible data segmentation schemes. It may be also be
+possible to estimate the models using a synthetic population with statistical
+resampling instead of block group-level aggregate demographic measures.
 
 A necessary assumption made when constructing the estimation dataset is that
 people experience access from their home neighborhood. This may not always be true;
@@ -817,7 +863,7 @@ fundamentally different from buffer-based measures more commonly used to
 inform spatial policy analysis.
 
 Ultimately, the purpose of any accessibility measure to a community resources
-is to enable a subsequent analysis of some metric of well-being. \citet{macfarlane2020}
+is to enable a subsequent analysis of some metric of well-being. Macfarlane et al. (\protect\hyperlink{ref-macfarlane2020}{2020})
 suggest that a utility-based access to parks measure is more predictive of
 physical health outcomes than a buffer-based measure. Is this true for more
 community resources? Would using a more subtle or nuanced measure of access to
@@ -834,9 +880,177 @@ approached.
 \section*{Acknowledgements}\label{acknowledgements}}
 \addcontentsline{toc}{section}{Acknowledgements}
 
-The authors are grateful to Brooke Jones, Kaeli Monahan, and Mali Smith for their help in gathering the grocery store and library information data. Connor Williams gathered the parks data, and Michael Copley assisted with the StreetLight data. Tables and figures in the article are produced using a variety of packages for R \citep{modelsummary, ggspatial}. This research did not receive any specific grant from funding agencies in the public, commercial, or not-for-profit sectors.
+Tables and figures in the article are produced using a variety of packages for R (\protect\hyperlink{ref-modelsummary}{Arel-Bundock, 2021}; \protect\hyperlink{ref-ggspatial}{Dunnington, 2021}).
+The authors are grateful to Brooke Jones, Kaeli Monahan, and Mali Smith for their help in gathering the grocery store and library information data. Connor Williams gathered the parks data, and Michael Copley assisted with the StreetLight data.
 
-\bibliography{book.bib}
+\hypertarget{funding-details}{%
+\section*{Funding details}\label{funding-details}}
+\addcontentsline{toc}{section}{Funding details}
+
+This research did not receive any specific grant from funding agencies in the public, commercial, or not-for-profit sectors.
+
+\hypertarget{biographical-note}{%
+\section*{Biographical Note}\label{biographical-note}}
+\addcontentsline{toc}{section}{Biographical Note}
+
+The authors report there are no competing interests to declare.
+
+\hypertarget{references}{%
+\section*{References}\label{references}}
+\addcontentsline{toc}{section}{References}
+
+\hypertarget{refs}{}
+\begin{CSLReferences}{1}{0}
+\leavevmode\vadjust pre{\hypertarget{ref-aggarwal2014}{}}%
+Aggarwal, A., Cook, A. J., Jiao, J. F., Seguin, R. A., Moudon, A. V., Hurvitz, P. M., \& Drewnowski, A. (2014). Access to supermarkets and fruit and vegetable consumption {[}Journal Article{]}. \emph{American Journal of Public Health}, \emph{104}(5), 917--923. \url{https://doi.org/10.2105/Ajph.2013.301763}
+
+\leavevmode\vadjust pre{\hypertarget{ref-algert2006}{}}%
+Algert, S. J., Agrawal, A., \& Lewis, D. S. (2006). Disparities in access to fresh produce in low-income neighborhoods in los angeles {[}Journal Article{]}. \emph{American Journal of Preventive Medicine}, \emph{30}(5), 365--370. \url{https://doi.org/10.1016/j.amepre.2006.01.009}
+
+\leavevmode\vadjust pre{\hypertarget{ref-allen2019}{}}%
+Allen, J. (2019). Mapping differences in access to public libraries by travel mode and time of day {[}Journal Article{]}. \emph{Library \& Information Science Research}, \emph{41}(1), 11--18. \url{https://doi.org/10.1016/j.lisr.2019.02.001}
+
+\leavevmode\vadjust pre{\hypertarget{ref-modelsummary}{}}%
+Arel-Bundock, V. (2021). \emph{Modelsummary: Summary tables and plots for statistical models and data: Beautiful, customizable, and publication-ready}. \url{https://CRAN.R-project.org/package=modelsummary}
+
+\leavevmode\vadjust pre{\hypertarget{ref-bancroft2015association}{}}%
+Bancroft, C., Joshi, S., Rundle, A., Hutson, M., Chong, C., Weiss, C. C., Genkinger, J., Neckerman, K., \& Lovasi, G. (2015). Association of proximity and density of parks and objectively measured physical activity in the united states: A systematic review. \emph{Social Science \& Medicine}, \emph{138}, 22--30.
+
+\leavevmode\vadjust pre{\hypertarget{ref-barclay2017space}{}}%
+Barclay, D. A. (2017). Space and the social worth of public libraries. \emph{Public Library Quarterly}, \emph{36}(4), 267--273.
+
+\leavevmode\vadjust pre{\hypertarget{ref-bedimo2005}{}}%
+Bedimo-Rung, A. L., Mowen, A. J., \& Cohen, D. A. (2005). The significance of parks to physical activity and public health {[}Journal Article{]}. \emph{American Journal of Preventive Medicine}, \emph{28}(2), 159--168. \url{https://doi.org/10.1016/j.amepre.2004.10.024}
+
+\leavevmode\vadjust pre{\hypertarget{ref-nchrp716}{}}%
+Cambridge Systematics. (2012). \emph{Travel demand forecasting: Parameters and techniques} (NCHRP Report No. 716). Transportation Research Board. \url{https://www.trb.org/Publications/Blurbs/167055.aspx}
+
+\leavevmode\vadjust pre{\hypertarget{ref-chen2021effects}{}}%
+Chen, Z., \& Yeh, A. G.-O. (2021). Effects of built environment on activity participation under different space-time constraints: A case study of guangzhou, china. \emph{Travel Behaviour and Society}, \emph{22}, 84--93.
+
+\leavevmode\vadjust pre{\hypertarget{ref-cheng2021}{}}%
+Cheng, W., Wu, J., Moen, W., \& Hong, L. (2021). Assessing the spatial accessibility and spatial equity of public libraries' physical locations {[}Journal Article{]}. \emph{Library \& Information Science Research}, \emph{43}(2), 101089. https://doi.org/\url{https://doi.org/10.1016/j.lisr.2021.101089}
+
+\leavevmode\vadjust pre{\hypertarget{ref-clifton2004}{}}%
+Clifton, K. J. (2004). Mobility strategies and food shopping for low-income families - a case study {[}Journal Article{]}. \emph{Journal of Planning Education and Research}, \emph{23}(4), 402--413. \url{https://doi.org/10.1177/0739456x04264919}
+
+\leavevmode\vadjust pre{\hypertarget{ref-mlogit}{}}%
+Croissant, Y. (2020). Estimation of random utility models in {R}: The {mlogit} package. \emph{Journal of Statistical Software}, \emph{95}(11), 1--41. \url{https://doi.org/10.18637/jss.v095.i11}
+
+\leavevmode\vadjust pre{\hypertarget{ref-dong2006}{}}%
+Dong, X. J., Ben-Akiva, M. E., Bowman, J. L., \& Walker, J. L. (2006). Moving from trip-based to activity-based measures of accessibility {[}Journal Article{]}. \emph{Transportation Research Part a-Policy and Practice}, \emph{40}(2), 163--180. \url{https://doi.org/10.1016/j.tra.2005.05.002}
+
+\leavevmode\vadjust pre{\hypertarget{ref-ggspatial}{}}%
+Dunnington, D. (2021). \emph{Ggspatial: Spatial data framework for ggplot2}. \url{https://CRAN.R-project.org/package=ggspatial}
+
+\leavevmode\vadjust pre{\hypertarget{ref-ermagun2020}{}}%
+Ermagun, A., \& Tilahun, N. (2020). Equity of transit accessibility across chicago {[}Journal Article{]}. \emph{Transportation Research Part D: Transport and Environment}, \emph{86}, 102461. \url{https://doi.org/10.1016/j.trd.2020.102461}
+
+\leavevmode\vadjust pre{\hypertarget{ref-glanz2007}{}}%
+Glanz, K., Sallis, J. F., Saelens, B. E., \& Frank, L. D. (2007). Nutrition environment measures survey in stores (NEMS-s): Development and evaluation {[}Journal Article{]}. \emph{American Journal of Preventive Medicine}, \emph{32}(4), 282--289.
+
+\leavevmode\vadjust pre{\hypertarget{ref-guo2017}{}}%
+Guo, Y., Chan, C. H., \& Yip, P. S. F. (2017). Spatial variation in accessibility of libraries in hong kong {[}Journal Article{]}. \emph{Library \& Information Science Research}, \emph{39}(4), 319--329. https://doi.org/\url{https://doi.org/10.1016/j.lisr.2017.11.007}
+
+\leavevmode\vadjust pre{\hypertarget{ref-hamidi2020}{}}%
+Hamidi, S. (2020). Urban sprawl and the emergence of food deserts in the USA {[}Journal Article{]}. \emph{Urban Studies}, \emph{57}(8), 1660--1675. \url{https://doi.org/10.1177/0042098019841540}
+
+\leavevmode\vadjust pre{\hypertarget{ref-handy1997}{}}%
+Handy, S. L., \& Niemeier, D. A. (1997). Measuring accessibility: An exploration of issues and alternatives. \emph{Environment and Planning A}, \emph{29}(7), 1175--1194.
+
+\leavevmode\vadjust pre{\hypertarget{ref-hansen1959}{}}%
+Hansen, W. G. (1959). How accessibility shapes land use {[}Journal Article{]}. \emph{Journal of the American Institute of Planners}, \emph{25}(2), 73--76. \url{https://doi.org/10.1080/01944365908978307}
+
+\leavevmode\vadjust pre{\hypertarget{ref-horowitz1987}{}}%
+Horowitz, J. L. (1987). Specification tests for nested logit models {[}Journal Article{]}. \emph{Environment and Planning A: Economy and Space}, \emph{19}(3), 395--402. \url{https://doi.org/10.1068/a190395}
+
+\leavevmode\vadjust pre{\hypertarget{ref-kacynski2016}{}}%
+Kaczynski, A. T., Schipperijn, J., Hipp, J. A., Besenyi, G. M., Wilhelm Stanis, S. A., Hughey, S. M., \& Wilcox, S. (2016). ParkIndex: Development of a standardized metric of park access for research and planning {[}Journal Article{]}. \emph{Preventive Medicine}, \emph{87}, 110--114. \url{https://doi.org/10.1016/j.ypmed.2016.02.012}
+
+\leavevmode\vadjust pre{\hypertarget{ref-kinnell2006}{}}%
+Kinnell, J. C., Bingham, M. F., Mohamed, A. F., Desvousges, W. H., Kiler, T. B., Hastings, E. K., \& Kuhns, K. T. (2006). Estimating site choice decisions for urban recreators {[}Journal Article{]}. \emph{Land Economics}, \emph{82}(2), 257--272. \url{https://doi.org/10.3368/le.82.2.257}
+
+\leavevmode\vadjust pre{\hypertarget{ref-lochner1999}{}}%
+Lochner, K. (1999). Social capital: A guide to its measurement {[}Journal Article{]}. \emph{Health \& Place}, \emph{5}(4), 259--270. \url{https://doi.org/10.1016/s1353-8292(99)00016-7}
+
+\leavevmode\vadjust pre{\hypertarget{ref-logan2019}{}}%
+Logan, T. M., Williams, T. G., Nisbet, A. J., Liberman, K. D., Zuo, C. T., \& Guikema, S. D. (2019). Evaluating urban accessibility: Leveraging open-source data and analytics to overcome existing limitations {[}Journal Article{]}. \emph{Environment and Planning B-Urban Analytics and City Science}, \emph{46}(5), 897--913. \url{https://doi.org/10.1177/2399808317736528}
+
+\leavevmode\vadjust pre{\hypertarget{ref-macfarlane2020}{}}%
+Macfarlane, G. S., Boyd, N., Taylor, J. E., \& Watkins, K. (2020). Modeling the impacts of park access on health outcomes: A utility-based accessibility approach. \emph{Environment and Planning B: Urban Analytics and City Science}. \url{https://doi.org/10.1177/2399808320974027}
+
+\leavevmode\vadjust pre{\hypertarget{ref-alamedaparks}{}}%
+Macfarlane, G. S., Turley Voulgaris, C., \& Tapia, T. (2021). If you build it who will come? Equity analysis of park system changes during COVID-19 using passive origin-destination data. \emph{Journal of Transport and Land Use}.
+
+\leavevmode\vadjust pre{\hypertarget{ref-maxwell2008libraries}{}}%
+Maxwell, N. K. (2008). Libraries?---yes, in my backyard! \emph{Journal of Access Services}, \emph{5}(3), 391--396.
+
+\leavevmode\vadjust pre{\hypertarget{ref-monz2019}{}}%
+Monz, C., Mitrovich, M., D'Antonio, A., \& Sisneros-Kidd, A. (2019). {Using Mobile Device Data to Estimate Visitation in Parks and Protected Areas: An Example from the Nature Reserve of Orange County, California}. \emph{Journal of Park and Recreation Administration}. \url{https://doi.org/10.18666/JPRA-2019-9899}
+
+\leavevmode\vadjust pre{\hypertarget{ref-morland2002}{}}%
+Morland, K., Wing, S., Roux, A. D., \& Poole, C. (2002). Neighborhood characteristics associated with the location of food stores and food service places {[}Journal Article{]}. \emph{American Journal of Preventive Medicine}, \emph{22}(1), 23--29. https://doi.org/\href{https://doi.org/Pii\%20S0749-377(01)00403-2\%0ADoi\%2010.1016/S0749-3797(01)00403-2}{Pii S0749-377(01)00403-2
+Doi 10.1016/S0749-3797(01)00403-2}
+
+\leavevmode\vadjust pre{\hypertarget{ref-muth1971}{}}%
+Muth, R. F. (1971). The derived demand for urban residential land {[}Journal Article{]}. \emph{Urban Studies}, \emph{8}(3), 243--254.
+
+\leavevmode\vadjust pre{\hypertarget{ref-naboulsi2016}{}}%
+Naboulsi, D., Fiore, M., Ribot, S., \& Stanica, R. (2016). Large-scale mobile traffic analysis: A survey {[}Journal Article{]}. \emph{IEEE Communications Surveys \& Tutorials}, \emph{18}(1), 124--161. \url{https://doi.org/10.1109/comst.2015.2491361}
+
+\leavevmode\vadjust pre{\hypertarget{ref-neusel2016}{}}%
+Neusel Ussery, E., Yngve, L., Merriam, D., Whitfield, G., Foster, S., Wendel, A., \& Boehmer, T. (2016). The national environmental public health tracking network access to parks indicator: A national county-level measure of park proximity {[}Journal Article{]}. \emph{Journal of Park and Recreation Administration}, \emph{34}(3). \url{https://doi.org/10.18666/jpra-2016-v34-i3-7119}
+
+\leavevmode\vadjust pre{\hypertarget{ref-philbin2019}{}}%
+Philbin, M. M., Parker, C. M., Flaherty, M. G., \& Hirsch, J. S. (2019). Public libraries: A community-level resource to advance population health {[}Journal Article{]}. \emph{Journal of Community Health}, \emph{44}(1), 192--199. \url{https://doi.org/10.1007/s10900-018-0547-4}
+
+\leavevmode\vadjust pre{\hypertarget{ref-R}{}}%
+R Core Team. (2021). \emph{R: A language and environment for statistical computing}. R Foundation for Statistical Computing. \url{https://www.R-project.org/}
+
+\leavevmode\vadjust pre{\hypertarget{ref-r5r}{}}%
+Rafael H. M. Pereira, Marcus Saraiva, Daniel Herszenhut, Carlos Kaue Vieira Braga, \& Matthew Wigginton Conway. (2021). r5r: Rapid realistic routing on multimodal transport networks with R5 in r. \emph{Findings}. \url{https://doi.org/10.32866/001c.21262}
+
+\leavevmode\vadjust pre{\hypertarget{ref-recker1978}{}}%
+Recker, W. W., \& Kostyniuk, L. P. (1978). Factors influencing destination choice for the urban grocery shopping trip. \emph{Transportation}, \emph{7}(1), 19--33.
+
+\leavevmode\vadjust pre{\hypertarget{ref-rigolon2018}{}}%
+Rigolon, A., Browning, M., \& Jennings, V. (2018). Inequities in the quality of urban park systems: An environmental justice investigation of cities in the united states {[}Journal Article{]}. \emph{Landscape and Urban Planning}, \emph{178}, 156--169. \url{https://doi.org/10.1016/j.landurbplan.2018.05.026}
+
+\leavevmode\vadjust pre{\hypertarget{ref-train2009}{}}%
+Train, K. E. (2009). \emph{{Discrete Choice Methods with Simulation, 2nd Edition}}. Cambridge University Press. \url{https://doi.org/10.1016/S0898-1221(04)90100-9}
+
+\leavevmode\vadjust pre{\hypertarget{ref-parkscore2019}{}}%
+Trust for Public Land. (2019). \emph{{2019 ParkScore Index}}. \url{https://www.tpl.org/parkscore}
+
+\leavevmode\vadjust pre{\hypertarget{ref-usdafara}{}}%
+U.S. Department of Agriculture. (2021). \emph{Food access research atlas} {[}Web Page{]}. \url{https://www.ers.usda.gov/data-products/food-access-research-atlas/documentation/}.
+
+\leavevmode\vadjust pre{\hypertarget{ref-walker2002}{}}%
+Walker, J., \& Ben-Akiva, M. (2002). Generalized random utility model {[}Journal Article{]}. \emph{Mathematical Social Sciences}, \emph{43}(3), 303--343. https://doi.org/\href{https://doi.org/Pii\%20S0165-4896(02)00023-9\%0ADoi\%2010.1016/S0165-4896(02)00023-9}{Pii S0165-4896(02)00023-9
+Doi 10.1016/S0165-4896(02)00023-9}
+
+\leavevmode\vadjust pre{\hypertarget{ref-tidycensus}{}}%
+Walker, K., \& Herman, M. (2021). \emph{Tidycensus: Load US census boundary and attribute data as 'tidyverse' and 'sf'-ready data frames}. \url{https://CRAN.R-project.org/package=tidycensus}
+
+\leavevmode\vadjust pre{\hypertarget{ref-widener2015spatiotemporal}{}}%
+Widener, M. J., Farber, S., Neutens, T., \& Horner, M. (2015). Spatiotemporal accessibility to supermarkets using public transit: An interaction potential approach in cincinnati, ohio. \emph{Journal of Transport Geography}, \emph{42}, 72--83.
+
+\leavevmode\vadjust pre{\hypertarget{ref-williams1977formation}{}}%
+Williams, H. C. (1977). On the formation of travel demand models and economic evaluation measures of user benefit. \emph{Environment and Planning A}, \emph{9}(3), 285--344.
+
+\leavevmode\vadjust pre{\hypertarget{ref-witten2003}{}}%
+Witten, K., Exeter, D., \& Field, A. (2003). The quality of urban environments: Mapping variation in access to community resources {[}Journal Article{]}. \emph{Urban Studies}, \emph{40}(1), 161--177. \url{https://doi.org/10.1080/00420980220080221}
+
+\leavevmode\vadjust pre{\hypertarget{ref-wood2016}{}}%
+Wood, B. S., \& Horner, M. W. (2016). Understanding accessibility to snap-accepting food store locations: Disentangling the roles of transportation and socioeconomic status {[}Journal Article{]}. \emph{Applied Spatial Analysis and Policy}, \emph{9}(3), 309--327. \url{https://doi.org/10.1007/s12061-015-9138-2}
+
+\leavevmode\vadjust pre{\hypertarget{ref-tcrp138}{}}%
+Zalewski, A., Sonenklar, D., Cohen, A., Kressner, J., \& Macfarlane, G. (2019). \emph{Public transit rider origin-destination survey methods and technologies} (TCRP Synthesis Report No. 138). Transportation Research Board.
+
+\leavevmode\vadjust pre{\hypertarget{ref-zhu2018}{}}%
+Zhu, J., \& Ye, X. (2018). Development of destination choice model with pairwise district-level constants using taxi GPS data {[}Journal Article{]}. \emph{Transportation Research Part C: Emerging Technologies}, \emph{93}, 410--424. \url{https://doi.org/10.1016/j.trc.2018.06.016}
+
+\end{CSLReferences}
 
 
 \end{document}

@@ -4,18 +4,18 @@
 
   <meta charset="utf-8" />
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-  <title>Utility-based accessibility to community resources: An application of location-based services data</title>
+  <title>Funding details | Utility-based accessibility to community resources: An application of location-based services data</title>
   <meta name="description" content="Utah County Resources" />
   <meta name="generator" content="bookdown 0.26.3 and GitBook 2.6.7" />
 
-  <meta property="og:title" content="Utility-based accessibility to community resources: An application of location-based services data" />
+  <meta property="og:title" content="Funding details | Utility-based accessibility to community resources: An application of location-based services data" />
   <meta property="og:type" content="book" />
   
   <meta property="og:description" content="Utah County Resources" />
   
 
   <meta name="twitter:card" content="summary" />
-  <meta name="twitter:title" content="Utility-based accessibility to community resources: An application of location-based services data" />
+  <meta name="twitter:title" content="Funding details | Utility-based accessibility to community resources: An application of location-based services data" />
   
   <meta name="twitter:description" content="Utah County Resources" />
   
@@ -29,8 +29,8 @@
   <meta name="apple-mobile-web-app-status-bar-style" content="black" />
   
   
-
-<link rel="next" href="lit-review.html"/>
+<link rel="prev" href="acknowledgements.html"/>
+<link rel="next" href="biographical-note.html"/>
 <style type="text/css">
 p.abstract{
   text-align: center;
@@ -227,125 +227,17 @@ div.csl-indent {
           <div class="page-inner">
 
             <section class="normal" id="section-">
-<div id="header">
-<h1 class="title">Utility-based accessibility to community resources: An application of location-based services data</h1>
-<p class="author multi-author"><em>Gregory Macfarlane</em></p>
-<address class="author_afil">
-BYUCE<br>
-<a class="author_email" href="mailto:#"><a href="mailto:gregmacfarlane@byu.edu" class="email">gregmacfarlane@byu.edu</a></a>
-</address>
-<p class="author multi-author"><em>Emma Stucki</em></p>
-<address class="author_afil">
-BYUCE<br>
-<a class="author_email" href="mailto:#"><a href="mailto:stuckiemma@gmail.com" class="email">stuckiemma@gmail.com</a></a>
-</address>
-<p class="author multi-author"><em>Alisha Redelfs</em></p>
-<address class="author_afil">
-BYUPH<br>
-<a class="author_email" href="mailto:#"><a href="mailto:alisha_redelfs@byu.edu" class="email">alisha_redelfs@byu.edu</a></a>
-</address>
-<p class="author multi-author"><em>Lori Spruance</em></p>
-<address class="author_afil">
-BYUPH<br>
-<a class="author_email" href="mailto:#"><a href="mailto:lori.spruance@byu.edu" class="email">lori.spruance@byu.edu</a></a>
-</address>
-<p class="date"><em>2022-08-31</em></p>
-<div class="abstract">
-<p class="abstract">Abstract</p>
-<p>Understanding who in a community has access to its resources – parks, libraries,
-grocery stores, etc. – has profound equity implications, but typical methods
-to understand access to these resources are limited. Travel time buffers require
-researchers to assert mode of access as well as an arbitrary distance threshold;
-further, these methods do not distinguish between destination quality attributes
-in an effective way. In this research, we present a methodology to develop
-utility-based accessibility measures for parks, libraries, and grocery stores
-in Utah County, Utah. The method relies on passive location-based services data
-to model destination choice to these community resources; the destination choice
-model utility functions in turn allow us to develop a picture of regional access
-that is sensitive to: the quality and size of the destination resource;
-continuous (non-binary) travel impedance by multiple modes; and the
-sociodemographic attributes of the traveler. We then use this measure
-to explore equity in access to the specified community resources across
-income level in Utah County: the results reveal a discrepancy between which
-neighborhoods might be targeted for intervention using space-based analysis.</p>
-</div>
-</div>
-<div id="intro" class="section level1 hasAnchor" number="1">
-<h1><span class="header-section-number"> 1</span> Introduction<a href="intro.html#intro" class="anchor-section" aria-label="Anchor link to header"></a></h1>
-<p>Communities provide important resources to the people who live in them. These
-resources might include physical and economic resources
-— shared open space, libraries, commercial establishments, etc. — as well as less identifiable resources
-including a sense of membership and other forms of social capital
-<span class="citation">(<a href="#ref-lochner1999" role="doc-biblioref">Lochner, 1999</a>)</span>. Indeed, access to these resources is a primary reason why
-communities exist <span class="citation">(<a href="#ref-muth1971" role="doc-biblioref">Muth, 1971</a>)</span>, as well as a long-motivating objective in
-transportation infrastructure planning <span class="citation">(<a href="#ref-hansen1959" role="doc-biblioref">Hansen, 1959</a>)</span>.</p>
-<p>Given the importance of these community resources, it is not surprising that
-so much scholarly attention has been paid to examining the spatial and
-socioeconomic variation in access to them <span class="citation">(<a href="#ref-handy1997" role="doc-biblioref">Handy &amp; Niemeier, 1997</a>; <a href="#ref-witten2003" role="doc-biblioref">Witten et al., 2003</a>)</span>. What
-is surprising is the simplistic and arbitrary definition of many
-quantitative resource accessibility measures, in spite of the widespread
-availability of geographical information systems (GIS) software <span class="citation">(<a href="#ref-logan2019" role="doc-biblioref">Logan et al., 2019</a>)</span> and
-an understanding that proximity to a resource is not the only consideration
-in its use <span class="citation">(<a href="#ref-dong2006" role="doc-biblioref">Dong et al., 2006</a>)</span>. Individuals do not always shop at the nearest grocery
-store, nor do they necessarily perceive an 11-minute walk to a park as
-meaningfully different from a 9-minute walk. A measure of access that can
-incorporate travel impedance by multiple transportation modes alongside
-qualitative attributes of the resources in question would provide a better
-theoretical comparison to what people experience and observe in their own
-communities. This measure in turn may result in a different understanding
-of which groups have or do not have good access — and therefore in different
-policy interventions to resolve the access gap — than more traditionally used
-measures <span class="citation">(<a href="#ref-logan2019" role="doc-biblioref">Logan et al., 2019</a>; <a href="#ref-macfarlane2020" role="doc-biblioref">Macfarlane et al., 2020</a>)</span>.</p>
-<p>In this paper, we develop utility-based access measures to parks, grocery stores, and
-libraries in Utah County, Utah. These measures are based in econometric choice
-theory relating continuous multimodal travel impedance to attributes of the
-resource. The utility preferences are estimated on location-based services data
-obtained from a third-party commercial data aggregator. We then use the model
-estimates to construct a composite accessibility measure and examine potential
-discrepancies between this measure and a more common travel-time buffer
-measurement.</p>
-<p>The paper begins with a discussion of previous findings relating access to
-community resources with social, health, and equity benefits. We then describe
-the methodology employed in this research, which makes use of novel third-party
-mobile device. A results section describes both the estimated choice models and
-a comparative analysis; the paper closes with a discussion of several
-limitations of the approach as well as associated opportunities for future research.</p>
-
-</div>
-<h3>References<a href="references.html#references" class="anchor-section" aria-label="Anchor link to header"></a></h3>
-<div id="refs" class="references csl-bib-body hanging-indent" line-spacing="2">
-<div id="ref-dong2006" class="csl-entry">
-Dong, X. J., Ben-Akiva, M. E., Bowman, J. L., &amp; Walker, J. L. (2006). Moving from trip-based to activity-based measures of accessibility [Journal Article]. <em>Transportation Research Part a-Policy and Practice</em>, <em>40</em>(2), 163–180. <a href="https://doi.org/10.1016/j.tra.2005.05.002">https://doi.org/10.1016/j.tra.2005.05.002</a>
-</div>
-<div id="ref-handy1997" class="csl-entry">
-Handy, S. L., &amp; Niemeier, D. A. (1997). Measuring accessibility: An exploration of issues and alternatives. <em>Environment and Planning A</em>, <em>29</em>(7), 1175–1194.
-</div>
-<div id="ref-hansen1959" class="csl-entry">
-Hansen, W. G. (1959). How accessibility shapes land use [Journal Article]. <em>Journal of the American Institute of Planners</em>, <em>25</em>(2), 73–76. <a href="https://doi.org/10.1080/01944365908978307">https://doi.org/10.1080/01944365908978307</a>
-</div>
-<div id="ref-lochner1999" class="csl-entry">
-Lochner, K. (1999). Social capital: A guide to its measurement [Journal Article]. <em>Health &amp; Place</em>, <em>5</em>(4), 259–270. <a href="https://doi.org/10.1016/s1353-8292(99)00016-7">https://doi.org/10.1016/s1353-8292(99)00016-7</a>
-</div>
-<div id="ref-logan2019" class="csl-entry">
-Logan, T. M., Williams, T. G., Nisbet, A. J., Liberman, K. D., Zuo, C. T., &amp; Guikema, S. D. (2019). Evaluating urban accessibility: Leveraging open-source data and analytics to overcome existing limitations [Journal Article]. <em>Environment and Planning B-Urban Analytics and City Science</em>, <em>46</em>(5), 897–913. <a href="https://doi.org/10.1177/2399808317736528">https://doi.org/10.1177/2399808317736528</a>
-</div>
-<div id="ref-macfarlane2020" class="csl-entry">
-Macfarlane, G. S., Boyd, N., Taylor, J. E., &amp; Watkins, K. (2020). Modeling the impacts of park access on health outcomes: A utility-based accessibility approach. <em>Environment and Planning B: Urban Analytics and City Science</em>. <a href="https://doi.org/10.1177/2399808320974027">https://doi.org/10.1177/2399808320974027</a>
-</div>
-<div id="ref-muth1971" class="csl-entry">
-Muth, R. F. (1971). The derived demand for urban residential land [Journal Article]. <em>Urban Studies</em>, <em>8</em>(3), 243–254.
-</div>
-<div id="ref-witten2003" class="csl-entry">
-Witten, K., Exeter, D., &amp; Field, A. (2003). The quality of urban environments: Mapping variation in access to community resources [Journal Article]. <em>Urban Studies</em>, <em>40</em>(1), 161–177. <a href="https://doi.org/10.1080/00420980220080221">https://doi.org/10.1080/00420980220080221</a>
-</div>
+<div id="funding-details" class="section level1 unnumbered hasAnchor">
+<h1>Funding details<a href="funding-details.html#funding-details" class="anchor-section" aria-label="Anchor link to header"></a></h1>
+<p>This research did not receive any specific grant from funding agencies in the public, commercial, or not-for-profit sectors.</p>
 </div>
             </section>
 
           </div>
         </div>
       </div>
-
-<a href="lit-review.html" class="navigation navigation-next navigation-unique" aria-label="Next page"><i class="fa fa-angle-right"></i></a>
+<a href="acknowledgements.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+<a href="biographical-note.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
     </div>
   </div>
 <script src="libs/gitbook-2.6.7/js/app.min.js"></script>

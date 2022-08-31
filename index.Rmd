@@ -1,13 +1,14 @@
 ---
-title: "Utility-Based Accessibility to Community Resources: An Application of Location-Based Services Data"
+title: "Utility-based accessibility to community resources: An application of location-based services data"
+type: JOURNAL ARTICLE
 author:
   - name: Gregory Macfarlane
+    correspondingauthor: true
     email: gregmacfarlane@byu.edu
-    affiliation: BYU
-    footnote: 1
+    affiliation: BYUCE
   - name: Emma Stucki
     email: stuckiemma@gmail.com 
-    affiliation: BYU
+    affiliation: BYUCE
   - name: Alisha Redelfs
     email: alisha_redelfs@byu.edu
     affiliation: BYUPH
@@ -15,22 +16,23 @@ author:
     email: lori.spruance@byu.edu
     affiliation: BYUPH
 address: 
-  - code: BYU
-    address: Brigham Young University, Civil and Construction Engineering Department, 430 EB, Provo, Utah 84602
+  - code: BYUCE
+    address: Brigham Young University, Civil and Construction Engineering Department,
   - code: BYUPH
-    address: Brigham Young University, Public Health Department, 4103 LSB, Provo, Utah 84602
+    address: Brigham Young University, Public Health Department
 footnote:
   - code: 1
     text: "Corresponding Author"
 date: "`r Sys.Date()`"
 site: bookdown::bookdown_site
-journal: "submitted to Health and Place"
+journal: "submitted to Cities and Health"
 bibliography: [book.bib]
-biblio-style: "apalike"
-csl: elsevier-harvard-italics.csl
+# option "doubleblind" will remove authors names
+classoption: review, 3p
+csl-refs: yes
+csl: apa.csl
 link-citations: yes
-layout: "3p, authoryear, review"
-keywords:
+keywords: 
   - Accessibility
   - Passive Data
   - Location Choice
@@ -52,6 +54,10 @@ abstract: |
     income level in Utah County: the results reveal a discrepancy between which
     neighborhoods might be targeted for intervention using space-based analysis.
 description: "Utah County Resources"
+header-includes: |
+  \usepackage{hyperref}
+  \usepackage[utf8]{inputenc}
+  \def\tightlist{}
 ---
 
 ```{r setup, include = FALSE}
