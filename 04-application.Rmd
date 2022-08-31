@@ -177,15 +177,15 @@ people are likely to experience.
 left_join(
   access_bin %>%
     st_set_geometry(NULL) %>%
-    rename(buffer_grocery = grocery, buffer_library = library, buffer_park = park,
-           minutes_grocery = grocery_min, minutes_library = library_min, minutes_park = park_min),
+    rename(buffer_Grocery = grocery, buffer_Library = library, buffer_Park = park,
+           minutes_Grocery = grocery_min, minutes_Library = library_min, minutes_Park = park_min),
   access_ls %>%
     st_set_geometry(NULL) %>%
     select(-total) %>%
-    rename(logsum_grocery = grocery, logsum_library = library, logsum_park = park),
+    rename(logsum_Grocery = grocery, logsum_Library = library, logsum_Park = park),
   by = c("id", "POPULATION")
 )  %>%
-  pivot_longer(cols = minutes_grocery:logsum_park) %>%
+  pivot_longer(cols = minutes_Grocery:logsum_Park) %>%
   separate(name, c("measure", "resource")) %>%
   pivot_wider(names_from = measure, values_from = value) %>%
   mutate(buffer = as.logical(buffer)) %>%
@@ -224,16 +224,8 @@ construction.
 
 
 ```{r income-disp}
-no_buffer <- access_bin %>% left_join(acsdata, by = c("id" =  "geoid")) %>%
-  filter(!grocery, !park,!library) %>%
-  st_set_geometry(NULL)
-
-no_logsum <- access_ls %>% left_join(acsdata, by = c("id" =  "geoid")) %>%
-  filter(grocery < mean(grocery, na.rm = TRUE),  
-         park < mean(park, na.rm = TRUE), 
-         library < mean(library, na.rm = TRUE)) %>%
-  st_set_geometry(NULL)
-
+tar_load(no_buffer)
+tar_load(no_logsum)
 
 # calculate number of households in each group, and number of low-income
 nhh_nobuf <- sum(no_buffer$households, na.rm = TRUE)
@@ -247,8 +239,9 @@ nhh_both <- inner_join(no_buffer[, c("id", "households", "lowincome")],
   summarise(n_hh = sum(households), n_lo = sum(households * lowincome * 0.01))
 ```
 
-What this distinction between access estimation methods might mean for policy
-analysis is yet to be determined, and future research is required. In this analysis, 
+## Spatial Distribution
+
+ In this analysis, 
 we estimate that `r nhh_nobuf` households live in block groups outside the
 boundary of all three resource buffers: 10-minute drive for a library, 5-minute drive for 
 a grocery store, and 5-minute walk for a park. Of these, `r nhh_nobuflow` make less
@@ -259,6 +252,6 @@ all three resources; that is, they have less-than the regional average access to
 grocery stores, and to libraries, and to parks. Of these households, `r nhh_nolslow`
 are similarly low-income. Perhaps more importantly, the overlap between the households
 in *both* groups is not very high: only `r nhh_both$n_hh[1]` households live
-in block groups with low access determined by both buffers and by accessiblity 
+in block groups with low access determined by both buffers and by accessibility 
 logsum, `r nhh_both$n_lo[1]` of which are low-income households.
 

@@ -1,16 +1,28 @@
-# Limitations and Future Research
+# Discussion
 
-The location-based services data reveals the likely home location of devices 
-observed within a geographic polygon, within some measurement error. 
-It cannot tell us whether the device holder actually accomplished the assumed
-activity; that is, there may be a reason why a device was observed near a
-library even though the person did not actually patronize the library.
-Additionally, the method we use to compile the estimation dataset presumes that
-the choice to make a trip to the community resource has already been made. Though
-it can suggest how the accessibility of a neighborhood to these resource would improve 
-were transportation impedance decreased or the resources expanded or improved, 
-it cannot tell us how many more people might take advantage of the resource 
-in that case. 
+The results presented in the previous section suggest that professionals and 
+academics must understand the implications of accessibility definitions when 
+conducting spatial analysis of community resources. This study does not attempt
+to correlate the accessibility measure it presents with measures of nutrition,
+health, or numerous other potential covariates. But it is not difficult to forsee
+how the results of such an analysis could change substantially based on whether a
+binary distance-based or utility-based definition is used. Further, the lack of 
+spatial agreement on which people in the community have access or do not have access
+implies that policy interventions constructed based on distance alone may target 
+neighborhoods that actually have good access from a more holistic perspective.
+
+Surely there are limitations to the specific methods developed in this study. 
+The location-based services data
+reveals the likely home location of devices observed within a geographic
+polygon, within some measurement error. It cannot tell us whether the device
+holder actually accomplished the assumed activity; that is, there may be a
+reason why a device was observed near a library even though the person did not
+actually patronize the library. Additionally, the method we use to compile the
+estimation dataset presumes that the choice to make a trip to the community
+resource has already been made. Though it can suggest how the accessibility of a
+neighborhood to these resource would improve were transportation impedance
+decreased or the resources expanded or improved, it cannot tell us how many more
+people might take advantage of the resource in that case.
 
 In this research, all simulated trips were grouped into a single pooled model 
 for analysis. This implies that the effect of amenities and travel impedance on 
@@ -21,7 +33,9 @@ differences in preferences among residents of the different neighborhoods. Some
 neighborhoods might show a particular preference for access utilities by 
 transit, or for specific park amenities. A latent class choice model [@walker2002]
 would go further in potentially informing which demographic variables are
-meaningful in defining possible data segmentation schemes.
+meaningful in defining possible data segmentation schemes. It may be also be
+possible to estimate the models using a synthetic population with statistical 
+resampling instead of block group-level aggregate demographic measures.
 
 A necessary assumption made when constructing the estimation dataset is that
 people experience access from their home neighborhood. This may not always be true;
@@ -57,7 +71,7 @@ were informed by observing trips to specific facilities in mobile
 device data, allowing the measures to incorporate attributes of the resource 
 as well as attributes of the journey there. The computed measures are 
 fundamentally different from buffer-based measures more commonly used to 
-inform spatial policy analysis.
+inform spatial policy analysis. 
 
 Ultimately, the purpose of any accessibility measure to a community resources 
 is to enable a subsequent analysis of some metric of well-being. @macfarlane2020
