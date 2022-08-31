@@ -28,6 +28,7 @@ otp_path <- "r5"
 # End this file with a list of target objects.
 list(
   # block group centroids
+  tar_target(bg, tigris::block_groups("UT", "Utah", year = 2019)),
   tar_target(bgcentroid, get_bglatlong()),
   tar_target(acsdata, get_acsdata(state = "UT", county = "Utah")),
   
@@ -99,6 +100,12 @@ list(
   # aggregate accessibilities ==============
   tar_target(access_bin, accessbin_data(bgcentroid, gbin_access, lbin_access, pbin_access)),
   tar_target(access_ls , accessls_data(bgcentroid, grocery_access, library_access, park_access)),
+  tar_target(no_buffer, make_nobuffer(access_bin, acsdata)),
+  tar_target(no_logsum, make_nologsum(access_ls, acsdata)),
+  
+  # income map ===========
+  tar_target(hh, read_rds("data/syn_hh.rds")), 
+  tar_target(pp, read_rds("data/syn_pp.rds")),
   
   
   tar_target(dummy,1+1)

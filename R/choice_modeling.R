@@ -223,7 +223,88 @@ my_augment <- function (x, data = x$model, ...) {
 }
 
 
-#' Horowitz likelihood ratio test of nested specifications
+make_nobuffer <- function(access_bin, acsdata){
+  access_bin %>% left_join(acsdata, by = c("id" =  "geoid")) %>%
+    filter(!grocery, !park,!library) %>%
+    st_set_geometry(NULL)
+}
+
+make_nologsum <- function(access_ls, acsdata){
+  access_ls %>% left_join(acsdata, by = c("id" =  "geoid")) %>%
+    filter(grocery < mean(grocery, na.rm = TRUE),  
+           park < mean(park, na.rm = TRUE), 
+           library < mean(library, na.rm = TRUE)) %>%
+    st_set_geometry(NULL)
+}
+
+
+income_map <- function(hh, access_bin, access_ls){
+  
+  # count up the number of children in each household
+  children <- pp |> 
+    filter(age < 18) |> 
+    group_by(household_id) |> 
+    summarise(n_children = n())
+  
+  
+  hh_access <- hh |> 
+    group_by(zone_id) |> 
+    mutate(
+      meaninc = median(HHINCADJ, na.rm = TRUE),
+      div = as.numeric(cut(HHINCADJ - meaninc, breaks = c(-Inf, -50, -20, 0, 20, 50, 100, Inf) * 1000, 
+                labels = 1:7))
+    ) |> 
+    left_join(children, by = c("household_id")) |> 
+    ungroup() %>% 
+    mutate(
+      n_children = ifelse(is.na(n_children), 0, n_children)
+    ) |> 
+    rename(bg = GEOID) |> 
+    left_join(access_bin |> st_set_geometry(NULL) |>  
+                transmute(id, grocery_bin = grocery, library_bin = library, park_bin = park, 
+                          bin_total = ifelse(!grocery & !library & !park, FALSE, TRUE)),
+              by = c("bg" = "id")) |> 
+    left_join(access_ls  |> st_set_geometry(NULL) |> 
+                transmute(id, grocery_ls = grocery, library_ls = library, park_ls = park, 
+                          total_ls = total), 
+              by = c("bg" = "id"))  |> 
+    mutate(
+      category =  case_when(
+         ~ "Outside buffer, above average logsum",
+        grocery_min > 5 & grocery <= 0 ~ "Outside buffer, below average logsum",
+        grocery_min <= 5 & grocery > 0 ~ "Inside buffer, above average logsum",
+        grocery_min <= 5 & grocery <= 0 ~ "Inside buffer, below average logsum",
+        TRUE ~ "None"
+      )
+    )
+  
+  table(hh_access$grocery_category)
+    
+  ggplot(hh_access |> sample_frac(0.1) , aes(color = grocery_category, alpha = HHINCADJ)) +
+    annotation_map_tile(type = "cartolight", zoom = 12) +
+    geom_sf()
+  
+  
+  
+  hh_access |> 
+    mutate(
+      HHINCADJ = ifelse(HHINCADJ < 0, NA, HHINCADJ),
+      inc_group = cut(HHINCADJ, breaks = c(-Inf, -In))
+    )
+  
+  
+  l <- hh_access |> 
+    sample_frac(0.1) 
+  
+  pal <- leaflet::colorFactor(viridis_pal(option = "C")(3), domain = l$HHINCADJ)
+  leaflet(l) |> 
+    addProviderTiles(providers$CartoDB) |> 
+    addCircles(color = ~pal(HHINCADJ), radius = ~div, label = ~HHINCADJ, stroke = TRUE)
+    
+}
+
+
+#' Horowitz likelihood ratio test of non-nested specifications
 #' 
 #' @param m1 an mlogit model
 #' @param m2 an mlogit model
