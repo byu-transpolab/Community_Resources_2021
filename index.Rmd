@@ -1,59 +1,50 @@
 ---
-title: "Utility-based accessibility to community resources: An application of location-based services data"
-type: JOURNAL ARTICLE
+title: "Beyond proximity: utility-based access from location-based services data."
+type: article
+journal: ijerph
 author:
-  - name: Gregory Macfarlane
-    correspondingauthor: true
-    email: gregmacfarlane@byu.edu
-    affiliation: BYUCE
+  - name: Gregory S. Macfarlane
+    affil: 1, *
   - name: Emma Stucki
-    email: stuckiemma@gmail.com 
-    affiliation: BYUCE
+    affil: 1
   - name: Alisha Redelfs
-    email: alisha_redelfs@byu.edu
-    affiliation: BYUPH
+    affil: 2
   - name: Lori Spruance
-    email: lori.spruance@byu.edu
-    affiliation: BYUPH
-address: 
-  - code: BYUCE
-    address: Brigham Young University, Civil and Construction Engineering Department,
-  - code: BYUPH
+    affil: 2
+affiliation: 
+  - num: 1
+    address: Brigham Young University, Civil and Construction Engineering Department
+  - num: 2
     address: Brigham Young University, Public Health Department
 footnote:
   - code: 1
     text: "Corresponding Author"
+correspondence: |
+  gregmacfarlane@byu.edu; Tel.: +1.801.422.8505
 date: "`r Sys.Date()`"
 site: bookdown::bookdown_site
-journal: "submitted to Cities and Health"
+status: submit
 bibliography: [book.bib]
-# option "doubleblind" will remove authors names
-classoption: review, 3p
-csl-refs: yes
-csl: apa.csl
 link-citations: yes
-keywords: 
-  - Accessibility
-  - Passive Data
-  - Location Choice
+keywords: |
+  Accessibility; Spatial analysis
+simplesummary: |
+  Proximity to community resources is often used as a benchmark in spatial 
+  public health analyses, but a measure that incorporates observed preferences
+  leads to different policy interventions.
 abstract: |
-    Understanding who in a community has access to its resources – parks, libraries, 
-    grocery stores, etc. – has profound equity implications, but typical methods 
-    to understand access to these resources are limited. Travel time buffers require 
-    researchers to assert mode of access as well as an arbitrary distance threshold; 
-    further, these methods do not distinguish between destination quality attributes 
-    in an effective way. In this research, we present a methodology to develop 
-    utility-based accessibility measures for parks, libraries, and grocery stores 
-    in Utah County, Utah. The method relies on passive location-based services data 
-    to model destination choice to these community resources; the destination choice
-    model utility functions in turn allow us to develop a picture of regional access
-    that is sensitive to: the quality and size of the destination resource; 
-    continuous (non-binary) travel impedance by multiple modes; and the 
-    sociodemographic attributes of the traveler. We then use this measure 
-    to explore equity in access to the specified community resources across
-    income level in Utah County: the results reveal a discrepancy between which
-    neighborhoods might be targeted for intervention using space-based analysis.
-description: "Utah County Resources"
+    Understanding who in a community has access to its resources – parks, libraries,  grocery stores, etc. – has profound equity implications, but typical methods  to understand access to these resources are limited. Travel time buffers require  researchers to assert mode of access as well as an arbitrary distance threshold;  further, these methods do not distinguish between destination quality attributes  in an effective way. In this research, we present a methodology to develop  utility-based accessibility measures for parks, libraries, and grocery stores  in Utah County, Utah. The method relies on passive location-based services data  to model destination choice to these community resources; the destination choice model utility functions in turn allow us to develop a picture of regional access that is sensitive to: the quality and size of the destination resource;  continuous (non-binary) travel impedance by multiple modes; and the  sociodemographic attributes of the traveler. We then use this measure  to explore equity in access to the specified community resources across income level in Utah County: the results reveal a discrepancy between which neighborhoods might be targeted for intervention using space-based analysis.
+acknowledgement: |
+  Tables and figures in the article are produced using a variety of packages for R [@modelsummary; @ggspatial]. 
+  The authors are grateful to Brooke Jones, Kaeli Monahan, and Mali Smith for their help in gathering the grocery 
+  store and library information data. Connor Williams gathered the parks data, and Michael Copley assisted with the 
+  StreetLight data. 
+authorcontributions: |
+  G. Macfarlane conceived and designed the experiments. G. Macfarlane and E. Stucki 
+  performed the experiments. A. Redelfs and L. Spruance designed the data collection
+  efforts. All authors reviewed and edited the paper from an intial draft by G. Macfarlane.
+conflictsofinterest: |
+  The authors declare no conflicts of interest.
 header-includes: |
   \usepackage{hyperref}
   \usepackage[utf8]{inputenc}
@@ -81,6 +72,7 @@ library(sf)
 library(ggspatial)
 library(ggnewscale)
 
+options(tinytex.verbose = TRUE)
 source("R/choice_modeling.R")
 # Instructions and options =========
 # prints missing data in tables as blank space
