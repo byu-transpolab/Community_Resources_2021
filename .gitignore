@@ -22,6 +22,10 @@ data/streetlight_parks
 data/utah.osm.pbf
 
 *.log
+*.bbl
+*.spl
+*.synctex.gz
+*.blg
 
 
 # needed to get correct version of java running on multiple-java machines
