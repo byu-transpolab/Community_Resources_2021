@@ -77,6 +77,48 @@ MCLS_{ij} = \log\left(\exp(V_{ij\mathrm{auto}}) + \exp(V_{ij\mathrm{transit}}) +
 
 
 ## Data 
+Figure \@ref(fig:diagram) presents a schematic of the process to calculate the accessibility logsum for a particular region. Though the remainder of this section provides detail on each step and data input, a high-level overview is perhaps  useful here. First, the American Community Survey provides information on the "origins" or residence neighborhoods in the region of study. Manual data collection efforts or other methods provide information on the community resources under study, or the "destinations." Routing software (R5) generates a matrix of travel costs between pairs of neighborhoods and resource locations using highway networks from OpenStreetMap and transit service timetables. These three data sets (origin information, destination information, and travel costs) are then combined into a "synthetic" choice set representing possible activity locations for people in each  neighborhood. Location-based services data from a commercial provider reveals which potential destination was actually chosen, information which feeds an econometric choice model that estimates choice utility parameters. Finally, these utility parameters can then be re-applied to the choice set --- or a new dataset  representing future conditions or even a different region --- to calculate utility-based accessibility measures.
+
+```{r diagram, fig.cap="Diagram of the data assembly process.", fig.width=6}
+grViz(diagram = "
+digraph boxes_and_circles {
+  # a 'graph' statement
+  graph [overlap = true, fontsize = 10]
+  # several 'node' statements
+  node [shape = box,
+        fontname = Helvetica]
+  'Road Network (OpenStreetMap)'; 
+  'Transit (GTFS)'; 
+  'Travel costs';
+  'American Community Survey (origins)';  
+  'Resources (destinations)';
+  'Synthetic choice set'; 
+  'Location-based services data' [color = red];
+  'Utility estimates'; 
+  'Accessibility'; 
+  node [shape = circle,
+        color = blue,
+        fixedsize = true,
+        width = 0.9] // sets as circles
+  R5; mlogit
+  # several 'edge' statements
+  'Road Network (OpenStreetMap)' -> R5
+  'Transit (GTFS)' -> R5
+  R5 -> 'Travel costs'
+  'Travel costs' -> 'Synthetic choice set'
+  'American Community Survey (origins)' -> 'Synthetic choice set'
+  'Resources (destinations)' -> 'Synthetic choice set'
+  'Synthetic choice set' -> mlogit
+  'Location-based services data' -> mlogit
+  mlogit -> 'Utility estimates'
+  'Utility estimates' -> 'Accessibility'
+  'Synthetic choice set' -> 'Accessibility'
+}
+", height = 300, width = 400)
+```
+
+
+
 Utah County, Utah, is among the fastest-growing urbanized regions in the United
 States, with formerly agrarian areas and open rangeland being converted to
 predominately suburban built environments. The population and economic center of 
