@@ -29,7 +29,9 @@ a cumulative opportunities measure can be defined as
   (\#eq:isochrone)
 \end{equation}
 Variations of this measure include elements like "number of grocery stores 
-within 10 minutes" or "density of green space within 5 miles." Strengths of 
+within 10 minutes" or "density of green space within 5 miles." Further modifications
+might allow a measure to include the supply of the resource in addition to its 
+spatial location [@kiani2021different]. Strengths of 
 this method include its relative simplicity, but it has three central limitations. First,
 the threshold $t^*$ must be defined by the researcher for a specific value by
 a certain travel mode, and different definitions

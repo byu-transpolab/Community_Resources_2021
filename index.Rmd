@@ -71,6 +71,7 @@ library(leaflet)
 library(sf)
 library(ggspatial)
 library(ggnewscale)
+library(DiagrammeR)
 
 options(tinytex.verbose = TRUE)
 source("R/choice_modeling.R")

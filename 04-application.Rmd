@@ -139,7 +139,7 @@ tar_load(access_ls)
 ```
 
 
-```{r access-map, dev = "tikz", dev.args=list(pointsize=12), fig.cap = "Spatial comparison of grocery access buffer versus logsum."}
+```{r access-map, dev = "tikz", dev.args=list(pointsize=12), fig.cap = "Spatial comparison of grocery access threshold versus logsum value."}
 amdata <- bind_rows(
   access_ls %>% st_transform(4326) %>%
     select(-total) %>% mutate(method = "Logsum"),
@@ -173,7 +173,13 @@ difference is at the margins, where the discontinuity of the buffer measure
 is replaced by a smoother access surface, more spatially reflective of what 
 people are likely to experience.
 
-```{r access-plot, fig.cap="Relationship between travel time, and logsum access value for block groups in Utah County. Travel-time based buffers shown as dashed lines.", dev = "tikz", dev.args=list(pointsize=10)}
+```{r access-plot, fig.cap="Relationship between travel time and logsum access value for block groups in Utah County. Travel time thresholds shown as dashed lines, with best fit regresssion line added for context.", fig.height=4, dev = "tikz", dev.args=list(pointsize=10)}
+
+thresholds <- tibble(
+  resource = c("Grocery", "Library", "Park"),
+  minutes = c(5, 10, 5)
+)
+
 left_join(
   access_bin %>%
     st_set_geometry(NULL) %>%
@@ -189,19 +195,16 @@ left_join(
   separate(name, c("measure", "resource")) %>%
   pivot_wider(names_from = measure, values_from = value) %>%
   mutate(buffer = as.logical(buffer)) %>%
-  ggplot(aes(x = minutes, y = logsum, color = resource)) +
-  geom_point(pch = 21, alpha = 0.7, stroke = 1) + 
-  stat_smooth(method = "lm", show.legend = FALSE, ribbon = FALSE) + 
-  annotate("segment", x = 5, xend = 5, y = 0, yend =  4, lty = "dashed", lwd = 2, color = dj1[1]) + 
-  annotate("segment", x =10, xend =10, y = 6, yend = 11, lty = "dashed", lwd = 2, color = dj1[5]) + 
-  annotate("segment", x = 5, xend = 5, y = 6, yend = 12, lty = "dashed", lwd = 2, color = dj1[3]) + 
-  scale_color_manual("Resource", values = dj1[c(1, 5, 3)]) + 
-  scale_fill_manual("Within buffer", values = c("white", "grey")) + 
+  ggplot(aes(x = minutes, y = logsum)) +
+  facet_wrap(~resource, scales = "free") +
+  geom_point(pch = 21, alpha = 0.4, stroke = 1) + 
+  geom_vline(data = thresholds, aes(xintercept = minutes), lty = "dashed") +
+  stat_smooth(method = "lm", show.legend = FALSE, ribbon = FALSE) +
   ylab("Accessibility Logsum") + xlab("Travel Time in Minutes")
 
 ```
 
-The potential for the buffer measure to oversimplify the accessiblity problem is further 
+The potential for the buffer measure to oversimplify the accessibility problem is further 
 illustrated in 
 Figure \@ref(fig:access-plot). This figure shows the utility-based accessibility
 logsum calculated using the mode choice logsum as an impedance term against the

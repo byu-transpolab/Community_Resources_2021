@@ -131,7 +131,7 @@ stations in Orem, American Fork, and Lehi. A bus rapid transit (BRT) system conn
 the universities, two commuter rail stations, and the densest portions of Provo 
 and Orem, and other local bus services operate in other communities in the region. 
 Table \@ref(tab:acstable) presents descriptive statistics of
-the block groups in Utah County obtained from the 2015-2019 American Community
+the block groups --- a Census-defined geography between 600 and 3,000 people, and the smallest geography at which aggregate demographic statistics are generally available ---  in Utah County obtained from the 2015-2019 American Community
 Survey (ACS) using the tidycensus package for R [@tidycensus].
 
 ```{r acstable}
@@ -140,7 +140,7 @@ options("datasummary_format_numeric_latex" = "plain")
 
 acs_for_table <- acsdata %>% select(
     "Density: Households per square kilometer" = density,
-    "Income: Median block group income" = income,
+    "Income: Median block group annual income ($US)" = income,
     "Low Income: Share of households making less than $35k" = lowincome,
     "High Income: Share of households making more than $125k" = highincome,
     "Children: Share of households with children under 6" = children,
@@ -150,9 +150,11 @@ acs_for_table <- acsdata %>% select(
     "White: Share of population who is White" = white)
 
 datasummary_skim(acs_for_table, title = "Block Group Summary Statistics",
-  histogram = !knitr::is_latex_output()) %>%
+  histogram = !knitr::is_latex_output(),
+  output = "kableExtra",
+  col.names = c("", "", "", "", "", "", "", "")) %>%
   kableExtra::kable_styling(latex_options = c("scale_down")) %>%
-  kableExtra::column_spec(1, width = "4cm") %>%
+  kableExtra::column_spec(1, width = "4cm", ) %>%
   kableExtra::footnote(symbol = "Hispanic indicates Hispanic individuals of all races; non-Hispanic individuals report a single race alone.") 
 ```
 
