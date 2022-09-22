@@ -149,7 +149,7 @@ applied travel time thresholds to examine the share of communities in Hong Kong
 that lacked access. @guo2017 also measured library access disparities in  Hong Kong,
 using two different travel-time focused measures. None of the measures we could 
 find considered other attributes of the library beyond its proximity, even though
-these addtional features play a strong role in the library's role in community building
+these additional features play a strong role in the library's role in community building
 [@barclay2017space].
 
 Certainly there are other community resources that warrant consideration;

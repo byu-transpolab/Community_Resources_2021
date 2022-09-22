@@ -205,7 +205,7 @@ such data, which we repeat in this study. We provided a set of geometric
 polygons for each park, grocery store, and library to StreetLight Data, Inc., a 
 commercial aggregator. StreetLight Data in turn provided data on the number of
 mobile devices observed in each polygon grouped by the inferred residence block
-group of of those devices during summer and fall 2019.
+group of those devices during summer and fall 2019.
 We then created a simulated destination choice estimation dataset for each
 community resource by sampling 10,000 block group - resource "trips" from the 
 StreetLight dataset. This created a "chosen" alternative; we then sampled ten additional
