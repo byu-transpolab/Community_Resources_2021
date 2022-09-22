@@ -114,7 +114,7 @@ datasummary_skim(acs_for_table, title = "Block Group Summary Statistics",
   kableExtra::footnote(symbol = "Hispanic indicates Hispanic individuals of all races; non-Hispanic individuals report a single race alone.") 
 ```
 
-```{r utco-map, fig.cap="Location of community resources in Utah County", fig.align='center', dev='tikz', cache = FALSE, fig.width=6, fig.height=6,dev.args=list(pointsize=2)}
+```{r utco-map, fig.cap="Location of community resources in Utah County", fig.align='center', dev='tikz', cache = FALSE, fig.width=6.5, fig.height=8,dev.args=list(pointsize=2)}
 tar_load(groceries)
 tar_load(park_polygons)
 tar_load(libraries)
@@ -131,10 +131,12 @@ mapdata <- bind_rows(
 if(knitr::is_latex_output()){
   
   ggplot() + 
-    annotation_map_tile("cartolight", zoom=11) + 
+    annotation_map_tile("stamenbw", zoom=11) + 
+    annotation_scale() +
+    ggspatial::annotation_north_arrow(pad_y = unit(1, "in")) +
     coord_sf(crs = st_crs(4326),  expand = FALSE) + 
     geom_sf(data = mapdata %>% st_transform(4326),  aes(color = `LandUse`, size = `LandUse`),
-            inherit.aes = FALSE, alpha = 0.4) +
+            inherit.aes = FALSE, alpha = 0.5) +
     scale_color_manual("Resource Type", values = dj1[c(1, 5, 3)]) +
     scale_size_manual("Resource Type", values = c(2,3, 1)) +
     theme(axis.line = element_line(color = NA),
