@@ -47,7 +47,7 @@ A gravity-based accessibility measure
 \end{equation}
 considers the "size" of the destination $S_j$ as well as a continuous travel 
 impedance function that decreases the impact of further destinations. The parameters
-of this impedance function can be calibrated to match the observed trip length
+$\beta$ of this impedance function can be calibrated to match the observed trip length
 distribution of a survey or other data, or a basic distance decay function without
 parameters can be used. Additionally, if no other information on the "size" or 
 attractiveness of the destinations is available, then $S_j = 1$.
@@ -62,13 +62,15 @@ the utility $V_{ij}$ of a person at origin $i$ selecting that destination
 V_{ij} = X_{ij}\beta
   (\#eq:simple-utility)
 \end{equation}
-One potential obstacle to developing utility-based accessibility measures is
-obtaining sufficient data on which to estimate the utility preference parameters $\beta$.
+where the marginal effect of the attributes are defined by a vector of 
+estimable parameters $\beta$. 
+One potential obstacle to developing utility-based accessibility measures has been
+obtaining sufficient data on which to estimate these utility preference parameters.
 High-quality household surveys that reveal activity locations are most commonly
 used for this purpose in general travel demand modeling, but such surveys typically
 group many infrequent discretionary trips into catch-all categories [@nchrp716].
 
-In the last several years, various commercial data products developed from
+In the last several years, however, various commercial data products developed from
 mobile device and location-based services (LBS) data have entered common use in
 transportation planning activities. Applications or websites that serve mobile 
 content based on a user's location will log this location information and 
