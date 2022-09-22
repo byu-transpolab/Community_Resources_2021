@@ -27,7 +27,7 @@ status: submit
 bibliography: [book.bib]
 link-citations: yes
 keywords: |
-  Accessibility; Spatial analysis
+  Accessibility; Spatial analysis; Location-based services data; community resources; Parks; Groceries; Libraries
 simplesummary: |
   Proximity to community resources is often used as a benchmark in spatial 
   public health analyses, but a measure that incorporates observed preferences
