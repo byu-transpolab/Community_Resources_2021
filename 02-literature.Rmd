@@ -1,4 +1,4 @@
-# Literature {#lit-review}
+# Literature Review {#lit-review}
 
 In this study, we have chosen to focus on three specific community resources
 that have robust histories of accessibility and spatial analysis: parks, grocery
