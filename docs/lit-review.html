@@ -4,25 +4,25 @@
 
   <meta charset="utf-8" />
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-  <title> 2 Literature | Beyond proximity: utility-based access from location-based services data.</title>
-  <meta name="description" content=" 2 Literature | Beyond proximity: utility-based access from location-based services data." />
+  <title> 2 Literature Review | Beyond proximity: utility-based access from location-based services data.</title>
+  <meta name="description" content=" 2 Literature Review | Beyond proximity: utility-based access from location-based services data." />
   <meta name="generator" content="bookdown 0.26.3 and GitBook 2.6.7" />
 
-  <meta property="og:title" content=" 2 Literature | Beyond proximity: utility-based access from location-based services data." />
+  <meta property="og:title" content=" 2 Literature Review | Beyond proximity: utility-based access from location-based services data." />
   <meta property="og:type" content="book" />
   
   
   
 
   <meta name="twitter:card" content="summary" />
-  <meta name="twitter:title" content=" 2 Literature | Beyond proximity: utility-based access from location-based services data." />
+  <meta name="twitter:title" content=" 2 Literature Review | Beyond proximity: utility-based access from location-based services data." />
   
   
   
 
 
 
-<meta name="date" content="2022-09-22" />
+<meta name="date" content="2022-09-27" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -61,9 +61,12 @@ div.abstract{
 <link href="libs/anchor-sections-1.1.0/anchor-sections.css" rel="stylesheet" />
 <link href="libs/anchor-sections-1.1.0/anchor-sections-hash.css" rel="stylesheet" />
 <script src="libs/anchor-sections-1.1.0/anchor-sections.js"></script>
+<script src="libs/htmlwidgets-1.5.4/htmlwidgets.js"></script>
+<script src="libs/viz-1.8.2/viz.js"></script>
+<link href="libs/DiagrammeR-styles-0.2/styles.css" rel="stylesheet" />
+<script src="libs/grViz-binding-1.0.9/grViz.js"></script>
 <script src="libs/kePrint-0.0.1/kePrint.js"></script>
 <link href="libs/lightable-0.0.1/lightable.css" rel="stylesheet" />
-<script src="libs/htmlwidgets-1.5.4/htmlwidgets.js"></script>
 <link href="libs/leaflet-1.3.1/leaflet.css" rel="stylesheet" />
 <script src="libs/leaflet-1.3.1/leaflet.js"></script>
 <link href="libs/leafletfix-1.0.0/leafletfix.css" rel="stylesheet" />
@@ -180,7 +183,7 @@ div.csl-indent {
 
 <li class="divider"></li>
 <li class="chapter" data-level="1" data-path="intro.html"><a href="intro.html"><i class="fa fa-check"></i><b>1</b> Introduction</a></li>
-<li class="chapter" data-level="2" data-path="lit-review.html"><a href="lit-review.html"><i class="fa fa-check"></i><b>2</b> Literature</a>
+<li class="chapter" data-level="2" data-path="lit-review.html"><a href="lit-review.html"><i class="fa fa-check"></i><b>2</b> Literature Review</a>
 <ul>
 <li class="chapter" data-level="2.1" data-path="lit-review.html"><a href="lit-review.html#developing-access-measures"><i class="fa fa-check"></i><b>2.1</b> Developing Access Measures</a></li>
 <li class="chapter" data-level="2.2" data-path="lit-review.html"><a href="lit-review.html#access-to-parks-grocery-stores-and-libraries"><i class="fa fa-check"></i><b>2.2</b> Access to Parks, Grocery Stores, and Libraries</a></li>
@@ -224,7 +227,7 @@ div.csl-indent {
 
             <section class="normal" id="section-">
 <div id="lit-review" class="section level1 hasAnchor" number="2">
-<h1><span class="header-section-number"> 2</span> Literature<a href="lit-review.html#lit-review" class="anchor-section" aria-label="Anchor link to header"></a></h1>
+<h1><span class="header-section-number"> 2</span> Literature Review<a href="lit-review.html#lit-review" class="anchor-section" aria-label="Anchor link to header"></a></h1>
 <p>In this study, we have chosen to focus on three specific community resources
 that have robust histories of accessibility and spatial analysis: parks, grocery
 stores, and libraries. This section first discusses research developing and
@@ -252,7 +255,9 @@ a cumulative opportunities measure can be defined as
   \tag{2.1}
 \end{equation}\]</span>
 Variations of this measure include elements like “number of grocery stores
-within 10 minutes” or “density of green space within 5 miles.” Strengths of
+within 10 minutes” or “density of green space within 5 miles.” Further modifications
+might allow a measure to include the supply of the resource in addition to its
+spatial location <span class="citation">(<a href="#ref-kiani2021different" role="doc-biblioref">Kiani et al. 2021</a>)</span>. Strengths of
 this method include its relative simplicity, but it has three central limitations. First,
 the threshold <span class="math inline">\(t^*\)</span> must be defined by the researcher for a specific value by
 a certain travel mode, and different definitions
@@ -269,7 +274,7 @@ A gravity-based accessibility measure
 \end{equation}\]</span>
 considers the “size” of the destination <span class="math inline">\(S_j\)</span> as well as a continuous travel
 impedance function that decreases the impact of further destinations. The parameters
-of this impedance function can be calibrated to match the observed trip length
+<span class="math inline">\(\beta\)</span> of this impedance function can be calibrated to match the observed trip length
 distribution of a survey or other data, or a basic distance decay function without
 parameters can be used. Additionally, if no other information on the “size” or
 attractiveness of the destinations is available, then <span class="math inline">\(S_j = 1\)</span>.</p>
@@ -283,12 +288,14 @@ the utility <span class="math inline">\(V_{ij}\)</span> of a person at origin <s
 V_{ij} = X_{ij}\beta
   \tag{2.3}
 \end{equation}\]</span>
-One potential obstacle to developing utility-based accessibility measures is
-obtaining sufficient data on which to estimate the utility preference parameters <span class="math inline">\(\beta\)</span>.
+where the marginal effect of the attributes are defined by a vector of
+estimable parameters <span class="math inline">\(\beta\)</span>.
+One potential obstacle to developing utility-based accessibility measures has been
+obtaining sufficient data on which to estimate these utility preference parameters.
 High-quality household surveys that reveal activity locations are most commonly
 used for this purpose in general travel demand modeling, but such surveys typically
 group many infrequent discretionary trips into catch-all categories <span class="citation">(<a href="#ref-nchrp716" role="doc-biblioref">Cambridge Systematics 2012</a>)</span>.</p>
-<p>In the last several years, various commercial data products developed from
+<p>In the last several years, however, various commercial data products developed from
 mobile device and location-based services (LBS) data have entered common use in
 transportation planning activities. Applications or websites that serve mobile
 content based on a user’s location will log this location information and
@@ -364,7 +371,7 @@ applied travel time thresholds to examine the share of communities in Hong Kong
 that lacked access. <span class="citation">Guo, Chan, and Yip (<a href="#ref-guo2017" role="doc-biblioref">2017</a>)</span> also measured library access disparities in Hong Kong,
 using two different travel-time focused measures. None of the measures we could
 find considered other attributes of the library beyond its proximity, even though
-these addtional features play a strong role in the library’s role in community building
+these additional features play a strong role in the library’s role in community building
 <span class="citation">(<a href="#ref-barclay2017space" role="doc-biblioref">Barclay 2017</a>)</span>.</p>
 <p>Certainly there are other community resources that warrant consideration;
 <span class="citation">Ermagun and Tilahun (<a href="#ref-ermagun2020" role="doc-biblioref">2020</a>)</span> consider a multiple-resource gravity accessibility measure that
@@ -429,6 +436,9 @@ Handy, Susan L, and Debbie A Niemeier. 1997. <span>“Measuring Accessibility: A
 </div>
 <div id="ref-kacynski2016" class="csl-entry">
 Kaczynski, Andrew T., Jasper Schipperijn, J. Aaron Hipp, Gina M. Besenyi, Sonja A. Wilhelm Stanis, S. Morgan Hughey, and Sara Wilcox. 2016. <span>“ParkIndex: Development of a Standardized Metric of Park Access for Research and Planning.”</span> Journal Article. <em>Preventive Medicine</em> 87: 110–14. <a href="https://doi.org/10.1016/j.ypmed.2016.02.012">https://doi.org/10.1016/j.ypmed.2016.02.012</a>.
+</div>
+<div id="ref-kiani2021different" class="csl-entry">
+Kiani, Behzad, Alireza Mohammadi, Robert Bergquist, and Nasser Bagheri. 2021. <span>“Different Configurations of the Two-Step Floating Catchment Area Method for Measuring the Spatial Accessibility to Hospitals for People Living with Disability: A Cross-Sectional Study.”</span> <em>Archives of Public Health</em> 79 (1): 1–10.
 </div>
 <div id="ref-kinnell2006" class="csl-entry">
 Kinnell, J. C., M. F. Bingham, A. F. Mohamed, W. H. Desvousges, T. B. Kiler, E. K. Hastings, and K. T. Kuhns. 2006. <span>“Estimating Site Choice Decisions for Urban Recreators.”</span> Journal Article. <em>Land Economics</em> 82 (2): 257–72. <a href="https://doi.org/10.3368/le.82.2.257">https://doi.org/10.3368/le.82.2.257</a>.

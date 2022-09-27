@@ -139,7 +139,7 @@ tar_load(access_ls)
 ```
 
 
-```{r access-map, dev = "tikz", dev.args=list(pointsize=12), fig.cap = "Spatial comparison of grocery access threshold versus logsum value."}
+```{r access-map, dev = if(knitr::is_latex_output())"tikz", dev.args=list(pointsize=12), fig.cap = "Spatial comparison of grocery access threshold versus logsum value."}
 amdata <- bind_rows(
   access_ls %>% st_transform(4326) %>%
     select(-total) %>% mutate(method = "Logsum"),
@@ -173,7 +173,7 @@ difference is at the margins, where the discontinuity of the buffer measure
 is replaced by a smoother access surface, more spatially reflective of what 
 people are likely to experience.
 
-```{r access-plot, fig.cap="Relationship between travel time and logsum access value for block groups in Utah County. Travel time thresholds shown as dashed lines, with best fit regresssion line added for context.", fig.height=4, dev = "tikz", dev.args=list(pointsize=10)}
+```{r access-plot, fig.cap="Relationship between travel time and logsum access value for block groups in Utah County. Travel time thresholds shown as dashed lines, with best fit regresssion line added for context.", fig.height=4, dev = if(knitr::is_latex_output())"tikz",, dev.args=list(pointsize=10)}
 
 thresholds <- tibble(
   resource = c("Grocery", "Library", "Park"),

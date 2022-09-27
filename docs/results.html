@@ -22,7 +22,7 @@
 
 
 
-<meta name="date" content="2022-09-22" />
+<meta name="date" content="2022-09-27" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -61,9 +61,12 @@ div.abstract{
 <link href="libs/anchor-sections-1.1.0/anchor-sections.css" rel="stylesheet" />
 <link href="libs/anchor-sections-1.1.0/anchor-sections-hash.css" rel="stylesheet" />
 <script src="libs/anchor-sections-1.1.0/anchor-sections.js"></script>
+<script src="libs/htmlwidgets-1.5.4/htmlwidgets.js"></script>
+<script src="libs/viz-1.8.2/viz.js"></script>
+<link href="libs/DiagrammeR-styles-0.2/styles.css" rel="stylesheet" />
+<script src="libs/grViz-binding-1.0.9/grViz.js"></script>
 <script src="libs/kePrint-0.0.1/kePrint.js"></script>
 <link href="libs/lightable-0.0.1/lightable.css" rel="stylesheet" />
-<script src="libs/htmlwidgets-1.5.4/htmlwidgets.js"></script>
 <link href="libs/leaflet-1.3.1/leaflet.css" rel="stylesheet" />
 <script src="libs/leaflet-1.3.1/leaflet.js"></script>
 <link href="libs/leafletfix-1.0.0/leafletfix.css" rel="stylesheet" />
@@ -180,7 +183,7 @@ div.csl-indent {
 
 <li class="divider"></li>
 <li class="chapter" data-level="1" data-path="intro.html"><a href="intro.html"><i class="fa fa-check"></i><b>1</b> Introduction</a></li>
-<li class="chapter" data-level="2" data-path="lit-review.html"><a href="lit-review.html"><i class="fa fa-check"></i><b>2</b> Literature</a>
+<li class="chapter" data-level="2" data-path="lit-review.html"><a href="lit-review.html"><i class="fa fa-check"></i><b>2</b> Literature Review</a>
 <ul>
 <li class="chapter" data-level="2.1" data-path="lit-review.html"><a href="lit-review.html#developing-access-measures"><i class="fa fa-check"></i><b>2.1</b> Developing Access Measures</a></li>
 <li class="chapter" data-level="2.2" data-path="lit-review.html"><a href="lit-review.html#access-to-parks-grocery-stores-and-libraries"><i class="fa fa-check"></i><b>2.2</b> Access to Parks, Grocery Stores, and Libraries</a></li>
@@ -230,27 +233,27 @@ div.csl-indent {
 <p>Using the simulated trip choices assembled from the location-based services data,
 we estimate destination choice models with the <code>mlogit</code> package for
 R <span class="citation">(<a href="#ref-R" role="doc-biblioref">R Core Team 2021</a>; <a href="#ref-mlogit" role="doc-biblioref">Croissant 2020</a>)</span>.</p>
-<div class="sourceCode" id="cb6"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb6-1"><a href="results.html#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="fu">tar_load</span>(park_models)</span>
-<span id="cb6-2"><a href="results.html#cb6-2" aria-hidden="true" tabindex="-1"></a>park_map <span class="ot">=</span> <span class="fu">c</span>(</span>
-<span id="cb6-3"><a href="results.html#cb6-3" aria-hidden="true" tabindex="-1"></a>    <span class="st">&quot;duration_CAR&quot;</span> <span class="ot">=</span> <span class="st">&quot;Drive time&quot;</span>,</span>
-<span id="cb6-4"><a href="results.html#cb6-4" aria-hidden="true" tabindex="-1"></a>    <span class="st">&quot;mclogsum&quot;</span> <span class="ot">=</span> <span class="st">&quot;Mode Choice Logsum&quot;</span>,</span>
-<span id="cb6-5"><a href="results.html#cb6-5" aria-hidden="true" tabindex="-1"></a>    <span class="st">&quot;yj_acres&quot;</span> <span class="ot">=</span> <span class="st">&quot;log(Acres)&quot;</span>,</span>
-<span id="cb6-6"><a href="results.html#cb6-6" aria-hidden="true" tabindex="-1"></a>    <span class="st">&quot;playgroundTRUE&quot;</span> <span class="ot">=</span> <span class="st">&quot;Playground&quot;</span>,</span>
-<span id="cb6-7"><a href="results.html#cb6-7" aria-hidden="true" tabindex="-1"></a>    <span class="st">&quot;splashpadTRUE&quot;</span>  <span class="ot">=</span> <span class="st">&quot;Splashpad&quot;</span>,</span>
-<span id="cb6-8"><a href="results.html#cb6-8" aria-hidden="true" tabindex="-1"></a>    <span class="st">&quot;volleyballTRUE&quot;</span> <span class="ot">=</span> <span class="st">&quot;Volleyball&quot;</span>,</span>
-<span id="cb6-9"><a href="results.html#cb6-9" aria-hidden="true" tabindex="-1"></a>    <span class="st">&quot;basketballTRUE&quot;</span> <span class="ot">=</span> <span class="st">&quot;Basketball&quot;</span>,</span>
-<span id="cb6-10"><a href="results.html#cb6-10" aria-hidden="true" tabindex="-1"></a>    <span class="st">&quot;tennisTRUE&quot;</span> <span class="ot">=</span> <span class="st">&quot;Tennis&quot;</span></span>
-<span id="cb6-11"><a href="results.html#cb6-11" aria-hidden="true" tabindex="-1"></a>)</span>
-<span id="cb6-12"><a href="results.html#cb6-12" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb6-13"><a href="results.html#cb6-13" aria-hidden="true" tabindex="-1"></a>ls_v_attr <span class="ot">&lt;-</span> <span class="fu">lrtest</span>(park_models<span class="sc">$</span>Attributes, park_models<span class="sc">$</span><span class="st">`</span><span class="at">All - Logsum</span><span class="st">`</span>)</span>
-<span id="cb6-14"><a href="results.html#cb6-14" aria-hidden="true" tabindex="-1"></a>ls_v_car <span class="ot">&lt;-</span> <span class="fu">horowitz_lrtest</span>(park_models<span class="sc">$</span><span class="st">`</span><span class="at">All - Logsum</span><span class="st">`</span>, park_models<span class="sc">$</span><span class="st">`</span><span class="at">All - Car</span><span class="st">`</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb7"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb7-1"><a href="results.html#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="fu">tar_load</span>(park_models)</span>
+<span id="cb7-2"><a href="results.html#cb7-2" aria-hidden="true" tabindex="-1"></a>park_map <span class="ot">=</span> <span class="fu">c</span>(</span>
+<span id="cb7-3"><a href="results.html#cb7-3" aria-hidden="true" tabindex="-1"></a>    <span class="st">&quot;duration_CAR&quot;</span> <span class="ot">=</span> <span class="st">&quot;Drive time&quot;</span>,</span>
+<span id="cb7-4"><a href="results.html#cb7-4" aria-hidden="true" tabindex="-1"></a>    <span class="st">&quot;mclogsum&quot;</span> <span class="ot">=</span> <span class="st">&quot;Mode Choice Logsum&quot;</span>,</span>
+<span id="cb7-5"><a href="results.html#cb7-5" aria-hidden="true" tabindex="-1"></a>    <span class="st">&quot;yj_acres&quot;</span> <span class="ot">=</span> <span class="st">&quot;log(Acres)&quot;</span>,</span>
+<span id="cb7-6"><a href="results.html#cb7-6" aria-hidden="true" tabindex="-1"></a>    <span class="st">&quot;playgroundTRUE&quot;</span> <span class="ot">=</span> <span class="st">&quot;Playground&quot;</span>,</span>
+<span id="cb7-7"><a href="results.html#cb7-7" aria-hidden="true" tabindex="-1"></a>    <span class="st">&quot;splashpadTRUE&quot;</span>  <span class="ot">=</span> <span class="st">&quot;Splashpad&quot;</span>,</span>
+<span id="cb7-8"><a href="results.html#cb7-8" aria-hidden="true" tabindex="-1"></a>    <span class="st">&quot;volleyballTRUE&quot;</span> <span class="ot">=</span> <span class="st">&quot;Volleyball&quot;</span>,</span>
+<span id="cb7-9"><a href="results.html#cb7-9" aria-hidden="true" tabindex="-1"></a>    <span class="st">&quot;basketballTRUE&quot;</span> <span class="ot">=</span> <span class="st">&quot;Basketball&quot;</span>,</span>
+<span id="cb7-10"><a href="results.html#cb7-10" aria-hidden="true" tabindex="-1"></a>    <span class="st">&quot;tennisTRUE&quot;</span> <span class="ot">=</span> <span class="st">&quot;Tennis&quot;</span></span>
+<span id="cb7-11"><a href="results.html#cb7-11" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb7-12"><a href="results.html#cb7-12" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-13"><a href="results.html#cb7-13" aria-hidden="true" tabindex="-1"></a>ls_v_attr <span class="ot">&lt;-</span> <span class="fu">lrtest</span>(park_models<span class="sc">$</span>Attributes, park_models<span class="sc">$</span><span class="st">`</span><span class="at">All - Logsum</span><span class="st">`</span>)</span>
+<span id="cb7-14"><a href="results.html#cb7-14" aria-hidden="true" tabindex="-1"></a>ls_v_car <span class="ot">&lt;-</span> <span class="fu">horowitz_lrtest</span>(park_models<span class="sc">$</span><span class="st">`</span><span class="at">All - Logsum</span><span class="st">`</span>, park_models<span class="sc">$</span><span class="st">`</span><span class="at">All - Car</span><span class="st">`</span>)</span></code></pre></div>
 <pre><code>## Test statistic value: -0.859514662009484</code></pre>
-<div class="sourceCode" id="cb8"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb8-1"><a href="results.html#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="fu">modelsummary</span>(park_models, <span class="at">estimate =</span> <span class="st">&quot;{estimate}({statistic}){stars}&quot;</span>, </span>
-<span id="cb8-2"><a href="results.html#cb8-2" aria-hidden="true" tabindex="-1"></a>             <span class="at">title =</span> <span class="st">&quot;Park Destination Choice Utilities&quot;</span>,</span>
-<span id="cb8-3"><a href="results.html#cb8-3" aria-hidden="true" tabindex="-1"></a>             <span class="at">stars =</span> <span class="fu">c</span>(<span class="st">&#39;*&#39;</span> <span class="ot">=</span> .<span class="dv">05</span>, <span class="st">&#39;**&#39;</span> <span class="ot">=</span> .<span class="dv">01</span>),</span>
-<span id="cb8-4"><a href="results.html#cb8-4" aria-hidden="true" tabindex="-1"></a>             <span class="at">coef_map =</span> park_map, <span class="at">gof_map =</span> gm,</span>
-<span id="cb8-5"><a href="results.html#cb8-5" aria-hidden="true" tabindex="-1"></a>             <span class="at">statistic =</span> <span class="cn">NULL</span>, <span class="at">note =</span> <span class="st">&quot;t-statistics in parentheses. * p &lt; 0.5, ** p &lt; 0.1&quot;</span>) <span class="sc">%&gt;%</span></span>
-<span id="cb8-6"><a href="results.html#cb8-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">kable_styling</span>(<span class="at">latex_options =</span> <span class="fu">c</span>(<span class="st">&quot;scale_down&quot;</span>))</span></code></pre></div>
+<div class="sourceCode" id="cb9"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb9-1"><a href="results.html#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="fu">modelsummary</span>(park_models, <span class="at">estimate =</span> <span class="st">&quot;{estimate}({statistic}){stars}&quot;</span>, </span>
+<span id="cb9-2"><a href="results.html#cb9-2" aria-hidden="true" tabindex="-1"></a>             <span class="at">title =</span> <span class="st">&quot;Park Destination Choice Utilities&quot;</span>,</span>
+<span id="cb9-3"><a href="results.html#cb9-3" aria-hidden="true" tabindex="-1"></a>             <span class="at">stars =</span> <span class="fu">c</span>(<span class="st">&#39;*&#39;</span> <span class="ot">=</span> .<span class="dv">05</span>, <span class="st">&#39;**&#39;</span> <span class="ot">=</span> .<span class="dv">01</span>),</span>
+<span id="cb9-4"><a href="results.html#cb9-4" aria-hidden="true" tabindex="-1"></a>             <span class="at">coef_map =</span> park_map, <span class="at">gof_map =</span> gm,</span>
+<span id="cb9-5"><a href="results.html#cb9-5" aria-hidden="true" tabindex="-1"></a>             <span class="at">statistic =</span> <span class="cn">NULL</span>, <span class="at">note =</span> <span class="st">&quot;t-statistics in parentheses. * p &lt; 0.5, ** p &lt; 0.01&quot;</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb9-6"><a href="results.html#cb9-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">kable_styling</span>(<span class="at">latex_options =</span> <span class="fu">c</span>(<span class="st">&quot;scale_down&quot;</span>))</span></code></pre></div>
 <table style="NAborder-bottom: 0; width: auto !important; margin-left: auto; margin-right: auto; margin-left: auto; margin-right: auto;" class="table table">
 <caption>
 <span id="tab:park-models">Table 4.1: </span>Park Destination Choice Utilities
@@ -465,7 +468,7 @@ McFadden Rho-Sq
 <tfoot>
 <tr>
 <td style="padding: 0; " colspan="100%">
-<sup></sup> t-statistics in parentheses. * p &lt; 0.5, ** p &lt; 0.1
+<sup></sup> t-statistics in parentheses. * p &lt; 0.5, ** p &lt; 0.01
 </td>
 </tr>
 </tfoot>
@@ -481,38 +484,38 @@ including size and amenities. On balance, people appear attracted to larger park
 and parks with playgrounds, while somewhat deterred by various sports facilities.
 The “All” models include both the relevant travel impedance term as well as
 destination attributes.</p>
-<p>For most block group-park pairs, the transit and walk travel disutilities
+<p>For most block group-park pairs, the transit and walk travel costs
 are sufficiently high that choosing these travel modes is unlikely. As a
 result, the mode choice logsum is highly collinear with the car travel time.
-Nevertheless, there are small differences differences between the models
+Nevertheless, there are small differences between the models
 with the different impedance terms. Using a non-nested likelihood statistic
 test presented by <span class="citation">Horowitz (<a href="#ref-horowitz1987" role="doc-biblioref">1987</a>)</span>, we cannot reject the null hypothesis that the two
 “All” models have equivalent likelihood (<span class="math inline">\(p\)</span>-value of 0.195), and therefore
 cannot infer that the mode choice logsum is a marginally better estimator of
 park choice than the vehicle travel time alone.</p>
-<div class="sourceCode" id="cb9"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb9-1"><a href="results.html#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="fu">tar_load</span>(grocery_models)</span>
-<span id="cb9-2"><a href="results.html#cb9-2" aria-hidden="true" tabindex="-1"></a>ls_v_car_g <span class="ot">&lt;-</span> <span class="fu">horowitz_lrtest</span>(grocery_models<span class="sc">$</span><span class="st">`</span><span class="at">All - Car</span><span class="st">`</span>, grocery_models<span class="sc">$</span><span class="st">`</span><span class="at">All - Logsum</span><span class="st">`</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb10"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb10-1"><a href="results.html#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="fu">tar_load</span>(grocery_models)</span>
+<span id="cb10-2"><a href="results.html#cb10-2" aria-hidden="true" tabindex="-1"></a>ls_v_car_g <span class="ot">&lt;-</span> <span class="fu">horowitz_lrtest</span>(grocery_models<span class="sc">$</span><span class="st">`</span><span class="at">All - Car</span><span class="st">`</span>, grocery_models<span class="sc">$</span><span class="st">`</span><span class="at">All - Logsum</span><span class="st">`</span>)</span></code></pre></div>
 <pre><code>## Test statistic value: -0.116872929919177</code></pre>
-<div class="sourceCode" id="cb11"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb11-1"><a href="results.html#cb11-1" aria-hidden="true" tabindex="-1"></a>d_conv_ratio <span class="ot">&lt;-</span> grocery_models<span class="sc">$</span><span class="st">`</span><span class="at">All - Car</span><span class="st">`</span><span class="sc">$</span>coefficients[<span class="st">&quot;typeConvenience Store&quot;</span>] <span class="sc">/</span> </span>
-<span id="cb11-2"><a href="results.html#cb11-2" aria-hidden="true" tabindex="-1"></a>  grocery_models<span class="sc">$</span><span class="st">`</span><span class="at">All - Car</span><span class="st">`</span><span class="sc">$</span>coefficients[<span class="st">&quot;duration_CAR&quot;</span>]  </span>
-<span id="cb11-3"><a href="results.html#cb11-3" aria-hidden="true" tabindex="-1"></a>grocery_map <span class="ot">=</span> <span class="fu">c</span>(</span>
-<span id="cb11-4"><a href="results.html#cb11-4" aria-hidden="true" tabindex="-1"></a>    <span class="st">&quot;duration_CAR&quot;</span> <span class="ot">=</span> <span class="st">&quot;Drive time&quot;</span>,</span>
-<span id="cb11-5"><a href="results.html#cb11-5" aria-hidden="true" tabindex="-1"></a>    <span class="st">&quot;mclogsum&quot;</span> <span class="ot">=</span> <span class="st">&quot;Mode Choice Logsum&quot;</span>,</span>
-<span id="cb11-6"><a href="results.html#cb11-6" aria-hidden="true" tabindex="-1"></a>    <span class="st">&quot;typeConvenience Store&quot;</span> <span class="ot">=</span> <span class="st">&quot;Convenience Store&quot;</span>,</span>
-<span id="cb11-7"><a href="results.html#cb11-7" aria-hidden="true" tabindex="-1"></a>    <span class="st">&quot;typeOther (Write in a description)&quot;</span> <span class="ot">=</span> <span class="st">&quot;Other non-standard&quot;</span>,</span>
-<span id="cb11-8"><a href="results.html#cb11-8" aria-hidden="true" tabindex="-1"></a>    <span class="st">&quot;pharmacyTRUE&quot;</span> <span class="ot">=</span> <span class="st">&quot;Has pharmacy&quot;</span>,</span>
-<span id="cb11-9"><a href="results.html#cb11-9" aria-hidden="true" tabindex="-1"></a>    <span class="st">&quot;ethnicTRUE&quot;</span> <span class="ot">=</span> <span class="st">&quot;Ethnic market&quot;</span>,</span>
-<span id="cb11-10"><a href="results.html#cb11-10" aria-hidden="true" tabindex="-1"></a>    <span class="st">&quot;merchTRUE&quot;</span> <span class="ot">=</span> <span class="st">&quot;Has other merchandise&quot;</span>,</span>
-<span id="cb11-11"><a href="results.html#cb11-11" aria-hidden="true" tabindex="-1"></a>    <span class="st">&quot;registers&quot;</span> <span class="ot">=</span> <span class="st">&quot;Number of registers&quot;</span>,</span>
-<span id="cb11-12"><a href="results.html#cb11-12" aria-hidden="true" tabindex="-1"></a>    <span class="st">&quot;selfchecko&quot;</span> <span class="ot">=</span> <span class="st">&quot;Number of self-checkout&quot;</span></span>
-<span id="cb11-13"><a href="results.html#cb11-13" aria-hidden="true" tabindex="-1"></a>  )</span>
-<span id="cb11-14"><a href="results.html#cb11-14" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb11-15"><a href="results.html#cb11-15" aria-hidden="true" tabindex="-1"></a><span class="fu">modelsummary</span>(grocery_models, </span>
-<span id="cb11-16"><a href="results.html#cb11-16" aria-hidden="true" tabindex="-1"></a>             <span class="at">estimate =</span> <span class="st">&quot;{estimate}({statistic}){stars}&quot;</span>,  <span class="at">statistic =</span> <span class="cn">NULL</span>, </span>
-<span id="cb11-17"><a href="results.html#cb11-17" aria-hidden="true" tabindex="-1"></a>             <span class="at">title =</span> <span class="st">&quot;Grocery Destination Choice Utilities&quot;</span>,</span>
-<span id="cb11-18"><a href="results.html#cb11-18" aria-hidden="true" tabindex="-1"></a>             <span class="at">stars =</span> <span class="fu">c</span>(<span class="st">&#39;*&#39;</span> <span class="ot">=</span> .<span class="dv">05</span>, <span class="st">&#39;**&#39;</span> <span class="ot">=</span> .<span class="dv">01</span>), <span class="at">coef_map =</span> grocery_map, <span class="at">gof_map =</span> gm,</span>
-<span id="cb11-19"><a href="results.html#cb11-19" aria-hidden="true" tabindex="-1"></a>             <span class="at">note =</span> <span class="st">&quot;t-statistics in parentheses. * p &lt; 0.5, ** p &lt; 0.1&quot;</span>) <span class="sc">%&gt;%</span></span>
-<span id="cb11-20"><a href="results.html#cb11-20" aria-hidden="true" tabindex="-1"></a>  <span class="fu">kable_styling</span>(<span class="at">latex_options =</span> <span class="fu">c</span>(<span class="st">&quot;scale_down&quot;</span>))</span></code></pre></div>
+<div class="sourceCode" id="cb12"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb12-1"><a href="results.html#cb12-1" aria-hidden="true" tabindex="-1"></a>d_conv_ratio <span class="ot">&lt;-</span> grocery_models<span class="sc">$</span><span class="st">`</span><span class="at">All - Car</span><span class="st">`</span><span class="sc">$</span>coefficients[<span class="st">&quot;typeConvenience Store&quot;</span>] <span class="sc">/</span> </span>
+<span id="cb12-2"><a href="results.html#cb12-2" aria-hidden="true" tabindex="-1"></a>  grocery_models<span class="sc">$</span><span class="st">`</span><span class="at">All - Car</span><span class="st">`</span><span class="sc">$</span>coefficients[<span class="st">&quot;duration_CAR&quot;</span>]  </span>
+<span id="cb12-3"><a href="results.html#cb12-3" aria-hidden="true" tabindex="-1"></a>grocery_map <span class="ot">=</span> <span class="fu">c</span>(</span>
+<span id="cb12-4"><a href="results.html#cb12-4" aria-hidden="true" tabindex="-1"></a>    <span class="st">&quot;duration_CAR&quot;</span> <span class="ot">=</span> <span class="st">&quot;Drive time&quot;</span>,</span>
+<span id="cb12-5"><a href="results.html#cb12-5" aria-hidden="true" tabindex="-1"></a>    <span class="st">&quot;mclogsum&quot;</span> <span class="ot">=</span> <span class="st">&quot;Mode Choice Logsum&quot;</span>,</span>
+<span id="cb12-6"><a href="results.html#cb12-6" aria-hidden="true" tabindex="-1"></a>    <span class="st">&quot;typeConvenience Store&quot;</span> <span class="ot">=</span> <span class="st">&quot;Convenience Store&quot;</span>,</span>
+<span id="cb12-7"><a href="results.html#cb12-7" aria-hidden="true" tabindex="-1"></a>    <span class="st">&quot;typeOther (Write in a description)&quot;</span> <span class="ot">=</span> <span class="st">&quot;Other non-standard&quot;</span>,</span>
+<span id="cb12-8"><a href="results.html#cb12-8" aria-hidden="true" tabindex="-1"></a>    <span class="st">&quot;pharmacyTRUE&quot;</span> <span class="ot">=</span> <span class="st">&quot;Has pharmacy&quot;</span>,</span>
+<span id="cb12-9"><a href="results.html#cb12-9" aria-hidden="true" tabindex="-1"></a>    <span class="st">&quot;ethnicTRUE&quot;</span> <span class="ot">=</span> <span class="st">&quot;Ethnic market&quot;</span>,</span>
+<span id="cb12-10"><a href="results.html#cb12-10" aria-hidden="true" tabindex="-1"></a>    <span class="st">&quot;merchTRUE&quot;</span> <span class="ot">=</span> <span class="st">&quot;Has other merchandise&quot;</span>,</span>
+<span id="cb12-11"><a href="results.html#cb12-11" aria-hidden="true" tabindex="-1"></a>    <span class="st">&quot;registers&quot;</span> <span class="ot">=</span> <span class="st">&quot;Number of registers&quot;</span>,</span>
+<span id="cb12-12"><a href="results.html#cb12-12" aria-hidden="true" tabindex="-1"></a>    <span class="st">&quot;selfchecko&quot;</span> <span class="ot">=</span> <span class="st">&quot;Number of self-checkout&quot;</span></span>
+<span id="cb12-13"><a href="results.html#cb12-13" aria-hidden="true" tabindex="-1"></a>  )</span>
+<span id="cb12-14"><a href="results.html#cb12-14" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-15"><a href="results.html#cb12-15" aria-hidden="true" tabindex="-1"></a><span class="fu">modelsummary</span>(grocery_models, </span>
+<span id="cb12-16"><a href="results.html#cb12-16" aria-hidden="true" tabindex="-1"></a>             <span class="at">estimate =</span> <span class="st">&quot;{estimate}({statistic}){stars}&quot;</span>,  <span class="at">statistic =</span> <span class="cn">NULL</span>, </span>
+<span id="cb12-17"><a href="results.html#cb12-17" aria-hidden="true" tabindex="-1"></a>             <span class="at">title =</span> <span class="st">&quot;Grocery Destination Choice Utilities&quot;</span>,</span>
+<span id="cb12-18"><a href="results.html#cb12-18" aria-hidden="true" tabindex="-1"></a>             <span class="at">stars =</span> <span class="fu">c</span>(<span class="st">&#39;*&#39;</span> <span class="ot">=</span> .<span class="dv">05</span>, <span class="st">&#39;**&#39;</span> <span class="ot">=</span> .<span class="dv">01</span>), <span class="at">coef_map =</span> grocery_map, <span class="at">gof_map =</span> gm,</span>
+<span id="cb12-19"><a href="results.html#cb12-19" aria-hidden="true" tabindex="-1"></a>             <span class="at">note =</span> <span class="st">&quot;t-statistics in parentheses. * p &lt; 0.5, ** p &lt; 0.01&quot;</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb12-20"><a href="results.html#cb12-20" aria-hidden="true" tabindex="-1"></a>  <span class="fu">kable_styling</span>(<span class="at">latex_options =</span> <span class="fu">c</span>(<span class="st">&quot;scale_down&quot;</span>))</span></code></pre></div>
 <table style="NAborder-bottom: 0; width: auto !important; margin-left: auto; margin-right: auto; margin-left: auto; margin-right: auto;" class="table table">
 <caption>
 <span id="tab:grocery-models">Table 4.2: </span>Grocery Destination Choice Utilities
@@ -798,7 +801,7 @@ McFadden Rho-Sq
 <tfoot>
 <tr>
 <td style="padding: 0; " colspan="100%">
-<sup></sup> t-statistics in parentheses. * p &lt; 0.5, ** p &lt; 0.1
+<sup></sup> t-statistics in parentheses. * p &lt; 0.5, ** p &lt; 0.01
 </td>
 </tr>
 </tfoot>
@@ -815,24 +818,24 @@ drive 4.97 minutes to reach a store that is not a convenience store.
 In terms of the travel impedance, there is again not a sufficiently large gap in the
 model likelihoods to reject that the mode choice logsum and the drive
 time are equivalent predictors of grocery store choice.</p>
-<div class="sourceCode" id="cb12"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb12-1"><a href="results.html#cb12-1" aria-hidden="true" tabindex="-1"></a><span class="fu">tar_load</span>(library_models)</span>
-<span id="cb12-2"><a href="results.html#cb12-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb12-3"><a href="results.html#cb12-3" aria-hidden="true" tabindex="-1"></a>library_map <span class="ot">&lt;-</span> <span class="fu">c</span>(</span>
-<span id="cb12-4"><a href="results.html#cb12-4" aria-hidden="true" tabindex="-1"></a>    <span class="st">&quot;duration_CAR&quot;</span> <span class="ot">=</span> <span class="st">&quot;Drive time&quot;</span>,</span>
-<span id="cb12-5"><a href="results.html#cb12-5" aria-hidden="true" tabindex="-1"></a>    <span class="st">&quot;mclogsum&quot;</span> <span class="ot">=</span> <span class="st">&quot;Mode Choice Logsum&quot;</span>,</span>
-<span id="cb12-6"><a href="results.html#cb12-6" aria-hidden="true" tabindex="-1"></a>    <span class="st">&quot;classesTRUE&quot;</span> <span class="ot">=</span> <span class="st">&quot;Offers Classes&quot;</span>,</span>
-<span id="cb12-7"><a href="results.html#cb12-7" aria-hidden="true" tabindex="-1"></a>    <span class="st">&quot;genealogyTRUE&quot;</span> <span class="ot">=</span> <span class="st">&quot;Genealogy Resources&quot;</span>,</span>
-<span id="cb12-8"><a href="results.html#cb12-8" aria-hidden="true" tabindex="-1"></a>    <span class="st">&quot;area&quot;</span> <span class="ot">=</span> <span class="st">&quot;log(Square Footage)&quot;</span></span>
-<span id="cb12-9"><a href="results.html#cb12-9" aria-hidden="true" tabindex="-1"></a>)</span>
-<span id="cb12-10"><a href="results.html#cb12-10" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb12-11"><a href="results.html#cb12-11" aria-hidden="true" tabindex="-1"></a>ls_v_car_l <span class="ot">&lt;-</span> <span class="fu">horowitz_lrtest</span>(library_models<span class="sc">$</span><span class="st">`</span><span class="at">All - Logsum</span><span class="st">`</span>, library_models<span class="sc">$</span><span class="st">`</span><span class="at">All - Car</span><span class="st">`</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb13"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb13-1"><a href="results.html#cb13-1" aria-hidden="true" tabindex="-1"></a><span class="fu">tar_load</span>(library_models)</span>
+<span id="cb13-2"><a href="results.html#cb13-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb13-3"><a href="results.html#cb13-3" aria-hidden="true" tabindex="-1"></a>library_map <span class="ot">&lt;-</span> <span class="fu">c</span>(</span>
+<span id="cb13-4"><a href="results.html#cb13-4" aria-hidden="true" tabindex="-1"></a>    <span class="st">&quot;duration_CAR&quot;</span> <span class="ot">=</span> <span class="st">&quot;Drive time&quot;</span>,</span>
+<span id="cb13-5"><a href="results.html#cb13-5" aria-hidden="true" tabindex="-1"></a>    <span class="st">&quot;mclogsum&quot;</span> <span class="ot">=</span> <span class="st">&quot;Mode Choice Logsum&quot;</span>,</span>
+<span id="cb13-6"><a href="results.html#cb13-6" aria-hidden="true" tabindex="-1"></a>    <span class="st">&quot;classesTRUE&quot;</span> <span class="ot">=</span> <span class="st">&quot;Offers Classes&quot;</span>,</span>
+<span id="cb13-7"><a href="results.html#cb13-7" aria-hidden="true" tabindex="-1"></a>    <span class="st">&quot;genealogyTRUE&quot;</span> <span class="ot">=</span> <span class="st">&quot;Genealogy Resources&quot;</span>,</span>
+<span id="cb13-8"><a href="results.html#cb13-8" aria-hidden="true" tabindex="-1"></a>    <span class="st">&quot;area&quot;</span> <span class="ot">=</span> <span class="st">&quot;log(Square Footage)&quot;</span></span>
+<span id="cb13-9"><a href="results.html#cb13-9" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb13-10"><a href="results.html#cb13-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb13-11"><a href="results.html#cb13-11" aria-hidden="true" tabindex="-1"></a>ls_v_car_l <span class="ot">&lt;-</span> <span class="fu">horowitz_lrtest</span>(library_models<span class="sc">$</span><span class="st">`</span><span class="at">All - Logsum</span><span class="st">`</span>, library_models<span class="sc">$</span><span class="st">`</span><span class="at">All - Car</span><span class="st">`</span>)</span></code></pre></div>
 <pre><code>## Test statistic value: -0.36497326071821</code></pre>
-<div class="sourceCode" id="cb14"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb14-1"><a href="results.html#cb14-1" aria-hidden="true" tabindex="-1"></a><span class="fu">modelsummary</span>(library_models, <span class="at">estimate =</span> <span class="st">&quot;{estimate}({statistic}){stars}&quot;</span>, </span>
-<span id="cb14-2"><a href="results.html#cb14-2" aria-hidden="true" tabindex="-1"></a>             <span class="at">title =</span> <span class="st">&quot;Library Destination Choice Utilities&quot;</span>,</span>
-<span id="cb14-3"><a href="results.html#cb14-3" aria-hidden="true" tabindex="-1"></a>             <span class="at">stars =</span> <span class="fu">c</span>(<span class="st">&#39;*&#39;</span> <span class="ot">=</span> .<span class="dv">05</span>, <span class="st">&#39;**&#39;</span> <span class="ot">=</span> .<span class="dv">01</span>), </span>
-<span id="cb14-4"><a href="results.html#cb14-4" aria-hidden="true" tabindex="-1"></a>             <span class="at">coef_map =</span> library_map, <span class="at">gof_map =</span> gm,</span>
-<span id="cb14-5"><a href="results.html#cb14-5" aria-hidden="true" tabindex="-1"></a>             <span class="at">statistic =</span> <span class="cn">NULL</span>, <span class="at">note =</span> <span class="st">&quot;t-statistics in parentheses. * p &lt; 0.5, ** p &lt; 0.1&quot;</span>) <span class="sc">%&gt;%</span></span>
-<span id="cb14-6"><a href="results.html#cb14-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">kable_styling</span>(<span class="at">latex_options =</span> <span class="fu">c</span>(<span class="st">&quot;scale_down&quot;</span>))</span></code></pre></div>
+<div class="sourceCode" id="cb15"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb15-1"><a href="results.html#cb15-1" aria-hidden="true" tabindex="-1"></a><span class="fu">modelsummary</span>(library_models, <span class="at">estimate =</span> <span class="st">&quot;{estimate}({statistic}){stars}&quot;</span>, </span>
+<span id="cb15-2"><a href="results.html#cb15-2" aria-hidden="true" tabindex="-1"></a>             <span class="at">title =</span> <span class="st">&quot;Library Destination Choice Utilities&quot;</span>,</span>
+<span id="cb15-3"><a href="results.html#cb15-3" aria-hidden="true" tabindex="-1"></a>             <span class="at">stars =</span> <span class="fu">c</span>(<span class="st">&#39;*&#39;</span> <span class="ot">=</span> .<span class="dv">05</span>, <span class="st">&#39;**&#39;</span> <span class="ot">=</span> .<span class="dv">01</span>), </span>
+<span id="cb15-4"><a href="results.html#cb15-4" aria-hidden="true" tabindex="-1"></a>             <span class="at">coef_map =</span> library_map, <span class="at">gof_map =</span> gm,</span>
+<span id="cb15-5"><a href="results.html#cb15-5" aria-hidden="true" tabindex="-1"></a>             <span class="at">statistic =</span> <span class="cn">NULL</span>, <span class="at">note =</span> <span class="st">&quot;t-statistics in parentheses. * p &lt; 0.5, ** p &lt; 0.01&quot;</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb15-6"><a href="results.html#cb15-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">kable_styling</span>(<span class="at">latex_options =</span> <span class="fu">c</span>(<span class="st">&quot;scale_down&quot;</span>))</span></code></pre></div>
 <table style="NAborder-bottom: 0; width: auto !important; margin-left: auto; margin-right: auto; margin-left: auto; margin-right: auto;" class="table table">
 <caption>
 <span id="tab:library-models">Table 4.3: </span>Library Destination Choice Utilities
@@ -1011,7 +1014,7 @@ McFadden Rho-Sq
 <tfoot>
 <tr>
 <td style="padding: 0; " colspan="100%">
-<sup></sup> t-statistics in parentheses. * p &lt; 0.5, ** p &lt; 0.1
+<sup></sup> t-statistics in parentheses. * p &lt; 0.5, ** p &lt; 0.01
 </td>
 </tr>
 </tfoot>
@@ -1037,38 +1040,38 @@ we also created buffer-based accessibility terms where a block group has
 “access” to a grocery store if there is one within a 5-minute drive, a
 park if there is one within a five-minute walk, and a library if there is one within
 a ten-minute drive.</p>
-<div class="sourceCode" id="cb15"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb15-1"><a href="results.html#cb15-1" aria-hidden="true" tabindex="-1"></a><span class="fu">tar_load</span>(access_bin)</span>
-<span id="cb15-2"><a href="results.html#cb15-2" aria-hidden="true" tabindex="-1"></a><span class="fu">tar_load</span>(access_ls)</span></code></pre></div>
-<div class="sourceCode" id="cb16"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb16-1"><a href="results.html#cb16-1" aria-hidden="true" tabindex="-1"></a>amdata <span class="ot">&lt;-</span> <span class="fu">bind_rows</span>(</span>
-<span id="cb16-2"><a href="results.html#cb16-2" aria-hidden="true" tabindex="-1"></a>  access_ls <span class="sc">%&gt;%</span> <span class="fu">st_transform</span>(<span class="dv">4326</span>) <span class="sc">%&gt;%</span></span>
-<span id="cb16-3"><a href="results.html#cb16-3" aria-hidden="true" tabindex="-1"></a>    <span class="fu">select</span>(<span class="sc">-</span>total) <span class="sc">%&gt;%</span> <span class="fu">mutate</span>(<span class="at">method =</span> <span class="st">&quot;Logsum&quot;</span>),</span>
-<span id="cb16-4"><a href="results.html#cb16-4" aria-hidden="true" tabindex="-1"></a>  access_bin <span class="sc">%&gt;%</span> <span class="fu">st_transform</span>(<span class="dv">4326</span>) <span class="sc">%&gt;%</span></span>
-<span id="cb16-5"><a href="results.html#cb16-5" aria-hidden="true" tabindex="-1"></a>    <span class="fu">select</span>(<span class="sc">!</span><span class="fu">contains</span>(<span class="st">&quot;_min&quot;</span>)) <span class="sc">%&gt;%</span> <span class="fu">mutate</span>(<span class="at">method =</span> <span class="st">&quot;Buffer&quot;</span>)</span>
-<span id="cb16-6"><a href="results.html#cb16-6" aria-hidden="true" tabindex="-1"></a>)</span>
-<span id="cb16-7"><a href="results.html#cb16-7" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb16-8"><a href="results.html#cb16-8" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>() <span class="sc">+</span> </span>
-<span id="cb16-9"><a href="results.html#cb16-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">annotation_map_tile</span>(<span class="st">&quot;cartolight&quot;</span>, <span class="at">zoom=</span><span class="dv">11</span>) <span class="sc">+</span> </span>
-<span id="cb16-10"><a href="results.html#cb16-10" aria-hidden="true" tabindex="-1"></a>  <span class="fu">coord_sf</span>(<span class="at">crs =</span> <span class="fu">st_crs</span>(<span class="dv">3426</span>),  <span class="at">expand =</span> <span class="cn">FALSE</span>) <span class="sc">+</span> </span>
-<span id="cb16-11"><a href="results.html#cb16-11" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_sf</span>(<span class="at">data =</span> amdata <span class="sc">%&gt;%</span> <span class="fu">filter</span>(method <span class="sc">==</span> <span class="st">&quot;Buffer&quot;</span>), <span class="fu">aes</span>(<span class="at">color =</span> <span class="fu">as.logical</span>(grocery)), <span class="at">inherit.aes =</span> <span class="cn">FALSE</span>, <span class="at">alpha =</span> <span class="fl">0.7</span>) <span class="sc">+</span></span>
-<span id="cb16-12"><a href="results.html#cb16-12" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_color_manual</span>(<span class="st">&quot;$&lt;5$ minute drive&quot;</span>, <span class="at">values =</span> dj1[<span class="fu">c</span>(<span class="dv">5</span>, <span class="dv">3</span>)]) <span class="sc">+</span>  </span>
-<span id="cb16-13"><a href="results.html#cb16-13" aria-hidden="true" tabindex="-1"></a>  <span class="fu">new_scale_color</span>() <span class="sc">+</span> </span>
-<span id="cb16-14"><a href="results.html#cb16-14" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_sf</span>(<span class="at">data =</span> amdata <span class="sc">%&gt;%</span> <span class="fu">filter</span>(method <span class="sc">==</span> <span class="st">&quot;Logsum&quot;</span>),  <span class="fu">aes</span>(<span class="at">color =</span> grocery), <span class="at">inherit.aes =</span> <span class="cn">FALSE</span>, <span class="at">alpha =</span> <span class="fl">0.7</span>) <span class="sc">+</span></span>
-<span id="cb16-15"><a href="results.html#cb16-15" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_color_viridis_c</span>(<span class="st">&quot;Logsum&quot;</span>, <span class="at">option =</span> <span class="st">&quot;magma&quot;</span>) <span class="sc">+</span>  </span>
-<span id="cb16-16"><a href="results.html#cb16-16" aria-hidden="true" tabindex="-1"></a>  <span class="fu">facet_wrap</span>(<span class="sc">~</span>method) <span class="sc">+</span> </span>
-<span id="cb16-17"><a href="results.html#cb16-17" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme</span>(<span class="at">axis.line =</span> <span class="fu">element_line</span>(<span class="at">color =</span> <span class="cn">NA</span>),</span>
-<span id="cb16-18"><a href="results.html#cb16-18" aria-hidden="true" tabindex="-1"></a>        <span class="at">axis.title.x=</span><span class="fu">element_blank</span>(),</span>
-<span id="cb16-19"><a href="results.html#cb16-19" aria-hidden="true" tabindex="-1"></a>        <span class="at">axis.text.x=</span><span class="fu">element_blank</span>(),</span>
-<span id="cb16-20"><a href="results.html#cb16-20" aria-hidden="true" tabindex="-1"></a>        <span class="at">axis.ticks.x=</span><span class="fu">element_blank</span>(),</span>
-<span id="cb16-21"><a href="results.html#cb16-21" aria-hidden="true" tabindex="-1"></a>        <span class="at">axis.title.y=</span><span class="fu">element_blank</span>(),</span>
-<span id="cb16-22"><a href="results.html#cb16-22" aria-hidden="true" tabindex="-1"></a>        <span class="at">axis.text.y=</span><span class="fu">element_blank</span>(),</span>
-<span id="cb16-23"><a href="results.html#cb16-23" aria-hidden="true" tabindex="-1"></a>        <span class="at">axis.ticks.y=</span><span class="fu">element_blank</span>())</span></code></pre></div>
+<div class="sourceCode" id="cb16"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb16-1"><a href="results.html#cb16-1" aria-hidden="true" tabindex="-1"></a><span class="fu">tar_load</span>(access_bin)</span>
+<span id="cb16-2"><a href="results.html#cb16-2" aria-hidden="true" tabindex="-1"></a><span class="fu">tar_load</span>(access_ls)</span></code></pre></div>
+<div class="sourceCode" id="cb17"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb17-1"><a href="results.html#cb17-1" aria-hidden="true" tabindex="-1"></a>amdata <span class="ot">&lt;-</span> <span class="fu">bind_rows</span>(</span>
+<span id="cb17-2"><a href="results.html#cb17-2" aria-hidden="true" tabindex="-1"></a>  access_ls <span class="sc">%&gt;%</span> <span class="fu">st_transform</span>(<span class="dv">4326</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb17-3"><a href="results.html#cb17-3" aria-hidden="true" tabindex="-1"></a>    <span class="fu">select</span>(<span class="sc">-</span>total) <span class="sc">%&gt;%</span> <span class="fu">mutate</span>(<span class="at">method =</span> <span class="st">&quot;Logsum&quot;</span>),</span>
+<span id="cb17-4"><a href="results.html#cb17-4" aria-hidden="true" tabindex="-1"></a>  access_bin <span class="sc">%&gt;%</span> <span class="fu">st_transform</span>(<span class="dv">4326</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb17-5"><a href="results.html#cb17-5" aria-hidden="true" tabindex="-1"></a>    <span class="fu">select</span>(<span class="sc">!</span><span class="fu">contains</span>(<span class="st">&quot;_min&quot;</span>)) <span class="sc">%&gt;%</span> <span class="fu">mutate</span>(<span class="at">method =</span> <span class="st">&quot;Buffer&quot;</span>)</span>
+<span id="cb17-6"><a href="results.html#cb17-6" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb17-7"><a href="results.html#cb17-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb17-8"><a href="results.html#cb17-8" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>() <span class="sc">+</span> </span>
+<span id="cb17-9"><a href="results.html#cb17-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">annotation_map_tile</span>(<span class="st">&quot;cartolight&quot;</span>, <span class="at">zoom=</span><span class="dv">11</span>) <span class="sc">+</span> </span>
+<span id="cb17-10"><a href="results.html#cb17-10" aria-hidden="true" tabindex="-1"></a>  <span class="fu">coord_sf</span>(<span class="at">crs =</span> <span class="fu">st_crs</span>(<span class="dv">3426</span>),  <span class="at">expand =</span> <span class="cn">FALSE</span>) <span class="sc">+</span> </span>
+<span id="cb17-11"><a href="results.html#cb17-11" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_sf</span>(<span class="at">data =</span> amdata <span class="sc">%&gt;%</span> <span class="fu">filter</span>(method <span class="sc">==</span> <span class="st">&quot;Buffer&quot;</span>), <span class="fu">aes</span>(<span class="at">color =</span> <span class="fu">as.logical</span>(grocery)), <span class="at">inherit.aes =</span> <span class="cn">FALSE</span>, <span class="at">alpha =</span> <span class="fl">0.7</span>) <span class="sc">+</span></span>
+<span id="cb17-12"><a href="results.html#cb17-12" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_color_manual</span>(<span class="st">&quot;$&lt;5$ minute drive&quot;</span>, <span class="at">values =</span> dj1[<span class="fu">c</span>(<span class="dv">5</span>, <span class="dv">3</span>)]) <span class="sc">+</span>  </span>
+<span id="cb17-13"><a href="results.html#cb17-13" aria-hidden="true" tabindex="-1"></a>  <span class="fu">new_scale_color</span>() <span class="sc">+</span> </span>
+<span id="cb17-14"><a href="results.html#cb17-14" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_sf</span>(<span class="at">data =</span> amdata <span class="sc">%&gt;%</span> <span class="fu">filter</span>(method <span class="sc">==</span> <span class="st">&quot;Logsum&quot;</span>),  <span class="fu">aes</span>(<span class="at">color =</span> grocery), <span class="at">inherit.aes =</span> <span class="cn">FALSE</span>, <span class="at">alpha =</span> <span class="fl">0.7</span>) <span class="sc">+</span></span>
+<span id="cb17-15"><a href="results.html#cb17-15" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_color_viridis_c</span>(<span class="st">&quot;Logsum&quot;</span>, <span class="at">option =</span> <span class="st">&quot;magma&quot;</span>) <span class="sc">+</span>  </span>
+<span id="cb17-16"><a href="results.html#cb17-16" aria-hidden="true" tabindex="-1"></a>  <span class="fu">facet_wrap</span>(<span class="sc">~</span>method) <span class="sc">+</span> </span>
+<span id="cb17-17"><a href="results.html#cb17-17" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme</span>(<span class="at">axis.line =</span> <span class="fu">element_line</span>(<span class="at">color =</span> <span class="cn">NA</span>),</span>
+<span id="cb17-18"><a href="results.html#cb17-18" aria-hidden="true" tabindex="-1"></a>        <span class="at">axis.title.x=</span><span class="fu">element_blank</span>(),</span>
+<span id="cb17-19"><a href="results.html#cb17-19" aria-hidden="true" tabindex="-1"></a>        <span class="at">axis.text.x=</span><span class="fu">element_blank</span>(),</span>
+<span id="cb17-20"><a href="results.html#cb17-20" aria-hidden="true" tabindex="-1"></a>        <span class="at">axis.ticks.x=</span><span class="fu">element_blank</span>(),</span>
+<span id="cb17-21"><a href="results.html#cb17-21" aria-hidden="true" tabindex="-1"></a>        <span class="at">axis.title.y=</span><span class="fu">element_blank</span>(),</span>
+<span id="cb17-22"><a href="results.html#cb17-22" aria-hidden="true" tabindex="-1"></a>        <span class="at">axis.text.y=</span><span class="fu">element_blank</span>(),</span>
+<span id="cb17-23"><a href="results.html#cb17-23" aria-hidden="true" tabindex="-1"></a>        <span class="at">axis.ticks.y=</span><span class="fu">element_blank</span>())</span></code></pre></div>
 <pre><code>## Coordinate system already present. Adding new coordinate system, which will replace the existing one.</code></pre>
 <pre><code>## Zoom: 11
 ## Zoom: 11</code></pre>
 <div class="figure"><span style="display:block;" id="fig:access-map"></span>
-<img src="Community_Resources_files/figure-html/access-map-1.pdf" alt="Spatial comparison of grocery access buffer versus logsum." width="672" />
+<img src="Community_Resources_files/figure-html/access-map-1.pdf" alt="Spatial comparison of grocery access threshold versus logsum value." width="672" />
 <p class="caption">
-Figure 4.1: Spatial comparison of grocery access buffer versus logsum.
+Figure 4.1: Spatial comparison of grocery access threshold versus logsum value.
 </p>
 </div>
 <p>Figure <a href="results.html#fig:access-map">4.1</a> spatially presents the difference between the
@@ -1078,41 +1081,43 @@ to have binary access in the buffer and also have a higher logsum value. The
 difference is at the margins, where the discontinuity of the buffer measure
 is replaced by a smoother access surface, more spatially reflective of what
 people are likely to experience.</p>
-<div class="sourceCode" id="cb19"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb19-1"><a href="results.html#cb19-1" aria-hidden="true" tabindex="-1"></a><span class="fu">left_join</span>(</span>
-<span id="cb19-2"><a href="results.html#cb19-2" aria-hidden="true" tabindex="-1"></a>  access_bin <span class="sc">%&gt;%</span></span>
-<span id="cb19-3"><a href="results.html#cb19-3" aria-hidden="true" tabindex="-1"></a>    <span class="fu">st_set_geometry</span>(<span class="cn">NULL</span>) <span class="sc">%&gt;%</span></span>
-<span id="cb19-4"><a href="results.html#cb19-4" aria-hidden="true" tabindex="-1"></a>    <span class="fu">rename</span>(<span class="at">buffer_Grocery =</span> grocery, <span class="at">buffer_Library =</span> library, <span class="at">buffer_Park =</span> park,</span>
-<span id="cb19-5"><a href="results.html#cb19-5" aria-hidden="true" tabindex="-1"></a>           <span class="at">minutes_Grocery =</span> grocery_min, <span class="at">minutes_Library =</span> library_min, <span class="at">minutes_Park =</span> park_min),</span>
-<span id="cb19-6"><a href="results.html#cb19-6" aria-hidden="true" tabindex="-1"></a>  access_ls <span class="sc">%&gt;%</span></span>
-<span id="cb19-7"><a href="results.html#cb19-7" aria-hidden="true" tabindex="-1"></a>    <span class="fu">st_set_geometry</span>(<span class="cn">NULL</span>) <span class="sc">%&gt;%</span></span>
-<span id="cb19-8"><a href="results.html#cb19-8" aria-hidden="true" tabindex="-1"></a>    <span class="fu">select</span>(<span class="sc">-</span>total) <span class="sc">%&gt;%</span></span>
-<span id="cb19-9"><a href="results.html#cb19-9" aria-hidden="true" tabindex="-1"></a>    <span class="fu">rename</span>(<span class="at">logsum_Grocery =</span> grocery, <span class="at">logsum_Library =</span> library, <span class="at">logsum_Park =</span> park),</span>
-<span id="cb19-10"><a href="results.html#cb19-10" aria-hidden="true" tabindex="-1"></a>  <span class="at">by =</span> <span class="fu">c</span>(<span class="st">&quot;id&quot;</span>, <span class="st">&quot;POPULATION&quot;</span>)</span>
-<span id="cb19-11"><a href="results.html#cb19-11" aria-hidden="true" tabindex="-1"></a>)  <span class="sc">%&gt;%</span></span>
-<span id="cb19-12"><a href="results.html#cb19-12" aria-hidden="true" tabindex="-1"></a>  <span class="fu">pivot_longer</span>(<span class="at">cols =</span> minutes_Grocery<span class="sc">:</span>logsum_Park) <span class="sc">%&gt;%</span></span>
-<span id="cb19-13"><a href="results.html#cb19-13" aria-hidden="true" tabindex="-1"></a>  <span class="fu">separate</span>(name, <span class="fu">c</span>(<span class="st">&quot;measure&quot;</span>, <span class="st">&quot;resource&quot;</span>)) <span class="sc">%&gt;%</span></span>
-<span id="cb19-14"><a href="results.html#cb19-14" aria-hidden="true" tabindex="-1"></a>  <span class="fu">pivot_wider</span>(<span class="at">names_from =</span> measure, <span class="at">values_from =</span> value) <span class="sc">%&gt;%</span></span>
-<span id="cb19-15"><a href="results.html#cb19-15" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">buffer =</span> <span class="fu">as.logical</span>(buffer)) <span class="sc">%&gt;%</span></span>
-<span id="cb19-16"><a href="results.html#cb19-16" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x =</span> minutes, <span class="at">y =</span> logsum, <span class="at">color =</span> resource)) <span class="sc">+</span></span>
-<span id="cb19-17"><a href="results.html#cb19-17" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>(<span class="at">pch =</span> <span class="dv">21</span>, <span class="at">alpha =</span> <span class="fl">0.7</span>, <span class="at">stroke =</span> <span class="dv">1</span>) <span class="sc">+</span> </span>
-<span id="cb19-18"><a href="results.html#cb19-18" aria-hidden="true" tabindex="-1"></a>  <span class="fu">stat_smooth</span>(<span class="at">method =</span> <span class="st">&quot;lm&quot;</span>, <span class="at">show.legend =</span> <span class="cn">FALSE</span>, <span class="at">ribbon =</span> <span class="cn">FALSE</span>) <span class="sc">+</span> </span>
-<span id="cb19-19"><a href="results.html#cb19-19" aria-hidden="true" tabindex="-1"></a>  <span class="fu">annotate</span>(<span class="st">&quot;segment&quot;</span>, <span class="at">x =</span> <span class="dv">5</span>, <span class="at">xend =</span> <span class="dv">5</span>, <span class="at">y =</span> <span class="dv">0</span>, <span class="at">yend =</span>  <span class="dv">4</span>, <span class="at">lty =</span> <span class="st">&quot;dashed&quot;</span>, <span class="at">lwd =</span> <span class="dv">2</span>, <span class="at">color =</span> dj1[<span class="dv">1</span>]) <span class="sc">+</span> </span>
-<span id="cb19-20"><a href="results.html#cb19-20" aria-hidden="true" tabindex="-1"></a>  <span class="fu">annotate</span>(<span class="st">&quot;segment&quot;</span>, <span class="at">x =</span><span class="dv">10</span>, <span class="at">xend =</span><span class="dv">10</span>, <span class="at">y =</span> <span class="dv">6</span>, <span class="at">yend =</span> <span class="dv">11</span>, <span class="at">lty =</span> <span class="st">&quot;dashed&quot;</span>, <span class="at">lwd =</span> <span class="dv">2</span>, <span class="at">color =</span> dj1[<span class="dv">5</span>]) <span class="sc">+</span> </span>
-<span id="cb19-21"><a href="results.html#cb19-21" aria-hidden="true" tabindex="-1"></a>  <span class="fu">annotate</span>(<span class="st">&quot;segment&quot;</span>, <span class="at">x =</span> <span class="dv">5</span>, <span class="at">xend =</span> <span class="dv">5</span>, <span class="at">y =</span> <span class="dv">6</span>, <span class="at">yend =</span> <span class="dv">12</span>, <span class="at">lty =</span> <span class="st">&quot;dashed&quot;</span>, <span class="at">lwd =</span> <span class="dv">2</span>, <span class="at">color =</span> dj1[<span class="dv">3</span>]) <span class="sc">+</span> </span>
-<span id="cb19-22"><a href="results.html#cb19-22" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_color_manual</span>(<span class="st">&quot;Resource&quot;</span>, <span class="at">values =</span> dj1[<span class="fu">c</span>(<span class="dv">1</span>, <span class="dv">5</span>, <span class="dv">3</span>)]) <span class="sc">+</span> </span>
-<span id="cb19-23"><a href="results.html#cb19-23" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_fill_manual</span>(<span class="st">&quot;Within buffer&quot;</span>, <span class="at">values =</span> <span class="fu">c</span>(<span class="st">&quot;white&quot;</span>, <span class="st">&quot;grey&quot;</span>)) <span class="sc">+</span> </span>
-<span id="cb19-24"><a href="results.html#cb19-24" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ylab</span>(<span class="st">&quot;Accessibility Logsum&quot;</span>) <span class="sc">+</span> <span class="fu">xlab</span>(<span class="st">&quot;Travel Time in Minutes&quot;</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb20"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb20-1"><a href="results.html#cb20-1" aria-hidden="true" tabindex="-1"></a>thresholds <span class="ot">&lt;-</span> <span class="fu">tibble</span>(</span>
+<span id="cb20-2"><a href="results.html#cb20-2" aria-hidden="true" tabindex="-1"></a>  <span class="at">resource =</span> <span class="fu">c</span>(<span class="st">&quot;Grocery&quot;</span>, <span class="st">&quot;Library&quot;</span>, <span class="st">&quot;Park&quot;</span>),</span>
+<span id="cb20-3"><a href="results.html#cb20-3" aria-hidden="true" tabindex="-1"></a>  <span class="at">minutes =</span> <span class="fu">c</span>(<span class="dv">5</span>, <span class="dv">10</span>, <span class="dv">5</span>)</span>
+<span id="cb20-4"><a href="results.html#cb20-4" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb20-5"><a href="results.html#cb20-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb20-6"><a href="results.html#cb20-6" aria-hidden="true" tabindex="-1"></a><span class="fu">left_join</span>(</span>
+<span id="cb20-7"><a href="results.html#cb20-7" aria-hidden="true" tabindex="-1"></a>  access_bin <span class="sc">%&gt;%</span></span>
+<span id="cb20-8"><a href="results.html#cb20-8" aria-hidden="true" tabindex="-1"></a>    <span class="fu">st_set_geometry</span>(<span class="cn">NULL</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb20-9"><a href="results.html#cb20-9" aria-hidden="true" tabindex="-1"></a>    <span class="fu">rename</span>(<span class="at">buffer_Grocery =</span> grocery, <span class="at">buffer_Library =</span> library, <span class="at">buffer_Park =</span> park,</span>
+<span id="cb20-10"><a href="results.html#cb20-10" aria-hidden="true" tabindex="-1"></a>           <span class="at">minutes_Grocery =</span> grocery_min, <span class="at">minutes_Library =</span> library_min, <span class="at">minutes_Park =</span> park_min),</span>
+<span id="cb20-11"><a href="results.html#cb20-11" aria-hidden="true" tabindex="-1"></a>  access_ls <span class="sc">%&gt;%</span></span>
+<span id="cb20-12"><a href="results.html#cb20-12" aria-hidden="true" tabindex="-1"></a>    <span class="fu">st_set_geometry</span>(<span class="cn">NULL</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb20-13"><a href="results.html#cb20-13" aria-hidden="true" tabindex="-1"></a>    <span class="fu">select</span>(<span class="sc">-</span>total) <span class="sc">%&gt;%</span></span>
+<span id="cb20-14"><a href="results.html#cb20-14" aria-hidden="true" tabindex="-1"></a>    <span class="fu">rename</span>(<span class="at">logsum_Grocery =</span> grocery, <span class="at">logsum_Library =</span> library, <span class="at">logsum_Park =</span> park),</span>
+<span id="cb20-15"><a href="results.html#cb20-15" aria-hidden="true" tabindex="-1"></a>  <span class="at">by =</span> <span class="fu">c</span>(<span class="st">&quot;id&quot;</span>, <span class="st">&quot;POPULATION&quot;</span>)</span>
+<span id="cb20-16"><a href="results.html#cb20-16" aria-hidden="true" tabindex="-1"></a>)  <span class="sc">%&gt;%</span></span>
+<span id="cb20-17"><a href="results.html#cb20-17" aria-hidden="true" tabindex="-1"></a>  <span class="fu">pivot_longer</span>(<span class="at">cols =</span> minutes_Grocery<span class="sc">:</span>logsum_Park) <span class="sc">%&gt;%</span></span>
+<span id="cb20-18"><a href="results.html#cb20-18" aria-hidden="true" tabindex="-1"></a>  <span class="fu">separate</span>(name, <span class="fu">c</span>(<span class="st">&quot;measure&quot;</span>, <span class="st">&quot;resource&quot;</span>)) <span class="sc">%&gt;%</span></span>
+<span id="cb20-19"><a href="results.html#cb20-19" aria-hidden="true" tabindex="-1"></a>  <span class="fu">pivot_wider</span>(<span class="at">names_from =</span> measure, <span class="at">values_from =</span> value) <span class="sc">%&gt;%</span></span>
+<span id="cb20-20"><a href="results.html#cb20-20" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">buffer =</span> <span class="fu">as.logical</span>(buffer)) <span class="sc">%&gt;%</span></span>
+<span id="cb20-21"><a href="results.html#cb20-21" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x =</span> minutes, <span class="at">y =</span> logsum)) <span class="sc">+</span></span>
+<span id="cb20-22"><a href="results.html#cb20-22" aria-hidden="true" tabindex="-1"></a>  <span class="fu">facet_wrap</span>(<span class="sc">~</span>resource, <span class="at">scales =</span> <span class="st">&quot;free&quot;</span>) <span class="sc">+</span></span>
+<span id="cb20-23"><a href="results.html#cb20-23" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>(<span class="at">pch =</span> <span class="dv">21</span>, <span class="at">alpha =</span> <span class="fl">0.4</span>, <span class="at">stroke =</span> <span class="dv">1</span>) <span class="sc">+</span> </span>
+<span id="cb20-24"><a href="results.html#cb20-24" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_vline</span>(<span class="at">data =</span> thresholds, <span class="fu">aes</span>(<span class="at">xintercept =</span> minutes), <span class="at">lty =</span> <span class="st">&quot;dashed&quot;</span>) <span class="sc">+</span></span>
+<span id="cb20-25"><a href="results.html#cb20-25" aria-hidden="true" tabindex="-1"></a>  <span class="fu">stat_smooth</span>(<span class="at">method =</span> <span class="st">&quot;lm&quot;</span>, <span class="at">show.legend =</span> <span class="cn">FALSE</span>, <span class="at">ribbon =</span> <span class="cn">FALSE</span>) <span class="sc">+</span></span>
+<span id="cb20-26"><a href="results.html#cb20-26" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ylab</span>(<span class="st">&quot;Accessibility Logsum&quot;</span>) <span class="sc">+</span> <span class="fu">xlab</span>(<span class="st">&quot;Travel Time in Minutes&quot;</span>)</span></code></pre></div>
 <pre><code>## Warning: Ignoring unknown parameters: ribbon</code></pre>
 <pre><code>## `geom_smooth()` using formula &#39;y ~ x&#39;</code></pre>
 <pre><code>## Warning: Removed 62 rows containing non-finite values (stat_smooth).</code></pre>
 <pre><code>## Warning: Removed 62 rows containing missing values (geom_point).</code></pre>
 <div class="figure"><span style="display:block;" id="fig:access-plot"></span>
-<img src="Community_Resources_files/figure-html/access-plot-1.pdf" alt="Relationship between travel time, and logsum access value for block groups in Utah County. Travel-time based buffers shown as dashed lines." width="672" />
+<img src="Community_Resources_files/figure-html/access-plot-1.pdf" alt="Relationship between travel time and logsum access value for block groups in Utah County. Travel time thresholds shown as dashed lines, with best fit regresssion line added for context." width="672" />
 <p class="caption">
-Figure 4.2: Relationship between travel time, and logsum access value for block groups in Utah County. Travel-time based buffers shown as dashed lines.
+Figure 4.2: Relationship between travel time and logsum access value for block groups in Utah County. Travel time thresholds shown as dashed lines, with best fit regresssion line added for context.
 </p>
 </div>
-<p>The potential for the buffer measure to oversimplify the accessiblity problem is further
+<p>The potential for the buffer measure to oversimplify the accessibility problem is further
 illustrated in
 Figure <a href="results.html#fig:access-plot">4.2</a>. This figure shows the utility-based accessibility
 logsum calculated using the mode choice logsum as an impedance term against the
@@ -1120,7 +1125,7 @@ travel time in minutes (drive time for grocery stores and libraries; walk time
 for parks), for block groups in the study region. It is clear that for all three
 land uses,
 lower travel time is significantly correlated with higher accessibility.
-But for block groups with with equivalent travel time to a particular community
+But for block groups with equivalent travel time to a particular community
 resource, the accessibility logsum value
 varies substantially. Even for block groups along the buffer — where a small change
 in travel time might place a block within or without the buffer — the variance
@@ -1132,19 +1137,19 @@ set of block groups have substantial variance in their amenities. Being near a
 single poor-quality grocery store is not the same thing as being near multiple
 high-quality groceries, and the logsum value can capture this variance in its
 construction.</p>
-<div class="sourceCode" id="cb24"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb24-1"><a href="results.html#cb24-1" aria-hidden="true" tabindex="-1"></a><span class="fu">tar_load</span>(no_buffer)</span>
-<span id="cb24-2"><a href="results.html#cb24-2" aria-hidden="true" tabindex="-1"></a><span class="fu">tar_load</span>(no_logsum)</span>
-<span id="cb24-3"><a href="results.html#cb24-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb24-4"><a href="results.html#cb24-4" aria-hidden="true" tabindex="-1"></a><span class="co"># calculate number of households in each group, and number of low-income</span></span>
-<span id="cb24-5"><a href="results.html#cb24-5" aria-hidden="true" tabindex="-1"></a>nhh_nobuf <span class="ot">&lt;-</span> <span class="fu">sum</span>(no_buffer<span class="sc">$</span>households, <span class="at">na.rm =</span> <span class="cn">TRUE</span>)</span>
-<span id="cb24-6"><a href="results.html#cb24-6" aria-hidden="true" tabindex="-1"></a>nhh_nols  <span class="ot">&lt;-</span> <span class="fu">sum</span>(no_logsum<span class="sc">$</span>households, <span class="at">na.rm =</span> <span class="cn">TRUE</span>)</span>
-<span id="cb24-7"><a href="results.html#cb24-7" aria-hidden="true" tabindex="-1"></a>nhh_nobuflow <span class="ot">&lt;-</span> <span class="fu">sum</span>(no_buffer<span class="sc">$</span>households <span class="sc">*</span> <span class="fl">0.01</span> <span class="sc">*</span> no_buffer<span class="sc">$</span>lowincome, <span class="at">na.rm =</span> <span class="cn">TRUE</span>)</span>
-<span id="cb24-8"><a href="results.html#cb24-8" aria-hidden="true" tabindex="-1"></a>nhh_nolslow  <span class="ot">&lt;-</span> <span class="fu">sum</span>(no_logsum<span class="sc">$</span>households <span class="sc">*</span> <span class="fl">0.01</span> <span class="sc">*</span> no_logsum<span class="sc">$</span>lowincome, <span class="at">na.rm =</span> <span class="cn">TRUE</span>)</span>
-<span id="cb24-9"><a href="results.html#cb24-9" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb24-10"><a href="results.html#cb24-10" aria-hidden="true" tabindex="-1"></a><span class="co"># how many households are  in both groups?</span></span>
-<span id="cb24-11"><a href="results.html#cb24-11" aria-hidden="true" tabindex="-1"></a>nhh_both <span class="ot">&lt;-</span> <span class="fu">inner_join</span>(no_buffer[, <span class="fu">c</span>(<span class="st">&quot;id&quot;</span>, <span class="st">&quot;households&quot;</span>, <span class="st">&quot;lowincome&quot;</span>)], </span>
-<span id="cb24-12"><a href="results.html#cb24-12" aria-hidden="true" tabindex="-1"></a>                       no_logsum[, <span class="st">&quot;id&quot;</span>], <span class="at">by =</span> <span class="st">&quot;id&quot;</span>)  <span class="sc">%&gt;%</span></span>
-<span id="cb24-13"><a href="results.html#cb24-13" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarise</span>(<span class="at">n_hh =</span> <span class="fu">sum</span>(households), <span class="at">n_lo =</span> <span class="fu">sum</span>(households <span class="sc">*</span> lowincome <span class="sc">*</span> <span class="fl">0.01</span>))</span></code></pre></div>
+<div class="sourceCode" id="cb25"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb25-1"><a href="results.html#cb25-1" aria-hidden="true" tabindex="-1"></a><span class="fu">tar_load</span>(no_buffer)</span>
+<span id="cb25-2"><a href="results.html#cb25-2" aria-hidden="true" tabindex="-1"></a><span class="fu">tar_load</span>(no_logsum)</span>
+<span id="cb25-3"><a href="results.html#cb25-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb25-4"><a href="results.html#cb25-4" aria-hidden="true" tabindex="-1"></a><span class="co"># calculate number of households in each group, and number of low-income</span></span>
+<span id="cb25-5"><a href="results.html#cb25-5" aria-hidden="true" tabindex="-1"></a>nhh_nobuf <span class="ot">&lt;-</span> <span class="fu">sum</span>(no_buffer<span class="sc">$</span>households, <span class="at">na.rm =</span> <span class="cn">TRUE</span>)</span>
+<span id="cb25-6"><a href="results.html#cb25-6" aria-hidden="true" tabindex="-1"></a>nhh_nols  <span class="ot">&lt;-</span> <span class="fu">sum</span>(no_logsum<span class="sc">$</span>households, <span class="at">na.rm =</span> <span class="cn">TRUE</span>)</span>
+<span id="cb25-7"><a href="results.html#cb25-7" aria-hidden="true" tabindex="-1"></a>nhh_nobuflow <span class="ot">&lt;-</span> <span class="fu">sum</span>(no_buffer<span class="sc">$</span>households <span class="sc">*</span> <span class="fl">0.01</span> <span class="sc">*</span> no_buffer<span class="sc">$</span>lowincome, <span class="at">na.rm =</span> <span class="cn">TRUE</span>)</span>
+<span id="cb25-8"><a href="results.html#cb25-8" aria-hidden="true" tabindex="-1"></a>nhh_nolslow  <span class="ot">&lt;-</span> <span class="fu">sum</span>(no_logsum<span class="sc">$</span>households <span class="sc">*</span> <span class="fl">0.01</span> <span class="sc">*</span> no_logsum<span class="sc">$</span>lowincome, <span class="at">na.rm =</span> <span class="cn">TRUE</span>)</span>
+<span id="cb25-9"><a href="results.html#cb25-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb25-10"><a href="results.html#cb25-10" aria-hidden="true" tabindex="-1"></a><span class="co"># how many households are  in both groups?</span></span>
+<span id="cb25-11"><a href="results.html#cb25-11" aria-hidden="true" tabindex="-1"></a>nhh_both <span class="ot">&lt;-</span> <span class="fu">inner_join</span>(no_buffer[, <span class="fu">c</span>(<span class="st">&quot;id&quot;</span>, <span class="st">&quot;households&quot;</span>, <span class="st">&quot;lowincome&quot;</span>)], </span>
+<span id="cb25-12"><a href="results.html#cb25-12" aria-hidden="true" tabindex="-1"></a>                       no_logsum[, <span class="st">&quot;id&quot;</span>], <span class="at">by =</span> <span class="st">&quot;id&quot;</span>)  <span class="sc">%&gt;%</span></span>
+<span id="cb25-13"><a href="results.html#cb25-13" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarise</span>(<span class="at">n_hh =</span> <span class="fu">sum</span>(households), <span class="at">n_lo =</span> <span class="fu">sum</span>(households <span class="sc">*</span> lowincome <span class="sc">*</span> <span class="fl">0.01</span>))</span></code></pre></div>
 </div>
 <div id="spatial-distribution" class="section level2 hasAnchor" number="4.3">
 <h2><span class="header-section-number">4.3</span> Spatial Distribution<a href="results.html#spatial-distribution" class="anchor-section" aria-label="Anchor link to header"></a></h2>
