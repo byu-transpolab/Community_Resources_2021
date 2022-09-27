@@ -26,7 +26,7 @@ modelsummary(park_models, estimate = "{estimate}({statistic}){stars}",
              title = "Park Destination Choice Utilities",
              stars = c('*' = .05, '**' = .01),
              coef_map = park_map, gof_map = gm,
-             statistic = NULL, note = "t-statistics in parentheses. * p < 0.5, ** p < 0.1") %>%
+             statistic = NULL, note = "t-statistics in parentheses. * p < 0.5, ** p < 0.01") %>%
   kable_styling(latex_options = c("scale_down"))
 ```
 
@@ -73,7 +73,7 @@ modelsummary(grocery_models,
              estimate = "{estimate}({statistic}){stars}",  statistic = NULL, 
              title = "Grocery Destination Choice Utilities",
              stars = c('*' = .05, '**' = .01), coef_map = grocery_map, gof_map = gm,
-             note = "t-statistics in parentheses. * p < 0.5, ** p < 0.1") %>%
+             note = "t-statistics in parentheses. * p < 0.5, ** p < 0.01") %>%
   kable_styling(latex_options = c("scale_down"))
 ```
 
@@ -106,7 +106,7 @@ modelsummary(library_models, estimate = "{estimate}({statistic}){stars}",
              title = "Library Destination Choice Utilities",
              stars = c('*' = .05, '**' = .01), 
              coef_map = library_map, gof_map = gm,
-             statistic = NULL, note = "t-statistics in parentheses. * p < 0.5, ** p < 0.1") %>%
+             statistic = NULL, note = "t-statistics in parentheses. * p < 0.5, ** p < 0.01") %>%
   kable_styling(latex_options = c("scale_down"))
 ```
 
@@ -212,7 +212,7 @@ travel time in minutes (drive time for grocery stores and libraries; walk time
 for parks), for block groups in the study region. It is clear that for all three
 land uses,
 lower travel time is significantly correlated with higher accessibility.
-But for block groups with with equivalent travel time to a particular community
+But for block groups with equivalent travel time to a particular community
 resource, the accessibility logsum value
 varies substantially. Even for block groups along the buffer --- where a small change
 in travel time might place a block within or without the buffer --- the variance 
